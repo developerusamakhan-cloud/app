@@ -1,0 +1,123 @@
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Hello Guest Screen",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Amazon Fire TV, Roku OS, Samsung Tizen OS, LG webOS, Apple tvOS, Android TV",
+    "url": "https://helloguestscreen.com/locations/florida/",
+    "offers": {
+      "@type": "Offer",
+      "price": "14.99",
+      "priceCurrency": "USD"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Hello Guest Screen",
+    "url": "https://helloguestscreen.com/locations/florida/",
+    "areaServed": {
+      "@type": "State",
+      "name": "Florida",
+      "containedInPlace": {
+        "@type": "Country",
+        "name": "United States"
+      }
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does Hello Guest Screen work for Florida vacation rentals?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Hello Guest Screen works on any TV in any Florida vacation rental. It is compatible with Amazon Firestick, Samsung Smart TV, LG Smart TV, Roku, Apple TV, and Android TV/Google TV. Any TV with an HDMI port works with a Firestick in under 10 minutes. It connects to Airbnb iCal, VRBO iCal, Guesty, Hostfully, OwnerRez, and all major booking platforms to display your guest's name, checkout time, and WiFi password automatically for every reservation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which Florida vacation rental markets benefit most from a TV welcome screen?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "All Florida markets benefit, but the highest-impact markets are Destin and the Emerald Coast (where guests pay $433+ per night and have very high expectations), Miami Beach (where guests expect hotel-quality presentation), and Orlando (where family groups need clear checkout time and house rules). Florida is one of the most competitive STR markets in the US, and a professional in-room welcome experience is one of the most visible ways to differentiate a listing."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I manage multiple Florida properties from one Hello Guest Screen account?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Hello Guest Screen supports unlimited properties from a single account. Each property has its own screen with its own customization -- different WiFi passwords, different welcome messages, different QR code destinations, different background images. Florida property managers running portfolios across multiple markets (Miami, Orlando, Destin) manage all properties from one dashboard. Each screen is billed at $14.99 per month."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Hello Guest Screen update automatically for same-day or last-minute bookings in Florida?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Hello Guest Screen syncs in real time from connected PMS platforms. When a same-day booking is confirmed -- common in Florida's Miami spring break and Orlando holiday markets -- the guest's name and checkout date update on the TV immediately. This is different from some competitors that sync only every 8 to 24 hours, which can result in the previous guest's name still showing when a new guest checks in."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need a special Florida license to operate a vacation rental?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Florida requires all vacation rental properties to be licensed through the Florida Department of Business and Professional Regulation (DBPR). There are two license types: Vacation Rental Condo (for condos and co-op units) and Vacation Rental Dwelling (for single-family homes and multi-unit properties). You must also collect state sales tax (6%), a discretionary county surtax (0.5% to 1.5%), and a County Tourist Development Tax (2% to 6%). Advertising platforms like Airbnb now collect and remit these taxes on your behalf in most Florida counties. Verify current requirements at myfloridalicense.com/DBPR/hotels-restaurants/vacation-rentals/. Note: Hello Guest Screen is not a legal or tax advisor -- always consult local authorities."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I show local Florida recommendations on the Hello Guest Screen display?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, via the QR code feature. Set the QR code destination to any URL you choose -- your curated local guide, a Google Maps list of nearby restaurants, your Hostfully or Touch Stay guidebook, a local activities page, or any website. For Florida beach markets, popular QR code destinations include local beach access maps, snorkel and kayak rental pages, surf conditions, and seafood restaurant guides. The QR code label can also be customized -- for example, Scan for Destin's Best Beaches or Your Miami Local Guide."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Hello Guest Screen work for Florida properties listed on both Airbnb and VRBO?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Hello Guest Screen supports multiple simultaneous iCal connections on the same property. Connect both your Airbnb iCal and your VRBO iCal to the same property screen. Hello Guest Screen merges both calendars and activates the correct welcome screen based on whichever booking is currently active. For Florida property managers who also use Guesty, OwnerRez, or Hostfully, connecting through the PMS instead covers all channels through a single integration."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Hello Guest Screen handle Florida's high-turnover beach market with back-to-back Saturday bookings?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Hello Guest Screen handles back-to-back turnovers automatically. The screen clears the outgoing guest's information 2 hours after checkout time and activates the new guest's welcome display 2 hours before the next check-in. For Saturday-to-Saturday Destin or Miramar Beach properties with the same-day turnover, the transition is fully automatic. The property management team does not need to touch the screen between stays. The welcome display is correct and ready before each new guest arrives."
+        }
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://helloguestscreen.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Locations",
+        "item": "https://helloguestscreen.com/locations/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Florida",
+        "item": "https://helloguestscreen.com/locations/florida/"
+      }
+    ]
+  }
+]

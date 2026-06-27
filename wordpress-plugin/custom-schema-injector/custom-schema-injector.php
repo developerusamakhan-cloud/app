@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Custom Schema Injector
  * Description: Adds a per-page/post textarea to enter custom JSON-LD schema, which is injected into that page's <head> tag.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: developerusamakhan
  * License: GPL-2.0+
  */
@@ -37,7 +37,8 @@ function csi_render_meta_box( $post ) {
 	<p>
 		<label for="csi_custom_schema_field">
 			Paste your custom JSON-LD schema for this page. It will be added inside the
-			<code>&lt;head&gt;</code> tag of this page only.
+			<code>&lt;head&gt;</code> tag of this page only. You can paste either a single
+			JSON object, or one or more full <code>&lt;script type="application/ld+json"&gt;</code> blocks.
 		</label>
 	</p>
 	<textarea
@@ -47,8 +48,24 @@ function csi_render_meta_box( $post ) {
 		style="width:100%;font-family:monospace;"
 		placeholder='{&#10;  "@context": "https://schema.org",&#10;  "@type": "Article",&#10;  "headline": "..."&#10;}'
 	><?php echo esc_textarea( $value ); ?></textarea>
-	<p class="description">Must be valid JSON. Leave empty to output nothing on this page.</p>
+	<p class="description">Leave empty to output nothing on this page.</p>
 	<?php
+}
+
+/**
+ * Validate one JSON-LD payload, used both for plain-JSON input and for the
+ * contents of each <script> block when multiple schema blocks are pasted.
+ */
+function csi_is_valid_json( $string ) {
+	json_decode( $string );
+	return ( json_last_error() === JSON_ERROR_NONE );
+}
+
+/**
+ * Returns true if the input contains <script type="application/ld+json"> blocks.
+ */
+function csi_contains_schema_scripts( $string ) {
+	return (bool) preg_match( '/<script[^>]*application\/ld\+json[^>]*>/i', $string );
 }
 
 add_action( 'save_post', 'csi_save_meta_box' );
@@ -72,9 +89,27 @@ function csi_save_meta_box( $post_id ) {
 			return;
 		}
 
-		// Validate JSON before saving; store raw text but flag invalid JSON.
-		json_decode( $raw );
-		if ( json_last_error() !== JSON_ERROR_NONE ) {
+		$is_valid = false;
+
+		if ( csi_contains_schema_scripts( $raw ) ) {
+			// Multiple <script type="application/ld+json"> blocks: validate the JSON inside each one.
+			$is_valid = true;
+			if ( preg_match_all( '/<script[^>]*application\/ld\+json[^>]*>(.*?)<\/script>/is', $raw, $matches ) ) {
+				foreach ( $matches[1] as $json_block ) {
+					if ( ! csi_is_valid_json( trim( $json_block ) ) ) {
+						$is_valid = false;
+						break;
+					}
+				}
+			} else {
+				$is_valid = false;
+			}
+		} else {
+			// Plain JSON object/array.
+			$is_valid = csi_is_valid_json( $raw );
+		}
+
+		if ( ! $is_valid ) {
 			set_transient( 'csi_invalid_json_' . $post_id, true, 45 );
 		}
 
@@ -107,6 +142,20 @@ function csi_output_schema() {
 
 	$schema = get_post_meta( $post_id, CSI_META_KEY, true );
 	if ( empty( $schema ) ) {
+		return;
+	}
+
+	if ( csi_contains_schema_scripts( $schema ) ) {
+		// Author already pasted full <script type="application/ld+json"> block(s); output each
+		// re-encoded JSON block re-validated, ignoring anything outside the script tags.
+		if ( preg_match_all( '/<script[^>]*application\/ld\+json[^>]*>(.*?)<\/script>/is', $schema, $matches ) ) {
+			foreach ( $matches[1] as $json_block ) {
+				$decoded = json_decode( trim( $json_block ) );
+				if ( json_last_error() === JSON_ERROR_NONE ) {
+					echo "\n<script type=\"application/ld+json\">\n" . wp_json_encode( $decoded ) . "\n</script>\n";
+				}
+			}
+		}
 		return;
 	}
 

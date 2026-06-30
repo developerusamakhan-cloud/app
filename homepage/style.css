@@ -1,16 +1,16 @@
 /* ---------- Base ---------- */
 :root {
-  --sage: #7c9473;
-  --sage-dark: #5e7456;
-  --sage-light: #eef2ea;
-  --beige: #f5f0e6;
-  --earth: #b08968;
-  --ink: #2e3328;
-  --muted: #6b7264;
+  --sage: #cc1c1c;
+  --sage-dark: #b91010;
+  --sage-light: #fdf0f0;
+  --beige: #f7f7f7;
+  --earth: #1a1a1a;
+  --ink: #111111;
+  --muted: #555555;
   --white: #ffffff;
   --radius: 16px;
-  --shadow: 0 10px 30px rgba(46, 51, 40, 0.08);
-  --shadow-hover: 0 16px 40px rgba(46, 51, 40, 0.14);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+  --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.18);
 }
 
 * { box-sizing: border-box; }
@@ -146,7 +146,7 @@ section { padding: 88px 0; }
 
 /* ---------- Hero ---------- */
 .hero {
-  background: linear-gradient(135deg, var(--sage-light) 0%, var(--beige) 100%);
+  background: linear-gradient(135deg, #fdf0f0 0%, #f7f7f7 100%);
   padding: 100px 0;
 }
 
@@ -285,7 +285,7 @@ section { padding: 88px 0; }
 .benefit-list li strong { color: var(--ink); }
 
 /* ---------- Story ---------- */
-.story { background: var(--sage-light); }
+.story { background: #f7f7f7; }
 
 .story-inner {
   display: grid;
@@ -304,7 +304,7 @@ section { padding: 88px 0; }
 
 /* ---------- Promise ---------- */
 .promise {
-  background: var(--sage-dark);
+  background: #111111;
   color: var(--white);
 }
 
@@ -323,7 +323,7 @@ section { padding: 88px 0; }
 
 /* ---------- CTA ---------- */
 .cta {
-  background: var(--earth);
+  background: var(--sage-dark);
   color: var(--white);
   text-align: center;
 }
@@ -352,7 +352,7 @@ section { padding: 88px 0; }
 
 /* ---------- Footer ---------- */
 .site-footer {
-  background: var(--ink);
+  background: #111111;
   color: rgba(255,255,255,0.75);
   padding-top: 64px;
 }

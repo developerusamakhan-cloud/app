@@ -225,13 +225,13 @@ function nabia_quick_contact( $title = '', $class = '' ) {
 			<?php if ( $wa ) : ?>
 				<a class="qc-btn qc-whatsapp" href="<?php echo esc_url( $wa ); ?>" target="_blank" rel="noopener noreferrer">
 					<?php nabia_icon( 'whatsapp' ); ?>
-					<span><strong><?php esc_html_e( 'WhatsApp', 'nabia' ); ?></strong><small><?php echo esc_html( nabia_mod( 'contact_whatsapp' ) ); ?></small></span>
+					<span><strong><?php esc_html_e( 'WhatsApp', 'nabia' ); ?></strong></span>
 				</a>
 			<?php endif; ?>
 			<?php if ( $gchat ) : ?>
-				<a class="qc-btn qc-gchat" href="<?php echo esc_url( $gchat ); ?>" target="_blank" rel="noopener noreferrer" data-copy="<?php echo esc_attr( nabia_mod( 'gchat_email' ) ); ?>" title="<?php esc_attr_e( 'Opens Google Chat and copies my chat email', 'nabia' ); ?>">
+				<a class="qc-btn qc-gchat" href="<?php echo esc_url( $gchat ); ?>" target="_blank" rel="noopener noreferrer" data-copy="<?php echo esc_attr( nabia_mod( 'gchat_email' ) ); ?>" title="<?php esc_attr_e( 'Chat with me on Google Chat', 'nabia' ); ?>">
 					<?php nabia_icon( 'gchat' ); ?>
-					<span><strong><?php esc_html_e( 'Google Chat', 'nabia' ); ?></strong><small><?php echo esc_html( nabia_mod( 'gchat_email' ) ); ?></small></span>
+					<span><strong><?php esc_html_e( 'Google Chat', 'nabia' ); ?></strong></span>
 				</a>
 			<?php endif; ?>
 		</div>

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NABIA_VERSION', '2.13.1' );
+define( 'NABIA_VERSION', '2.13.2' );
 define( 'NABIA_DIR', get_template_directory() );
 define( 'NABIA_URI', get_template_directory_uri() );
 
@@ -127,7 +127,7 @@ function nabia_scripts() {
 			'cursor'    => (bool) nabia_mod( 'enable_cursor' ),
 			'smooth'    => (bool) nabia_mod( 'enable_smooth' ),
 			'formKeys'  => esc_url_raw( rest_url( 'nabia/v1/form-keys' ) ),
-			'copied'    => __( 'Email copied. Paste it in Google Chat to start a chat.', 'nabia' ),
+			'copied'    => __( 'My chat address is copied. In Google Chat tap "New chat" and paste it to message me.', 'nabia' ),
 		)
 	);
 

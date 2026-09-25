@@ -123,7 +123,7 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 					<?php endif; ?>
 					<li><a href="<?php echo esc_url( nabia_hire_url() ); ?>"><?php esc_html_e( 'Send a message', 'nabia' ); ?></a></li>
 					<?php if ( $nabia_wa ) : ?>
-						<li><a href="<?php echo esc_url( $nabia_wa ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'WhatsApp', 'nabia' ); ?> <?php echo esc_html( nabia_mod( 'contact_whatsapp' ) ); ?></a></li>
+						<li><a href="<?php echo esc_url( $nabia_wa ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'WhatsApp', 'nabia' ); ?></a></li>
 					<?php endif; ?>
 					<?php if ( nabia_gchat_url() ) : ?>
 						<li><a href="<?php echo esc_url( nabia_gchat_url() ); ?>" target="_blank" rel="noopener noreferrer" data-copy="<?php echo esc_attr( nabia_mod( 'gchat_email' ) ); ?>"><?php esc_html_e( 'Google Chat', 'nabia' ); ?></a></li>

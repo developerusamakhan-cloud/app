@@ -436,6 +436,63 @@ function nabia_yoast_hide_projects( $excluded, $post_type ) {
 add_filter( 'wpseo_sitemap_exclude_post_type', 'nabia_yoast_hide_projects', 10, 2 );
 
 /**
+ * Is the current request a Websites (portfolio post type) page: a single item, its archive or its categories?
+ *
+ * @return bool
+ */
+function nabia_is_portfolio_request() {
+	$type = nabia_portfolio_type();
+	$tax  = nabia_portfolio_taxonomy();
+	return is_singular( $type ) || is_post_type_archive( $type ) || ( $tax && is_tax( $tax ) );
+}
+
+/**
+ * Noindex the Websites post type (WordPress core robots meta).
+ *
+ * @param array $robots Robots directives.
+ * @return array
+ */
+function nabia_portfolio_noindex( $robots ) {
+	if ( nabia_is_portfolio_request() ) {
+		$robots['noindex'] = true;
+		$robots['follow']  = true;
+		unset( $robots['max-image-preview'] );
+	}
+	return $robots;
+}
+add_filter( 'wp_robots', 'nabia_portfolio_noindex' );
+
+/**
+ * Noindex the Websites post type when Yoast SEO or Rank Math prints the robots meta.
+ *
+ * @param string|array $robots Robots value.
+ * @return string|array
+ */
+function nabia_portfolio_noindex_seo( $robots ) {
+	if ( ! nabia_is_portfolio_request() ) {
+		return $robots;
+	}
+	if ( is_array( $robots ) ) {
+		$robots['index'] = 'noindex';
+		unset( $robots['max-snippet'], $robots['max-image-preview'], $robots['max-video-preview'] );
+		return $robots;
+	}
+	return 'noindex, follow';
+}
+add_filter( 'wpseo_robots', 'nabia_portfolio_noindex_seo', 99 );
+add_filter( 'rank_math/frontend/robots', 'nabia_portfolio_noindex_seo', 99 );
+
+/**
+ * Also send the noindex as an HTTP header, so the redirecting single items are covered too.
+ */
+function nabia_portfolio_noindex_header() {
+	if ( nabia_is_portfolio_request() && ! headers_sent() ) {
+		header( 'X-Robots-Tag: noindex, follow', true );
+	}
+}
+add_action( 'template_redirect', 'nabia_portfolio_noindex_header', 0 );
+
+/**
  * Use the theme's portfolio templates for whichever post type is the portfolio.
  *
  * @param string[] $templates Candidate templates.

@@ -3,7 +3,7 @@
  * Template Name: Portfolio
  * Template Post Type: page
  *
- * Portfolio overview: every Website with instant category filters and "Show more".
+ * Portfolio overview: every Website with "Show more".
  * Assign it to your portfolio page (for example /my-works/).
  *
  * @package Nabia
@@ -13,13 +13,6 @@ get_header();
 
 $nabia_type  = nabia_portfolio_type();
 $nabia_tax   = nabia_portfolio_taxonomy();
-$nabia_terms = $nabia_tax ? get_terms(
-	array(
-		'taxonomy'   => $nabia_tax,
-		'hide_empty' => true,
-	)
-) : array();
-$nabia_terms = is_wp_error( $nabia_terms ) ? array() : $nabia_terms;
 $nabia_items = new WP_Query(
 	array(
 		'post_type'      => $nabia_type,
@@ -38,12 +31,12 @@ nabia_page_header(
 		'eyebrow' => __( 'Portfolio', 'nabia' ),
 		'icon'    => 'grid',
 		'title'   => get_the_title() ? get_the_title() : nabia_mod( 'work_title' ),
-		'intro'   => __( 'Websites and online stores I designed and built for clients around the world. Filter by type, open any project for the details, and visit the live site.', 'nabia' ),
+		'intro'   => __( 'Websites and online stores I designed and built for clients around the world. Click any project to visit the live website.', 'nabia' ),
 		'aside'   => nabia_aside_card(
 			__( 'At a glance', 'nabia' ),
 			array(
 				array( __( 'Projects', 'nabia' ), (string) $nabia_items->post_count ),
-				array( __( 'Categories', 'nabia' ), (string) count( $nabia_terms ) ),
+				array( __( 'Clients', 'nabia' ), __( 'Worldwide', 'nabia' ) ),
 				array( __( 'Platforms', 'nabia' ), __( 'WordPress, Shopify & more', 'nabia' ) ),
 				array( __( 'Experience', 'nabia' ), nabia_mod( 'stat_1_number' ) . nabia_mod( 'stat_1_suffix' ) . ' ' . __( 'years', 'nabia' ) ),
 			),
@@ -55,15 +48,6 @@ nabia_page_header(
 ?>
 <section class="section section-tight work portfolio-page" data-portfolio>
 	<div class="container">
-		<?php if ( $nabia_terms ) : ?>
-			<div class="filter-pills" role="toolbar" aria-label="<?php esc_attr_e( 'Filter projects', 'nabia' ); ?>">
-				<button type="button" class="is-active" data-filter="*"><?php esc_html_e( 'All', 'nabia' ); ?> <em><?php echo (int) $nabia_items->post_count; ?></em></button>
-				<?php foreach ( $nabia_terms as $nabia_term ) : ?>
-					<button type="button" data-filter="<?php echo esc_attr( $nabia_term->slug ); ?>"><?php echo esc_html( $nabia_term->name ); ?> <em><?php echo (int) $nabia_term->count; ?></em></button>
-				<?php endforeach; ?>
-			</div>
-		<?php endif; ?>
-
 		<?php if ( $nabia_items->have_posts() ) : ?>
 			<div class="work-grid" data-portfolio-grid>
 				<?php

@@ -5,7 +5,7 @@
  * @package Nabia
  */
 
-$nabia_about_image = nabia_mod( 'about_image' );
+$nabia_about_image = nabia_mod( 'about_image' ) ? nabia_mod( 'about_image' ) : nabia_mod( 'author_image' );
 $nabia_intro_video = nabia_mod( 'intro_video' );
 $nabia_intro_thumb = nabia_mod( 'intro_video_poster' );
 $nabia_skills      = array(

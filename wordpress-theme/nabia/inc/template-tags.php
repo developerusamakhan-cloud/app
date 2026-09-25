@@ -545,3 +545,37 @@ function nabia_tight( $text ) {
 	}
 	return $out;
 }
+
+/**
+ * Use the author photo from the Customizer for every registered user's avatar
+ * (post bylines, author box, comments by the site owner, admin bar).
+ *
+ * @param array $args        Avatar data.
+ * @param mixed $id_or_email User ID, email, WP_User, WP_Post or WP_Comment.
+ * @return array
+ */
+function nabia_author_avatar( $args, $id_or_email ) {
+	$photo = nabia_mod( 'author_image' );
+	if ( ! $photo ) {
+		return $args;
+	}
+	$user_id = 0;
+	if ( is_numeric( $id_or_email ) ) {
+		$user_id = (int) $id_or_email;
+	} elseif ( $id_or_email instanceof WP_User ) {
+		$user_id = $id_or_email->ID;
+	} elseif ( $id_or_email instanceof WP_Post ) {
+		$user_id = (int) $id_or_email->post_author;
+	} elseif ( $id_or_email instanceof WP_Comment ) {
+		$user_id = (int) $id_or_email->user_id;
+	} elseif ( is_string( $id_or_email ) && is_email( $id_or_email ) ) {
+		$user    = get_user_by( 'email', $id_or_email );
+		$user_id = $user ? $user->ID : 0;
+	}
+	if ( $user_id && get_userdata( $user_id ) ) {
+		$args['url']          = $photo;
+		$args['found_avatar'] = true;
+	}
+	return $args;
+}
+add_filter( 'pre_get_avatar_data', 'nabia_author_avatar', 10, 2 );

@@ -65,6 +65,12 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.12
+
+- **Author photo everywhere.** New Customizer setting (Nabia Theme, About, "Author photo"), preset to Nabia's photo. It replaces the Gravatar for every registered user, so it shows in blog post bylines, the author box, comments by the site owner and the admin bar. The homepage About section also uses it when no intro video or About image is set.
+- **No filters on the portfolio.** The category pills are gone from the Portfolio page and the Websites archive. All projects show in one grid with "Show more".
+- **Websites are noindex.** Single websites, the Websites archive and its category pages send `noindex, follow` (robots meta, Yoast SEO, Rank Math and an `X-Robots-Tag` header). The Portfolio page itself stays indexable.
+
 ## What's new in 2.11
 
 - **Websites link straight to the live site.** Every portfolio card (home, portfolio page, archive, related work, HTML sitemap) opens the URL saved in the ACF field `live_link` in a new tab. Opening a single website URL redirects to that live link, or to the portfolio page when no link is set. There are no detail pages for now, so websites are also kept out of the XML sitemaps (WordPress core and Yoast). To bring detail pages back later, add `add_filter( 'nabia_redirect_projects', '__return_false' );` and point the cards back to the permalink.

@@ -1365,7 +1365,7 @@ function nwa_base_report( $url, $blocked, $google = '' ) {
 		'speed'   => array(
 			nwa_check( 'Domain', $dns ? 'pass' : 'fail', 2, $dns ? sprintf( '%s is online and resolves correctly.', $host ) : sprintf( '%s does not resolve. Check the spelling or your DNS settings.', $host ), 'Check the domain name and DNS settings with your domain provider.' ),
 			$google
-				? nwa_check( 'Google can load your homepage', 'fail', 3, 'Google\'s own test tool (PageSpeed Insights) could not load your homepage either' . ( 'yes' !== $google ? ' (' . $google . ')' : '' ) . '. If Google can not load it, it can not rank it well.', 'Check your firewall, Cloudflare bot settings or security plugin and make sure Google is allowed in. Then test the page at pagespeed.web.dev and in Google Search Console.' )
+				? nwa_check( 'Google can load your homepage', 'fail', 3, 'Google\'s own test tool (PageSpeed Insights) could not load your homepage either: ' . $google . '. If Google can not see your page, it can not rank it well.', 'Check your firewall, Cloudflare bot settings or security plugin and make sure Google is allowed in. Then test the page at pagespeed.web.dev and in Google Search Console.' )
 				: nwa_check(
 					'Open to search engines and scanners',
 					'warn',
@@ -1439,5 +1439,17 @@ function nwa_google_blocked( $error ) {
 	if ( ! $error || ! preg_match( '/(FAILED_DOCUMENT_REQUEST|ERRORED_DOCUMENT_REQUEST|NO_FCP|NO_NAVSTART|unable to reliably load|Status code: \d{3}|DNS_FAILURE|INSECURE_DOCUMENT_REQUEST)/i', $error ) ) {
 		return '';
 	}
-	return preg_match( '/Status code: (\d{3})/i', $error, $m ) ? 'status ' . $m[1] : 'yes';
+	if ( preg_match( '/Status code: (\d{3})/i', $error, $m ) ) {
+		return 'the server answered Google with error ' . $m[1] . ', so a firewall or security setting is refusing it';
+	}
+	if ( preg_match( '/NO_FCP|NO_NAVSTART/i', $error ) ) {
+		return 'the page stayed blank for Google, so no content appeared while it loaded (often a loading screen, a heavy script or a bot challenge)';
+	}
+	if ( preg_match( '/DNS_FAILURE/i', $error ) ) {
+		return 'Google could not find the domain (DNS problem)';
+	}
+	if ( preg_match( '/INSECURE_DOCUMENT_REQUEST/i', $error ) ) {
+		return 'the SSL certificate was not accepted by Google';
+	}
+	return 'the page did not load for Google';
 }

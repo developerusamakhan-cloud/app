@@ -24,12 +24,12 @@ $nabia_first = trim( strtok( $nabia_name, ' ' ) );
 			<?php endif; ?>
 
 			<h1 class="hero-title">
-				<span class="line"><span data-hero-line><?php echo esc_html( nabia_mod( 'hero_line_1' ) ); ?></span></span>
-				<span class="line"><span data-hero-line><?php echo esc_html( nabia_mod( 'hero_line_2' ) ); ?></span></span>
+				<span class="line"><span data-hero-line><?php echo nabia_tight( nabia_mod( 'hero_line_1' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></span>
+				<span class="line"><span data-hero-line><?php echo nabia_tight( nabia_mod( 'hero_line_2' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></span>
 				<?php if ( $nabia_words ) : ?>
 					<span class="line">
 						<span class="rotator" data-hero-line data-words="<?php echo esc_attr( wp_json_encode( $nabia_words ) ); ?>">
-							<span class="rotator-word"><?php echo esc_html( $nabia_words[0] ); ?></span>
+							<span class="rotator-word"><?php echo nabia_tight( $nabia_words[0] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 						</span>
 					</span>
 				<?php endif; ?>

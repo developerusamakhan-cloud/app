@@ -43,6 +43,8 @@ function nabia_customize_register( $wp_customize ) {
 		'nabia_portfolio' => __( 'Portfolio', 'nabia' ),
 		'nabia_videos'  => __( 'Video Reviews', 'nabia' ),
 		'nabia_google'  => __( 'Google Reviews', 'nabia' ),
+		'nabia_pricing' => __( 'Pricing', 'nabia' ),
+		'nabia_audit'   => __( 'Free Audit', 'nabia' ),
 		'nabia_contact' => __( 'Contact', 'nabia' ),
 		'nabia_social'  => __( 'Links: Linktree, Fiverr & Upwork', 'nabia' ),
 	);
@@ -123,6 +125,23 @@ function nabia_customize_register( $wp_customize ) {
 		'google_api_key'     => array( 'nabia_google', 'text', __( 'Google Places API key', 'nabia' ) ),
 		'google_min_rating'  => array( 'nabia_google', 'select', __( 'Only show reviews with at least', 'nabia' ) ),
 
+		'pricing_title'      => array( 'nabia_pricing', 'text', __( 'Pricing title', 'nabia' ) ),
+		'pricing_text'       => array( 'nabia_pricing', 'textarea', __( 'Pricing intro', 'nabia' ) ),
+		'plan_web_1'         => array( 'nabia_pricing', 'textarea', __( 'Website plan 1', 'nabia' ) ),
+		'plan_web_2'         => array( 'nabia_pricing', 'textarea', __( 'Website plan 2', 'nabia' ) ),
+		'plan_web_3'         => array( 'nabia_pricing', 'textarea', __( 'Website plan 3', 'nabia' ) ),
+		'plan_popular'       => array( 'nabia_pricing', 'select', __( 'Highlight as “Most popular”', 'nabia' ) ),
+		'plan_care_1'        => array( 'nabia_pricing', 'textarea', __( 'Maintenance plan 1', 'nabia' ) ),
+		'plan_care_2'        => array( 'nabia_pricing', 'textarea', __( 'Maintenance plan 2', 'nabia' ) ),
+		'plan_care_3'        => array( 'nabia_pricing', 'textarea', __( 'Maintenance plan 3', 'nabia' ) ),
+		'care_period'        => array( 'nabia_pricing', 'text', __( 'Maintenance price period (e.g. /month)', 'nabia' ) ),
+		'hire_url'           => array( 'nabia_pricing', 'url', __( '“Hire me” button link (empty = your /hire-me/ page or the contact section)', 'nabia' ) ),
+
+		'audit_title'        => array( 'nabia_audit', 'text', __( 'Title', 'nabia' ) ),
+		'audit_text'         => array( 'nabia_audit', 'textarea', __( 'Text', 'nabia' ) ),
+		'audit_points'       => array( 'nabia_audit', 'textarea', __( 'What you check (comma separated)', 'nabia' ) ),
+		'audit_shortcode'    => array( 'nabia_audit', 'text', __( 'Use my own form instead (shortcode, optional)', 'nabia' ) ),
+
 		'cta_title'          => array( 'nabia_contact', 'text', __( 'Contact title', 'nabia' ) ),
 		'cta_text'           => array( 'nabia_contact', 'textarea', __( 'Contact text', 'nabia' ) ),
 		'contact_email'      => array( 'nabia_contact', 'email', __( 'Email', 'nabia' ) ),
@@ -163,6 +182,12 @@ function nabia_customize_register( $wp_customize ) {
 		$post_types['websites'] = __( 'Websites (websites)', 'nabia' );
 	}
 	$choices = array(
+		'plan_popular'        => array(
+			'0' => __( 'None', 'nabia' ),
+			'1' => __( 'Plan 1', 'nabia' ),
+			'2' => __( 'Plan 2', 'nabia' ),
+			'3' => __( 'Plan 3', 'nabia' ),
+		),
 		'google_min_rating'   => array(
 			'1' => __( '1 star (show all)', 'nabia' ),
 			'3' => __( '3 stars', 'nabia' ),
@@ -181,6 +206,8 @@ function nabia_customize_register( $wp_customize ) {
 	$descriptions = array(
 		'video_reviews'   => __( 'Paste MP4 links from your Media Library (or YouTube links), one per line. The client name is read from the file name, or add it after a | sign: https://…/review.mp4 | Sarah Malik | New store in 2 weeks. You can also use Dashboard → Video Reviews.', 'nabia' ),
 		'google_place_id' => __( 'Find it at developers.google.com/maps/documentation/places/web-service/place-id, search your business name and copy the ID (starts with “ChIJ…”).', 'nabia' ),
+		'plan_web_1'      => __( 'Line 1: plan name. Line 2: price (leave the line empty for “Custom quote”). Then one feature per line. Start a line with - to show it as not included.', 'nabia' ),
+		'plan_care_1'     => __( 'Same format. Add your monthly price on line 2, e.g. $49', 'nabia' ),
 		'google_api_key'  => __( 'Google Cloud Console → enable “Places API (New)” → Credentials → Create API key (restrict it to Places API). Stored on your server only; visitors never see it. Reviews refresh every 12 hours.', 'nabia' ),
 	);
 

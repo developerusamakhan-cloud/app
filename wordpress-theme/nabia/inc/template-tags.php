@@ -268,17 +268,22 @@ function nabia_pagination() {
  */
 function nabia_menu_fallback( $args ) {
 	$base  = is_front_page() ? '' : home_url( '/' );
+	$page  = function ( $role, $hash ) use ( $base ) {
+		$url = function_exists( 'nabia_page_url' ) ? nabia_page_url( $role ) : '';
+		return $url ? $url : $base . $hash;
+	};
 	$items = array(
-		'#services' => __( 'Services', 'nabia' ),
-		'#work'     => __( 'Work', 'nabia' ),
-		'#about'    => __( 'About', 'nabia' ),
-		'#process'  => __( 'Process', 'nabia' ),
-		'#contact'  => __( 'Contact', 'nabia' ),
+		array( $page( 'services', '#services' ), __( 'Services', 'nabia' ) ),
+		array( $base . '#work', __( 'Work', 'nabia' ) ),
+		array( $page( 'pricing', '#pricing' ), __( 'Pricing', 'nabia' ) ),
+		array( $base . '#about', __( 'About', 'nabia' ) ),
+		array( $page( 'audit', '#audit' ), __( 'Free audit', 'nabia' ) ),
+		array( $base . '#contact', __( 'Contact', 'nabia' ) ),
 	);
 	$class = isset( $args['menu_class'] ) ? $args['menu_class'] : 'menu';
 	echo '<ul class="' . esc_attr( $class ) . '">';
-	foreach ( $items as $hash => $label ) {
-		printf( '<li class="menu-item"><a href="%1$s">%2$s</a></li>', esc_url( $base . $hash ), esc_html( $label ) );
+	foreach ( $items as $item ) {
+		printf( '<li class="menu-item"><a href="%1$s">%2$s</a></li>', esc_url( $item[0] ), esc_html( $item[1] ) );
 	}
 	echo '</ul>';
 }
@@ -524,4 +529,18 @@ function nabia_video_reviews() {
 		}
 	}
 	return $videos;
+}
+
+/**
+ * Escape text for a large headline, pulling trailing punctuation closer.
+ *
+ * @param string $text Text.
+ * @return string Safe HTML.
+ */
+function nabia_tight( $text ) {
+	$out = '';
+	foreach ( preg_split( '/([.,?!]+)/', (string) $text, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY ) as $part ) {
+		$out .= preg_match( '/^[.,?!]+$/', $part ) ? '<span class="punct">' . esc_html( $part ) . '</span>' : esc_html( $part );
+	}
+	return $out;
 }

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NABIA_VERSION', '2.4.0' );
+define( 'NABIA_VERSION', '2.5.0' );
 define( 'NABIA_DIR', get_template_directory() );
 define( 'NABIA_URI', get_template_directory_uri() );
 
@@ -18,6 +18,10 @@ require NABIA_DIR . '/inc/customizer.php';
 require NABIA_DIR . '/inc/post-types.php';
 require NABIA_DIR . '/inc/template-tags.php';
 require NABIA_DIR . '/inc/google-reviews.php';
+require NABIA_DIR . '/inc/services.php';
+require NABIA_DIR . '/inc/pricing.php';
+require NABIA_DIR . '/inc/audit.php';
+require NABIA_DIR . '/inc/setup.php';
 
 /**
  * Theme setup.

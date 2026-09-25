@@ -164,6 +164,23 @@
 	/* ------------------------------------------------------------------
 	 * Split headings into words for a staggered reveal.
 	 * ------------------------------------------------------------------ */
+	// Pull trailing punctuation closer: this font spaces . , ? ! widely at large sizes.
+	function appendTightText(el, text) {
+		text.split(/([.,?!]+)/).forEach(function (part, i) {
+			if (!part) {
+				return;
+			}
+			if (i % 2) {
+				var p = document.createElement('span');
+				p.className = 'punct';
+				p.textContent = part;
+				el.appendChild(p);
+			} else {
+				el.appendChild(document.createTextNode(part));
+			}
+		});
+	}
+
 	$$('[data-split]').forEach(function (el) {
 		var words = el.textContent.trim().split(/\s+/);
 		el.setAttribute('aria-label', el.textContent.trim());
@@ -174,7 +191,7 @@
 			outer.setAttribute('aria-hidden', 'true');
 			var inner = document.createElement('span');
 			inner.style.setProperty('--w', i);
-			inner.textContent = word;
+			appendTightText(inner, word);
 			outer.appendChild(inner);
 			el.appendChild(outer);
 			if (i < words.length - 1) {
@@ -248,7 +265,8 @@
 				wordEl.classList.add('is-out');
 				setTimeout(function () {
 					index = (index + 1) % words.length;
-					wordEl.textContent = words[index];
+					wordEl.textContent = '';
+					appendTightText(wordEl, words[index]);
 					wordEl.classList.remove('is-out');
 					wordEl.classList.add('is-in');
 					void wordEl.offsetWidth; // Restart transition.
@@ -621,6 +639,41 @@
 
 		renderDots();
 		window.addEventListener('resize', renderDots);
+	});
+
+	/* ------------------------------------------------------------------
+	 * Pricing tabs (websites / monthly maintenance).
+	 * ------------------------------------------------------------------ */
+	$$('.pricing-tabs').forEach(function (tablist) {
+		var tabs = $$('[role="tab"]', tablist);
+		function select(tab) {
+			tabs.forEach(function (t) {
+				var on = t === tab;
+				t.setAttribute('aria-selected', on ? 'true' : 'false');
+				t.tabIndex = on ? 0 : -1;
+				var panel = document.getElementById(t.getAttribute('aria-controls'));
+				if (panel) {
+					panel.hidden = !on;
+					if (on) {
+						$$('[data-reveal]', panel).forEach(function (el) {
+							el.classList.add('is-visible');
+						});
+					}
+				}
+			});
+		}
+		tabs.forEach(function (tab, i) {
+			tab.addEventListener('click', function () {
+				select(tab);
+			});
+			tab.addEventListener('keydown', function (e) {
+				if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+					var next = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+					next.focus();
+					select(next);
+				}
+			});
+		});
 	});
 
 	/* ------------------------------------------------------------------

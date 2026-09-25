@@ -15,8 +15,10 @@ get_template_part( 'template-parts/home', 'work' );
 get_template_part( 'template-parts/home', 'videos' );
 get_template_part( 'template-parts/home', 'about' );
 get_template_part( 'template-parts/home', 'process' );
+get_template_part( 'template-parts/home', 'pricing' );
 get_template_part( 'template-parts/home', 'testimonials' );
 get_template_part( 'template-parts/home', 'hire' );
+get_template_part( 'template-parts/home', 'audit' );
 
 get_template_part( 'template-parts/home', 'faq' );
 get_template_part( 'template-parts/home', 'contact' );

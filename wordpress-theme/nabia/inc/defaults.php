@@ -86,6 +86,26 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Reginald-Hilliard-
 https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-Client-_-Nabia-Khan-720P.mp4",
 		'video_layout'       => 'auto',
 
+		// Pricing. Each plan: line 1 = name, line 2 = price, then one feature per line.
+		// Start a feature with "-" to show it as not included.
+		'pricing_title'      => 'Simple, honest pricing',
+		'pricing_text'       => 'Fixed prices, no surprises. Every website includes a custom design, speed optimisation and one month of free support.',
+		'hire_url'           => '',
+		'plan_web_1'         => "New Startup\n$499\nCustom theme\nOptimised images\n3 pages\nHosting setup\nContent upload\nContact form\nSocial icons\nFree support (1 month)\n- Domain & hosting not included",
+		'plan_web_2'         => "Business Website\n$799\nCustom theme\nOptimised images\n5 pages\nHosting setup\nContent + product upload (20)\nContact form + login forms\nSocial icons\nFree support (1 month)\n- Domain & hosting not included",
+		'plan_web_3'         => "E-Commerce Store\n$1199\nCustom theme\nOptimised images\n8 pages\nHosting setup\nContent + product upload (30)\nContact form + booking forms\nSocial icons + email integration\nFree support (1 month)\n- Domain & hosting not included",
+		'plan_popular'       => '2',
+		'plan_care_1'        => "Basic Care\n\nWordPress, theme & plugin updates\nWeekly backups\nUptime monitoring\nMonthly security scan\n30 minutes of small edits\nMonthly report",
+		'plan_care_2'        => "Growth Care\n\nEverything in Basic Care\nDaily backups\nMalware removal included\nSpeed check & optimisation\n2 hours of edits\nPriority support (24h reply)",
+		'plan_care_3'        => "Premium Care\n\nEverything in Growth Care\nReal-time backups\nStaging site for safe changes\n5 hours of edits\nSEO health check\nSame-day support",
+		'care_period'        => '/month',
+
+		// Free audit.
+		'audit_title'        => 'Get a free website audit',
+		'audit_text'         => 'Not sure what is holding your website back? Send me your link and I will review it personally, then send you a short report with clear, practical fixes. No cost, no obligation.',
+		'audit_points'       => 'Speed & Core Web Vitals, SEO basics & Google visibility, Mobile experience, Security & updates, Design & trust signals, Conversion: calls to action & forms',
+		'audit_shortcode'    => '',
+
 		// Google reviews.
 		'google_api_key'     => '',
 		'google_place_id'    => '',
@@ -111,7 +131,7 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 		'social_dribbble'    => '',
 		'social_github'      => '',
 		'social_youtube'     => '',
-		'social_upwork'      => '',
+		'social_upwork'      => 'https://www.upwork.com/freelancers/~017b55e580768aed42',
 		'social_fiverr'      => 'https://www.fiverr.com/nabia_khan',
 		'social_tiktok'      => '',
 		'social_linktree'    => 'https://linktr.ee/nabia_khan',
@@ -157,54 +177,63 @@ function nabia_services() {
 		array(
 			array(
 				'icon'  => 'layout',
+				'slug'  => 'web-design',
 				'title' => __( 'Web Design', 'nabia' ),
 				'text'  => __( 'Interfaces that look sharp, feel effortless and guide visitors straight to the contact button.', 'nabia' ),
 				'tags'  => array( 'UI / UX', 'Wireframes', 'Figma' ),
 			),
 			array(
 				'icon'  => 'code',
+				'slug'  => 'wordpress-development',
 				'title' => __( 'WordPress Development', 'nabia' ),
 				'text'  => __( 'Custom themes, Elementor builds, plugin customisation and pixel-perfect clones. Fast, secure and easy to edit.', 'nabia' ),
 				'tags'  => array( 'Custom themes', 'Elementor', 'PHP' ),
 			),
 			array(
 				'icon'  => 'cart',
+				'slug'  => 'shopify-woocommerce',
 				'title' => __( 'Shopify & WooCommerce Stores', 'nabia' ),
 				'text'  => __( 'Online stores with smooth checkouts, payment integrations and product pages that actually sell.', 'nabia' ),
 				'tags'  => array( 'Shopify', 'WooCommerce', 'Stripe' ),
 			),
 			array(
 				'icon'  => 'grid',
+				'slug'  => 'wix-webflow-squarespace',
 				'title' => __( 'Wix, Webflow & Squarespace', 'nabia' ),
 				'text'  => __( 'Beautiful sites on the no-code platform you love, set up so you can change everything yourself.', 'nabia' ),
 				'tags'  => array( 'Wix', 'Webflow', 'Squarespace' ),
 			),
 			array(
 				'icon'  => 'terminal',
+				'slug'  => 'custom-websites',
 				'title' => __( 'Custom-Coded Websites', 'nabia' ),
 				'text'  => __( 'Hand-built HTML, CSS, JavaScript and PHP sites for when you need total freedom and top speed.', 'nabia' ),
 				'tags'  => array( 'HTML & CSS', 'JavaScript', 'PHP' ),
 			),
 			array(
 				'icon'  => 'sparkles',
+				'slug'  => 'ai-website-solutions',
 				'title' => __( 'AI Website Solutions', 'nabia' ),
 				'text'  => __( 'AI chatbots, smart forms, AI-assisted content and automations that answer customers and save you hours every week.', 'nabia' ),
 				'tags'  => array( 'AI chatbots', 'AI content', 'Automation' ),
 			),
 			array(
 				'icon'  => 'pen',
+				'slug'  => 'branding-graphic-design',
 				'title' => __( 'Branding & Graphic Design', 'nabia' ),
 				'text'  => __( 'Logos, visual identities, social media kits and print, for a consistent look that people remember.', 'nabia' ),
 				'tags'  => array( 'Logo', 'Identity', 'Social kits' ),
 			),
 			array(
 				'icon'  => 'bolt',
+				'slug'  => 'speed-seo',
 				'title' => __( 'Speed & SEO', 'nabia' ),
 				'text'  => __( 'Core Web Vitals tuning, on-page SEO and clean markup, so Google and your visitors love your site.', 'nabia' ),
 				'tags'  => array( 'Core Web Vitals', 'On-page SEO' ),
 			),
 			array(
 				'icon'  => 'shield',
+				'slug'  => 'website-maintenance',
 				'title' => __( 'Care & Maintenance', 'nabia' ),
 				'text'  => __( 'Updates, backups, security hardening and small edits every month, so you can focus on your business.', 'nabia' ),
 				'tags'  => array( 'Updates', 'Backups', 'Security' ),

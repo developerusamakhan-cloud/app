@@ -25,6 +25,16 @@ It uses the style of creative agency sites (big type, bright accent colour, play
 - Respects "reduced motion" settings; content stays visible without JavaScript
 - Blog, single post (with reading time), page, search, 404 and a *Full width* template for Elementor/block-editor pages
 
+## What's new in 2.5
+
+- **Pricing section** on the homepage with two tabs:
+  - **Websites**: New Startup $499, Business Website $799 (highlighted as "Most popular"), E-Commerce Store $1199.
+  - **Monthly maintenance**: Basic, Growth and Premium Care. These show "Custom quote" until you add your monthly prices.
+  - Edit every plan in Customize, Nabia Theme, Pricing. Line 1 is the name, line 2 the price, then one feature per line; start a line with "-" to mark it as not included. "Hire me" buttons go to your /hire-me/ page if it exists, otherwise to the contact section; you can also set a custom link.
+- **Free website audit section**: a form (website, name, email, goal, message). Each request is emailed to your contact email and saved under Dashboard, Audit Requests, with spam protection. To use Contact Form 7 or WPForms instead, paste its shortcode in Customize, Nabia Theme, Free Audit.
+- **Service pages**: Appearance, Nabia Setup creates a Services page, 9 detailed service pages, a Pricing page and a Free Website Audit page in one click, plus a main menu with a Services dropdown. Each service page has its own headline, intro, "What you get", 6 benefits, "Perfect for", process, pricing, video reviews, FAQ, the free audit form and links to the other services. The homepage service cards link to these pages automatically.
+- Upwork profile link added below Fiverr.
+
 ## What's new in 2.4
 
 - **New logo**: an animated "Nabia Khan" wordmark with no tagline, in the header and footer. The dot on the "i" bounces, "Khan" has a gradient, and an underline draws in on hover. To use an uploaded logo image instead, tick the option in Customize, Nabia Theme, General.

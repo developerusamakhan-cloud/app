@@ -237,6 +237,11 @@ function nabia_form_settings_screen() {
 		update_option( 'nabia_form_settings', $data, false );
 		$saved = true;
 	}
+	$test = '';
+	if ( isset( $_POST['nabia_test_mail_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nabia_test_mail_nonce'] ) ), 'nabia_test_mail' ) ) {
+		$sent = wp_mail( nabia_form_recipients(), __( 'Test email from your website', 'nabia' ), __( 'It works! Contact form emails can be delivered from this website.', 'nabia' ) );
+		$test = $sent ? 'ok' : nabia_last_mail_error();
+	}
 	$s = nabia_form_settings();
 
 	$text = function ( $key, $label, $help = '' ) use ( $s ) {
@@ -271,7 +276,51 @@ function nabia_form_settings_screen() {
 		<?php if ( $saved ) : ?>
 			<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'Settings saved.', 'nabia' ); ?></p></div>
 		<?php endif; ?>
+		<?php if ( 'ok' === $test ) : ?>
+			<div class="notice notice-success"><p>
+				<?php
+				/* translators: %s: email addresses */
+				echo esc_html( sprintf( __( 'Test email handed to the mail server for %s. If it does not arrive within a few minutes (check spam too), install an SMTP plugin such as WP Mail SMTP or FluentSMTP.', 'nabia' ), implode( ', ', nabia_form_recipients() ) ) );
+				?>
+			</p></div>
+		<?php elseif ( $test ) : ?>
+			<div class="notice notice-error"><p><?php echo esc_html( __( 'The test email failed:', 'nabia' ) . ' ' . $test . ' ' . __( 'Install an SMTP plugin such as WP Mail SMTP or FluentSMTP to fix email delivery. Messages are still saved under Submissions.', 'nabia' ) ); ?></p></div>
+		<?php endif; ?>
 		<p><?php esc_html_e( 'The contact form appears on pages using the “Contact / Hire me” template. Add it anywhere else with the shortcode', 'nabia' ); ?> <code>[nabia_contact_form]</code>.</p>
+
+		<h2><?php esc_html_e( 'Form health', 'nabia' ); ?></h2>
+		<form method="post" style="margin-bottom:12px">
+			<?php wp_nonce_field( 'nabia_test_mail', 'nabia_test_mail_nonce' ); ?>
+			<?php submit_button( __( 'Send a test email', 'nabia' ), 'secondary', 'nabia_test_mail', false ); ?>
+		</form>
+		<?php
+		$log    = get_option( 'nabia_form_log', array() );
+		$labels = array(
+			'sent'        => __( 'Saved and sent', 'nabia' ),
+			'invalid'     => __( 'Missing name, email or message', 'nabia' ),
+			'expired'     => __( 'Rejected: form expired or failed the bot check', 'nabia' ),
+			'captcha'     => __( 'Rejected: wrong math answer', 'nabia' ),
+			'limit'       => __( 'Rejected: too many messages from one visitor', 'nabia' ),
+			'mail_failed' => __( 'Saved, but the email could not be sent', 'nabia' ),
+			'honeypot'    => __( 'Blocked: the hidden bot field was filled in', 'nabia' ),
+		);
+		?>
+		<p class="description"><?php esc_html_e( 'The last form attempts (no personal data). Use it to see why a message did not arrive.', 'nabia' ); ?></p>
+		<table class="widefat striped" style="max-width:900px;margin-bottom:24px">
+			<thead><tr><th><?php esc_html_e( 'When', 'nabia' ); ?></th><th><?php esc_html_e( 'Form', 'nabia' ); ?></th><th><?php esc_html_e( 'Result', 'nabia' ); ?></th></tr></thead>
+			<tbody>
+				<?php if ( ! $log ) : ?>
+					<tr><td colspan="3"><?php esc_html_e( 'No attempts yet. Send yourself a message from the contact page to test.', 'nabia' ); ?></td></tr>
+				<?php endif; ?>
+				<?php foreach ( (array) $log as $row ) : ?>
+					<tr>
+						<td><?php echo esc_html( wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), (int) $row['t'] ) ); ?></td>
+						<td><?php echo esc_html( 'audit' === $row['f'] ? __( 'Free audit', 'nabia' ) : __( 'Contact', 'nabia' ) ); ?></td>
+						<td><?php echo esc_html( ( isset( $labels[ $row['r'] ] ) ? $labels[ $row['r'] ] : $row['r'] ) . ( $row['n'] ? ': ' . $row['n'] : '' ) ); ?></td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
 		<form method="post">
 			<?php wp_nonce_field( 'nabia_form_settings', 'nabia_form_settings_nonce' ); ?>
 
@@ -368,9 +417,12 @@ function nabia_math_captcha_ok( $key, $answer ) {
  * Handle a contact form submission.
  */
 function nabia_handle_contact() {
-	$back = wp_get_referer() ? wp_get_referer() : home_url( '/' );
+	$back = wp_validate_redirect( (string) wp_get_raw_referer(), home_url( '/' ) );
 	$back = remove_query_arg( 'contact', $back );
-	$go   = function ( $code ) use ( $back ) {
+	$go   = function ( $code, $log = true ) use ( $back ) {
+		if ( $log ) {
+			nabia_form_log( 'contact', $code );
+		}
 		wp_safe_redirect( add_query_arg( 'contact', $code, $back ) . '#contact-form' );
 		exit;
 	};
@@ -379,7 +431,8 @@ function nabia_handle_contact() {
 		$go( 'expired' );
 	}
 	if ( ! empty( $_POST['company_website'] ) ) {
-		$go( 'sent' ); // Honeypot.
+		nabia_form_log( 'contact', 'honeypot' );
+		$go( 'sent', false ); // Honeypot.
 	}
 
 	// Reject forms sent less than 3 seconds after loading (bots).
@@ -447,16 +500,109 @@ function nabia_handle_contact() {
 	}
 	$body .= "\n" . $message . "\n\n" . __( 'See all messages:', 'nabia' ) . ' ' . admin_url( 'edit.php?post_type=nabia_submission' );
 
-	wp_mail( nabia_form_recipients(), $settings['subject'] . ': ' . $name, $body, array( 'Reply-To: ' . $name . ' <' . $email . '>' ) );
+	$mailed = wp_mail( nabia_form_recipients(), $settings['subject'] . ': ' . $name, $body, array( 'Reply-To: ' . $name . ' <' . $email . '>' ) );
+	if ( ! $mailed ) {
+		nabia_form_log( 'contact', 'mail_failed', nabia_last_mail_error() );
+	}
 
 	if ( ! empty( $settings['autoreply'] ) ) {
 		wp_mail( $email, $settings['autoreply_subject'], str_replace( '{name}', $name, $settings['autoreply_message'] ) );
 	}
 
-	$go( 'sent' );
+	$go( 'sent', $mailed );
 }
 add_action( 'admin_post_nopriv_nabia_contact', 'nabia_handle_contact' );
 add_action( 'admin_post_nabia_contact', 'nabia_handle_contact' );
+
+/**
+ * The forms post to the page they are on (not /wp-admin/admin-post.php), so security
+ * plugins or hosts that block /wp-admin/ for visitors can not swallow messages.
+ */
+function nabia_handle_frontend_forms() {
+	if ( is_admin() || ! isset( $_SERVER['REQUEST_METHOD'] ) || 'POST' !== $_SERVER['REQUEST_METHOD'] || empty( $_POST['action'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		return;
+	}
+	$action = sanitize_key( wp_unslash( $_POST['action'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+	if ( 'nabia_contact' === $action ) {
+		nabia_handle_contact();
+	} elseif ( 'nabia_audit' === $action && function_exists( 'nabia_handle_audit_request' ) ) {
+		nabia_handle_audit_request();
+	}
+}
+add_action( 'wp_loaded', 'nabia_handle_frontend_forms' );
+
+/**
+ * Fresh security fields for pages served from a cache. Page caching plugins can serve
+ * a copy of the form that is days old, with an expired nonce, so real messages were
+ * rejected. The page asks for current values when it loads; every check still runs.
+ */
+function nabia_form_keys_route() {
+	register_rest_route(
+		'nabia/v1',
+		'/form-keys',
+		array(
+			'methods'             => 'GET',
+			'permission_callback' => '__return_true',
+			'callback'            => function () {
+				$math     = nabia_math_captcha();
+				$response = new WP_REST_Response(
+					array(
+						'contact' => wp_create_nonce( 'nabia_contact' ),
+						'audit'   => wp_create_nonce( 'nabia_audit' ),
+						'token'   => nabia_form_token(),
+						'a'       => $math['a'],
+						'b'       => $math['b'],
+						'cq'      => $math['key'],
+					)
+				);
+				$response->header( 'Cache-Control', 'no-store, max-age=0' );
+				return $response;
+			},
+		)
+	);
+}
+add_action( 'rest_api_init', 'nabia_form_keys_route' );
+
+/**
+ * Remember the last 40 form attempts (result only, no personal data) for Form settings.
+ *
+ * @param string $form   contact or audit.
+ * @param string $result Result code.
+ * @param string $note   Optional detail.
+ */
+function nabia_form_log( $form, $result, $note = '' ) {
+	$log = get_option( 'nabia_form_log', array() );
+	$log = is_array( $log ) ? $log : array();
+	array_unshift(
+		$log,
+		array(
+			't' => time(),
+			'f' => $form,
+			'r' => $result,
+			'n' => $note,
+		)
+	);
+	update_option( 'nabia_form_log', array_slice( $log, 0, 40 ), false );
+}
+
+/**
+ * Keep the last wp_mail error so it can be shown in the log.
+ *
+ * @param WP_Error $error Error.
+ */
+function nabia_catch_mail_error( $error ) {
+	$GLOBALS['nabia_mail_error'] = $error instanceof WP_Error ? $error->get_error_message() : '';
+}
+add_action( 'wp_mail_failed', 'nabia_catch_mail_error' );
+
+/**
+ * Last wp_mail error message.
+ *
+ * @return string
+ */
+function nabia_last_mail_error() {
+	return isset( $GLOBALS['nabia_mail_error'] ) ? (string) $GLOBALS['nabia_mail_error'] : __( 'Your server could not send the email.', 'nabia' );
+}
 
 /**
  * Shortcode: [nabia_contact_form]

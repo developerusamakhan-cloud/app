@@ -27,6 +27,7 @@ function nabia_get_icon( $name ) {
 		'shield'    => '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
 		'star'      => '<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
 		'mail'      => '<rect x="2" y="4" width="20" height="16" rx="3"/><path d="m22 7-10 6L2 7"/>',
+		'gchat'     => '<path d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H9l-5 4V5a1 1 0 0 1 1-1z"/><path d="M8 9h8M8 12.5h5"/>',
 		'whatsapp'  => '<path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.1-4.7A9 9 0 1 1 21 12z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5"/>',
 		'plus'      => '<path d="M12 5v14M5 12h14"/>',
 		'menu'      => '<path d="M4 8h16M4 16h16"/>',
@@ -187,7 +188,55 @@ function nabia_section_head( $eyebrow, $title ) {
  */
 function nabia_whatsapp_url() {
 	$number = preg_replace( '/\D+/', '', (string) nabia_mod( 'contact_whatsapp' ) );
-	return $number ? 'https://wa.me/' . $number : '';
+	if ( ! $number ) {
+		return '';
+	}
+	$text = trim( (string) nabia_mod( 'whatsapp_message' ) );
+	return 'https://wa.me/' . $number . ( $text ? '?text=' . rawurlencode( $text ) : '' );
+}
+
+/**
+ * Google Chat link (empty when no Google Chat email is set).
+ *
+ * @return string
+ */
+function nabia_gchat_url() {
+	return nabia_mod( 'gchat_email' ) ? ( nabia_mod( 'gchat_url' ) ? nabia_mod( 'gchat_url' ) : 'https://mail.google.com/chat/' ) : '';
+}
+
+/**
+ * WhatsApp + Google Chat buttons for a faster reply.
+ *
+ * @param string $title Optional line above the buttons.
+ * @param string $class Extra class.
+ */
+function nabia_quick_contact( $title = '', $class = '' ) {
+	$wa    = nabia_whatsapp_url();
+	$gchat = nabia_gchat_url();
+	if ( ! $wa && ! $gchat ) {
+		return;
+	}
+	?>
+	<div class="quick-contact <?php echo esc_attr( $class ); ?>">
+		<?php if ( $title ) : ?>
+			<p class="quick-contact-title"><?php nabia_icon( 'bolt' ); ?><span><?php echo esc_html( $title ); ?></span></p>
+		<?php endif; ?>
+		<div class="quick-contact-buttons">
+			<?php if ( $wa ) : ?>
+				<a class="qc-btn qc-whatsapp" href="<?php echo esc_url( $wa ); ?>" target="_blank" rel="noopener noreferrer">
+					<?php nabia_icon( 'whatsapp' ); ?>
+					<span><strong><?php esc_html_e( 'WhatsApp', 'nabia' ); ?></strong><small><?php echo esc_html( nabia_mod( 'contact_whatsapp' ) ); ?></small></span>
+				</a>
+			<?php endif; ?>
+			<?php if ( $gchat ) : ?>
+				<a class="qc-btn qc-gchat" href="<?php echo esc_url( $gchat ); ?>" target="_blank" rel="noopener noreferrer" data-copy="<?php echo esc_attr( nabia_mod( 'gchat_email' ) ); ?>" title="<?php esc_attr_e( 'Opens Google Chat and copies my chat email', 'nabia' ); ?>">
+					<?php nabia_icon( 'gchat' ); ?>
+					<span><strong><?php esc_html_e( 'Google Chat', 'nabia' ); ?></strong><small><?php echo esc_html( nabia_mod( 'gchat_email' ) ); ?></small></span>
+				</a>
+			<?php endif; ?>
+		</div>
+	</div>
+	<?php
 }
 
 /**

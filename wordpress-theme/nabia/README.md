@@ -65,6 +65,13 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.13
+
+- **Contact form delivery fixed.** The forms now post to the page they are on instead of `/wp-admin/admin-post.php`, which security plugins and hosts often block for visitors. Pages served from a cache fetch fresh security fields when they load, so an old cached copy of the form no longer rejects real messages (every check still runs). After sending, visitors now stay on the same page instead of being sent to the homepage.
+- **Form health.** Submissions, Form settings shows the last 40 form attempts with the result (saved and sent, email failed with the server's reason, wrong math answer, expired, too many, bot field filled). A "Send a test email" button checks if your server can send email. If it fails, install an SMTP plugin such as WP Mail SMTP or FluentSMTP. Messages are always saved under Submissions, even when the email fails.
+- **WhatsApp and Google Chat.** New settings in Customize, Nabia Theme, Contact: WhatsApp number (preset to +92 312 1305032, with a ready typed first message) and Google Chat email (preset to devnabiakhan@gmail.com). The Google Chat button opens Google Chat and copies the email so visitors can paste it to start a chat. Both buttons appear on the contact form, after sending the contact or audit form ("Want an answer even faster?"), in the footer call to action, in the footer "Say hello" links and in the homepage contact section. A floating WhatsApp button shows on every page.
+- **Audit Requests** have their own admin menu, and both lists show 20 items per page.
+
 ## What's new in 2.12
 
 - **Author photo everywhere.** New Customizer setting (Nabia Theme, About, "Author photo"), preset to Nabia's photo. It replaces the Gravatar for every registered user, so it shows in blog post bylines, the author box, comments by the site owner and the admin bar. The homepage About section also uses it when no intro video or About image is set.

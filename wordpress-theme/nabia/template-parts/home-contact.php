@@ -32,6 +32,9 @@ $nabia_shortcode = nabia_mod( 'contact_shortcode' );
 						<?php nabia_icon( 'whatsapp' ); ?><span><?php esc_html_e( 'WhatsApp me', 'nabia' ); ?></span>
 					</a>
 				<?php endif; ?>
+				<?php if ( nabia_gchat_url() ) : ?>
+					<a class="btn btn-ghost btn-lg" href="<?php echo esc_url( nabia_gchat_url() ); ?>" target="_blank" rel="noopener noreferrer" data-copy="<?php echo esc_attr( nabia_mod( 'gchat_email' ) ); ?>" data-magnetic><?php nabia_icon( 'gchat' ); ?><span><?php esc_html_e( 'Google Chat', 'nabia' ); ?></span></a>
+				<?php endif; ?>
 			</div>
 			<?php nabia_social_links( 'socials-contact' ); ?>
 		</div>

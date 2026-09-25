@@ -53,6 +53,7 @@ $nabia_uid    = wp_unique_id( 'cf-' );
 					</li>
 				<?php endif; ?>
 			</ul>
+			<?php nabia_quick_contact( __( 'Need a faster reply? Message me directly', 'nabia' ), 'is-info' ); ?>
 			<?php nabia_social_links(); ?>
 		</div>
 
@@ -61,8 +62,15 @@ $nabia_uid    = wp_unique_id( 'cf-' );
 				<p class="audit-message <?php echo 'sent' === $nabia_status ? 'is-success' : 'is-error'; ?>" role="status"><?php echo esc_html( $nabia_msgs[ $nabia_status ] ); ?></p>
 			<?php endif; ?>
 
+			<?php if ( 'sent' === $nabia_status ) : ?>
+				<div class="cf-sent">
+					<p class="cf-sent-text"><?php esc_html_e( 'Want an answer even faster? I usually reply within minutes on WhatsApp and Google Chat.', 'nabia' ); ?></p>
+					<?php nabia_quick_contact( '', 'is-sent' ); ?>
+				</div>
+			<?php endif; ?>
+
 			<?php if ( 'sent' !== $nabia_status ) : ?>
-				<form class="cf-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<form class="cf-form" method="post" action="<?php echo esc_url( remove_query_arg( array( 'contact', 'audit' ) ) ); ?>" data-nabia-form>
 					<input type="hidden" name="action" value="nabia_contact">
 					<input type="hidden" name="nabia_t" value="<?php echo esc_attr( nabia_form_token() ); ?>">
 					<input type="hidden" name="cf_source" value="<?php echo esc_url( get_permalink() ? get_permalink() : home_url( '/' ) ); ?>">

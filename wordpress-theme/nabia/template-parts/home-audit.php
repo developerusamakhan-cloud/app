@@ -37,10 +37,14 @@ $nabia_messages  = array(
 					<p class="audit-message <?php echo 'sent' === $nabia_status ? 'is-success' : 'is-error'; ?>" role="status"><?php echo esc_html( $nabia_messages[ $nabia_status ] ); ?></p>
 				<?php endif; ?>
 
+				<?php if ( 'sent' === $nabia_status ) : ?>
+					<?php nabia_quick_contact( __( 'Questions in the meantime? Message me directly', 'nabia' ), 'is-sent' ); ?>
+				<?php endif; ?>
+
 				<?php if ( $nabia_shortcode ) : ?>
 					<?php echo do_shortcode( $nabia_shortcode ); ?>
 				<?php elseif ( 'sent' !== $nabia_status ) : ?>
-					<form class="audit-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+					<form class="audit-form" method="post" action="<?php echo esc_url( remove_query_arg( array( 'contact', 'audit' ) ) ); ?>" data-nabia-form>
 						<input type="hidden" name="action" value="nabia_audit">
 						<?php wp_nonce_field( 'nabia_audit', 'nabia_audit_nonce' ); ?>
 						<p class="audit-hp" aria-hidden="true">

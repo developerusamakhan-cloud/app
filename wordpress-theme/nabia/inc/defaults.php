@@ -124,7 +124,10 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 		'cta_title'          => "Let's build something bold.",
 		'cta_text'           => 'Tell me about your project and I will get back to you within 24 hours with ideas, a timeline and a clear quote.',
 		'contact_email'      => 'info@nabiakhan.com',
-		'contact_whatsapp'   => '',
+		'contact_whatsapp'   => '+92 312 1305032',
+		'whatsapp_message'   => 'Hi Nabia, I found your website and would like to talk about a project.',
+		'gchat_email'        => 'devnabiakhan@gmail.com',
+		'gchat_url'          => 'https://mail.google.com/chat/u/0/#chat/home',
 		'contact_shortcode'  => '',
 
 		// Social.

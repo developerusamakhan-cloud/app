@@ -945,6 +945,67 @@
 		});
 	});
 
+	// Cached pages can hold an old copy of the form: fetch fresh security fields.
+	var forms = $$('[data-nabia-form]');
+	if (forms.length && settings.formKeys && !document.body.classList.contains('logged-in') && window.fetch) {
+		fetch(settings.formKeys, { credentials: 'omit', cache: 'no-store' })
+			.then(function (r) { return r.ok ? r.json() : null; })
+			.then(function (k) {
+				if (!k) {
+					return;
+				}
+				forms.forEach(function (form) {
+					var set = function (name, value) {
+						var input = form.querySelector('[name="' + name + '"]');
+						if (input && value) {
+							input.value = value;
+						}
+					};
+					set('nabia_contact_nonce', k.contact);
+					set('nabia_audit_nonce', k.audit);
+					set('nabia_t', k.token);
+					if (form.querySelector('[name="nabia_cq"]') && k.cq) {
+						set('nabia_cq', k.cq);
+						var q = form.querySelector('.cf-math-q');
+						if (q) {
+							q.innerHTML = k.a + ' <b>+</b> ' + k.b + ' <b>=</b>';
+						}
+						var answer = form.querySelector('[name="cf_math"]');
+						if (answer) {
+							answer.setAttribute('aria-label', 'What is ' + k.a + ' plus ' + k.b + '?');
+						}
+					}
+				});
+			})
+			.catch(function () {});
+	}
+
+	// Google Chat buttons: copy the chat email so it can be pasted in Google Chat.
+	$$('[data-copy]').forEach(function (link) {
+		link.addEventListener('click', function () {
+			var text = link.getAttribute('data-copy');
+			if (!text || !navigator.clipboard) {
+				return;
+			}
+			navigator.clipboard.writeText(text).then(function () {
+				var toast = document.createElement('div');
+				toast.className = 'nabia-toast';
+				toast.setAttribute('role', 'status');
+				toast.textContent = settings.copied || 'Copied';
+				document.body.appendChild(toast);
+				setTimeout(function () {
+					toast.classList.add('is-in');
+				}, 20);
+				setTimeout(function () {
+					toast.classList.remove('is-in');
+					setTimeout(function () {
+						toast.remove();
+					}, 400);
+				}, 4200);
+			}).catch(function () {});
+		});
+	});
+
 	// Contact card glow follows the pointer.
 	var contact = $('.contact-card');
 	if (contact) {

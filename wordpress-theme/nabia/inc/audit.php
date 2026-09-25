@@ -2,7 +2,7 @@
 /**
  * Free website audit requests.
  *
- * The form posts to admin-post.php. Each request is emailed to the contact email and
+ * The form posts to the page it is on (handled in inc/forms.php). Each request is emailed to the contact email and
  * saved under Dashboard → Audit Requests, so nothing is lost if an email goes missing.
  *
  * @package Nabia
@@ -61,10 +61,11 @@ function nabia_audit_goals() {
  * Handle a submitted audit request.
  */
 function nabia_handle_audit_request() {
-	$back = wp_get_referer() ? wp_get_referer() : home_url( '/' );
+	$back = wp_validate_redirect( (string) wp_get_raw_referer(), home_url( '/' ) );
 	$back = remove_query_arg( 'audit', $back );
 
 	$fail = function ( $code ) use ( $back ) {
+		nabia_form_log( 'audit', $code );
 		wp_safe_redirect( add_query_arg( 'audit', $code, $back ) . '#audit' );
 		exit;
 	};
@@ -75,7 +76,9 @@ function nabia_handle_audit_request() {
 
 	// Honeypot: real people never fill this hidden field.
 	if ( ! empty( $_POST['company_website'] ) ) {
-		$fail( 'sent' );
+		nabia_form_log( 'audit', 'honeypot' );
+		wp_safe_redirect( add_query_arg( 'audit', 'sent', $back ) . '#audit' );
+		exit;
 	}
 
 	$name    = isset( $_POST['audit_name'] ) ? sanitize_text_field( wp_unslash( $_POST['audit_name'] ) ) : '';
@@ -125,13 +128,18 @@ function nabia_handle_audit_request() {
 	);
 
 	$to = nabia_mod( 'contact_email' ) ? nabia_mod( 'contact_email' ) : get_option( 'admin_email' );
-	wp_mail(
+	$mailed = wp_mail(
 		$to,
 		/* translators: %s: website URL */
 		sprintf( __( 'New free audit request: %s', 'nabia' ), $site ),
 		$body,
 		array( 'Reply-To: ' . ( $name ? $name . ' ' : '' ) . '<' . $email . '>' )
 	);
+	if ( $mailed ) {
+		nabia_form_log( 'audit', 'sent' );
+	} else {
+		nabia_form_log( 'audit', 'mail_failed', nabia_last_mail_error() );
+	}
 
 	wp_safe_redirect( add_query_arg( 'audit', 'sent', $back ) . '#audit' );
 	exit;

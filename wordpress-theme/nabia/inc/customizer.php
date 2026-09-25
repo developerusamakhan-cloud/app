@@ -148,7 +148,10 @@ function nabia_customize_register( $wp_customize ) {
 		'cta_title'          => array( 'nabia_contact', 'text', __( 'Contact title', 'nabia' ) ),
 		'cta_text'           => array( 'nabia_contact', 'textarea', __( 'Contact text', 'nabia' ) ),
 		'contact_email'      => array( 'nabia_contact', 'email', __( 'Email', 'nabia' ) ),
-		'contact_whatsapp'   => array( 'nabia_contact', 'text', __( 'WhatsApp number (digits with country code)', 'nabia' ) ),
+		'contact_whatsapp'   => array( 'nabia_contact', 'text', __( 'WhatsApp number (with country code)', 'nabia' ) ),
+		'whatsapp_message'   => array( 'nabia_contact', 'text', __( 'WhatsApp: first message typed for the visitor', 'nabia' ) ),
+		'gchat_email'        => array( 'nabia_contact', 'email', __( 'Google Chat email', 'nabia' ) ),
+		'gchat_url'          => array( 'nabia_contact', 'url', __( 'Google Chat link (the button opens this and copies your Google Chat email)', 'nabia' ) ),
 		'contact_shortcode'  => array( 'nabia_contact', 'text', __( 'Contact form shortcode (e.g. Contact Form 7 / WPForms)', 'nabia' ) ),
 
 		'social_upwork'      => array( 'nabia_social', 'url', __( 'Upwork profile link', 'nabia' ) ),

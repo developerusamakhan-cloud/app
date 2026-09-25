@@ -384,16 +384,85 @@
 		frame.classList.add('is-loaded');
 		frame.classList.toggle('is-unmuted', !muted);
 
-		// In a Shorts reel only one video has sound: switching sound on here mutes the others.
-		var reel = frame.closest('[data-reel]');
-		if (reel && !muted) {
-			$$('.video-frame.is-unmuted', reel).forEach(function (other) {
-				if (other !== frame) {
-					loadVideo(other, true);
-				}
-			});
+		if (!muted) {
+			muteOthers(frame);
 		}
 	}
+
+	// In a carousel only one video has sound: switching sound on for one mutes the rest.
+	function muteOthers(frame) {
+		var reel = frame.closest('[data-reel]');
+		if (!reel) {
+			return;
+		}
+		$$('.video-frame.is-unmuted', reel).forEach(function (other) {
+			if (other === frame) {
+				return;
+			}
+			if (other.classList.contains('is-file')) {
+				$('video', other).muted = true;
+				other.classList.remove('is-unmuted');
+			} else {
+				loadVideo(other, true);
+			}
+		});
+	}
+
+	/* Self-hosted videos: load when visible, play muted, pause when scrolled away. */
+	function startFileVideo(frame) {
+		var video = $('video', frame);
+		var source = $('source', video);
+		if (source && !source.getAttribute('src')) {
+			source.setAttribute('src', source.getAttribute('data-src'));
+			video.preload = 'auto';
+			video.load();
+		}
+		var p = video.play();
+		if (p && p.catch) {
+			p.catch(function () {});
+		}
+		frame.classList.add('is-loaded');
+	}
+
+	$$('.video-frame.is-file').forEach(function (frame) {
+		var video = $('video', frame);
+		// Show clean muted autoplay; native controls appear once sound is on.
+		video.removeAttribute('controls');
+
+		if ('IntersectionObserver' in window && !reduceMotion) {
+			new IntersectionObserver(
+				function (entries) {
+					entries.forEach(function (entry) {
+						if (entry.isIntersecting) {
+							startFileVideo(frame);
+						} else if (!video.paused) {
+							video.pause();
+						}
+					});
+				},
+				{ threshold: 0.35 }
+			).observe(frame);
+		} else {
+			video.setAttribute('controls', '');
+			startFileVideo(frame);
+		}
+
+		function unmute() {
+			startFileVideo(frame);
+			video.muted = false;
+			video.setAttribute('controls', '');
+			frame.classList.add('is-unmuted');
+			muteOthers(frame);
+		}
+
+		$('.video-sound', frame).addEventListener('click', unmute);
+		video.addEventListener('click', function (e) {
+			if (video.muted) {
+				e.preventDefault();
+				unmute();
+			}
+		});
+	});
 
 	var frames = $$('.video-frame[data-video-id]');
 	if (frames.length) {

@@ -25,6 +25,12 @@ It uses the style of creative agency sites (big type, bright accent colour, play
 - Respects "reduced motion" settings; content stays visible without JavaScript
 - Blog, single post (with reading time), page, search, 404 and a *Full width* template for Elementor/block-editor pages
 
+## What's new in 2.3
+
+- **Self-hosted video reviews**: your 5 client videos (Annika Dose, Dr Craig Duncan, Phillip Duff, Reginald Hilliard, Tara Lori) play straight from your Media Library, with no YouTube involved. Names are read from the file names. A video downloads only when visitors reach the section, plays muted, and pauses when scrolled away; "Tap for sound" turns on sound for one video and mutes the rest.
+- **Websites post type built into the theme**: `?post_type=websites` and `/websites/` work without Custom Post Type UI or any other plugin, and existing categories are kept. You can deactivate that plugin; nothing is lost.
+- The theme's own **Projects** menu is hidden because Websites replaces it. It only comes back if you have Projects posts or choose it as the portfolio.
+
 ## What's new in 2.2
 
 - **Shorts carousel**: 4 client Shorts visible at a time, all playing muted. Use the arrows, dots or swipe to see more. "Tap for sound" turns on sound for one video and mutes the others. The "Happy client #…" captions are gone; a caption only shows if you give a video a name in Dashboard → Video Reviews.
@@ -80,7 +86,7 @@ The section shows your average rating, total count, "Write a review" and "See al
 
 ### Adding your YouTube reviews
 
-**Dashboard → Video Reviews → Add video review**: title = client name, then paste the YouTube link, company and a short caption. Use *Order* to choose which video plays first.
+**Dashboard → Video Reviews → Add video review**: title = client name, then paste the video link (an MP4 from Media → Library → "Copy URL", or a YouTube link), company and a short caption. Use *Order* to choose which video plays first.
 
 Or, in the Customizer list:
 
@@ -96,7 +102,7 @@ The name and caption are optional. Normal links, youtu.be links and Shorts links
 
 Also:
 
-- **Projects → Add New**: title, description, featured image (the thumbnail), *Excerpt* (subtitle) and the *Details* box (client, year, services, live URL). Drag order via *Order* in Page Attributes.
+- **Websites → Add new Website**: title, description, featured image (the thumbnail), category and *Excerpt* (subtitle). A custom field named `website_url` (or `live_url`) adds a "Visit site" button.
 - **Testimonials → Add New**: title = client name, content = quote, featured image = avatar, *Details* = role and rating.
 - **Appearance → Menus**: assign a *Primary* and *Footer* menu. Until you do, the menus link to the homepage sections (`#services`, `#work`, `#about`, `#process`, `#contact`).
 - **Logo**: Customize → Site Identity → Logo (otherwise the brand name is shown as text).

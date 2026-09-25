@@ -1,6 +1,9 @@
 <?php
 /**
- * Portfolio projects & testimonials.
+ * Post types: Websites (portfolio), Testimonials and Video Reviews.
+ *
+ * The theme's older "Projects" type only appears if it already has posts or is chosen
+ * as the portfolio in the Customizer — "Websites" is the portfolio by default.
  *
  * @package Nabia
  */
@@ -13,40 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Register post types and taxonomy.
  */
 function nabia_register_post_types() {
-	register_post_type(
-		'project',
-		array(
-			'labels'       => array(
-				'name'          => __( 'Projects', 'nabia' ),
-				'singular_name' => __( 'Project', 'nabia' ),
-				'add_new_item'  => __( 'Add new project', 'nabia' ),
-				'edit_item'     => __( 'Edit project', 'nabia' ),
-				'all_items'     => __( 'All projects', 'nabia' ),
-			),
-			'public'       => true,
-			'has_archive'  => true,
-			'rewrite'      => array( 'slug' => 'work' ),
-			'menu_icon'    => 'dashicons-portfolio',
-			'menu_position' => 5,
-			'show_in_rest' => true,
-			'supports'     => array( 'title', 'editor', 'thumbnail', 'excerpt', 'page-attributes' ),
-		)
-	);
-
-	register_taxonomy(
-		'project_type',
-		'project',
-		array(
-			'labels'            => array(
-				'name'          => __( 'Project types', 'nabia' ),
-				'singular_name' => __( 'Project type', 'nabia' ),
-			),
-			'hierarchical'      => true,
-			'show_admin_column' => true,
-			'show_in_rest'      => true,
-			'rewrite'           => array( 'slug' => 'work-type' ),
-		)
-	);
+	if ( nabia_projects_enabled() ) {
+		nabia_register_projects();
+	}
 
 	register_post_type(
 		'testimonial',
@@ -91,6 +63,64 @@ function nabia_register_post_types() {
 add_action( 'init', 'nabia_register_post_types' );
 
 /**
+ * Show the theme's own "Projects" type only when it's needed.
+ *
+ * @return bool
+ */
+function nabia_projects_enabled() {
+	if ( 'project' === get_theme_mod( 'portfolio_post_type', 'websites' ) ) {
+		return true;
+	}
+	$count = get_transient( 'nabia_has_projects' );
+	if ( false === $count ) {
+		global $wpdb;
+		$count = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(1) FROM {$wpdb->posts} WHERE post_type = %s AND post_status NOT IN ('auto-draft','trash')", 'project' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		set_transient( 'nabia_has_projects', $count, DAY_IN_SECONDS );
+	}
+	return $count > 0;
+}
+
+/**
+ * Register the legacy "Projects" post type and its taxonomy.
+ */
+function nabia_register_projects() {
+	register_post_type(
+		'project',
+		array(
+			'labels'       => array(
+				'name'          => __( 'Projects', 'nabia' ),
+				'singular_name' => __( 'Project', 'nabia' ),
+				'add_new_item'  => __( 'Add new project', 'nabia' ),
+				'edit_item'     => __( 'Edit project', 'nabia' ),
+				'all_items'     => __( 'All projects', 'nabia' ),
+			),
+			'public'       => true,
+			'has_archive'  => true,
+			'rewrite'      => array( 'slug' => 'work' ),
+			'menu_icon'    => 'dashicons-portfolio',
+			'menu_position' => 5,
+			'show_in_rest' => true,
+			'supports'     => array( 'title', 'editor', 'thumbnail', 'excerpt', 'page-attributes' ),
+		)
+	);
+
+	register_taxonomy(
+		'project_type',
+		'project',
+		array(
+			'labels'            => array(
+				'name'          => __( 'Project types', 'nabia' ),
+				'singular_name' => __( 'Project type', 'nabia' ),
+			),
+			'hierarchical'      => true,
+			'show_admin_column' => true,
+			'show_in_rest'      => true,
+			'rewrite'           => array( 'slug' => 'work-type' ),
+		)
+	);
+}
+
+/**
  * Flush rewrite rules once when the theme is activated so /work/ works immediately.
  */
 function nabia_activate() {
@@ -117,7 +147,7 @@ function nabia_meta_fields() {
 			'_nabia_rating'      => __( 'Rating (1–5)', 'nabia' ),
 		),
 		'video_review' => array(
-			'_nabia_youtube'       => __( 'YouTube link (normal, youtu.be or Shorts)', 'nabia' ),
+			'_nabia_youtube'       => __( 'Video link: MP4 from your Media Library, or a YouTube link', 'nabia' ),
 			'_nabia_video_role'    => __( 'Company / role', 'nabia' ),
 			'_nabia_video_caption' => __( 'Short caption, e.g. “New store in 2 weeks”', 'nabia' ),
 		),
@@ -154,7 +184,7 @@ function nabia_render_meta_box( $post ) {
 		);
 	}
 	if ( 'video_review' === $post->post_type ) {
-		echo '<p class="description">' . esc_html__( 'Title = client name. Use “Order” to choose which video shows first.', 'nabia' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Title = client name. Upload the MP4 in Media → Add New, copy its “File URL” and paste it above (YouTube links work too). Use “Order” to choose which video shows first.', 'nabia' ) . '</p>';
 	}
 	if ( 'testimonial' === $post->post_type ) {
 		echo '<p class="description">' . esc_html__( 'Title = client name, content = the quote, featured image = avatar.', 'nabia' ) . '</p>';
@@ -193,38 +223,106 @@ function nabia_save_meta( $post_id ) {
 add_action( 'save_post', 'nabia_save_meta' );
 
 /**
- * Keep existing "websites" portfolio posts visible even if the plugin that created
- * the post type is deactivated: register it only when nobody else has and posts exist.
+ * The "Websites" portfolio post type (your ?post_type=websites posts), built into the theme
+ * so it no longer depends on a plugin. If a plugin (e.g. Custom Post Type UI) still registers
+ * it, that registration simply takes over — the posts are the same either way.
  */
-function nabia_register_websites_fallback() {
-	if ( post_type_exists( 'websites' ) ) {
-		return;
-	}
-	$has_posts = get_transient( 'nabia_has_websites' );
-	if ( false === $has_posts ) {
-		global $wpdb;
-		$has_posts = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(1) FROM {$wpdb->posts} WHERE post_type = %s", 'websites' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		set_transient( 'nabia_has_websites', $has_posts, DAY_IN_SECONDS );
-	}
-	if ( ! $has_posts ) {
-		return;
-	}
+function nabia_register_websites() {
 	register_post_type(
 		'websites',
 		array(
-			'labels'       => array(
-				'name'          => __( 'Websites', 'nabia' ),
-				'singular_name' => __( 'Website', 'nabia' ),
+			'labels'        => array(
+				'name'               => __( 'Websites', 'nabia' ),
+				'singular_name'      => __( 'Website', 'nabia' ),
+				'menu_name'          => __( 'Websites', 'nabia' ),
+				'all_items'          => __( 'All Websites', 'nabia' ),
+				'add_new'            => __( 'Add new Website', 'nabia' ),
+				'add_new_item'       => __( 'Add new Website', 'nabia' ),
+				'edit_item'          => __( 'Edit Website', 'nabia' ),
+				'new_item'           => __( 'New Website', 'nabia' ),
+				'view_item'          => __( 'View Website', 'nabia' ),
+				'search_items'       => __( 'Search Websites', 'nabia' ),
+				'not_found'          => __( 'No websites found', 'nabia' ),
+				'not_found_in_trash' => __( 'No websites found in Trash', 'nabia' ),
 			),
-			'public'       => true,
-			'has_archive'  => true,
-			'menu_icon'    => 'dashicons-admin-site-alt3',
-			'show_in_rest' => true,
-			'supports'     => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields', 'page-attributes' ),
+			'public'        => true,
+			'has_archive'   => true,
+			'rewrite'       => array(
+				'slug'       => 'websites',
+				'with_front' => false,
+			),
+			'menu_icon'     => 'dashicons-admin-site-alt3',
+			'menu_position' => 5,
+			'show_in_rest'  => true,
+			'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields', 'page-attributes', 'revisions' ),
 		)
 	);
 }
-add_action( 'init', 'nabia_register_websites_fallback', 99 );
+add_action( 'init', 'nabia_register_websites', 5 );
+
+/**
+ * Categories for Websites.
+ *
+ * Re-attaches whatever taxonomy your existing Websites posts already use (so their
+ * categories keep working without the plugin); otherwise registers "website_category".
+ */
+function nabia_register_websites_taxonomies() {
+	$taxonomies = get_transient( 'nabia_websites_taxonomies' );
+	if ( false === $taxonomies ) {
+		global $wpdb;
+		$taxonomies = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->prepare(
+				"SELECT DISTINCT tt.taxonomy FROM {$wpdb->term_relationships} tr
+				INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
+				INNER JOIN {$wpdb->posts} p ON p.ID = tr.object_id
+				WHERE p.post_type = %s",
+				'websites'
+			)
+		);
+		$taxonomies = array_values( array_diff( (array) $taxonomies, array( 'post_format', 'post_translations', 'language' ) ) );
+		set_transient( 'nabia_websites_taxonomies', $taxonomies, DAY_IN_SECONDS );
+	}
+	if ( ! $taxonomies ) {
+		$taxonomies = array( 'website_category' );
+	}
+
+	foreach ( $taxonomies as $taxonomy ) {
+		if ( taxonomy_exists( $taxonomy ) ) {
+			register_taxonomy_for_object_type( $taxonomy, 'websites' );
+			continue;
+		}
+		register_taxonomy(
+			$taxonomy,
+			'websites',
+			array(
+				'labels'            => array(
+					'name'          => __( 'Categories', 'nabia' ),
+					'singular_name' => __( 'Category', 'nabia' ),
+					'menu_name'     => __( 'Categories', 'nabia' ),
+				),
+				'hierarchical'      => true,
+				'public'            => true,
+				'show_admin_column' => true,
+				'show_in_rest'      => true,
+				'rewrite'           => array( 'slug' => str_replace( '_', '-', $taxonomy ) ),
+			)
+		);
+	}
+}
+add_action( 'init', 'nabia_register_websites_taxonomies', 6 );
+
+/**
+ * Refresh permalinks once after each theme update so /websites/ URLs always work.
+ */
+function nabia_maybe_flush_rewrites() {
+	if ( get_option( 'nabia_rewrite_version' ) !== NABIA_VERSION ) {
+		flush_rewrite_rules( false );
+		update_option( 'nabia_rewrite_version', NABIA_VERSION );
+		delete_transient( 'nabia_websites_taxonomies' );
+		delete_transient( 'nabia_has_projects' );
+	}
+}
+add_action( 'init', 'nabia_maybe_flush_rewrites', 99 );
 
 /**
  * The post type shown as the portfolio ("websites" by default, falls back to the theme's Projects).
@@ -233,7 +331,7 @@ add_action( 'init', 'nabia_register_websites_fallback', 99 );
  */
 function nabia_portfolio_type() {
 	$type = nabia_mod( 'portfolio_post_type' );
-	return ( $type && post_type_exists( $type ) ) ? $type : 'project';
+	return ( $type && post_type_exists( $type ) ) ? $type : 'websites';
 }
 
 /**
@@ -347,7 +445,12 @@ function nabia_video_review_column( $column, $post_id ) {
 	if ( 'nabia_thumb' !== $column ) {
 		return;
 	}
-	$id = nabia_youtube_id( (string) get_post_meta( $post_id, '_nabia_youtube', true ) );
+	$url = (string) get_post_meta( $post_id, '_nabia_youtube', true );
+	if ( nabia_is_video_file( $url ) ) {
+		printf( '<video src="%s#t=0.5" width="90" preload="metadata" muted style="border-radius:6px;background:#000"></video>', esc_url( $url ) );
+		return;
+	}
+	$id = nabia_youtube_id( $url );
 	if ( $id ) {
 		printf( '<img src="%s" alt="" width="120" style="border-radius:6px">', esc_url( 'https://i.ytimg.com/vi/' . $id . '/mqdefault.jpg' ) );
 	} else {

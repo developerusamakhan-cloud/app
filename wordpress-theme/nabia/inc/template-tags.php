@@ -422,11 +422,76 @@ function nabia_youtube_id( $url ) {
 }
 
 /**
+ * Is this a direct link to a video file (self-hosted MP4 etc.)?
+ *
+ * @param string $url URL.
+ * @return bool
+ */
+function nabia_is_video_file( $url ) {
+	return (bool) preg_match( '#^https?://\S+\.(mp4|m4v|webm|mov|ogv)(\?\S*)?$#i', trim( $url ) );
+}
+
+/**
+ * Guess a client name from a video file name.
+ * "vidssave.com-Dr-Craig-Duncan-_-Happy-Client-_-Nabia-Khan-480P.mp4" → "Dr Craig Duncan".
+ *
+ * @param string $url Video URL.
+ * @return string
+ */
+function nabia_name_from_video_url( $url ) {
+	$name = rawurldecode( pathinfo( wp_parse_url( $url, PHP_URL_PATH ), PATHINFO_FILENAME ) );
+	$name = preg_replace( '/^[a-z0-9]+\.(com|net|org|io|app|co)[-_]/i', '', $name ); // Downloader prefixes like "vidssave.com-".
+	$parts = preg_split( '/-_-|_-_|__/', $name );
+	$name  = $parts[0];
+	$name  = preg_replace( '/[-_](\d{3,4}p|hd|final|v\d+)$/i', '', $name );
+	$name  = trim( preg_replace( '/[-_\s]+/', ' ', $name ) );
+	return ucwords( $name );
+}
+
+/**
+ * Build one video entry from a link.
+ *
+ * @param string $url     YouTube link or video file URL.
+ * @param string $name    Client name (optional; guessed from the file name for MP4s).
+ * @param string $role    Company / role.
+ * @param string $caption Short caption.
+ * @return array|null
+ */
+function nabia_video_entry( $url, $name = '', $role = '', $caption = '' ) {
+	$url = trim( $url );
+	if ( nabia_is_video_file( $url ) ) {
+		return array(
+			'type'     => 'file',
+			'id'       => 'file-' . md5( $url ),
+			'src'      => $url,
+			'name'     => $name ? $name : nabia_name_from_video_url( $url ),
+			'role'     => $role,
+			'caption'  => $caption,
+			'vertical' => true,
+		);
+	}
+	$id = nabia_youtube_id( $url );
+	if ( ! $id ) {
+		return null;
+	}
+	return array(
+		'type'     => 'youtube',
+		'id'       => $id,
+		'src'      => '',
+		'name'     => $name,
+		'role'     => $role,
+		'caption'  => $caption,
+		'vertical' => false !== strpos( $url, '/shorts/' ),
+	);
+}
+
+/**
  * All video reviews: from Dashboard → Video Reviews first, then the Customizer list.
  *
- * Customizer format, one per line: URL | Client name | Short caption.
+ * Customizer format, one per line: link | Client name | Short caption.
+ * Links can be self-hosted MP4 files or YouTube videos/Shorts.
  *
- * @return array[] Each: id, name, role, caption, vertical (bool, true for Shorts links).
+ * @return array[] Each: type (file|youtube), id, src, name, role, caption, vertical.
  */
 function nabia_video_reviews() {
 	$videos = array();
@@ -443,34 +508,24 @@ function nabia_video_reviews() {
 		)
 	);
 	foreach ( $posts as $post ) {
-		$url = (string) get_post_meta( $post->ID, '_nabia_youtube', true );
-		$id  = nabia_youtube_id( $url );
-		if ( ! $id ) {
-			continue;
-		}
-		$videos[] = array(
-			'id'       => $id,
-			'name'     => get_the_title( $post ),
-			'role'     => (string) get_post_meta( $post->ID, '_nabia_video_role', true ),
-			'caption'  => (string) get_post_meta( $post->ID, '_nabia_video_caption', true ),
-			'vertical' => false !== strpos( $url, '/shorts/' ),
+		$entry = nabia_video_entry(
+			(string) get_post_meta( $post->ID, '_nabia_youtube', true ),
+			get_the_title( $post ),
+			(string) get_post_meta( $post->ID, '_nabia_video_role', true ),
+			(string) get_post_meta( $post->ID, '_nabia_video_caption', true )
 		);
+		if ( $entry ) {
+			$videos[] = $entry;
+		}
 	}
 
 	$lines = preg_split( '/\r\n|\r|\n/', (string) nabia_mod( 'video_reviews' ) );
 	foreach ( $lines as $line ) {
 		$parts = array_map( 'trim', explode( '|', $line ) );
-		$id    = nabia_youtube_id( $parts[0] );
-		if ( ! $id ) {
-			continue;
+		$entry = nabia_video_entry( $parts[0], isset( $parts[1] ) ? $parts[1] : '', '', isset( $parts[2] ) ? $parts[2] : '' );
+		if ( $entry ) {
+			$videos[] = $entry;
 		}
-		$videos[] = array(
-			'id'       => $id,
-			'name'     => isset( $parts[1] ) ? $parts[1] : '',
-			'role'     => '',
-			'caption'  => isset( $parts[2] ) ? $parts[2] : '',
-			'vertical' => false !== strpos( $parts[0], '/shorts/' ),
-		);
 	}
 	return $videos;
 }

@@ -75,7 +75,11 @@ function nabia_defaults() {
 		// Video reviews.
 		'videos_title'       => 'Hear it straight from my clients',
 		'videos_text'        => 'Real people, real projects. Press play and hear what working together feels like.',
-		'video_reviews'      => "https://www.youtube.com/shorts/MwMlc611rIw\nhttps://www.youtube.com/shorts/4vpWeFGHn9I\nhttps://www.youtube.com/shorts/jRGgGIXQLXc\nhttps://www.youtube.com/shorts/eCPKyawWOcM\nhttps://www.youtube.com/shorts/zkNOevDxl5I",
+		'video_reviews'      => "https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Annika-Dose-_-Happy-Client-_-Nabia-Khan-720P.mp4
+https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Dr-Craig-Duncan-_-Happy-Client-_-Nabia-Khan-480P.mp4
+https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Phillip-Duff-_-Happy-Client-_-Nabia-Khan-480P.mp4
+https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Reginald-Hilliard-_-Happy-Client-_-Nabia-Khan-480P.mp4
+https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-Client-_-Nabia-Khan-720P.mp4",
 		'video_layout'       => 'auto',
 
 		// Google reviews.

@@ -41,7 +41,7 @@ function nabia_customize_register( $wp_customize ) {
 		'nabia_stats'   => __( 'Marquee & Stats', 'nabia' ),
 		'nabia_about'   => __( 'About & Section Titles', 'nabia' ),
 		'nabia_portfolio' => __( 'Portfolio', 'nabia' ),
-		'nabia_videos'  => __( 'Video Reviews (YouTube)', 'nabia' ),
+		'nabia_videos'  => __( 'Video Reviews', 'nabia' ),
 		'nabia_google'  => __( 'Google Reviews', 'nabia' ),
 		'nabia_contact' => __( 'Contact', 'nabia' ),
 		'nabia_social'  => __( 'Social Links', 'nabia' ),
@@ -114,7 +114,7 @@ function nabia_customize_register( $wp_customize ) {
 
 		'videos_title'       => array( 'nabia_videos', 'text', __( 'Section title', 'nabia' ) ),
 		'videos_text'        => array( 'nabia_videos', 'textarea', __( 'Section intro', 'nabia' ) ),
-		'video_reviews'      => array( 'nabia_videos', 'textarea', __( 'Videos: one per line — YouTube link | Client name | Short caption', 'nabia' ) ),
+		'video_reviews'      => array( 'nabia_videos', 'textarea', __( 'Videos: one per line — MP4 or YouTube link | Client name | Short caption', 'nabia' ) ),
 		'video_layout'       => array( 'nabia_videos', 'select', __( 'Layout', 'nabia' ) ),
 
 		'google_place_id'    => array( 'nabia_google', 'text', __( 'Google Place ID', 'nabia' ) ),
@@ -184,7 +184,7 @@ function nabia_customize_register( $wp_customize ) {
 	);
 
 	$descriptions = array(
-		'video_reviews'   => __( 'Easier: use Dashboard → Video Reviews. Or list extra videos here, one per line: https://youtu.be/abc123XYZ00 | Sarah, Bloom Botanics | New store in 2 weeks', 'nabia' ),
+		'video_reviews'   => __( 'Paste MP4 links from your Media Library (or YouTube links), one per line. The client name is read from the file name, or add it after a | sign: https://…/review.mp4 | Sarah Malik | New store in 2 weeks. You can also use Dashboard → Video Reviews.', 'nabia' ),
 		'google_place_id' => __( 'Find it at developers.google.com/maps/documentation/places/web-service/place-id — search your business name and copy the ID (starts with “ChIJ…”).', 'nabia' ),
 		'google_api_key'  => __( 'Google Cloud Console → enable “Places API (New)” → Credentials → Create API key (restrict it to Places API). Stored on your server only; visitors never see it. Reviews refresh every 12 hours.', 'nabia' ),
 	);

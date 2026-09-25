@@ -15,7 +15,11 @@ if ( ! $nabia_videos && ! current_user_can( 'edit_posts' ) ) {
 
 $nabia_count  = count( $nabia_videos );
 $nabia_layout = nabia_mod( 'video_layout' );
-if ( 'auto' === $nabia_layout || ! in_array( $nabia_layout, array( 'wide', 'vertical' ), true ) ) {
+$nabia_has_files = (bool) wp_list_filter( $nabia_videos, array( 'type' => 'file' ) );
+if ( $nabia_has_files ) {
+	// Self-hosted videos always use the carousel.
+	$nabia_layout = 'vertical';
+} elseif ( 'auto' === $nabia_layout || ! in_array( $nabia_layout, array( 'wide', 'vertical' ), true ) ) {
 	$nabia_vertical = $nabia_videos && count( wp_list_filter( $nabia_videos, array( 'vertical' => true ) ) ) === $nabia_count;
 	$nabia_layout   = $nabia_vertical ? 'vertical' : 'wide';
 }
@@ -54,12 +58,22 @@ $nabia_channel = nabia_mod( 'social_youtube' );
 					<?php foreach ( $nabia_videos as $nabia_video ) : ?>
 						<?php $nabia_meta = trim( $nabia_video['role'] . ( $nabia_video['role'] && $nabia_video['caption'] ? ' · ' : '' ) . $nabia_video['caption'] ); ?>
 						<figure class="short-card">
-							<div class="video-frame is-vertical" data-video-id="<?php echo esc_attr( $nabia_video['id'] ); ?>">
-								<img src="<?php echo esc_url( 'https://i.ytimg.com/vi/' . $nabia_video['id'] . '/hqdefault.jpg' ); ?>" alt="" loading="lazy" width="480" height="360">
-								<button class="video-sound" type="button"><?php nabia_icon( 'volume' ); ?><span><?php esc_html_e( 'Tap for sound', 'nabia' ); ?></span></button>
-							</div>
+							<?php if ( 'file' === $nabia_video['type'] ) : ?>
+								<div class="video-frame is-vertical is-file" data-video-src="<?php echo esc_url( $nabia_video['src'] ); ?>">
+									<video muted loop playsinline preload="none" controls aria-label="<?php echo esc_attr( sprintf( /* translators: %s: client name */ __( 'Video review by %s', 'nabia' ), $nabia_video['name'] ) ); ?>">
+										<source data-src="<?php echo esc_url( $nabia_video['src'] ); ?>#t=0.1">
+									</video>
+									<button class="video-sound" type="button"><?php nabia_icon( 'volume' ); ?><span><?php esc_html_e( 'Tap for sound', 'nabia' ); ?></span></button>
+								</div>
+							<?php else : ?>
+								<div class="video-frame is-vertical" data-video-id="<?php echo esc_attr( $nabia_video['id'] ); ?>">
+									<img src="<?php echo esc_url( 'https://i.ytimg.com/vi/' . $nabia_video['id'] . '/hqdefault.jpg' ); ?>" alt="" loading="lazy" width="480" height="360">
+									<button class="video-sound" type="button"><?php nabia_icon( 'volume' ); ?><span><?php esc_html_e( 'Tap for sound', 'nabia' ); ?></span></button>
+								</div>
+							<?php endif; ?>
 							<?php if ( $nabia_video['name'] || $nabia_meta ) : ?>
 								<figcaption>
+									<span class="short-stars" aria-hidden="true">★★★★★</span>
 									<?php if ( $nabia_video['name'] ) : ?>
 										<strong><?php echo esc_html( $nabia_video['name'] ); ?></strong>
 									<?php endif; ?>

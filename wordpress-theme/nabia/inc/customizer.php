@@ -69,6 +69,7 @@ function nabia_customize_register( $wp_customize ) {
 		'accent_color'       => array( 'nabia_general', 'color', __( 'Custom accent colour (optional, overrides the scheme)', 'nabia' ) ),
 		'enable_preloader'   => array( 'nabia_general', 'checkbox', __( 'Show intro preloader', 'nabia' ) ),
 		'enable_cursor'      => array( 'nabia_general', 'checkbox', __( 'Custom animated cursor (desktop)', 'nabia' ) ),
+		'enable_smooth'      => array( 'nabia_general', 'checkbox', __( 'Smooth scrolling', 'nabia' ) ),
 		'footer_text'        => array( 'nabia_general', 'textarea', __( 'Footer text', 'nabia' ) ),
 		'footer_marquee'     => array( 'nabia_general', 'text', __( 'Footer scrolling slogan', 'nabia' ) ),
 		'footer_cta_title'   => array( 'nabia_general', 'text', __( 'Footer call-to-action title', 'nabia' ) ),

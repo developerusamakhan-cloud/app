@@ -116,6 +116,25 @@
 	onScroll();
 
 	/* ------------------------------------------------------------------
+	 * Smooth scrolling (Lenis). Native scrolling stays for touch screens,
+	 * reduced-motion users and scrollable boxes marked data-lenis-prevent.
+	 * ------------------------------------------------------------------ */
+	var lenis = null;
+	if (settings.smooth && window.Lenis && !reduceMotion) {
+		$$('.video-list, .mobile-menu, textarea, select').forEach(function (el) {
+			el.setAttribute('data-lenis-prevent-wheel', '');
+		});
+		lenis = new window.Lenis({
+			lerp: 0.09,
+			wheelMultiplier: 1,
+			autoRaf: true,
+			// The fixed-header gap comes from CSS scroll-padding-top, which Lenis respects.
+			anchors: true
+		});
+		window.nabiaLenis = lenis;
+	}
+
+	/* ------------------------------------------------------------------
 	 * Mobile menu.
 	 * ------------------------------------------------------------------ */
 	var toggle = $('.menu-toggle');
@@ -127,6 +146,13 @@
 		}
 		toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
 		body.classList.toggle('menu-open', open);
+		if (lenis) {
+			if (open) {
+				lenis.stop();
+			} else {
+				lenis.start();
+			}
+		}
 		if (open) {
 			mobileMenu.hidden = false;
 			requestAnimationFrame(function () {

@@ -65,6 +65,14 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.10
+
+- Blog page: plain grid of posts (no category buttons, no big featured post).
+- Blog post breadcrumb: Home / Blog / post title (no category).
+- Website packages show a crossed-out old price like the maintenance plans: $600 → $499, $999 → $799, $1499 → $1199, each with a "Save %" badge. Edit them in Customize, Nabia Theme, Pricing with a `Was: $600` line.
+- Branded scrollbar (slim violet-to-pink thumb).
+- Smooth scrolling with Lenis (bundled, MIT licence). It is off for visitors who prefer reduced motion, pauses while the mobile menu is open, and in-page links glide to their section. Turn it off in Customize, Nabia Theme, General.
+
 ## What's new in 2.9
 
 - The header "Let's talk" button (and every "Hire me" / "Contact" link) goes to your page using the **Contact / Hire me** template. Order: custom link in Customize, then your Contact template page, then /hire-me/ or /contact/, then the homepage contact section.
@@ -217,5 +225,6 @@ Available filters: `nabia_services`, `nabia_process`, `nabia_faq`, `nabia_skills
 
 ## Credits
 
+- Smooth scrolling: [Lenis](https://github.com/darkroomengineering/lenis) 1.3.26, MIT licence (see `assets/js/vendor`).
 - Fonts: [Plus Jakarta Sans](https://github.com/tokotype/PlusJakartaSans) and [Inter](https://rsms.me/inter/), SIL Open Font License 1.1 (see `assets/fonts`).
 - License: GPL v2 or later.

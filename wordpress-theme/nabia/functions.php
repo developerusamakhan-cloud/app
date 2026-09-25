@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NABIA_VERSION', '2.9.0' );
+define( 'NABIA_VERSION', '2.10.0' );
 define( 'NABIA_DIR', get_template_directory() );
 define( 'NABIA_URI', get_template_directory_uri() );
 
@@ -112,13 +112,20 @@ function nabia_scripts() {
 
 	wp_add_inline_style( 'nabia-style', nabia_scheme_css() );
 
-	wp_enqueue_script( 'nabia-main', NABIA_URI . '/assets/js/main.js', array(), nabia_asset_version( 'assets/js/main.js' ), array( 'strategy' => 'defer', 'in_footer' => true ) );
+	$deps = array();
+	if ( nabia_mod( 'enable_smooth' ) ) {
+		// Lenis smooth scrolling (MIT, bundled in assets/js/vendor).
+		wp_enqueue_script( 'lenis', NABIA_URI . '/assets/js/vendor/lenis.min.js', array(), '1.3.26', array( 'strategy' => 'defer', 'in_footer' => true ) );
+		$deps[] = 'lenis';
+	}
+	wp_enqueue_script( 'nabia-main', NABIA_URI . '/assets/js/main.js', $deps, nabia_asset_version( 'assets/js/main.js' ), array( 'strategy' => 'defer', 'in_footer' => true ) );
 	wp_localize_script(
 		'nabia-main',
 		'nabiaSettings',
 		array(
 			'preloader' => (bool) nabia_mod( 'enable_preloader' ),
 			'cursor'    => (bool) nabia_mod( 'enable_cursor' ),
+			'smooth'    => (bool) nabia_mod( 'enable_smooth' ),
 		)
 	);
 

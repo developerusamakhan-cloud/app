@@ -57,23 +57,7 @@ nabia_page_header(
 
 <section class="section section-tight blog-list">
 	<div class="container">
-		<?php if ( ( is_home() || is_category() ) && $nabia_cats ) : ?>
-			<ul class="filter-pills">
-				<li><a class="<?php echo is_home() ? 'is-active' : ''; ?>" href="<?php echo esc_url( $nabia_blog_url ); ?>"><?php esc_html_e( 'All', 'nabia' ); ?></a></li>
-				<?php foreach ( $nabia_cats as $nabia_cat ) : ?>
-					<li><a class="<?php echo is_category( $nabia_cat->term_id ) ? 'is-active' : ''; ?>" href="<?php echo esc_url( get_category_link( $nabia_cat ) ); ?>"><?php echo esc_html( $nabia_cat->name ); ?></a></li>
-				<?php endforeach; ?>
-			</ul>
-		<?php endif; ?>
-
 		<?php if ( have_posts() ) : ?>
-			<?php
-			$nabia_first = is_home() && ! is_paged();
-			if ( $nabia_first ) {
-				the_post();
-				get_template_part( 'template-parts/content', 'featured' );
-			}
-			?>
 			<div class="post-grid">
 				<?php
 				while ( have_posts() ) :

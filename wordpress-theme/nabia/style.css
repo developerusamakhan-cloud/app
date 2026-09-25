@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.9.0
+Version: 2.10.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -80,6 +80,57 @@ Tags: portfolio, one-column, custom-logo, custom-menu, featured-images, threaded
 /* ==========================================================================
    Base
    ========================================================================== */
+/* Branded scrollbar */
+html {
+	scrollbar-width: thin;
+	scrollbar-color: var(--accent) var(--bg-alt);
+}
+
+::-webkit-scrollbar {
+	width: 12px;
+	height: 12px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--bg-alt);
+}
+
+::-webkit-scrollbar-thumb {
+	border: 3px solid var(--bg-alt);
+	border-radius: 999px;
+	background: linear-gradient(180deg, var(--accent), var(--second));
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(180deg, var(--second), var(--accent));
+}
+
+::-webkit-scrollbar-corner {
+	background: var(--bg-alt);
+}
+
+/* Smooth scrolling (Lenis) */
+html.lenis,
+html.lenis body {
+	height: auto;
+}
+
+html.lenis {
+	scroll-behavior: auto;
+}
+
+.lenis.lenis-stopped {
+	overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel] {
+	overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+	pointer-events: none;
+}
 *,
 *::before,
 *::after {

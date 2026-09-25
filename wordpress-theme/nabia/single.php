@@ -11,11 +11,9 @@ while ( have_posts() ) :
 	the_post();
 	$nabia_cats    = get_the_category();
 	$nabia_minutes = max( 1, (int) ceil( str_word_count( wp_strip_all_tags( get_the_content() ) ) / 220 ) );
-	$nabia_blog    = get_option( 'page_for_posts' ) ? get_permalink( (int) get_option( 'page_for_posts' ) ) : home_url( '/' );
-	$nabia_crumbs  = array( array( __( 'Blog', 'nabia' ), $nabia_blog ) );
-	if ( $nabia_cats ) {
-		$nabia_crumbs[] = array( $nabia_cats[0]->name, get_category_link( $nabia_cats[0] ) );
-	}
+	$nabia_blog    = nabia_blog_url();
+	// Home / Blog / current post (no category).
+	$nabia_crumbs = array( array( __( 'Blog', 'nabia' ), $nabia_blog ) );
 	$nabia_author = get_the_author();
 	$nabia_aside  = '<div class="aside-card author-card">'
 		. '<span class="author-avatar">' . get_avatar( get_the_author_meta( 'ID' ), 64, '', '', array( 'force_display' => true ) ) . '</span>'
@@ -30,7 +28,7 @@ while ( have_posts() ) :
 
 	nabia_page_header(
 		array(
-			'eyebrow' => $nabia_cats ? $nabia_cats[0]->name : __( 'Article', 'nabia' ),
+			'eyebrow' => __( 'Article', 'nabia' ),
 			'icon'    => 'pen',
 			'title'   => get_the_title(),
 			'intro'   => has_excerpt() ? get_the_excerpt() : '',

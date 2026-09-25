@@ -40,6 +40,8 @@ function nabia_get_icon( $name ) {
 		'upwork'    => '<path d="M3 5v6a4 4 0 0 0 8 0V5M11 11c1.5 4 3 6 5.5 6a4 4 0 0 0 0-8c-2.5 0-4 2-5 5l-2 8"/>',
 		'fiverr'    => '<path d="M9 21V9h6v12M9 9V7a3 3 0 0 1 3-3h1M6 9h9"/><circle cx="18" cy="5" r="1"/>',
 		'search'    => '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+		'tiktok'    => '<path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.5 2.8 2.3 4.5 5 4.8"/>',
+		'linktree'  => '<path d="M12 22v-8M5 9h14M7.5 4.5 12 9l4.5-4.5M7.5 13.5 12 9l4.5 4.5"/>',
 		'volume'    => '<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/>',
 	);
 
@@ -104,7 +106,7 @@ function nabia_logo( $variant = '' ) {
  */
 function nabia_socials() {
 	$out = array();
-	foreach ( array( 'linkedin', 'instagram', 'behance', 'dribbble', 'github', 'youtube', 'upwork', 'fiverr' ) as $network ) {
+	foreach ( array( 'linkedin', 'instagram', 'behance', 'dribbble', 'github', 'youtube', 'tiktok', 'upwork', 'fiverr', 'linktree' ) as $network ) {
 		$url = nabia_mod( 'social_' . $network );
 		if ( $url ) {
 			$out[ $network ] = $url;
@@ -128,7 +130,7 @@ function nabia_social_links( $class = '' ) {
 		printf(
 			'<li><a href="%1$s" target="_blank" rel="noopener noreferrer" aria-label="%2$s" data-magnetic>%3$s</a></li>',
 			esc_url( $url ),
-			esc_attr( ucfirst( $network ) ),
+			esc_attr( 'tiktok' === $network ? 'TikTok' : ( 'linkedin' === $network ? 'LinkedIn' : ( 'youtube' === $network ? 'YouTube' : ucfirst( $network ) ) ) ),
 			nabia_get_icon( $network ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		);
 	}

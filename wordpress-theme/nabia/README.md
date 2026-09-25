@@ -25,6 +25,13 @@ It uses the style of creative agency sites (big type, bright accent colour, play
 - Respects "reduced motion" settings; content stays visible without JavaScript
 - Blog, single post (with reading time), page, search, 404 and a *Full width* template for Elementor/block-editor pages
 
+## What's new in 2.2
+
+- **Shorts carousel**: 4 client Shorts visible at a time, all playing muted. Use the arrows, dots or swipe to see more. "Tap for sound" turns on sound for one video and mutes the others. The "Happy client #…" captions are gone; a caption only shows if you give a video a name in Dashboard → Video Reviews.
+- Email is now **info@nabiakhan.com**, and the client portal link is removed.
+- Social links: Fiverr (fiverr.com/nabia_khan), YouTube and Linktree (linktr.ee/nabia_khan) are set. Add LinkedIn, Instagram, TikTok and others in Customize → Nabia Theme → Social Links.
+- Less empty space between the hero and the skills strip; the skills strip is slimmer.
+
 ## What's new in 2.1
 
 - The skills strip is now straight, and its stars no longer spin.
@@ -96,7 +103,7 @@ Also:
 
 Until you add real Projects and Testimonials, placeholder cards are shown. Only logged-in editors see the hint telling you to replace them.
 
-> **Please check before going live:** the default stats (250+ projects, 100% job success, 24h reply), skill percentages and two of the three placeholder testimonials are sample content. Replace them with your real numbers and client reviews.
+> **Please check before going live:** the default stats (300+ projects, 100% job success, 24h reply), skill percentages and two of the three placeholder testimonials are sample content. Replace them with your real numbers and client reviews.
 
 ## For developers
 

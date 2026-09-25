@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.1.0
+Version: 2.2.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -823,7 +823,7 @@ body:not(.is-home) .site-main {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	padding: calc(var(--header-h) + 32px) 0 40px;
+	padding: calc(var(--header-h) + 32px) 0 32px;
 	overflow: hidden;
 }
 
@@ -853,12 +853,12 @@ body:not(.is-home) .site-main {
 }
 
 .blob-2 {
-	width: 32vw;
-	height: 32vw;
-	max-width: 460px;
-	max-height: 460px;
-	bottom: -12%;
-	left: -10%;
+	width: 30vw;
+	height: 30vw;
+	max-width: 420px;
+	max-height: 420px;
+	top: 38%;
+	left: -12%;
 	background: var(--second);
 	opacity: 0.2;
 	animation: float 18s ease-in-out infinite reverse;
@@ -1634,11 +1634,11 @@ body:not(.is-home) .site-main {
    ========================================================================== */
 .marquee-section {
 	overflow: hidden;
-	padding-block: 48px;
+	padding-block: 0;
 }
 
 .marquee-wrap {
-	padding-block: 24px;
+	padding-block: 18px;
 	background: var(--accent);
 	color: var(--accent-ink);
 	border-block: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
@@ -1673,7 +1673,7 @@ body:not(.is-home) .site-main {
 	padding-right: 36px;
 	font-family: var(--font-display);
 	font-weight: 700;
-	font-size: clamp(28px, 4vw, 56px);
+	font-size: clamp(24px, 3.2vw, 46px);
 	white-space: nowrap;
 }
 
@@ -3710,22 +3710,21 @@ body:has(.float-chat) .site-footer {
 	font-size: 16px;
 }
 
-/* Shorts reel: tall video cards, 5 per row on desktop */
+/* Shorts carousel: 4 tall videos visible, swipe or use the arrows for more */
 .short-reel {
+	--per-view: 4;
 	display: grid;
-	grid-template-columns: repeat(5, minmax(0, 1fr));
-	gap: 20px;
-}
-
-.short-reel.is-scrolling {
-	grid-template-columns: none;
 	grid-auto-flow: column;
-	grid-auto-columns: calc((100% - 80px) / 5);
+	grid-auto-columns: calc((100% - (var(--per-view) - 1) * 20px) / var(--per-view));
+	gap: 20px;
 	overflow-x: auto;
 	scroll-snap-type: x mandatory;
-	scrollbar-width: thin;
-	scrollbar-color: color-mix(in srgb, var(--bg) 25%, transparent) transparent;
-	padding-bottom: 12px;
+	scrollbar-width: none;
+	overscroll-behavior-x: contain;
+}
+
+.short-reel::-webkit-scrollbar {
+	display: none;
 }
 
 .short-card {
@@ -3737,12 +3736,6 @@ body:has(.float-chat) .site-footer {
 .short-card .video-frame {
 	border-radius: 22px;
 	box-shadow: 0 0 0 1px color-mix(in srgb, var(--bg) 14%, transparent), 0 30px 50px -30px #000;
-	transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
-}
-
-.short-card:hover .video-frame {
-	transform: translateY(-6px);
-	box-shadow: 0 0 0 2px var(--accent), 0 40px 60px -30px #000;
 }
 
 .short-card .video-frame:not(.is-loaded)::after {
@@ -3750,41 +3743,6 @@ body:has(.float-chat) .site-footer {
 	height: 64px;
 	background-size: 26px;
 	box-shadow: 0 0 0 10px color-mix(in srgb, #fff 22%, transparent);
-}
-
-.short-shade {
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(180deg, color-mix(in srgb, #000 35%, transparent), transparent 30%, transparent 65%, color-mix(in srgb, #000 55%, transparent));
-	pointer-events: none;
-}
-
-.short-tag {
-	position: absolute;
-	top: 12px;
-	left: 12px;
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	padding: 5px 10px;
-	border-radius: 999px;
-	background: color-mix(in srgb, #000 45%, transparent);
-	backdrop-filter: blur(6px);
-	-webkit-backdrop-filter: blur(6px);
-	color: #fff;
-	font-size: 12px;
-	font-weight: 600;
-}
-
-.short-tag .icon {
-	width: 14px;
-	height: 14px;
-	color: #ff4e45;
-}
-
-.video-frame.is-loaded .short-shade,
-.video-frame.is-loaded .short-tag {
-	display: none;
 }
 
 .short-card .video-sound {
@@ -3812,33 +3770,67 @@ body:has(.float-chat) .site-footer {
 	font-size: 16px;
 }
 
-.short-stars {
-	color: #fbbc04;
-	letter-spacing: 2px;
-	font-size: 14px;
+.carousel-controls {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	margin-top: 28px;
+}
+
+.short-carousel.is-static .carousel-controls {
+	display: none;
+}
+
+.carousel-controls .slider-btn {
+	width: 48px;
+	height: 48px;
+	border-color: color-mix(in srgb, var(--bg) 30%, transparent);
+	color: var(--bg);
+}
+
+.carousel-controls .slider-btn:hover {
+	background: var(--accent);
+	border-color: var(--accent);
+	color: var(--accent-ink);
+}
+
+.carousel-controls [data-carousel-step="-1"] .icon {
+	transform: rotate(180deg);
+}
+
+.carousel-dots {
+	display: flex;
+	gap: 8px;
+}
+
+.carousel-dot {
+	width: 8px;
+	height: 8px;
+	padding: 0;
+	border: 0;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--bg) 30%, transparent);
+	cursor: pointer;
+	transition: width 0.4s var(--ease), background 0.3s;
+}
+
+.carousel-dot.is-active {
+	width: 28px;
+	background: var(--accent);
 }
 
 @media (max-width: 1100px) {
-	.short-reel,
-	.short-reel.is-scrolling {
-		grid-template-columns: none;
-		grid-auto-flow: column;
-		grid-auto-columns: 30%;
-		overflow-x: auto;
-		scroll-snap-type: x mandatory;
-		padding-bottom: 12px;
+	.short-reel {
+		--per-view: 3;
 	}
 }
 
 @media (max-width: 700px) {
-	.short-reel,
-	.short-reel.is-scrolling {
-		grid-auto-columns: 64%;
+	.short-reel {
+		--per-view: 1.6;
 		gap: 14px;
-		margin-inline: calc(var(--gutter) * -1);
-		padding-inline: var(--gutter);
-		scroll-padding-inline: var(--gutter);
-		scrollbar-width: none;
+		grid-auto-columns: 62%;
 	}
 }
 

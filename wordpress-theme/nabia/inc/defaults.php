@@ -43,7 +43,7 @@ function nabia_defaults() {
 		'stat_1_number'      => '5',
 		'stat_1_suffix'      => '+',
 		'stat_1_label'       => 'Years of experience',
-		'stat_2_number'      => '250',
+		'stat_2_number'      => '300',
 		'stat_2_suffix'      => '+',
 		'stat_2_label'       => 'Projects delivered',
 		'stat_3_number'      => '100',
@@ -86,16 +86,15 @@ function nabia_defaults() {
 		// Fiverr / Upwork call-to-action.
 		'hire_title'         => 'Prefer to hire through Fiverr or Upwork?',
 		'hire_text'          => 'Work with me on the platform you already trust: secure payments, clear milestones and reviews you can check.',
-		'fiverr_note'        => 'Order a gig',
+		'fiverr_note'        => 'Level 2 seller · Order a gig',
 		'upwork_note'        => 'Send me an invite',
 
 		// Contact.
 		'cta_title'          => "Let's build something bold.",
 		'cta_text'           => 'Tell me about your project and I will get back to you within 24 hours with ideas, a timeline and a clear quote.',
-		'contact_email'      => 'hello@nabiakhan.com',
+		'contact_email'      => 'info@nabiakhan.com',
 		'contact_whatsapp'   => '',
 		'contact_shortcode'  => '',
-		'portal_url'         => 'https://portal.nabiakhan.com/',
 
 		// Social.
 		'social_linkedin'    => '',
@@ -105,7 +104,9 @@ function nabia_defaults() {
 		'social_github'      => '',
 		'social_youtube'     => 'https://www.youtube.com/channel/UCDi-EYBfzHqvHDzAGK8uEiw',
 		'social_upwork'      => '',
-		'social_fiverr'      => '',
+		'social_fiverr'      => 'https://www.fiverr.com/nabia_khan',
+		'social_tiktok'      => '',
+		'social_linktree'    => 'https://linktr.ee/nabia_khan',
 
 		// Footer.
 		'footer_text'        => 'Creative WordPress developer & graphic designer. Building websites that refuse to be boring.',

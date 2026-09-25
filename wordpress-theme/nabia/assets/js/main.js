@@ -384,16 +384,12 @@
 		frame.classList.add('is-loaded');
 		frame.classList.toggle('is-unmuted', !muted);
 
-		// In a Shorts reel only one video plays at a time.
+		// In a Shorts reel only one video has sound: switching sound on here mutes the others.
 		var reel = frame.closest('[data-reel]');
-		if (reel) {
-			$$('.video-frame', reel).forEach(function (other) {
+		if (reel && !muted) {
+			$$('.video-frame.is-unmuted', reel).forEach(function (other) {
 				if (other !== frame) {
-					var otherIframe = $('iframe', other);
-					if (otherIframe) {
-						otherIframe.remove();
-					}
-					other.classList.remove('is-loaded', 'is-unmuted');
+					loadVideo(other, true);
 				}
 			});
 		}
@@ -414,8 +410,9 @@
 				{ threshold: 0.35 }
 			);
 			frames.forEach(function (frame) {
-				// In a Shorts reel only the first video autoplays; the rest play on tap.
-				if (!frame.closest('[data-reel]') || frame.hasAttribute('data-autoplay')) {
+				// Shorts carousel: every video autoplays muted once it scrolls into view.
+				var reelEl = frame.closest('[data-reel]');
+				if (!reelEl || reelEl.hasAttribute('data-autoplay-all') || frame.hasAttribute('data-autoplay')) {
 					vio.observe(frame);
 				}
 			});
@@ -488,6 +485,73 @@
 				select(current + parseInt(btn.getAttribute('data-video-step'), 10), true);
 			});
 		});
+	});
+
+	/* ------------------------------------------------------------------
+	 * Shorts carousel: arrows, dots and swipe (native scroll-snap).
+	 * ------------------------------------------------------------------ */
+	$$('[data-carousel]').forEach(function (carousel) {
+		var track = $('[data-reel]', carousel);
+		var dotsWrap = $('[data-carousel-dots]', carousel);
+		if (!track) {
+			return;
+		}
+
+		function cardWidth() {
+			var card = track.firstElementChild;
+			var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+			return card ? card.getBoundingClientRect().width + gap : track.clientWidth;
+		}
+
+		function pages() {
+			return Math.max(1, Math.round((track.scrollWidth - track.clientWidth) / cardWidth()) + 1);
+		}
+
+		function current() {
+			return Math.round(track.scrollLeft / cardWidth());
+		}
+
+		function renderDots() {
+			if (!dotsWrap) {
+				return;
+			}
+			var count = pages();
+			dotsWrap.innerHTML = '';
+			carousel.classList.toggle('is-static', count < 2);
+			for (var i = 0; i < count; i++) {
+				var dot = document.createElement('button');
+				dot.type = 'button';
+				dot.className = 'carousel-dot' + (i === current() ? ' is-active' : '');
+				dot.setAttribute('aria-label', 'Go to video ' + (i + 1));
+				dot.addEventListener('click', goTo.bind(null, i));
+				dotsWrap.appendChild(dot);
+			}
+		}
+
+		function goTo(index) {
+			var count = pages();
+			index = (index + count) % count;
+			track.scrollTo({ left: index * cardWidth(), behavior: 'smooth' });
+		}
+
+		$$('[data-carousel-step]', carousel).forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				goTo(current() + parseInt(btn.getAttribute('data-carousel-step'), 10));
+			});
+		});
+
+		var scrollTimer;
+		track.addEventListener('scroll', function () {
+			clearTimeout(scrollTimer);
+			scrollTimer = setTimeout(function () {
+				$$('.carousel-dot', dotsWrap).forEach(function (dot, i) {
+					dot.classList.toggle('is-active', i === current());
+				});
+			}, 80);
+		}, { passive: true });
+
+		renderDots();
+		window.addEventListener('resize', renderDots);
 	});
 
 	/* ------------------------------------------------------------------

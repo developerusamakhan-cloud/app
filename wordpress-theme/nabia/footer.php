@@ -101,9 +101,6 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 					<?php if ( $nabia_wa ) : ?>
 						<li><a href="<?php echo esc_url( $nabia_wa ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'WhatsApp', 'nabia' ); ?></a></li>
 					<?php endif; ?>
-					<?php if ( nabia_mod( 'portal_url' ) ) : ?>
-						<li><a href="<?php echo esc_url( nabia_mod( 'portal_url' ) ); ?>"><?php esc_html_e( 'Client portal', 'nabia' ); ?> ↗</a></li>
-					<?php endif; ?>
 				</ul>
 			</div>
 

@@ -126,7 +126,6 @@ function nabia_customize_register( $wp_customize ) {
 		'contact_email'      => array( 'nabia_contact', 'email', __( 'Email', 'nabia' ) ),
 		'contact_whatsapp'   => array( 'nabia_contact', 'text', __( 'WhatsApp number (digits with country code)', 'nabia' ) ),
 		'contact_shortcode'  => array( 'nabia_contact', 'text', __( 'Contact form shortcode (e.g. Contact Form 7 / WPForms)', 'nabia' ) ),
-		'portal_url'         => array( 'nabia_contact', 'url', __( 'Client portal link (leave empty to hide)', 'nabia' ) ),
 
 		'social_linkedin'    => array( 'nabia_social', 'url', 'LinkedIn' ),
 		'social_instagram'   => array( 'nabia_social', 'url', 'Instagram' ),
@@ -140,6 +139,8 @@ function nabia_customize_register( $wp_customize ) {
 		'fiverr_note'        => array( 'nabia_social', 'text', __( 'Fiverr button text', 'nabia' ) ),
 		'upwork_note'        => array( 'nabia_social', 'text', __( 'Upwork button text', 'nabia' ) ),
 		'social_fiverr'      => array( 'nabia_social', 'url', 'Fiverr' ),
+		'social_tiktok'      => array( 'nabia_social', 'url', 'TikTok' ),
+		'social_linktree'    => array( 'nabia_social', 'url', 'Linktree' ),
 	);
 
 	$sanitizers = array(

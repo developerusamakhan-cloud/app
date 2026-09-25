@@ -175,7 +175,7 @@ function nwa_fetch( $url, $timeout = 15, $limit = 3145728 ) {
  * @return bool
  */
 function nwa_is_real_page( $page ) {
-	if ( is_wp_error( $page ) || $page['code'] >= 400 || strlen( trim( $page['body'] ) ) < 200 ) {
+	if ( ! is_array( $page ) || is_wp_error( $page ) || $page['code'] >= 400 || strlen( trim( $page['body'] ) ) < 200 ) {
 		return false;
 	}
 	$head = strtolower( substr( $page['body'], 0, 20000 ) );
@@ -215,64 +215,266 @@ function nwa_check( $label, $status, $weight, $found, $fix = '' ) {
  */
 function nwa_run_audit( $url ) {
 	nwa_time_left( nwa_time_budget() );
+	$notes = array();
 	$host  = (string) wp_parse_url( $url, PHP_URL_HOST );
-	$path  = (string) wp_parse_url( $url, PHP_URL_PATH );
-	$query = (string) wp_parse_url( $url, PHP_URL_QUERY );
-	$rest  = ( $path ? $path : '/' ) . ( $query ? '?' . $query : '' );
-	$bare  = preg_replace( '/^www\./', '', $host );
-	$tries = array_values(
-		array_unique(
-			array(
-				$url,
-				'https://' . $host . $rest,
-				'https://' . ( $bare === $host ? 'www.' . $host : $bare ) . $rest,
-				'http://' . $host . $rest,
-			)
-		)
-	);
 
-	$notes   = array();
-	$blocked = false;
-	$page    = null;
-	foreach ( $tries as $try ) {
-		if ( nwa_time_left() < 6 ) {
-			break;
+	// 1. Direct scan and Google PageSpeed at the same time.
+	$blocked  = false;
+	$page     = null;
+	$has_key  = (bool) trim( (string) nwa_opt( 'psi_key' ) );
+	$parallel = nwa_parallel_scan( $url, $has_key );
+	$psi      = null;
+	if ( $parallel ) {
+		$response = $parallel['page'];
+		$psi      = $parallel['psi'];
+		// A redirect (for example to https or www) is followed with the safe WordPress request.
+		if ( is_array( $response ) && $response['code'] >= 300 && $response['code'] < 400 ) {
+			$response = nwa_fetch( $url, 10 );
 		}
-		$response = nwa_fetch( $try, 15 );
-		if ( nwa_is_real_page( $response ) ) {
-			$page = $response;
-			break;
+	} else {
+		$response = nwa_fetch( $url, 10 );
+	}
+	if ( nwa_is_real_page( $response ) ) {
+		$page = $response;
+	} elseif ( null !== $response ) {
+		$notes[] = nwa_note( $url, $response );
+		$blocked = ! is_wp_error( $response );
+	}
+	// cURL multi can not use SSL fallbacks: retry once with the WordPress request.
+	if ( ! $page && is_wp_error( $response ) && nwa_time_left() > 12 ) {
+		$retry = nwa_fetch( $url, 8 );
+		if ( nwa_is_real_page( $retry ) ) {
+			$page = $retry;
 		}
-		if ( is_wp_error( $response ) ) {
-			$notes[] = $try . ': ' . $response->get_error_message();
+	}
+
+	// 2. Other versions of the address, only for connection problems (not firewalls) and only when quick.
+	if ( ! $page && is_wp_error( $response ) && ( ! $psi || is_wp_error( $psi ) ) && nwa_time_left() > 25 ) {
+		$path  = (string) wp_parse_url( $url, PHP_URL_PATH );
+		$bare  = preg_replace( '/^www\./', '', $host );
+		$tries = array_diff(
+			array_unique(
+				array(
+					'https://' . $host . ( $path ? $path : '/' ),
+					'https://' . ( $bare === $host ? 'www.' . $host : $bare ) . ( $path ? $path : '/' ),
+					'http://' . $host . ( $path ? $path : '/' ),
+				)
+			),
+			array( $url )
+		);
+		foreach ( $tries as $try ) {
+			if ( nwa_time_left() < 35 ) {
+				break;
+			}
+			$response = nwa_fetch( $try, 6 );
+			if ( nwa_is_real_page( $response ) ) {
+				$page = $response;
+				break;
+			}
+			$notes[] = nwa_note( $try, $response );
+		}
+	}
+
+	$psi_error = '';
+	if ( $page ) {
+		$result = nwa_analyze_page( $page, $url );
+		$result['mode'] = 'full';
+		// Add Google's real speed numbers when they arrived.
+		if ( ! $psi && $has_key && nwa_time_left() > 30 ) {
+			$psi = nwa_pagespeed( $url );
+		}
+		if ( $psi && ! is_wp_error( $psi ) ) {
+			$result = nwa_merge_pagespeed( $result, $psi );
+		} elseif ( is_wp_error( $psi ) && $has_key ) {
+			$notes[] = 'PageSpeed (extra metrics): ' . $psi->get_error_message();
+		}
+	} else {
+		// 3. Google PageSpeed Insights reads the site from Google's servers.
+		if ( ! $psi || ( is_wp_error( $psi ) && nwa_time_left() > 25 ) ) {
+			$psi = nwa_time_left() > 12 ? nwa_pagespeed( $url ) : new WP_Error( 'nwa_time', 'Not enough time left on this server for PageSpeed (PHP time limit).' );
+		}
+		if ( ! is_wp_error( $psi ) ) {
+			$result = nwa_audit_from_pagespeed( $psi, $url );
 		} else {
-			$notes[] = $try . ': HTTP ' . $response['code'] . ( $response['code'] < 400 ? ' (firewall or empty page)' : '' );
-			if ( in_array( $response['code'], array( 401, 403, 406, 429, 503 ), true ) || $response['code'] < 400 ) {
-				$blocked = true;
+			$notes[]   = 'PageSpeed: ' . $psi->get_error_message();
+			$psi_error = $psi->get_error_message();
+			// 4. Quick base report, never an error.
+			$result = nwa_base_report( $url, $blocked );
+		}
+	}
+
+	// Domain, SSL and email checks work even when a firewall blocks the page.
+	if ( nwa_time_left() > 4 ) {
+		$result = nwa_add_checks( $result, nwa_domain_checks( $result['final_url'] ? $result['final_url'] : $url ) );
+	}
+	$result['notes'] = $notes;
+	if ( $psi_error ) {
+		$result['psi_error'] = $psi_error;
+	}
+	return $result;
+}
+
+/**
+ * Short note for the admin about a failed attempt.
+ *
+ * @param string         $url      URL.
+ * @param array|WP_Error $response Response.
+ * @return string
+ */
+function nwa_note( $url, $response ) {
+	if ( is_wp_error( $response ) ) {
+		return $url . ': ' . $response->get_error_message();
+	}
+	return $url . ': HTTP ' . $response['code'] . ( $response['code'] < 400 ? ' (firewall challenge or empty page)' : ' (blocked)' );
+}
+
+/**
+ * Append checks to a result and recalculate all scores.
+ *
+ * @param array $result Result.
+ * @param array $extra  cat => checks.
+ * @return array
+ */
+function nwa_add_checks( $result, $extra ) {
+	$groups = array();
+	foreach ( nwa_categories() as $key => $cat ) {
+		$groups[ $key ] = isset( $result['categories'][ $key ]['checks'] ) ? $result['categories'][ $key ]['checks'] : array();
+		if ( ! empty( $extra[ $key ] ) ) {
+			$labels = wp_list_pluck( $groups[ $key ], 'label' );
+			foreach ( $extra[ $key ] as $check ) {
+				if ( ! in_array( $check['label'], $labels, true ) ) {
+					$groups[ $key ][] = $check;
+				}
 			}
 		}
 	}
+	return nwa_finish( $result, $groups );
+}
 
-	if ( $page ) {
-		$result          = nwa_analyze_page( $page, $url );
-		$result['mode']  = 'full';
-		$result['notes'] = $notes;
-		return $result;
+/**
+ * Add Google's measured speed metrics to a full scan.
+ *
+ * @param array $result Result.
+ * @param array $lh     Lighthouse result.
+ * @return array
+ */
+function nwa_merge_pagespeed( $result, $lh ) {
+	$psi   = nwa_audit_from_pagespeed( $lh, $result['url'] );
+	$want  = array(
+		'speed'  => array( 'Main content load time (LCP)', 'First paint (FCP)', 'Responsiveness (TBT)', 'Google speed score (mobile)' ),
+		'design' => array( 'Stable layout (CLS)', 'Readable colours', 'Easy to tap', 'Google accessibility score' ),
+		'seo'    => array( 'Google SEO score' ),
+	);
+	$extra = array();
+	foreach ( $want as $cat => $labels ) {
+		foreach ( $psi['categories'][ $cat ]['checks'] as $check ) {
+			if ( in_array( $check['label'], $labels, true ) ) {
+				$extra[ $cat ][] = $check;
+			}
+		}
+	}
+	if ( ! empty( $psi['stats']['lcp'] ) ) {
+		$result['stats']['lcp'] = $psi['stats']['lcp'];
+	}
+	$result['google'] = true;
+	return nwa_add_checks( $result, $extra );
+}
+
+/**
+ * Checks that do not need the page itself: SSL certificate, https redirect and email setup.
+ *
+ * @param string $url URL.
+ * @return array cat => checks.
+ */
+function nwa_domain_checks( $url ) {
+	$host   = (string) wp_parse_url( $url, PHP_URL_HOST );
+	$domain = preg_replace( '/^www\./', '', $host );
+	$out    = array( 'speed' => array() );
+	if ( ! $host || filter_var( $host, FILTER_VALIDATE_IP ) ) {
+		return $out;
+	}
+	$public = nwa_is_own_host( $host ) || wp_http_validate_url( 'https://' . $host . '/' );
+
+	// SSL certificate: valid and not close to expiring.
+	if ( $public && function_exists( 'stream_socket_client' ) && function_exists( 'openssl_x509_parse' ) && nwa_time_left() > 6 ) {
+		$ctx  = stream_context_create(
+			array(
+				'ssl' => array(
+					'capture_peer_cert' => true,
+					'verify_peer'       => true,
+					'verify_peer_name'  => true,
+					'SNI_enabled'       => true,
+					'peer_name'         => $host,
+				),
+			)
+		);
+		$conn = @stream_socket_client( 'ssl://' . $host . ':443', $errno, $errstr, 5, STREAM_CLIENT_CONNECT, $ctx ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
+		if ( $conn ) {
+			$params = stream_context_get_params( $conn );
+			$cert   = isset( $params['options']['ssl']['peer_certificate'] ) ? openssl_x509_parse( $params['options']['ssl']['peer_certificate'] ) : false;
+			fclose( $conn ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+			if ( $cert && ! empty( $cert['validTo_time_t'] ) ) {
+				$days            = (int) floor( ( $cert['validTo_time_t'] - time() ) / DAY_IN_SECONDS );
+				$issuer          = isset( $cert['issuer']['O'] ) ? $cert['issuer']['O'] : ( isset( $cert['issuer']['CN'] ) ? $cert['issuer']['CN'] : '' );
+				$out['speed'][]  = $days > 14
+					? nwa_check( 'SSL certificate', 'pass', 2, sprintf( 'Valid certificate%s, renews in %d days (%s).', $issuer ? ' from ' . $issuer : '', $days, gmdate( 'j M Y', $cert['validTo_time_t'] ) ) )
+					: nwa_check( 'SSL certificate', $days >= 0 ? 'warn' : 'fail', 2, $days >= 0 ? sprintf( 'The certificate expires in %d days.', $days ) : 'The SSL certificate has expired.', 'Renew the SSL certificate (or turn on auto renewal with your host) before browsers start showing warnings.' );
+			}
+		} else {
+			$out['speed'][] = nwa_check( 'SSL certificate', 'fail', 2, 'No valid SSL certificate was found for ' . $host . '.', 'Install a free SSL certificate (Let\'s Encrypt) with your host so the site loads securely.' );
+		}
 	}
 
-	// Plan B: Google PageSpeed Insights reads the site from Google's servers.
-	$psi = nwa_time_left() > 20 ? nwa_pagespeed( $url ) : new WP_Error( 'nwa_time', 'Not enough time left for PageSpeed.' );
-	if ( ! is_wp_error( $psi ) ) {
-		$result          = nwa_audit_from_pagespeed( $psi, $url );
-		$result['notes'] = $notes;
-		return $result;
+	// http should redirect to https.
+	if ( $public && nwa_time_left() > 6 ) {
+		$args = array(
+			'timeout'     => 5,
+			'redirection' => 0,
+			'user-agent'  => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+		);
+		$http = nwa_is_own_host( $host ) ? wp_remote_get( 'http://' . $host . '/', $args ) : wp_safe_remote_get( 'http://' . $host . '/', $args );
+		if ( ! is_wp_error( $http ) && (int) wp_remote_retrieve_response_code( $http ) < 400 ) {
+			$code     = (int) wp_remote_retrieve_response_code( $http );
+			$location = (string) wp_remote_retrieve_header( $http, 'location' );
+			$out['speed'][] = in_array( $code, array( 301, 302, 307, 308 ), true ) && 0 === stripos( $location, 'https://' )
+				? nwa_check( 'Redirects to HTTPS', 'pass', 1, 'Visitors who type http:// are sent to the secure version.' )
+				: nwa_check( 'Redirects to HTTPS', 'warn', 1, 'The http:// version does not redirect to https://.', 'Add a 301 redirect from http to https (your host, Cloudflare or a plugin like Really Simple SSL can do this).' );
+		}
 	}
-	$notes[] = 'PageSpeed: ' . $psi->get_error_message();
 
-	// Plan C: a quick base report, never an error.
-	$result          = nwa_base_report( $url, $blocked );
-	$result['notes'] = $notes;
-	return $result;
+	// Professional email and protection against spoofing.
+	if ( function_exists( 'dns_get_record' ) && nwa_time_left() > 3 ) {
+		$mx    = @dns_get_record( $domain, DNS_MX ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
+		$txt   = @dns_get_record( $domain, DNS_TXT ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
+		$dmarc = @dns_get_record( '_dmarc.' . $domain, DNS_TXT ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
+		$spf   = false;
+		foreach ( (array) $txt as $record ) {
+			if ( isset( $record['txt'] ) && 0 === stripos( $record['txt'], 'v=spf1' ) ) {
+				$spf = true;
+			}
+		}
+		$has_dmarc = false;
+		foreach ( (array) $dmarc as $record ) {
+			if ( isset( $record['txt'] ) && 0 === stripos( $record['txt'], 'v=DMARC1' ) ) {
+				$has_dmarc = true;
+			}
+		}
+		$a_rec = @dns_get_record( $domain, DNS_A ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
+		if ( is_array( $mx ) && ( $mx || ! empty( $a_rec ) ) ) {
+			$out['speed'][] = $mx
+				? nwa_check( 'Business email', 'pass', 1, sprintf( 'Email is set up for @%s, which looks professional and builds trust.', $domain ) )
+				: nwa_check( 'Business email', 'warn', 1, sprintf( 'No email service found for @%s.', $domain ), sprintf( 'Use an email address like hello@%s instead of Gmail or Yahoo. It looks far more professional.', $domain ) );
+		}
+		if ( $mx ) {
+			$out['speed'][] = $spf
+				? nwa_check( 'Email protection (SPF)', 'pass', 1, 'An SPF record tells inboxes which servers may send your email.' )
+				: nwa_check( 'Email protection (SPF)', 'warn', 1, 'No SPF record found, so your emails are more likely to land in spam.', 'Add an SPF record in your DNS (your email provider gives you the exact text).' );
+			$out['speed'][] = $has_dmarc
+				? nwa_check( 'Anti spoofing (DMARC)', 'pass', 1, 'A DMARC policy protects your domain from fake emails.' )
+				: nwa_check( 'Anti spoofing (DMARC)', 'warn', 1, 'No DMARC record, so scammers can send email pretending to be you.', 'Add a DMARC record, for example v=DMARC1; p=none; rua=mailto:you@yourdomain, then tighten it later.' );
+		}
+	}
+	return $out;
 }
 
 /**
@@ -854,13 +1056,8 @@ function nwa_finish( $result, $groups ) {
  * @return array|WP_Error Lighthouse result.
  */
 function nwa_pagespeed( $url ) {
-	$api = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=' . rawurlencode( $url ) . '&strategy=mobile&category=performance&category=seo&category=accessibility&category=best-practices';
-	$key = trim( (string) nwa_opt( 'psi_key' ) );
-	if ( $key ) {
-		$api .= '&key=' . rawurlencode( $key );
-	}
 	$response = wp_safe_remote_get(
-		$api,
+		nwa_psi_api( $url ),
 		array(
 			'timeout'             => max( 10, min( 70, (int) floor( nwa_time_left() ) - 4 ) ),
 			'limit_response_size' => 20971520,
@@ -869,12 +1066,170 @@ function nwa_pagespeed( $url ) {
 	if ( is_wp_error( $response ) ) {
 		return $response;
 	}
-	$data = json_decode( (string) wp_remote_retrieve_body( $response ), true );
-	if ( 200 !== (int) wp_remote_retrieve_response_code( $response ) || empty( $data['lighthouseResult']['audits'] ) ) {
-		$message = isset( $data['error']['message'] ) ? $data['error']['message'] : 'HTTP ' . wp_remote_retrieve_response_code( $response );
+	return nwa_psi_parse( (int) wp_remote_retrieve_response_code( $response ), (string) wp_remote_retrieve_body( $response ) );
+}
+
+/**
+ * PageSpeed Insights API address for a URL.
+ *
+ * @param string $url URL.
+ * @return string
+ */
+function nwa_psi_api( $url ) {
+	$api = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=' . rawurlencode( $url ) . '&strategy=mobile&category=performance&category=seo&category=accessibility&category=best-practices';
+	$key = trim( (string) nwa_opt( 'psi_key' ) );
+	return $key ? $api . '&key=' . rawurlencode( $key ) : $api;
+}
+
+/**
+ * Read a PageSpeed API response.
+ *
+ * @param int    $code HTTP status.
+ * @param string $body Body.
+ * @return array|WP_Error Lighthouse result.
+ */
+function nwa_psi_parse( $code, $body ) {
+	$data = json_decode( $body, true );
+	if ( 200 !== $code || empty( $data['lighthouseResult']['audits'] ) ) {
+		$message = isset( $data['error']['message'] ) ? $data['error']['message'] : ( $code ? 'HTTP ' . $code : 'No answer from Google in time' );
 		return new WP_Error( 'nwa_psi', nwa_cut( $message, 200 ) );
 	}
 	return $data['lighthouseResult'];
+}
+
+/**
+ * Fetch the page and ask Google PageSpeed at the same time (curl multi), so Google
+ * gets the whole time budget even on hosts that stop PHP after 30 seconds.
+ *
+ * @param string $url       URL.
+ * @param bool   $want_psi  Keep waiting for Google after the page arrived.
+ * @return array|null { page: array|WP_Error|null, psi: array|WP_Error|null }, null when curl multi is missing.
+ */
+function nwa_parallel_scan( $url, $want_psi ) {
+	if ( ! function_exists( 'curl_multi_init' ) ) {
+		return null;
+	}
+	$host   = (string) wp_parse_url( $url, PHP_URL_HOST );
+	$own    = nwa_is_own_host( $host );
+	$ca     = ABSPATH . WPINC . '/certificates/ca-bundle.crt';
+	$mh     = curl_multi_init();
+	$jobs   = array();
+	$limit  = 3145728;
+	$budget = max( 8, (int) floor( nwa_time_left() ) - 3 );
+
+	// The page itself (redirects are followed later with the safe WordPress request).
+	if ( $own || wp_http_validate_url( $url ) ) {
+		$buffer  = '';
+		$headers = array();
+		$ch      = curl_init( $url );
+		curl_setopt_array(
+			$ch,
+			array(
+				CURLOPT_RETURNTRANSFER => false,
+				CURLOPT_FOLLOWLOCATION => false,
+				CURLOPT_CONNECTTIMEOUT => 8,
+				CURLOPT_TIMEOUT        => min( 15, $budget ),
+				CURLOPT_ENCODING       => '',
+				CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+				CURLOPT_HTTPHEADER     => array( 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Accept-Language: en-US,en;q=0.9', 'Cache-Control: no-cache' ),
+				CURLOPT_PROTOCOLS      => CURLPROTO_HTTP | CURLPROTO_HTTPS,
+				CURLOPT_CAINFO         => $ca,
+				CURLOPT_HEADERFUNCTION => function ( $h, $line ) use ( &$headers ) {
+					$parts = explode( ':', $line, 2 );
+					if ( 2 === count( $parts ) ) {
+						$headers[ strtolower( trim( $parts[0] ) ) ] = trim( $parts[1] );
+					}
+					return strlen( $line );
+				},
+				CURLOPT_WRITEFUNCTION  => function ( $h, $data ) use ( &$buffer, $limit ) {
+					$buffer .= $data;
+					return strlen( $buffer ) > $limit ? 0 : strlen( $data );
+				},
+			)
+		);
+		curl_multi_add_handle( $mh, $ch );
+		$jobs['page'] = array(
+			'h'       => $ch,
+			'buffer'  => &$buffer,
+			'headers' => &$headers,
+		);
+	}
+
+	// Google PageSpeed.
+	$psi_body = '';
+	$ph       = curl_init( nwa_psi_api( $url ) );
+	curl_setopt_array(
+		$ph,
+		array(
+			CURLOPT_RETURNTRANSFER => false,
+			CURLOPT_CONNECTTIMEOUT => 10,
+			CURLOPT_TIMEOUT        => min( 80, $budget ),
+			CURLOPT_ENCODING       => '',
+			CURLOPT_CAINFO         => $ca,
+			CURLOPT_WRITEFUNCTION  => function ( $h, $data ) use ( &$psi_body ) {
+				$psi_body .= $data;
+				return strlen( $data );
+			},
+		)
+	);
+	curl_multi_add_handle( $mh, $ph );
+	$jobs['psi'] = array( 'h' => $ph );
+
+	$done    = array();
+	$running = 0;
+	do {
+		$status = curl_multi_exec( $mh, $running );
+		if ( $running ) {
+			curl_multi_select( $mh, 0.5 );
+		}
+		while ( $info = curl_multi_info_read( $mh ) ) { // phpcs:ignore WordPress.CodeAnalysis.AssignmentInCondition, Generic.CodeAnalysis.AssignmentInCondition
+			foreach ( $jobs as $name => $job ) {
+				if ( $job['h'] === $info['handle'] ) {
+					$done[ $name ] = $info['result'];
+				}
+			}
+		}
+		// Page is in and good: stop unless we want Google's extra numbers and have time.
+		if ( isset( $done['page'] ) && ! isset( $done['psi'] ) && ( ! $want_psi || nwa_time_left() < 8 ) ) {
+			$code = (int) curl_getinfo( $jobs['page']['h'], CURLINFO_RESPONSE_CODE );
+			if ( 200 === $code && nwa_is_real_page( array( 'code' => 200, 'body' => $jobs['page']['buffer'] ) ) ) {
+				break;
+			}
+		}
+		if ( nwa_time_left() < 2 ) {
+			break;
+		}
+	} while ( $running && CURLM_OK === $status );
+
+	$out = array(
+		'page' => null,
+		'psi'  => null,
+	);
+	if ( isset( $jobs['page'] ) ) {
+		$ch = $jobs['page']['h'];
+		if ( isset( $done['page'] ) && CURLE_OK === $done['page'] ) {
+			$out['page'] = array(
+				'code'    => (int) curl_getinfo( $ch, CURLINFO_RESPONSE_CODE ),
+				'body'    => $jobs['page']['buffer'],
+				'headers' => $jobs['page']['headers'],
+				'time'    => (float) curl_getinfo( $ch, CURLINFO_TOTAL_TIME ),
+				'url'     => (string) curl_getinfo( $ch, CURLINFO_EFFECTIVE_URL ),
+			);
+		} else {
+			$out['page'] = new WP_Error( 'nwa_page', isset( $done['page'] ) ? curl_error( $ch ) . ' (curl ' . $done['page'] . ')' : 'No answer in time' );
+		}
+		curl_multi_remove_handle( $mh, $ch );
+		curl_close( $ch );
+	}
+	if ( isset( $done['psi'] ) && CURLE_OK === $done['psi'] ) {
+		$out['psi'] = nwa_psi_parse( (int) curl_getinfo( $ph, CURLINFO_RESPONSE_CODE ), $psi_body );
+	} else {
+		$out['psi'] = new WP_Error( 'nwa_psi', isset( $done['psi'] ) ? 'Connection to Google failed: ' . curl_error( $ph ) : 'Google did not finish within the time this server allows' );
+	}
+	curl_multi_remove_handle( $mh, $ph );
+	curl_close( $ph );
+	curl_multi_close( $mh );
+	return $out;
 }
 
 /**
@@ -1018,6 +1373,40 @@ function nwa_base_report( $url, $blocked ) {
 			),
 		),
 	);
+	// Small files are often allowed even when the homepage is behind a firewall.
+	$origin = ( 0 === stripos( $url, 'http://' ) ? 'http://' : 'https://' ) . $host;
+	$get    = function ( $path ) use ( $origin ) {
+		if ( nwa_time_left() < 8 ) {
+			return null;
+		}
+		$r = nwa_fetch( $origin . $path, 4, 204800 );
+		return is_wp_error( $r ) || 200 !== $r['code'] ? null : $r['body'];
+	};
+	if ( $dns ) {
+		$robots  = $get( '/robots.txt' );
+		$has_bot = $robots && false !== stripos( $robots, 'user-agent' );
+		$groups['seo'][] = $has_bot
+			? nwa_check( 'robots.txt', 'pass', 1, 'A robots.txt file guides search engines.' )
+			: nwa_check( 'robots.txt', 'warn', 1, 'A robots.txt file could not be confirmed.', 'Add a robots.txt file that points search engines to your sitemap.' );
+		$map = $has_bot && preg_match( '/^\s*sitemap:/im', $robots );
+		if ( ! $map ) {
+			foreach ( array( '/sitemap_index.xml', '/sitemap.xml', '/wp-sitemap.xml' ) as $path ) {
+				$body = $get( $path );
+				if ( $body && preg_match( '/<(urlset|sitemapindex)\b/i', $body ) ) {
+					$map = true;
+					break;
+				}
+			}
+		}
+		$groups['seo'][] = $map
+			? nwa_check( 'XML sitemap', 'pass', 2, 'An XML sitemap helps Google find all your pages.' )
+			: nwa_check( 'XML sitemap', 'warn', 2, 'An XML sitemap could not be confirmed.', 'Create an XML sitemap (Yoast, Rank Math or WordPress core) and submit it in Google Search Console.' );
+		$icon = $get( '/favicon.ico' );
+		if ( $icon ) {
+			$groups['design'][] = nwa_check( 'Favicon', 'pass', 1, 'A browser tab icon is set.' );
+		}
+	}
+
 	$result = array(
 		'url'       => $url,
 		'final_url' => $url,

@@ -156,6 +156,23 @@ function nwa_settings_screen() {
 		<?php if ( $saved ) : ?>
 			<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'Settings saved.', 'nabia-audit' ); ?></p></div>
 		<?php endif; ?>
+		<?php
+		$test = get_transient( 'nwa_psi_test_' . get_current_user_id() );
+		if ( $test ) :
+			delete_transient( 'nwa_psi_test_' . get_current_user_id() );
+			?>
+			<div class="notice notice-<?php echo 'ok' === $test['status'] ? 'success' : 'error'; ?>"><p><?php echo esc_html( $test['message'] ); ?></p></div>
+		<?php endif; ?>
+		<p>
+			<a class="button" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=nwa_test_psi' ), 'nwa_test_psi' ) ); ?>"><?php esc_html_e( 'Test the Google PageSpeed API key', 'nabia-audit' ); ?></a>
+			<span class="description"><?php esc_html_e( 'Takes 10 to 40 seconds. Save your key first.', 'nabia-audit' ); ?></span>
+			<br><span class="description">
+				<?php
+				/* translators: %d: seconds */
+				echo esc_html( sprintf( __( 'Your server allows each audit about %d seconds.', 'nabia-audit' ), nwa_time_budget() ) );
+				?>
+			</span>
+		</p>
 		<p><?php esc_html_e( 'Show the audit form on any page with the shortcode', 'nabia-audit' ); ?> <code>[nabia_website_audit]</code>. <?php esc_html_e( 'With the Nabia theme it replaces the built in free audit form automatically.', 'nabia-audit' ); ?></p>
 		<form method="post">
 			<?php wp_nonce_field( 'nwa_settings', 'nwa_settings_nonce' ); ?>
@@ -200,3 +217,36 @@ function nwa_settings_screen() {
 	</div>
 	<?php
 }
+
+/**
+ * Test the PageSpeed key on this website and show the result.
+ */
+function nwa_test_psi() {
+	check_admin_referer( 'nwa_test_psi' );
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'nabia-audit' ) );
+	}
+	nwa_time_left( nwa_time_budget() );
+	if ( ! trim( (string) nwa_opt( 'psi_key' ) ) ) {
+		$test = array(
+			'status'  => 'error',
+			'message' => __( 'No API key saved yet. Paste your key, save the settings and test again.', 'nabia-audit' ),
+		);
+	} else {
+		$lh   = nwa_pagespeed( home_url( '/' ) );
+		$test = is_wp_error( $lh )
+			? array(
+				'status'  => 'error',
+				'message' => __( 'Google PageSpeed did not work:', 'nabia-audit' ) . ' ' . $lh->get_error_message() . ' ' . __( 'Check that the "PageSpeed Insights API" is enabled and that the key has no website (HTTP referrer) restriction, because the request comes from your server.', 'nabia-audit' ),
+			)
+			: array(
+				'status'  => 'ok',
+				/* translators: %d: score */
+				'message' => sprintf( __( 'It works! Google scored your homepage %d/100 for mobile speed.', 'nabia-audit' ), isset( $lh['categories']['performance']['score'] ) ? (int) round( $lh['categories']['performance']['score'] * 100 ) : 0 ),
+			);
+	}
+	set_transient( 'nwa_psi_test_' . get_current_user_id(), $test, 300 );
+	wp_safe_redirect( admin_url( 'edit.php?post_type=nabia_audit&page=nwa-settings' ) );
+	exit;
+}
+add_action( 'admin_post_nwa_test_psi', 'nwa_test_psi' );

@@ -922,8 +922,8 @@ function nwa_build_pdf( $result, $lead = array() ) {
 	}
 
 	$pdf->fill( 'dark' );
-	$pdf->box( 18, 232, 174, 40, 6 );
-	$pdf->SetXY( 26, 239 );
+	$pdf->box( 18, 218, 174, 52, 6 );
+	$pdf->SetXY( 26, 226 );
 	$pdf->font( 15, 'B' );
 	$pdf->ink( 'white' );
 	$pdf->Cell( 100, 8, $pdf->t( $s['brand_name'] ), 0, 2, 'L', false, $s['website'] );
@@ -944,10 +944,10 @@ function nwa_build_pdf( $result, $lead = array() ) {
 	}
 	foreach ( $lines as $line ) {
 		$pdf->SetX( 26 );
-		$pdf->Cell( 110, 5.2, $pdf->t( $line[0] ), 0, 2, 'L', false, $line[1] );
+		$pdf->Cell( 110, 6, $pdf->t( $line[0] ), 0, 2, 'L', false, $line[1] );
 	}
-	$pdf->ring( 172, 252, 11, 3, $score, $state[ nwa_state( $score ) ], 'white', 0.15 );
-	$pdf->SetXY( 159, 247 );
+	$pdf->ring( 172, 244, 12, 3, $score, $state[ nwa_state( $score ) ], 'white', 0.15 );
+	$pdf->SetXY( 159, 239 );
 	$pdf->font( 14, 'B' );
 	$pdf->ink( 'white' );
 	$pdf->Cell( 26, 7, (string) $score, 0, 2, 'C' );

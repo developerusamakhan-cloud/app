@@ -57,6 +57,7 @@ function nwa_defaults() {
 		'form_title'    => 'Get your free website report',
 		'button_label'  => 'Audit my website',
 		'hourly_limit'  => 3,
+		'psi_key'       => '',
 	);
 }
 
@@ -190,7 +191,8 @@ function nwa_settings_screen() {
 				$row( 'send_user', __( 'Email the report', 'nabia-audit' ), 'checkbox', __( 'Send the PDF report to the visitor', 'nabia-audit' ) );
 				$row( 'send_admin', __( 'Notify me', 'nabia-audit' ), 'checkbox', __( 'Email me every new audit with the PDF attached', 'nabia-audit' ) );
 				$row( 'notify_email', __( 'Send notifications to', 'nabia-audit' ), 'email' );
-				$row( 'hourly_limit', __( 'Audits per visitor per hour', 'nabia-audit' ), 'number' );
+				$row( 'hourly_limit', __( 'Reports per visitor per hour', 'nabia-audit' ), 'number', __( 'Only finished reports count, the minimum is 3. You (admins) are never limited.', 'nabia-audit' ) );
+				$row( 'psi_key', __( 'Google PageSpeed API key (recommended)', 'nabia-audit' ), 'text', __( 'Used when a website blocks the direct scan. Free key: Google Cloud Console, enable "PageSpeed Insights API", create an API key. Without a key Google allows only a few requests.', 'nabia-audit' ) );
 				?>
 			</tbody></table>
 			<?php submit_button(); ?>

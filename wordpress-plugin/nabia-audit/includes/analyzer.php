@@ -69,29 +69,86 @@ function nwa_normalize_url( $url ) {
 }
 
 /**
- * Fetch a URL safely (no private or local addresses).
+ * Seconds left for this audit (hosts often stop PHP after 30 seconds).
+ *
+ * @param int|null $reset Start a new budget of this many seconds.
+ * @return float
+ */
+function nwa_time_left( $reset = null ) {
+	static $deadline = 0;
+	if ( null !== $reset ) {
+		$deadline = microtime( true ) + $reset;
+	}
+	if ( ! $deadline ) {
+		$deadline = microtime( true ) + 25;
+	}
+	return $deadline - microtime( true );
+}
+
+/**
+ * Time budget for one audit, based on the PHP time limit.
+ *
+ * @return int Seconds.
+ */
+function nwa_time_budget() {
+	if ( function_exists( 'set_time_limit' ) ) {
+		@set_time_limit( 120 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
+	}
+	$max = (int) ini_get( 'max_execution_time' );
+	if ( $max <= 0 ) {
+		return 90;
+	}
+	// Keep a few seconds for saving, the PDF and the emails.
+	return max( 15, min( 90, $max - 8 ) );
+}
+
+/**
+ * Is this host the website the plugin runs on (with or without www)?
+ *
+ * @param string $host Host.
+ * @return bool
+ */
+function nwa_is_own_host( $host ) {
+	$own = preg_replace( '/^www\./', '', (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
+	return $own && strtolower( preg_replace( '/^www\./', '', (string) $host ) ) === strtolower( $own );
+}
+
+/**
+ * Fetch a URL like a normal browser would.
+ *
+ * Other websites go through wp_safe_remote_get (no private or local addresses). The
+ * site's own domain may resolve to an internal address on many hosts, so it uses a
+ * normal request. When the SSL certificate chain is incomplete it retries without
+ * verification (we only read a public page).
  *
  * @param string $url     URL.
  * @param int    $timeout Seconds.
  * @param int    $limit   Max bytes.
  * @return array|WP_Error
  */
-function nwa_fetch( $url, $timeout = 20, $limit = 3145728 ) {
-	$start    = microtime( true );
-	$response = wp_safe_remote_get(
-		$url,
-		array(
-			'timeout'             => $timeout,
-			'redirection'         => 5,
-			'limit_response_size' => $limit,
-			'user-agent'          => 'Mozilla/5.0 (compatible; NabiaWebsiteAudit/' . NWA_VERSION . '; +' . home_url( '/' ) . ')',
-			'headers'             => array(
-				'Accept'          => 'text/html,application/xhtml+xml,*/*;q=0.8',
-				'Accept-Encoding' => 'gzip, deflate',
-			),
-		)
+function nwa_fetch( $url, $timeout = 15, $limit = 3145728 ) {
+	$timeout = max( 3, min( $timeout, (int) floor( nwa_time_left() ) - 2 ) );
+	$own     = nwa_is_own_host( wp_parse_url( $url, PHP_URL_HOST ) );
+	$args    = array(
+		'timeout'             => $timeout,
+		'redirection'         => 5,
+		'limit_response_size' => $limit,
+		'user-agent'          => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+		'headers'             => array(
+			'Accept'          => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+			'Accept-Language' => 'en-US,en;q=0.9',
+			'Accept-Encoding' => 'gzip, deflate',
+			'Cache-Control'   => 'no-cache',
+		),
 	);
-	$time     = microtime( true ) - $start;
+	$start    = microtime( true );
+	$response = $own ? wp_remote_get( $url, $args ) : wp_safe_remote_get( $url, $args );
+	if ( is_wp_error( $response ) && preg_match( '/ssl|certificate|curl error (35|51|58|60|77)/i', $response->get_error_message() ) && nwa_time_left() > 5 ) {
+		$args['sslverify'] = false;
+		$args['timeout']   = max( 3, min( $timeout, (int) floor( nwa_time_left() ) - 2 ) );
+		$response          = $own ? wp_remote_get( $url, $args ) : wp_safe_remote_get( $url, $args );
+	}
+	$time = microtime( true ) - $start;
 	if ( is_wp_error( $response ) ) {
 		return $response;
 	}
@@ -109,6 +166,24 @@ function nwa_fetch( $url, $timeout = 20, $limit = 3145728 ) {
 		'time'    => $time,
 		'url'     => $final,
 	);
+}
+
+/**
+ * Does a response look like a real web page (not a firewall challenge)?
+ *
+ * @param array|WP_Error $page Response.
+ * @return bool
+ */
+function nwa_is_real_page( $page ) {
+	if ( is_wp_error( $page ) || $page['code'] >= 400 || strlen( trim( $page['body'] ) ) < 200 ) {
+		return false;
+	}
+	$head = strtolower( substr( $page['body'], 0, 20000 ) );
+	if ( false === strpos( $head, '<html' ) && false === strpos( $head, '<body' ) && false === strpos( $head, '<head' ) ) {
+		return false;
+	}
+	// Bot protection pages (Cloudflare, Sucuri, Imunify and similar).
+	return ! preg_match( '/(just a moment\.\.\.|cf-browser-verification|cf_chl_|challenge-platform|attention required! \| cloudflare|sucuri website firewall|imunify360|ddos protection by|checking your browser)/', $head );
 }
 
 /**
@@ -132,12 +207,82 @@ function nwa_check( $label, $status, $weight, $found, $fix = '' ) {
 }
 
 /**
- * Run a full audit.
+ * Run a full audit. Never fails: when the page can not be read directly it tries
+ * other addresses, then Google PageSpeed, and finally builds a quick base report.
  *
  * @param string $url URL.
- * @return array { ok, error, url, final_url, fetched, stats, categories{ key => { score, checks } }, overall, grade }
+ * @return array { ok, url, final_url, fetched, mode, notes, stats, categories{ key => { score, checks } }, overall, grade }
  */
 function nwa_run_audit( $url ) {
+	nwa_time_left( nwa_time_budget() );
+	$host  = (string) wp_parse_url( $url, PHP_URL_HOST );
+	$path  = (string) wp_parse_url( $url, PHP_URL_PATH );
+	$query = (string) wp_parse_url( $url, PHP_URL_QUERY );
+	$rest  = ( $path ? $path : '/' ) . ( $query ? '?' . $query : '' );
+	$bare  = preg_replace( '/^www\./', '', $host );
+	$tries = array_values(
+		array_unique(
+			array(
+				$url,
+				'https://' . $host . $rest,
+				'https://' . ( $bare === $host ? 'www.' . $host : $bare ) . $rest,
+				'http://' . $host . $rest,
+			)
+		)
+	);
+
+	$notes   = array();
+	$blocked = false;
+	$page    = null;
+	foreach ( $tries as $try ) {
+		if ( nwa_time_left() < 6 ) {
+			break;
+		}
+		$response = nwa_fetch( $try, 15 );
+		if ( nwa_is_real_page( $response ) ) {
+			$page = $response;
+			break;
+		}
+		if ( is_wp_error( $response ) ) {
+			$notes[] = $try . ': ' . $response->get_error_message();
+		} else {
+			$notes[] = $try . ': HTTP ' . $response['code'] . ( $response['code'] < 400 ? ' (firewall or empty page)' : '' );
+			if ( in_array( $response['code'], array( 401, 403, 406, 429, 503 ), true ) || $response['code'] < 400 ) {
+				$blocked = true;
+			}
+		}
+	}
+
+	if ( $page ) {
+		$result          = nwa_analyze_page( $page, $url );
+		$result['mode']  = 'full';
+		$result['notes'] = $notes;
+		return $result;
+	}
+
+	// Plan B: Google PageSpeed Insights reads the site from Google's servers.
+	$psi = nwa_time_left() > 20 ? nwa_pagespeed( $url ) : new WP_Error( 'nwa_time', 'Not enough time left for PageSpeed.' );
+	if ( ! is_wp_error( $psi ) ) {
+		$result          = nwa_audit_from_pagespeed( $psi, $url );
+		$result['notes'] = $notes;
+		return $result;
+	}
+	$notes[] = 'PageSpeed: ' . $psi->get_error_message();
+
+	// Plan C: a quick base report, never an error.
+	$result          = nwa_base_report( $url, $blocked );
+	$result['notes'] = $notes;
+	return $result;
+}
+
+/**
+ * Analyse a fetched HTML page.
+ *
+ * @param array  $page Response from nwa_fetch().
+ * @param string $url  Requested URL.
+ * @return array
+ */
+function nwa_analyze_page( $page, $url ) {
 	$result = array(
 		'ok'         => false,
 		'error'      => '',
@@ -149,20 +294,6 @@ function nwa_run_audit( $url ) {
 		'overall'    => 0,
 		'grade'      => '',
 	);
-
-	$page = nwa_fetch( $url );
-	if ( is_wp_error( $page ) && 0 === stripos( $url, 'https://' ) ) {
-		// Some sites still only answer on http.
-		$page = nwa_fetch( 'http://' . substr( $url, 8 ) );
-	}
-	if ( is_wp_error( $page ) ) {
-		$result['error'] = 'We could not reach this website (' . $page->get_error_message() . '). Please check the address and try again.';
-		return $result;
-	}
-	if ( $page['code'] >= 400 || '' === trim( $page['body'] ) ) {
-		$result['error'] = sprintf( 'The website answered with an error (HTTP %d), so it could not be analysed. Please check the address and try again.', $page['code'] );
-		return $result;
-	}
 
 	$html  = $page['body'];
 	$final = $page['url'];
@@ -317,12 +448,15 @@ function nwa_run_audit( $url ) {
 	$origin      = ( $https ? 'https://' : 'http://' ) . $host . ( $port ? ':' . $port : '' );
 
 	// Robots.txt and sitemap.
-	$robots_txt = nwa_fetch( $origin . '/robots.txt', 8, 204800 );
+	$robots_txt = nwa_time_left() > 6 ? nwa_fetch( $origin . '/robots.txt', 6, 204800 ) : new WP_Error( 'nwa_time', 'skipped' );
 	$has_robots = ! is_wp_error( $robots_txt ) && 200 === $robots_txt['code'] && false !== stripos( $robots_txt['body'], 'user-agent' );
 	$sitemap    = $has_robots && preg_match( '/^\s*sitemap:/im', $robots_txt['body'] );
 	if ( ! $sitemap ) {
 		foreach ( array( '/sitemap_index.xml', '/sitemap.xml', '/wp-sitemap.xml' ) as $path ) {
-			$map = nwa_fetch( $origin . $path, 8, 204800 );
+			if ( nwa_time_left() < 6 ) {
+				break;
+			}
+			$map = nwa_fetch( $origin . $path, 6, 204800 );
 			if ( ! is_wp_error( $map ) && 200 === $map['code'] && preg_match( '/<(urlset|sitemapindex)\b/i', $map['body'] ) ) {
 				$sitemap = true;
 				break;
@@ -684,4 +818,221 @@ function nwa_strengths( $result, $limit = 5 ) {
 function nwa_cut( $text, $max ) {
 	$text = trim( preg_replace( '/\s+/u', ' ', (string) $text ) );
 	return mb_strlen( $text ) > $max ? rtrim( mb_substr( $text, 0, $max - 3 ) ) . '...' : $text;
+}
+
+/**
+ * Turn groups of checks into category scores, an overall score and a grade.
+ *
+ * @param array $result Result (url, final_url, stats set).
+ * @param array $groups design|seo|content|speed => checks.
+ * @return array
+ */
+function nwa_finish( $result, $groups ) {
+	$total  = 0;
+	$weight = 0;
+	foreach ( nwa_categories() as $key => $cat ) {
+		$checks = ! empty( $groups[ $key ] ) ? $groups[ $key ] : array( nwa_check( $cat['short'] . ' review', 'warn', 1, 'This part needs a manual check.', 'I will review this part by hand and send you my notes.' ) );
+		$score  = nwa_score( $checks );
+		$result['categories'][ $key ] = array(
+			'score'  => $score,
+			'checks' => $checks,
+		);
+		$total  += $score * $cat['weight'];
+		$weight += $cat['weight'];
+	}
+	$result['ok']      = true;
+	$result['error']   = '';
+	$result['overall'] = (int) round( $total / max( 1, $weight ) );
+	$result['grade']   = nwa_grade( $result['overall'] );
+	return $result;
+}
+
+/**
+ * Ask Google PageSpeed Insights (Lighthouse) about a URL.
+ *
+ * @param string $url URL.
+ * @return array|WP_Error Lighthouse result.
+ */
+function nwa_pagespeed( $url ) {
+	$api = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=' . rawurlencode( $url ) . '&strategy=mobile&category=performance&category=seo&category=accessibility&category=best-practices';
+	$key = trim( (string) nwa_opt( 'psi_key' ) );
+	if ( $key ) {
+		$api .= '&key=' . rawurlencode( $key );
+	}
+	$response = wp_safe_remote_get(
+		$api,
+		array(
+			'timeout'             => max( 10, min( 70, (int) floor( nwa_time_left() ) - 4 ) ),
+			'limit_response_size' => 20971520,
+		)
+	);
+	if ( is_wp_error( $response ) ) {
+		return $response;
+	}
+	$data = json_decode( (string) wp_remote_retrieve_body( $response ), true );
+	if ( 200 !== (int) wp_remote_retrieve_response_code( $response ) || empty( $data['lighthouseResult']['audits'] ) ) {
+		$message = isset( $data['error']['message'] ) ? $data['error']['message'] : 'HTTP ' . wp_remote_retrieve_response_code( $response );
+		return new WP_Error( 'nwa_psi', nwa_cut( $message, 200 ) );
+	}
+	return $data['lighthouseResult'];
+}
+
+/**
+ * Build our report from a Lighthouse result.
+ *
+ * @param array  $lh  Lighthouse result.
+ * @param string $url URL.
+ * @return array
+ */
+function nwa_audit_from_pagespeed( $lh, $url ) {
+	$audits = $lh['audits'];
+	$map    = array(
+		'is-on-https'               => array( 'speed', 'Secure connection (HTTPS)', 3, 'Install a free SSL certificate and redirect all pages to https.' ),
+		'largest-contentful-paint'  => array( 'speed', 'Main content load time (LCP)', 3, 'Compress and resize your hero image, use page caching and good hosting so the main content shows within 2.5 seconds.' ),
+		'first-contentful-paint'    => array( 'speed', 'First paint (FCP)', 2, 'Reduce render blocking CSS and JavaScript and turn on caching so something appears quickly.' ),
+		'total-blocking-time'       => array( 'speed', 'Responsiveness (TBT)', 2, 'Remove heavy plugins and scripts, and delay third party scripts like chat widgets and trackers.' ),
+		'speed-index'               => array( 'speed', 'Speed Index', 2, 'Optimise images and load only what is needed for the first screen.' ),
+		'server-response-time'      => array( 'speed', 'Server response', 2, 'Use page caching and good hosting. Aim for under 0.6 seconds.' ),
+		'render-blocking-resources' => array( 'speed', 'Render blocking files', 2, 'Defer non critical CSS and JavaScript so content appears sooner.' ),
+		'uses-text-compression'     => array( 'speed', 'Compression', 1, 'Turn on GZIP or Brotli compression on the server or with a caching plugin.' ),
+		'modern-image-formats'      => array( 'speed', 'Modern image formats', 2, 'Convert images to WebP. They are usually 30% smaller with the same quality.' ),
+		'uses-optimized-images'     => array( 'speed', 'Optimised images', 1, 'Compress images before uploading them.' ),
+		'offscreen-images'          => array( 'speed', 'Lazy loading', 1, 'Lazy load images further down the page.' ),
+		'unused-javascript'         => array( 'speed', 'Unused JavaScript', 1, 'Remove plugins and scripts you do not need on this page.' ),
+		'viewport'                  => array( 'design', 'Mobile friendly', 3, 'Make the site responsive. Over 60% of visitors browse on a phone.' ),
+		'cumulative-layout-shift'   => array( 'design', 'Stable layout (CLS)', 2, 'Give images, ads and embeds a fixed size so the page does not jump while loading.' ),
+		'color-contrast'            => array( 'design', 'Readable colours', 2, 'Increase the contrast between text and background so everyone can read it.' ),
+		'target-size'               => array( 'design', 'Easy to tap', 2, 'Make buttons and links at least 48px tall with space between them.' ),
+		'tap-targets'               => array( 'design', 'Easy to tap', 2, 'Make buttons and links at least 48px tall with space between them.' ),
+		'button-name'               => array( 'design', 'Labelled buttons', 1, 'Give every button a clear text label.' ),
+		'errors-in-console'         => array( 'design', 'No browser errors', 1, 'Fix the JavaScript errors so every feature works for visitors.' ),
+		'document-title'            => array( 'seo', 'Page title', 3, 'Add a unique title of 50 to 60 characters with your main service and location.' ),
+		'meta-description'          => array( 'seo', 'Meta description', 3, 'Write a 140 to 160 character description that sells the page and ends with a reason to click.' ),
+		'is-crawlable'              => array( 'seo', 'Indexing', 3, 'Remove the noindex tag or robots block so Google can list this page.' ),
+		'http-status-code'          => array( 'seo', 'Page status', 2, 'Make sure the homepage returns a normal 200 status.' ),
+		'robots-txt'                => array( 'seo', 'robots.txt', 1, 'Fix the robots.txt file so it is valid and points to your sitemap.' ),
+		'canonical'                 => array( 'seo', 'Canonical URL', 1, 'Add a valid canonical tag (any SEO plugin does this).' ),
+		'hreflang'                  => array( 'seo', 'Language versions', 1, 'Fix the hreflang tags for your language versions.' ),
+		'crawlable-anchors'         => array( 'seo', 'Crawlable links', 1, 'Use normal links with an href so Google can follow them.' ),
+		'image-alt'                 => array( 'seo', 'Image alt text', 2, 'Describe every meaningful image in a few words.' ),
+		'link-text'                 => array( 'content', 'Descriptive links', 2, 'Replace "click here" and "read more" with words that say where the link goes.' ),
+		'heading-order'             => array( 'content', 'Heading order', 2, 'Use headings in order (H1, then H2, then H3) so the page is easy to scan.' ),
+		'html-has-lang'             => array( 'content', 'Language set', 1, 'Add lang="en" (or your language) to the html tag.' ),
+		'font-size'                 => array( 'content', 'Readable text size', 2, 'Use at least 16px body text on phones.' ),
+		'dom-size'                  => array( 'content', 'Page structure', 1, 'Simplify the page: fewer nested sections and page builder wrappers.' ),
+	);
+	$groups = array(
+		'design'  => array(),
+		'seo'     => array(),
+		'content' => array(),
+		'speed'   => array(),
+	);
+	$clean  = function ( $text ) {
+		$text = preg_replace( '/\s*\[Learn[^\]]*\]\([^)]*\)\.?/i', '', (string) $text );
+		$text = preg_replace( '/\[([^\]]+)\]\([^)]*\)/', '$1', $text );
+		return rtrim( trim( str_replace( '`', '', $text ) ), '. ' );
+	};
+	$seen   = array();
+	foreach ( $map as $id => $info ) {
+		if ( empty( $audits[ $id ] ) || isset( $seen[ $info[1] ] ) ) {
+			continue;
+		}
+		$a    = $audits[ $id ];
+		$mode = isset( $a['scoreDisplayMode'] ) ? $a['scoreDisplayMode'] : '';
+		if ( ! isset( $a['score'] ) || null === $a['score'] || in_array( $mode, array( 'notApplicable', 'informative', 'manual', 'error' ), true ) ) {
+			continue;
+		}
+		$seen[ $info[1] ] = true;
+		$status           = $a['score'] >= 0.9 ? 'pass' : ( $a['score'] >= 0.5 ? 'warn' : 'fail' );
+		$found            = $clean( $a['title'] ) . ( ! empty( $a['displayValue'] ) ? ': ' . $clean( $a['displayValue'] ) : '' ) . '.';
+		$groups[ $info[0] ][] = nwa_check( $info[1], $status, $info[2], $found, $info[3] );
+	}
+	// Google's own category scores as extra checks.
+	$cats  = isset( $lh['categories'] ) ? $lh['categories'] : array();
+	$extra = array(
+		'performance'    => array( 'speed', 'Google speed score (mobile)', 3, 'Work through the speed fixes above. Images, caching and fewer scripts make the biggest difference.' ),
+		'accessibility'  => array( 'design', 'Google accessibility score', 2, 'Improve contrast, labels and tap targets so everyone can use the site.' ),
+		'seo'            => array( 'seo', 'Google SEO score', 2, 'Fix the SEO items above to reach 90 or more.' ),
+		'best-practices' => array( 'content', 'Google best practices score', 1, 'Fix browser errors, outdated libraries and insecure requests.' ),
+	);
+	foreach ( $extra as $id => $info ) {
+		if ( isset( $cats[ $id ]['score'] ) && null !== $cats[ $id ]['score'] ) {
+			$score                = (int) round( $cats[ $id ]['score'] * 100 );
+			$status               = $score >= 90 ? 'pass' : ( $score >= 50 ? 'warn' : 'fail' );
+			$groups[ $info[0] ][] = nwa_check( $info[1], $status, $info[2], sprintf( 'Google scores this %d out of 100.', $score ), $info[3] );
+		}
+	}
+
+	$num    = function ( $id ) use ( $audits ) {
+		return isset( $audits[ $id ]['numericValue'] ) ? (float) $audits[ $id ]['numericValue'] : null;
+	};
+	$final  = ! empty( $lh['finalDisplayedUrl'] ) ? $lh['finalDisplayedUrl'] : ( ! empty( $lh['finalUrl'] ) ? $lh['finalUrl'] : $url );
+	$result = array(
+		'url'       => $url,
+		'final_url' => $final,
+		'fetched'   => time(),
+		'mode'      => 'pagespeed',
+		'title'     => '',
+		'stats'     => array(
+			'load_time' => null !== $num( 'server-response-time' ) ? round( $num( 'server-response-time' ) / 1000, 2 ) : null,
+			'size_kb'   => null !== $num( 'total-byte-weight' ) ? round( $num( 'total-byte-weight' ) / 1024 ) : null,
+			'words'     => null,
+			'images'    => null,
+			'links'     => null,
+			'files'     => isset( $audits['network-requests']['details']['items'] ) ? count( $audits['network-requests']['details']['items'] ) : null,
+			'https'     => 0 === stripos( $final, 'https://' ),
+			'lcp'       => null !== $num( 'largest-contentful-paint' ) ? round( $num( 'largest-contentful-paint' ) / 1000, 1 ) : null,
+		),
+	);
+	return nwa_finish( $result, $groups );
+}
+
+/**
+ * Quick base report when the website can not be scanned at all. Never an error.
+ *
+ * @param string $url     URL.
+ * @param bool   $blocked Did a firewall answer?
+ * @return array
+ */
+function nwa_base_report( $url, $blocked ) {
+	$host   = (string) wp_parse_url( $url, PHP_URL_HOST );
+	$dns    = filter_var( $host, FILTER_VALIDATE_IP ) || gethostbyname( $host ) !== $host;
+	$groups = array(
+		'design'  => array(
+			nwa_check( 'Design and mobile review', 'warn', 2, 'Needs a manual check, our scanner could not open the page.', 'I will review your design, mobile layout and calls to action by hand and send you my notes.' ),
+		),
+		'seo'     => array(
+			nwa_check( 'SEO review', 'warn', 2, 'Needs a manual check, our scanner could not open the page.', 'I will check your titles, descriptions, headings and Google indexing by hand.' ),
+		),
+		'content' => array(
+			nwa_check( 'Content review', 'warn', 2, 'Needs a manual check, our scanner could not open the page.', 'I will review your text, trust signals and readability by hand.' ),
+		),
+		'speed'   => array(
+			nwa_check( 'Domain', $dns ? 'pass' : 'fail', 2, $dns ? sprintf( '%s is online and resolves correctly.', $host ) : sprintf( '%s does not resolve. Check the spelling or your DNS settings.', $host ), 'Check the domain name and DNS settings with your domain provider.' ),
+			nwa_check(
+				'Open to search engines and scanners',
+				'warn',
+				3,
+				$blocked ? 'A firewall or security plugin blocked our automated scanner.' : 'The website did not answer our scanner in time.',
+				$blocked ? 'Make sure Cloudflare, Wordfence or your host firewall does not block Google and other good bots, or you may lose rankings too.' : 'A slow server can also slow down Google. Check your hosting and caching.'
+			),
+		),
+	);
+	$result = array(
+		'url'       => $url,
+		'final_url' => $url,
+		'fetched'   => time(),
+		'mode'      => 'basic',
+		'title'     => '',
+		'stats'     => array(
+			'load_time' => null,
+			'size_kb'   => null,
+			'words'     => null,
+			'images'    => null,
+			'links'     => null,
+			'files'     => null,
+			'https'     => 0 === stripos( $url, 'https://' ),
+		),
+	);
+	return nwa_finish( $result, $groups );
 }

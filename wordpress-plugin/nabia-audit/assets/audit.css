@@ -538,3 +538,13 @@
 		text-align: center;
 	}
 }
+
+.nwa-note {
+	margin: 0;
+	padding: 12px 14px;
+	border-radius: 12px;
+	background: #fef3c7;
+	color: #92400e;
+	font-size: 14px;
+	font-weight: 600;
+}

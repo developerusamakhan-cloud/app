@@ -4,14 +4,14 @@ Tags: website audit, seo audit, lead generation, pdf report
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 
 Free website audit form that scores any website in real time and sends a branded PDF report.
 
 == What it does ==
 
-1. Visitors enter their website, name and email, and solve a small math captcha.
+1. Visitors enter their website and email, and solve a small math captcha.
 2. The plugin opens their homepage and runs about 40 checks in four groups:
    * Design & User Experience (mobile friendly, call to action, contact options, layout stability, fonts, social links)
    * SEO (title, meta description, H1, headings, alt text, canonical, indexing, language, Open Graph, schema, robots.txt, sitemap, internal links)
@@ -37,13 +37,26 @@ Free website audit form that scores any website in real time and sends a branded
 
 * Only public http and https websites can be audited (no local or private addresses).
 * PDF reports are stored in wp-content/uploads/nabia-audits, which is blocked from direct access. They are only served through links with a secret key.
-* Spam protection: nonce, hidden trap field, a minimum time on the form, the math captcha and a limit per visitor per hour.
+* Spam protection: nonce, hidden trap field, a minimum time on the form, the math captcha and a limit of finished reports per visitor per hour (admins are never limited).
+
+== If a website blocks the scan ==
+
+Some websites use firewalls (Cloudflare, Wordfence, host security) that block automated visitors. The plugin then asks Google PageSpeed Insights, which reads the site from Google's servers. Add a free PageSpeed API key in Settings for this to work reliably: Google Cloud Console, enable "PageSpeed Insights API", create an API key. If even that fails the visitor still gets a quick report, and the audit is marked "Manual review" in your list.
 
 == Credits ==
 
 PDF creation uses FPDF (http://www.fpdf.org), a free PHP library. Its license is in lib/fpdf/license.txt.
 
 == Changelog ==
+
+= 1.1.0 =
+* Never shows an error: when a website can not be opened directly, the plugin tries the https, www and http versions, then Google PageSpeed Insights, and finally sends a quick base report and flags it for a manual review.
+* The site's own domain can always be audited (many hosts resolve it to an internal address, which blocked the check).
+* Browser like requests and an SSL fallback, so firewalls and incomplete certificates block fewer scans.
+* Works within the PHP time limit of the host.
+* The hourly limit only counts finished reports (minimum 3) and admins are never limited.
+* The name field was removed from the form.
+* New optional Google PageSpeed API key setting.
 
 = 1.0.0 =
 * First release.

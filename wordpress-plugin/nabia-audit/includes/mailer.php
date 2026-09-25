@@ -126,7 +126,10 @@ function nwa_send_emails( $id ) {
 	}
 
 	if ( ! empty( $s['send_user'] ) && is_email( $email ) ) {
-		$intro        = sprintf( 'Hi %s, thank you for requesting a free audit of %s. Your full report is attached as a PDF. Here is the summary:', $name ? $name : 'there', $domain );
+		$intro        = sprintf( 'Hi there, thank you for requesting a free audit of %s. Your full report is attached as a PDF. Here is the summary:', $domain );
+		if ( isset( $result['mode'] ) && 'basic' === $result['mode'] ) {
+			$intro .= ' Your website did not let our scanner in, so this is a quick first look. I will review it by hand and email you the full picture within 24 hours.';
+		}
 		$headers      = $html;
 		$headers[]    = 'Reply-To: ' . $s['brand_name'] . ' <' . $s['email'] . '>';
 		$sent['user'] = wp_mail( $email, sprintf( 'Your website audit for %s: %d/100', $domain, $result['overall'] ), nwa_email_html( $id, $intro ), $headers, $files );
@@ -136,7 +139,11 @@ function nwa_send_emails( $id ) {
 		$intro         = sprintf( 'New free audit request from %s (%s) for %s. Open it in WordPress: %s', $name ? $name : 'a visitor', $email, $domain, admin_url( 'post.php?post=' . $id . '&action=edit' ) );
 		$headers       = $html;
 		$headers[]     = 'Reply-To: ' . ( $name ? $name : $email ) . ' <' . $email . '>';
-		$sent['admin'] = wp_mail( $s['notify_email'], sprintf( 'New audit: %s scored %d/100', $domain, $result['overall'] ), nwa_email_html( $id, $intro ), $headers, $files );
+		$manual        = isset( $result['mode'] ) && 'basic' === $result['mode'];
+		if ( $manual ) {
+			$intro .= ' IMPORTANT: the website could not be scanned automatically, so the visitor got a quick report and was promised a manual review within 24 hours.';
+		}
+		$sent['admin'] = wp_mail( $s['notify_email'], sprintf( 'New audit: %s scored %d/100%s', $domain, $result['overall'], $manual ? ' (manual review needed)' : '' ), nwa_email_html( $id, $intro ), $headers, $files );
 	}
 	if ( $renamed && file_exists( $renamed ) ) {
 		wp_delete_file( $renamed );

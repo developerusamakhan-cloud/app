@@ -122,7 +122,6 @@ function nwa_handle_submit() {
 		$fail( 'expired' );
 	}
 	$url   = nwa_normalize_url( isset( $_POST['nwa_url'] ) ? sanitize_text_field( wp_unslash( $_POST['nwa_url'] ) ) : '' );
-	$name  = isset( $_POST['nwa_name'] ) ? sanitize_text_field( wp_unslash( $_POST['nwa_name'] ) ) : '';
 	$email = isset( $_POST['nwa_email'] ) ? sanitize_email( wp_unslash( $_POST['nwa_email'] ) ) : '';
 	if ( ! $url || ! is_email( $email ) ) {
 		$fail( 'invalid' );
@@ -133,15 +132,12 @@ function nwa_handle_submit() {
 	) ) {
 		$fail( 'captcha' );
 	}
-	$ip_key = 'nwa_ip_' . md5( isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '' );
-	$count  = (int) get_transient( $ip_key );
-	if ( $count >= (int) nwa_opt( 'hourly_limit' ) ) {
+	// Only finished reports count towards the hourly limit, and admins are never limited.
+	$ip_key    = 'nwa_ip_' . md5( isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '' );
+	$count     = (int) get_transient( $ip_key );
+	$unlimited = current_user_can( 'manage_options' );
+	if ( ! $unlimited && $count >= max( 3, (int) nwa_opt( 'hourly_limit' ) ) ) {
 		$fail( 'limit' );
-	}
-	set_transient( $ip_key, $count + 1, HOUR_IN_SECONDS );
-
-	if ( function_exists( 'set_time_limit' ) ) {
-		@set_time_limit( 90 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
 	}
 	$host = preg_replace( '/^www\./', '', (string) wp_parse_url( $url, PHP_URL_HOST ) );
 	$id   = wp_insert_post(
@@ -155,27 +151,27 @@ function nwa_handle_submit() {
 		$fail( 'server' );
 	}
 	update_post_meta( $id, '_nwa_url', $url );
-	update_post_meta( $id, '_nwa_name', $name );
 	update_post_meta( $id, '_nwa_email', $email );
 	update_post_meta( $id, '_nwa_source', $back );
 	update_post_meta( $id, '_nwa_read', '0' );
 	nwa_key( $id );
 
 	$result = nwa_run_audit( $url );
-	update_post_meta( $id, '_nwa_result', wp_slash( wp_json_encode( $result ) ) );
 	if ( empty( $result['ok'] ) ) {
-		update_post_meta( $id, '_nwa_status', 'unreachable' );
-		update_post_meta( $id, '_nwa_error', $result['error'] );
-		wp_safe_redirect( add_query_arg( array( 'nwa_error' => 'unreachable', 'nwa_site' => rawurlencode( $host ) ), $back ) . '#nabia-audit' );
-		exit;
+		$result = nwa_base_report( $url, false );
 	}
+	update_post_meta( $id, '_nwa_result', wp_slash( wp_json_encode( $result ) ) );
 	update_post_meta( $id, '_nwa_status', 'done' );
+	update_post_meta( $id, '_nwa_mode', isset( $result['mode'] ) ? $result['mode'] : 'full' );
 	update_post_meta( $id, '_nwa_overall', (int) $result['overall'] );
 	foreach ( $result['categories'] as $key => $cat ) {
 		update_post_meta( $id, '_nwa_score_' . $key, (int) $cat['score'] );
 	}
 	nwa_pdf_path( $id, true );
 	nwa_send_emails( $id );
+	if ( ! $unlimited ) {
+		set_transient( $ip_key, $count + 1, HOUR_IN_SECONDS );
+	}
 
 	wp_safe_redirect( nwa_report_url( $id ) );
 	exit;
@@ -239,7 +235,7 @@ function nwa_render_form() {
 		'invalid'     => 'Please enter your website address and a valid email.',
 		'captcha'     => 'That sum was not quite right. Please try the little math question again.',
 		'expired'     => 'The form expired. Please try again.',
-		'limit'       => 'You have run a few audits already. Please try again in an hour, or message me directly.',
+		'limit'       => 'You have received a few reports already. Please try again in an hour, or message me directly for a free review.',
 		'server'      => 'Something went wrong on our side. Please try again.',
 		'unreachable' => sprintf( 'We could not open %s. Please check the address (for example yourwebsite.com) and try again. If your site blocks bots, message me and I will audit it by hand.', $site ? $site : 'this website' ),
 	);
@@ -261,16 +257,10 @@ function nwa_render_form() {
 			<label for="<?php echo esc_attr( $uid ); ?>-url">Website URL</label>
 			<input id="<?php echo esc_attr( $uid ); ?>-url" name="nwa_url" type="text" inputmode="url" autocomplete="url" placeholder="yourwebsite.com" required>
 		</p>
-		<div class="nwa-row">
-			<p class="nwa-field">
-				<label for="<?php echo esc_attr( $uid ); ?>-name">Your name</label>
-				<input id="<?php echo esc_attr( $uid ); ?>-name" name="nwa_name" type="text" autocomplete="name" placeholder="Jane">
-			</p>
-			<p class="nwa-field">
-				<label for="<?php echo esc_attr( $uid ); ?>-email">Email for the report</label>
-				<input id="<?php echo esc_attr( $uid ); ?>-email" name="nwa_email" type="email" autocomplete="email" placeholder="you@company.com" required>
-			</p>
-		</div>
+		<p class="nwa-field">
+			<label for="<?php echo esc_attr( $uid ); ?>-email">Email for the report</label>
+			<input id="<?php echo esc_attr( $uid ); ?>-email" name="nwa_email" type="email" autocomplete="email" placeholder="you@company.com" required>
+		</p>
 		<div class="nwa-field nwa-math">
 			<label for="<?php echo esc_attr( $uid ); ?>-math">Quick check, are you human?</label>
 			<div class="nwa-math-row">
@@ -329,6 +319,10 @@ function nwa_render_results( $id ) {
 				<p class="nwa-verdict"><?php echo esc_html( nwa_verdict( $score ) ); ?></p>
 			</div>
 		</div>
+
+		<?php if ( isset( $result['mode'] ) && 'basic' === $result['mode'] ) : ?>
+			<p class="nwa-note">Quick report: your website did not let our scanner in, so this is a first look. I will review it by hand and email you the full picture within 24 hours.</p>
+		<?php endif; ?>
 
 		<ul class="nwa-bars">
 			<?php foreach ( nwa_categories() as $key => $cat ) : ?>

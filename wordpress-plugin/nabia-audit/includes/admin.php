@@ -131,6 +131,9 @@ function nwa_column( $column, $id ) {
 			if ( 'done' === $status ) {
 				$score = (int) get_post_meta( $id, '_nwa_overall', true );
 				echo '<span class="nwa-badge is-' . esc_attr( nwa_state( $score ) ) . '">' . (int) $score . '</span>';
+				if ( 'basic' === get_post_meta( $id, '_nwa_mode', true ) ) {
+					echo '<br><small style="color:#b45309;font-weight:600">' . esc_html__( 'Manual review', 'nabia-audit' ) . '</small>';
+				}
 			} else {
 				echo '<span class="nwa-badge is-none" title="' . esc_attr( get_post_meta( $id, '_nwa_error', true ) ) . '">!</span>';
 			}
@@ -220,7 +223,7 @@ add_action( 'add_meta_boxes_nabia_audit', 'nwa_meta_boxes' );
 function nwa_detail_box( $post ) {
 	update_post_meta( $post->ID, '_nwa_read', '1' );
 	$result = nwa_result( $post->ID );
-	$name   = get_post_meta( $post->ID, '_nwa_name', true );
+	$name   = get_post_meta( $post->ID, '_nwa_name', true ); // Older audits only.
 	$email  = get_post_meta( $post->ID, '_nwa_email', true );
 	$url    = get_post_meta( $post->ID, '_nwa_url', true );
 	echo '<table class="widefat striped" style="margin-bottom:16px"><tbody>';
@@ -231,6 +234,16 @@ function nwa_detail_box( $post ) {
 	echo '<tr><th>' . esc_html__( 'Email', 'nabia-audit' ) . '</th><td><a href="mailto:' . esc_attr( $email ) . '">' . esc_html( $email ) . '</a></td></tr>';
 	echo '<tr><th>' . esc_html__( 'Report emailed', 'nabia-audit' ) . '</th><td>' . esc_html( get_post_meta( $post->ID, '_nwa_mail_user', true ) ? get_post_meta( $post->ID, '_nwa_mail_user', true ) : __( 'no', 'nabia-audit' ) ) . '</td></tr>';
 	echo '<tr><th>' . esc_html__( 'Requested', 'nabia-audit' ) . '</th><td>' . esc_html( get_the_date( '', $post ) . ' ' . get_the_time( '', $post ) ) . '</td></tr>';
+	$modes = array(
+		'full'      => __( 'Full scan of the homepage', 'nabia-audit' ),
+		'pagespeed' => __( 'Scanned with Google PageSpeed (the site blocked the direct scan)', 'nabia-audit' ),
+		'basic'     => __( 'Quick report only: the site could not be scanned. The visitor was promised a manual review within 24 hours.', 'nabia-audit' ),
+	);
+	$mode  = isset( $result['mode'] ) ? $result['mode'] : 'full';
+	echo '<tr><th>' . esc_html__( 'Scan type', 'nabia-audit' ) . '</th><td>' . ( 'basic' === $mode ? '<strong style="color:#b45309">' : '' ) . esc_html( isset( $modes[ $mode ] ) ? $modes[ $mode ] : $mode ) . ( 'basic' === $mode ? '</strong>' : '' ) . '</td></tr>';
+	if ( ! empty( $result['notes'] ) ) {
+		echo '<tr><th>' . esc_html__( 'Scanner notes', 'nabia-audit' ) . '</th><td><small>' . implode( '<br>', array_map( 'esc_html', (array) $result['notes'] ) ) . '</small></td></tr>';
+	}
 	echo '</tbody></table>';
 
 	if ( empty( $result['ok'] ) ) {
@@ -287,6 +300,7 @@ function nwa_admin_action() {
 	if ( 'nwa_rerun' === $action ) {
 		$result = nwa_run_audit( get_post_meta( $id, '_nwa_url', true ) );
 		update_post_meta( $id, '_nwa_result', wp_slash( wp_json_encode( $result ) ) );
+		update_post_meta( $id, '_nwa_mode', isset( $result['mode'] ) ? $result['mode'] : 'full' );
 		if ( ! empty( $result['ok'] ) ) {
 			update_post_meta( $id, '_nwa_status', 'done' );
 			update_post_meta( $id, '_nwa_overall', (int) $result['overall'] );

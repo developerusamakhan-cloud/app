@@ -425,6 +425,7 @@ function nwa_build_pdf( $result, $lead = array() ) {
 	$pdf->SetMargins( 18, 26, 18 );
 	$pdf->SetAutoPageBreak( true, 20 );
 
+	$mode   = isset( $result['mode'] ) ? $result['mode'] : 'full';
 	$date   = ! empty( $lead['date'] ) ? $lead['date'] : wp_date( get_option( 'date_format' ) );
 	$state  = array(
 		'good' => 'good',
@@ -552,21 +553,41 @@ function nwa_build_pdf( $result, $lead = array() ) {
 	$pdf->font( 10.5 );
 	$pdf->ink( 'muted' );
 	$pdf->Cell( 174, 6, $pdf->t( 'Start at the top: these fixes make the biggest difference first.' ), 0, 2 );
+	if ( 'basic' === $mode ) {
+		$pdf->SetY( $pdf->GetY() + 2 );
+		$by = $pdf->GetY();
+		$pdf->fill( '#fef3c7' );
+		$pdf->box( 18, $by, 174, 16, 3 );
+		$pdf->SetXY( 24, $by + 3 );
+		$pdf->font( 9.5, 'B' );
+		$pdf->ink( '#92400e' );
+		$pdf->MultiCell( 162, 5, $pdf->t( 'Quick report: your website did not let our scanner in, so this is a first look. I will review it by hand and email you the full picture within 24 hours.' ), 0, 'L' );
+		$pdf->SetY( $by + 18 );
+		$stats_y = $pdf->GetY();
+	}
 
+	$st    = $result['stats'];
+	$na    = function ( $value, $format ) {
+		return null === $value || '' === $value ? 'n/a' : $format( $value );
+	};
 	$stats = array(
-		array( sprintf( '%.2fs', $result['stats']['load_time'] ), 'Server response' ),
-		array( ( $result['stats']['size_kb'] < 10 ? number_format( (float) $result['stats']['size_kb'], 1 ) : (int) $result['stats']['size_kb'] ) . ' KB', 'HTML size' ),
-		array( number_format( $result['stats']['words'] ), 'Words' ),
-		array( (string) $result['stats']['images'], 'Images' ),
-		array( (string) $result['stats']['files'], 'Scripts & styles' ),
+		array( $na( isset( $st['load_time'] ) ? $st['load_time'] : null, function ( $v ) { return sprintf( '%.2fs', $v ); } ), 'Server response' ),
+		array( $na( isset( $st['size_kb'] ) ? $st['size_kb'] : null, function ( $v ) { return ( $v < 10 ? number_format( (float) $v, 1 ) : number_format( (float) $v ) ) . ' KB'; } ), 'pagespeed' === $mode ? 'Page weight' : 'HTML size' ),
+		'pagespeed' === $mode
+			? array( $na( isset( $st['lcp'] ) ? $st['lcp'] : null, function ( $v ) { return $v . 's'; } ), 'Main content loads' )
+			: array( $na( isset( $st['words'] ) ? $st['words'] : null, 'number_format' ), 'Words' ),
+		array( $na( isset( $st['images'] ) ? $st['images'] : null, 'strval' ), 'Images' ),
+		array( $na( isset( $st['files'] ) ? $st['files'] : null, 'strval' ), 'pagespeed' === $mode ? 'Requests' : 'Scripts & styles' ),
 	);
-	$tw = ( 174 - 4 * 3.5 ) / 5;
+	$stats_y = isset( $stats_y ) ? $stats_y : 48;
+	if ( 'basic' !== $mode ) :
+	$tw      = ( 174 - 4 * 3.5 ) / 5;
 	foreach ( $stats as $n => $stat ) {
 		$x = 18 + $n * ( $tw + 3.5 );
 		$pdf->fill( 'white' );
 		$pdf->stroke( 'line' );
-		$pdf->box( $x, 48, $tw, 21, 3, 'DF' );
-		$pdf->SetXY( $x, 51.5 );
+		$pdf->box( $x, $stats_y, $tw, 21, 3, 'DF' );
+		$pdf->SetXY( $x, $stats_y + 3.5 );
 		$pdf->font( 14, 'B' );
 		$pdf->ink( 'primary' );
 		$pdf->Cell( $tw, 7, $pdf->t( $stat[0] ), 0, 2, 'C' );
@@ -575,7 +596,9 @@ function nwa_build_pdf( $result, $lead = array() ) {
 		$pdf->Cell( $tw, 5, $pdf->t( $stat[1] ), 0, 0, 'C' );
 	}
 
-	$pdf->SetXY( 18, 78 );
+	endif;
+	$list_y = 'basic' === $mode ? $stats_y + 2 : $stats_y + 30;
+	$pdf->SetXY( 18, $list_y );
 	$pdf->font( 13, 'B' );
 	$pdf->ink( 'dark' );
 	$pdf->Cell( 174, 8, $pdf->t( 'Top priorities' ), 0, 2 );

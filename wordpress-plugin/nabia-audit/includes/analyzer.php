@@ -202,6 +202,7 @@ function nwa_check( $label, $status, $weight, $found, $fix = '' ) {
 		'status' => $status,
 		'weight' => $weight,
 		'found'  => $found,
+		'why'    => 'pass' === $status ? '' : nwa_impact( $label ),
 		'fix'    => 'pass' === $status ? '' : $fix,
 	);
 }
@@ -746,9 +747,15 @@ function nwa_analyze_page( $page, $url ) {
 	$seo[]  = $schema
 		? nwa_check( 'Structured data', 'pass', 2, 'Schema markup found, which helps rich results on Google.' )
 		: nwa_check( 'Structured data', 'warn', 2, 'No structured data found.', 'Add LocalBusiness or Organization schema so Google can show your details, reviews and opening hours.' );
-	$seo[] = $has_robots
-		? nwa_check( 'robots.txt', 'pass', 1, 'A robots.txt file is in place.' )
-		: nwa_check( 'robots.txt', 'warn', 1, 'No robots.txt file found.', 'Add a robots.txt file that points search engines to your sitemap.' );
+	$seo[] = $has_robots && nwa_robots_blocks_all( $robots_txt['body'] )
+		? nwa_check( 'robots.txt', 'fail', 3, 'robots.txt tells every search engine to stay out of the whole site (Disallow: /).', 'Remove "Disallow: /" from robots.txt. In WordPress also untick "Discourage search engines" under Settings, Reading.' )
+		: ( $has_robots
+			? nwa_check( 'robots.txt', 'pass', 1, 'A robots.txt file is in place.' )
+			: nwa_check( 'robots.txt', 'warn', 1, 'No robots.txt file found.', 'Add a robots.txt file that points search engines to your sitemap.' ) );
+	$analytics = preg_match( '/googletagmanager\.com|google-analytics\.com|gtag\(|fbq\(|connect\.facebook\.net|clarity\.ms|hotjar|plausible\.io|matomo|posthog|analytics\.tiktok|site-kit|usefathom|umami|snap\.licdn/i', $html );
+	$seo[]     = $analytics
+		? nwa_check( 'Visitor tracking (analytics)', 'pass', 2, 'Analytics or ad tracking is installed, so visits and leads can be measured.' )
+		: nwa_check( 'Visitor tracking (analytics)', 'fail', 2, 'No analytics tool found (Google Analytics, Tag Manager, Meta Pixel, Clarity or Hotjar).', 'Install Google Analytics 4 (for example with Site Kit) and track form submissions as conversions.' );
 	$seo[] = $sitemap
 		? nwa_check( 'XML sitemap', 'pass', 2, 'An XML sitemap is available for search engines.' )
 		: nwa_check( 'XML sitemap', 'fail', 2, 'No XML sitemap found.', 'Create an XML sitemap (Yoast, Rank Math or WordPress core) and submit it in Google Search Console.' );
@@ -768,6 +775,20 @@ function nwa_analyze_page( $page, $url ) {
 	$design[] = $contact
 		? nwa_check( 'Easy to contact', 'pass', 2, 'Phone, email or WhatsApp contact options are visible.' )
 		: nwa_check( 'Easy to contact', 'fail', 2, 'No phone number, email or WhatsApp link found on the page.', 'Show a clickable phone number, email or WhatsApp button in the header or footer.' );
+	$has_form = $q( "//form[.//input[@type='email'] or .//textarea]" )->length
+		|| preg_match( '/wpcf7|wpforms|gform_wrapper|elementor-form|hs-form|hbspt\.forms|typeform|calendly|fluentform|ninja-forms|jotform|tally\.so|nabia_website_audit|cf-form/i', $html );
+	$design[] = $has_form
+		? nwa_check( 'Lead capture form', 'pass', 3, 'Visitors can send an enquiry or book straight from this page.' )
+		: nwa_check( 'Lead capture form', 'fail', 3, 'No contact form, quote form or booking widget on this page.', 'Add a short form (name, email, one question) or a booking widget near the top and again at the bottom.' );
+	$design[] = $q( "//a[starts-with(@href,'tel:')]" )->length
+		? nwa_check( 'Tap to call', 'pass', 2, 'Mobile visitors can call with one tap.' )
+		: nwa_check( 'Tap to call', 'warn', 2, 'No clickable phone number (tel: link).', 'Add your phone number as a tel: link in the header and contact section.' );
+	$design[] = preg_match( '/wa\.me\/|api\.whatsapp\.com|whatsapp:\/\/|tawk\.to|crisp\.chat|intercom|drift\.com|livechatinc|tidio|zendesk|freshchat|chatra|smartsupp|m\.me\//i', $html )
+		? nwa_check( 'WhatsApp or live chat', 'pass', 1, 'Visitors can message instantly via WhatsApp or live chat.' )
+		: nwa_check( 'WhatsApp or live chat', 'warn', 1, 'No WhatsApp button or live chat found.', 'Add a WhatsApp click to chat button or a free live chat like Tawk.to.' );
+	if ( preg_match( '/user-scalable\s*=\s*(no|0)|maximum-scale\s*=\s*1(\.0)?\b/i', $viewport ) ) {
+		$design[] = nwa_check( 'Pinch to zoom', 'warn', 1, 'Zooming is switched off on phones.', 'Remove user-scalable=no and maximum-scale=1 from the viewport tag.' );
+	}
 	$design[] = $q( "//link[contains(@rel,'icon')]" )->length
 		? nwa_check( 'Favicon', 'pass', 1, 'A browser tab icon is set.' )
 		: nwa_check( 'Favicon', 'warn', 1, 'No favicon found.', 'Add a favicon so your brand shows in browser tabs and bookmarks.' );
@@ -808,6 +829,9 @@ function nwa_analyze_page( $page, $url ) {
 	$content[] = $text_ratio >= 10
 		? nwa_check( 'Text to code ratio', 'pass', 1, sprintf( '%s%% of the page is readable text.', $text_ratio ) )
 		: nwa_check( 'Text to code ratio', 'warn', 1, sprintf( 'Only %s%% of the page is readable text.', $text_ratio ), 'Too much code for little text. A leaner build and more helpful content both help.' );
+	$content[] = $q( "//a[contains(translate(@href,'PRIVACY','privacy'),'privacy') or contains(translate(.,'PRIVACY','privacy'),'privacy')]" )->length
+		? nwa_check( 'Privacy policy', 'pass', 1, 'A privacy policy is linked, which builds trust when people share details.' )
+		: nwa_check( 'Privacy policy', 'warn', 1, 'No privacy policy link found.', 'Publish a privacy policy and link it in the footer and next to your forms.' );
 	$content[] = ! $copyright || $copyright >= $year - 1
 		? nwa_check( 'Up to date', 'pass', 1, $copyright ? sprintf( 'Copyright year %d looks current.', $copyright ) : 'No outdated dates spotted.' )
 		: nwa_check( 'Up to date', 'warn', 1, sprintf( 'The footer says %d.', $copyright ), 'Update the copyright year. An old year makes visitors wonder if the business is still active.' );
@@ -874,6 +898,7 @@ function nwa_analyze_page( $page, $url ) {
 	$result['overall']   = (int) round( $total / max( 1, $weight ) );
 	$result['grade']     = nwa_grade( $result['overall'] );
 	$result['title']     = $title;
+	$result['tech']      = nwa_detect_tech( $html, $page['headers'] );
 	$result['stats']     = array(
 		'load_time' => $ttfb,
 		'size_kb'   => round( $size_kb, 1 ),
@@ -1452,4 +1477,162 @@ function nwa_google_blocked( $error ) {
 		return 'the SSL certificate was not accepted by Google';
 	}
 	return 'the page did not load for Google';
+}
+
+/**
+ * Does robots.txt block all search engines from the whole site?
+ *
+ * @param string $body robots.txt.
+ * @return bool
+ */
+function nwa_robots_blocks_all( $body ) {
+	$agents = array();
+	$rules  = false;
+	foreach ( preg_split( '/\r\n|\r|\n/', (string) $body ) as $line ) {
+		$line = trim( preg_replace( '/#.*/', '', $line ) );
+		if ( '' === $line || false === strpos( $line, ':' ) ) {
+			continue;
+		}
+		list( $field, $value ) = array_map( 'trim', explode( ':', $line, 2 ) );
+		$field                 = strtolower( $field );
+		if ( 'user-agent' === $field ) {
+			if ( $rules ) {
+				$agents = array();
+				$rules  = false;
+			}
+			$agents[] = $value;
+		} elseif ( 'disallow' === $field || 'allow' === $field ) {
+			$rules = true;
+			if ( 'disallow' === $field && '/' === $value && in_array( '*', $agents, true ) ) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+/**
+ * Platforms and tools the website is built with.
+ *
+ * @param string $html    HTML.
+ * @param array  $headers Response headers.
+ * @return string[]
+ */
+function nwa_detect_tech( $html, $headers ) {
+	$map  = array(
+		'WordPress'          => '#/wp-content/|/wp-includes/|content="WordPress#i',
+		'Elementor'          => '#/plugins/elementor/|class="[^"]*elementor-(kit|element|widget)#i',
+		'WooCommerce'        => '#/plugins/woocommerce/|class="[^"]*woocommerce-(page|cart|js)#i',
+		'Divi'               => '#et_pb_|/themes/Divi/#',
+		'Shopify'            => '#cdn\.shopify\.com|Shopify\.theme#i',
+		'Wix'                => '#static\.wixstatic\.com|_wixCIDX|wix-bolt#i',
+		'Squarespace'        => '#static1\.squarespace\.com|squarespace-cdn\.com#i',
+		'Webflow'            => '#data-wf-site|website-files\.com#i',
+		'Framer'             => '#framerusercontent\.com#i',
+		'Next.js'            => '#__NEXT_DATA__|/_next/static#',
+		'Google Tag Manager' => '#googletagmanager\.com#i',
+	);
+	$tech = array();
+	foreach ( $map as $name => $re ) {
+		if ( preg_match( $re, $html ) ) {
+			$tech[] = $name;
+		}
+	}
+	$server = isset( $headers['server'] ) ? ( is_array( $headers['server'] ) ? implode( ' ', $headers['server'] ) : (string) $headers['server'] ) : '';
+	if ( isset( $headers['cf-ray'] ) || false !== stripos( $server, 'cloudflare' ) ) {
+		$tech[] = 'Cloudflare';
+	}
+	return $tech;
+}
+
+/**
+ * Why a problem matters for the business (shown with every issue in the report).
+ *
+ * @param string $label Check label.
+ * @return string
+ */
+function nwa_impact( $label ) {
+	$map = array(
+		'Mobile friendly'                     => 'Most visitors browse on a phone. A zoomed out desktop page makes them leave, and Google ranks the mobile version first.',
+		'Clear call to action'                => 'Visitors need to be told what to do next. Pages without clear buttons turn far fewer visitors into enquiries.',
+		'Easy to contact'                     => 'If people can not find a quick way to reach you, ready buyers simply go to a competitor.',
+		'Lead capture form'                   => 'Interested visitors have to hunt for a way to reach you. Most will not bother, so ready buyers leave without a trace.',
+		'Tap to call'                         => 'High intent mobile visitors often prefer to call. Few will copy a number by hand.',
+		'WhatsApp or live chat'               => 'Many people will not fill in a form but will send a quick message. Instant chat captures leads that would otherwise leave.',
+		'Pinch to zoom'                       => 'People with weaker eyesight can not enlarge the text, which is an accessibility failure.',
+		'Favicon'                             => 'A missing icon in the browser tab looks unfinished and less trustworthy.',
+		'Stable layout'                       => 'When the page jumps while loading, people tap the wrong thing and get annoyed. Google measures this too.',
+		'Stable layout (CLS)'                 => 'When the page jumps while loading, people tap the wrong thing and get annoyed. Google measures this too.',
+		'Consistent typography'               => 'Too many fonts look messy and slow the page down.',
+		'Social proof links'                  => 'Active social profiles show you are a real, living business.',
+		'Clean build'                         => 'A heavy page builder makes the site slower and harder to keep consistent.',
+		'Readable colours'                    => 'Low contrast text is hard to read, especially on phones outside, so people skim less and leave sooner.',
+		'Easy to tap'                         => 'Small buttons close together cause mis taps and frustration on phones.',
+		'Labelled buttons'                    => 'Screen readers can not tell visitors what unlabeled buttons do.',
+		'No browser errors'                   => 'Script errors can break forms, menus and tracking without you noticing.',
+		'Google accessibility score'          => 'An accessible site reaches more customers and avoids legal risk in many countries.',
+		'Page title'                          => 'The title is the blue headline in Google results. A weak title means fewer clicks, even when you rank.',
+		'Meta description'                    => 'This is your advert text in Google. Without it Google picks random text and fewer people click.',
+		'Main heading (H1)'                   => 'The H1 tells visitors and Google what the page is about in one line.',
+		'Heading structure'                   => 'Clear sections help Google understand your services and help visitors find what they need.',
+		'Image alt text'                      => 'Alt text brings visitors from Google Images and helps people using screen readers.',
+		'Canonical URL'                       => 'Without it Google may split your ranking between duplicate addresses of the same page.',
+		'Indexing'                            => 'A page Google may not index can never appear in search results.',
+		'Language tag'                        => 'Helps Google show your page to people searching in the right language.',
+		'Social sharing preview'              => 'Links shared on WhatsApp, Facebook and LinkedIn look plain and get fewer clicks.',
+		'Structured data'                     => 'Schema can unlock rich results like stars, prices and opening hours that stand out in Google.',
+		'robots.txt'                          => 'robots.txt guides search engines. A wrong rule can hide your whole site from Google.',
+		'XML sitemap'                         => 'A sitemap helps Google find and index all your pages faster.',
+		'Internal links'                      => 'Links between your pages help visitors explore and pass ranking power to key pages.',
+		'Visitor tracking (analytics)'        => 'Without analytics you can not see visitors, sources or which pages bring leads, so marketing is guesswork.',
+		'Page status'                         => 'Error pages are dropped from Google and lose visitors.',
+		'Crawlable links'                     => 'Google can only follow real links, so hidden pages will not be found.',
+		'Google SEO score'                    => 'This is Google\'s own view of your technical SEO basics.',
+		'Amount of content'                   => 'Thin pages rarely rank. Helpful text answers questions and convinces visitors to contact you.',
+		'Easy to read'                        => 'Hard text makes visitors leave. Clear, simple writing sells better.',
+		'Scannable sections'                  => 'Most people scan instead of reading. Sub headings help them find what they came for.',
+		'Short paragraphs'                    => 'Long blocks of text are tiring on a phone, so people skip important points.',
+		'Visual content'                      => 'Real photos of your work build trust much faster than words alone.',
+		'Trust signals'                       => 'People rarely contact a business they can not verify. Reviews are one of the strongest drivers of enquiries.',
+		'Text to code ratio'                  => 'A lot of code with little text makes the page heavy and gives Google less to rank.',
+		'Up to date'                          => 'An old date makes visitors wonder whether the business is still active.',
+		'Privacy policy'                      => 'People hesitate to share details without one, and collecting data without a policy can break privacy laws.',
+		'Descriptive links'                   => 'Links like "click here" tell neither visitors nor Google where they lead.',
+		'Heading order'                       => 'A logical heading order makes the page easier to scan and understand.',
+		'Language set'                        => 'Helps browsers and Google handle your page correctly.',
+		'Readable text size'                  => 'Tiny text on phones makes people pinch and zoom, or leave.',
+		'Page structure'                      => 'A very complex page is slower to load and harder for phones to handle.',
+		'Google best practices score'         => 'Google checks for outdated code and security issues that can break the site.',
+		'Secure connection (HTTPS)'           => 'Browsers label http sites "Not secure", which scares visitors away and hurts rankings.',
+		'Server response'                     => 'A slow server delays everything else. Visitors leave and Google notices.',
+		'Page weight (HTML)'                  => 'Heavy pages load slowly on mobile data, and slow pages lose visitors.',
+		'Compression'                         => 'Compressed files load several times faster at no cost.',
+		'Number of files'                     => 'Every extra file is another round trip, which slows the page down on phones.',
+		'Render blocking scripts'             => 'Visitors stare at a blank screen while these files load first.',
+		'Render blocking files'               => 'Visitors stare at a blank screen while these files load first.',
+		'Modern image formats'                => 'Images are usually the heaviest part of a page. WebP makes them much lighter.',
+		'Optimised images'                    => 'Oversized images waste data and slow the page, especially on phones.',
+		'Lazy loading'                        => 'Loading every image at once slows the first screen people actually see.',
+		'Unused JavaScript'                   => 'Code that is loaded but not used still slows the page down.',
+		'Security headers'                    => 'These headers protect visitors against common attacks like clickjacking.',
+		'No mixed content'                    => 'Insecure files on a secure page can be blocked by browsers and break the design.',
+		'Software version hidden'             => 'Showing the exact version helps attackers look for known weaknesses.',
+		'Main content load time (LCP)'        => 'This is when visitors see your main content. Over 2.5 seconds and many leave before they even see your offer.',
+		'First paint (FCP)'                   => 'A long blank screen makes visitors think the site is broken.',
+		'Responsiveness (TBT)'                => 'When the page freezes, taps and clicks do nothing and people give up.',
+		'Speed Index'                         => 'Shows how quickly the page visibly fills in. Faster feels more professional.',
+		'Google speed score (mobile)'         => 'This is Google\'s own speed score for phones, which affects rankings and conversions.',
+		'SSL certificate'                     => 'An expired certificate shows a big security warning that stops almost every visitor.',
+		'Redirects to HTTPS'                  => 'People who type the address without https land on an insecure version.',
+		'Business email'                      => 'An email at your own domain looks far more professional than a free mailbox.',
+		'Email protection (SPF)'              => 'Without SPF your emails, including quotes and invoices, land in spam more often.',
+		'Anti spoofing (DMARC)'               => 'Scammers can send emails pretending to be you, which damages trust in your brand.',
+		'Domain'                              => 'If the domain does not resolve, nobody can reach the website at all.',
+		'Open to search engines and scanners' => 'If tools can not open your site, some search engines and link previews may struggle too.',
+		'Google can load your homepage'       => 'If Google can not see your page, it can not rank it, and you lose free traffic from search.',
+		'Design and mobile review'            => 'Design decides whether visitors trust you in the first seconds.',
+		'SEO review'                          => 'SEO decides whether new customers can find you on Google.',
+		'Content review'                      => 'Content is what finally convinces a visitor to get in touch.',
+	);
+	return isset( $map[ $label ] ) ? $map[ $label ] : '';
 }

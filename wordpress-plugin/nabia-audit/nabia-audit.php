@@ -3,7 +3,7 @@
  * Plugin Name:       Nabia Website Audit
  * Plugin URI:        https://nabiakhan.com/
  * Description:       Free website audit form with a math captcha. Scores a website for Design, SEO, Content and Speed & Security in real time, shows the results on the page, builds a branded PDF report and emails it. Every request is saved under Website Audits.
- * Version:           1.2.2
+ * Version:           1.3.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Nabia Khan
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NWA_VERSION', '1.2.2' );
+define( 'NWA_VERSION', '1.3.0' );
 define( 'NWA_FILE', __FILE__ );
 define( 'NWA_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NWA_URL', plugin_dir_url( __FILE__ ) );

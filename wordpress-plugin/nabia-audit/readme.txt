@@ -4,7 +4,7 @@ Tags: website audit, seo audit, lead generation, pdf report
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.2.2
+Stable tag: 1.3.0
 License: GPLv2 or later
 
 Free website audit form that scores any website in real time and sends a branded PDF report.
@@ -48,6 +48,13 @@ Some websites use firewalls (Cloudflare, Wordfence, host security) that block au
 PDF creation uses FPDF (http://www.fpdf.org), a free PHP library. Its license is in lib/fpdf/license.txt.
 
 == Changelog ==
+
+= 1.3.0 =
+* Every problem in the report now explains why it matters for the business, next to how to fix it.
+* New lead generation checks: lead capture form, tap to call, WhatsApp or live chat, analytics tracking, privacy policy and pinch to zoom.
+* robots.txt that blocks all search engines is reported as a high impact fix.
+* "Built with" detection (WordPress, Elementor, WooCommerce, Shopify, Wix, Squarespace, Webflow, Cloudflare and more) on the cover and in the admin.
+* The action plan page fits the "already working" list on the same page instead of leaving a nearly empty page.
 
 = 1.2.2 =
 * When Google can not load a website, the report explains why in plain English (refused by a firewall, blank page while loading, DNS problem or SSL problem).

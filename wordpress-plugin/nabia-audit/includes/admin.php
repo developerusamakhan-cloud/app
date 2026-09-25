@@ -240,6 +240,9 @@ function nwa_detail_box( $post ) {
 		'basic'     => __( 'Quick report only: the site could not be scanned. The visitor was promised a manual review within 24 hours.', 'nabia-audit' ),
 	);
 	$mode  = isset( $result['mode'] ) ? $result['mode'] : 'full';
+	if ( ! empty( $result['tech'] ) ) {
+		echo '<tr><th>' . esc_html__( 'Built with', 'nabia-audit' ) . '</th><td>' . esc_html( implode( ', ', $result['tech'] ) ) . '</td></tr>';
+	}
 	echo '<tr><th>' . esc_html__( 'Scan type', 'nabia-audit' ) . '</th><td>' . ( 'basic' === $mode ? '<strong style="color:#b45309">' : '' ) . esc_html( isset( $modes[ $mode ] ) ? $modes[ $mode ] : $mode ) . ( 'basic' === $mode ? '</strong>' : '' ) . '</td></tr>';
 	if ( ! empty( $result['notes'] ) ) {
 		echo '<tr><th>' . esc_html__( 'Scanner notes', 'nabia-audit' ) . '</th><td><small>' . implode( '<br>', array_map( 'esc_html', (array) $result['notes'] ) ) . '</small></td></tr>';
@@ -257,7 +260,7 @@ function nwa_detail_box( $post ) {
 		echo '<h3 class="nwa-cat">' . esc_html( $cat['title'] ) . ' <span class="nwa-badge is-' . esc_attr( nwa_state( $data['score'] ) ) . '" style="height:22px;min-width:30px;font-size:12px">' . (int) $data['score'] . '</span></h3>';
 		echo '<table class="widefat striped"><tbody>';
 		foreach ( $data['checks'] as $check ) {
-			echo '<tr><td style="width:80px"><span class="nwa-status ' . esc_attr( $check['status'] ) . '">' . esc_html( 'pass' === $check['status'] ? 'PASS' : ( 'warn' === $check['status'] ? 'IMPROVE' : 'FIX' ) ) . '</span></td><td style="width:190px"><strong>' . esc_html( $check['label'] ) . '</strong></td><td>' . esc_html( $check['found'] ) . ( $check['fix'] ? '<br><em style="color:#646970">' . esc_html( $check['fix'] ) . '</em>' : '' ) . '</td></tr>';
+			echo '<tr><td style="width:80px"><span class="nwa-status ' . esc_attr( $check['status'] ) . '">' . esc_html( 'pass' === $check['status'] ? 'PASS' : ( 'warn' === $check['status'] ? 'IMPROVE' : 'FIX' ) ) . '</span></td><td style="width:190px"><strong>' . esc_html( $check['label'] ) . '</strong></td><td>' . esc_html( $check['found'] ) . ( ! empty( $check['why'] ) ? '<br><small style="color:#9d174d">' . esc_html( $check['why'] ) . '</small>' : '' ) . ( $check['fix'] ? '<br><em style="color:#646970">' . esc_html( $check['fix'] ) . '</em>' : '' ) . '</td></tr>';
 		}
 		echo '</tbody></table>';
 	}

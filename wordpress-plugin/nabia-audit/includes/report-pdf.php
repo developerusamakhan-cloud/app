@@ -483,6 +483,9 @@ function nwa_build_pdf( $result, $lead = array() ) {
 	$pdf->alpha( 0.75 );
 	$prepared = ! empty( $lead['name'] ) ? 'Prepared for ' . $lead['name'] . ' on ' . $date : 'Generated on ' . $date;
 	$pdf->Cell( 170, 6, $pdf->t( $prepared ), 0, 2 );
+	if ( ! empty( $result['tech'] ) ) {
+		$pdf->Cell( 170, 6, $pdf->t( 'Built with ' . implode( ', ', array_slice( $result['tech'], 0, 5 ) ) ), 0, 2 );
+	}
 	$pdf->alpha( 1 );
 
 	$score = (int) $result['overall'];
@@ -649,9 +652,11 @@ function nwa_build_pdf( $result, $lead = array() ) {
 		$pdf->SetY( $y + $h + 3 );
 	}
 
-	$strengths = nwa_strengths( $result, 5 );
+	// Show as many strengths as fit on this page (at least 3, or move them all to a new page).
+	$room      = (int) floor( ( 297 - 20 - $pdf->GetY() - 14 ) / 8 );
+	$strengths = nwa_strengths( $result, $room >= 3 ? min( 6, $room ) : 6 );
 	if ( $strengths ) {
-		$pdf->need( 20 );
+		$pdf->need( 14 + 8 * count( $strengths ) );
 		$pdf->SetY( $pdf->GetY() + 3 );
 		$pdf->font( 13, 'B' );
 		$pdf->ink( 'dark' );
@@ -771,9 +776,11 @@ function nwa_build_pdf( $result, $lead = array() ) {
 		foreach ( $checks as $check ) {
 			$st = $status[ $check['status'] ];
 			$pdf->font( 9.5 );
+			$why         = ! empty( $check['why'] ) ? $check['why'] : '';
 			$found_lines = $pdf->lines( 142, $pdf->t( $check['found'] ) );
-			$fix_lines   = $check['fix'] ? $pdf->lines( 128, $pdf->t( $check['fix'] ) ) : 0;
-			$h           = 13 + $found_lines * 4.6 + ( $fix_lines ? 2 + $fix_lines * 4.6 : 0 );
+			$why_lines   = $why ? $pdf->lines( 121, $pdf->t( $why ) ) : 0;
+			$fix_lines   = $check['fix'] ? $pdf->lines( 121, $pdf->t( $check['fix'] ) ) : 0;
+			$h           = 13 + $found_lines * 4.6 + ( $why_lines ? 1.5 + $why_lines * 4.6 : 0 ) + ( $fix_lines ? 1.5 + $fix_lines * 4.6 : 0 );
 			$pdf->need( $h + 3 );
 			$y = $pdf->GetY();
 			$pdf->fill( 'white' );
@@ -808,16 +815,23 @@ function nwa_build_pdf( $result, $lead = array() ) {
 			$pdf->font( 9.5 );
 			$pdf->ink( 'body' );
 			$pdf->MultiCell( 142, 4.6, $pdf->t( $check['found'] ), 0, 'L' );
+			$rows = array();
+			if ( $why ) {
+				$rows[] = array( 'WHY IT MATTERS', 'accent', $why );
+			}
 			if ( $check['fix'] ) {
+				$rows[] = array( 'HOW TO FIX', 'primary', $check['fix'] );
+			}
+			foreach ( $rows as $row ) {
 				$fy = $pdf->GetY() + 1.5;
 				$pdf->SetXY( 34, $fy );
-				$pdf->font( 8.5, 'B' );
-				$pdf->ink( 'primary' );
-				$pdf->Cell( 20, 4.6, $pdf->t( 'HOW TO FIX' ), 0, 0 );
-				$pdf->SetXY( 55, $fy );
+				$pdf->font( 7.5, 'B' );
+				$pdf->ink( $row[1] );
+				$pdf->Cell( 27, 4.6, $pdf->t( $row[0] ), 0, 0 );
+				$pdf->SetXY( 61, $fy );
 				$pdf->font( 9.5 );
-				$pdf->ink( 'muted' );
-				$pdf->MultiCell( 128, 4.6, $pdf->t( $check['fix'] ), 0, 'L' );
+				$pdf->ink( 'WHY IT MATTERS' === $row[0] ? 'body' : 'muted' );
+				$pdf->MultiCell( 121, 4.6, $pdf->t( $row[2] ), 0, 'L' );
 			}
 			$pdf->SetY( $y + $h + 3 );
 		}

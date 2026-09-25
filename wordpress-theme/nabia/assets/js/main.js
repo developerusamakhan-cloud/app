@@ -383,6 +383,20 @@
 		iframe.src = embedUrl(id, muted);
 		frame.classList.add('is-loaded');
 		frame.classList.toggle('is-unmuted', !muted);
+
+		// In a Shorts reel only one video plays at a time.
+		var reel = frame.closest('[data-reel]');
+		if (reel) {
+			$$('.video-frame', reel).forEach(function (other) {
+				if (other !== frame) {
+					var otherIframe = $('iframe', other);
+					if (otherIframe) {
+						otherIframe.remove();
+					}
+					other.classList.remove('is-loaded', 'is-unmuted');
+				}
+			});
+		}
 	}
 
 	var frames = $$('.video-frame[data-video-id]');
@@ -400,7 +414,10 @@
 				{ threshold: 0.35 }
 			);
 			frames.forEach(function (frame) {
-				vio.observe(frame);
+				// In a Shorts reel only the first video autoplays; the rest play on tap.
+				if (!frame.closest('[data-reel]') || frame.hasAttribute('data-autoplay')) {
+					vio.observe(frame);
+				}
 			});
 		}
 

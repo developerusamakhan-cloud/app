@@ -49,16 +49,32 @@ $nabia_channel = nabia_mod( 'social_youtube' );
 			</div>
 
 		<?php elseif ( 'vertical' === $nabia_layout ) : ?>
-			<div class="video-reel" data-reveal>
-				<?php foreach ( $nabia_videos as $nabia_video ) : ?>
-					<figure class="video-card">
-						<div class="video-frame is-vertical" data-video-id="<?php echo esc_attr( $nabia_video['id'] ); ?>">
+			<div class="short-reel<?php echo $nabia_count > 5 ? ' is-scrolling' : ''; ?>" data-reel data-reveal>
+				<?php foreach ( $nabia_videos as $nabia_index => $nabia_video ) : ?>
+					<?php $nabia_meta = trim( $nabia_video['role'] . ( $nabia_video['role'] && $nabia_video['caption'] ? ' · ' : '' ) . $nabia_video['caption'] ); ?>
+					<figure class="short-card">
+						<div class="video-frame is-vertical" data-video-id="<?php echo esc_attr( $nabia_video['id'] ); ?>"<?php echo 0 === $nabia_index ? ' data-autoplay' : ''; ?>>
 							<img src="<?php echo esc_url( 'https://i.ytimg.com/vi/' . $nabia_video['id'] . '/hqdefault.jpg' ); ?>" alt="" loading="lazy" width="480" height="360">
+							<span class="short-shade" aria-hidden="true"></span>
+							<span class="short-tag" aria-hidden="true"><?php nabia_icon( 'youtube' ); ?> <?php esc_html_e( 'Client review', 'nabia' ); ?></span>
 							<button class="video-sound" type="button"><?php nabia_icon( 'volume' ); ?><span><?php esc_html_e( 'Tap for sound', 'nabia' ); ?></span></button>
 						</div>
 						<figcaption>
-							<strong><?php echo esc_html( $nabia_video['name'] ); ?></strong>
-							<?php echo esc_html( trim( $nabia_video['role'] . ( $nabia_video['role'] && $nabia_video['caption'] ? ' · ' : '' ) . $nabia_video['caption'] ) ); ?>
+							<span class="short-stars" aria-label="<?php esc_attr_e( '5 out of 5 stars', 'nabia' ); ?>">★★★★★</span>
+							<strong>
+								<?php
+								echo esc_html(
+									$nabia_video['name'] ? $nabia_video['name'] : sprintf(
+										/* translators: %d: review number */
+										__( 'Happy client #%d', 'nabia' ),
+										$nabia_index + 1
+									)
+								);
+								?>
+							</strong>
+							<?php if ( $nabia_meta ) : ?>
+								<span><?php echo esc_html( $nabia_meta ); ?></span>
+							<?php endif; ?>
 						</figcaption>
 					</figure>
 				<?php endforeach; ?>

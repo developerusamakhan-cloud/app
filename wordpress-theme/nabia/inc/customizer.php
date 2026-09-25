@@ -135,6 +135,10 @@ function nabia_customize_register( $wp_customize ) {
 		'social_github'      => array( 'nabia_social', 'url', 'GitHub' ),
 		'social_youtube'     => array( 'nabia_social', 'url', 'YouTube' ),
 		'social_upwork'      => array( 'nabia_social', 'url', 'Upwork' ),
+		'hire_title'         => array( 'nabia_social', 'text', __( 'Fiverr / Upwork section: title', 'nabia' ) ),
+		'hire_text'          => array( 'nabia_social', 'textarea', __( 'Fiverr / Upwork section: text', 'nabia' ) ),
+		'fiverr_note'        => array( 'nabia_social', 'text', __( 'Fiverr button text', 'nabia' ) ),
+		'upwork_note'        => array( 'nabia_social', 'text', __( 'Upwork button text', 'nabia' ) ),
 		'social_fiverr'      => array( 'nabia_social', 'url', 'Fiverr' ),
 	);
 

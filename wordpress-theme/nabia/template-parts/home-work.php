@@ -37,7 +37,7 @@ $nabia_projects = new WP_Query(
 			<?php else : ?>
 				<?php foreach ( nabia_demo_projects() as $nabia_demo ) : ?>
 					<article class="project-card" data-reveal data-cursor="<?php esc_attr_e( 'View', 'nabia' ); ?>">
-						<div class="project-media" style="--hue:<?php echo esc_attr( $nabia_demo['hue'] ); ?>">
+						<div class="project-media" data-view="<?php esc_attr_e( 'View project →', 'nabia' ); ?>" style="--hue:<?php echo esc_attr( $nabia_demo['hue'] ); ?>">
 							<div class="mock" aria-hidden="true">
 								<span class="mock-bar"><i></i><i></i><i></i></span>
 								<span class="mock-title"><?php echo esc_html( $nabia_demo['title'] ); ?></span>

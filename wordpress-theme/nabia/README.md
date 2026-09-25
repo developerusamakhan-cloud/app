@@ -25,6 +25,13 @@ It uses the style of creative agency sites (big type, bright accent colour, play
 - Respects "reduced motion" settings; content stays visible without JavaScript
 - Blog, single post (with reading time), page, search, 404 and a *Full width* template for Elementor/block-editor pages
 
+## What's new in 2.1
+
+- The skills strip is now straight, and its stars no longer spin.
+- **Client Shorts**: your 5 YouTube Shorts reviews are built in and show as a row of tall video cards. The first plays muted when visitors scroll to it; tapping another card plays that one with sound and stops the rest. Add more in Dashboard → Video Reviews, or edit the list in Customize → Nabia Theme → Video Reviews.
+- **Compact portfolio**: 3 columns on desktop, 2 on tablets, a swipeable row on phones, showing 6 projects plus "All projects".
+- **Fiverr / Upwork section**: a small call-to-action with a tile for each platform. It appears once you add your profile links in Customize → Nabia Theme → Social Links, where you can also edit its texts.
+
 ## What's new in 2.0
 
 - **Cache fix**: CSS/JS URLs now change with every upload, so browsers and caching plugins never show an old, broken layout again.

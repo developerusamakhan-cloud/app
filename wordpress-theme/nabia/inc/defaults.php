@@ -63,7 +63,7 @@ function nabia_defaults() {
 
 		// Portfolio.
 		'portfolio_post_type' => 'websites',
-		'portfolio_count'    => '8',
+		'portfolio_count'    => '6',
 
 		// Sections.
 		'services_title'     => 'What I can do for you',
@@ -75,13 +75,19 @@ function nabia_defaults() {
 		// Video reviews.
 		'videos_title'       => 'Hear it straight from my clients',
 		'videos_text'        => 'Real people, real projects. Press play and hear what working together feels like.',
-		'video_reviews'      => '',
+		'video_reviews'      => "https://www.youtube.com/shorts/MwMlc611rIw\nhttps://www.youtube.com/shorts/4vpWeFGHn9I\nhttps://www.youtube.com/shorts/jRGgGIXQLXc\nhttps://www.youtube.com/shorts/eCPKyawWOcM\nhttps://www.youtube.com/shorts/zkNOevDxl5I",
 		'video_layout'       => 'auto',
 
 		// Google reviews.
 		'google_api_key'     => '',
 		'google_place_id'    => '',
 		'google_min_rating'  => '4',
+
+		// Fiverr / Upwork call-to-action.
+		'hire_title'         => 'Prefer to hire through Fiverr or Upwork?',
+		'hire_text'          => 'Work with me on the platform you already trust: secure payments, clear milestones and reviews you can check.',
+		'fiverr_note'        => 'Order a gig',
+		'upwork_note'        => 'Send me an invite',
 
 		// Contact.
 		'cta_title'          => "Let's build something bold.",

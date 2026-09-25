@@ -14,7 +14,7 @@ $nabia_live  = nabia_project_live_url( get_the_ID() );
 ?>
 <article <?php post_class( 'project-card' ); ?> data-reveal data-cursor="<?php esc_attr_e( 'View', 'nabia' ); ?>">
 	<a class="project-link" href="<?php the_permalink(); ?>">
-		<div class="project-media">
+		<div class="project-media" data-view="<?php esc_attr_e( 'View project →', 'nabia' ); ?>">
 			<?php if ( has_post_thumbnail() ) : ?>
 				<?php the_post_thumbnail( 'nabia-card', array( 'loading' => 'lazy' ) ); ?>
 			<?php else : ?>

@@ -52,9 +52,13 @@
 		</nav>
 
 		<div class="header-actions">
-			<a class="btn btn-accent btn-sm header-cta" href="<?php echo esc_url( nabia_hire_url() ); ?>" data-magnetic>
-				<span><?php esc_html_e( "Let's talk", 'nabia' ); ?></span>
-				<?php nabia_icon( 'arrow-up' ); ?>
+			<?php
+			$nabia_audit_link = nabia_page_url( 'audit' );
+			$nabia_audit_link = $nabia_audit_link ? $nabia_audit_link : ( is_front_page() ? '#audit' : home_url( '/#audit' ) );
+			?>
+			<a class="btn btn-accent btn-sm header-cta" href="<?php echo esc_url( $nabia_audit_link ); ?>" data-magnetic>
+				<?php nabia_icon( 'search' ); ?>
+				<span><?php esc_html_e( 'Free audit', 'nabia' ); ?></span>
 			</a>
 			<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">
 				<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'nabia' ); ?></span>

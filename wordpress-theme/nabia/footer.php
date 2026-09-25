@@ -50,6 +50,7 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 						<?php if ( nabia_gchat_url() ) : ?>
 							<a class="btn btn-ghost btn-lg" href="<?php echo esc_url( nabia_gchat_url() ); ?>" target="_blank" rel="noopener noreferrer" data-copy="<?php echo esc_attr( nabia_mod( 'gchat_email' ) ); ?>" data-magnetic><?php nabia_icon( 'gchat' ); ?><span><?php esc_html_e( 'Google Chat', 'nabia' ); ?></span></a>
 						<?php endif; ?>
+						<?php nabia_livechat_button( 'btn btn-ghost btn-lg' ); ?>
 					</div>
 				</div>
 
@@ -182,11 +183,7 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 	</dialog>
 <?php endif; ?>
 
-<?php if ( $nabia_wa ) : ?>
-	<a class="float-chat" href="<?php echo esc_url( $nabia_wa ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Chat on WhatsApp', 'nabia' ); ?>" data-magnetic>
-		<?php nabia_icon( 'whatsapp' ); ?>
-	</a>
-<?php endif; ?>
+
 
 <?php wp_footer(); ?>
 </body>

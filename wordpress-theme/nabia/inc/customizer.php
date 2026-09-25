@@ -151,6 +151,8 @@ function nabia_customize_register( $wp_customize ) {
 		'contact_whatsapp'   => array( 'nabia_contact', 'text', __( 'WhatsApp number (with country code)', 'nabia' ) ),
 		'whatsapp_message'   => array( 'nabia_contact', 'text', __( 'WhatsApp: first message typed for the visitor', 'nabia' ) ),
 		'gchat_email'        => array( 'nabia_contact', 'email', __( 'Google Chat email', 'nabia' ) ),
+		'enable_livechat'    => array( 'nabia_contact', 'checkbox', __( 'Show "Live chat" buttons (open your Tawk.to chat; without Tawk.to they go to the contact page)', 'nabia' ) ),
+		'livechat_label'     => array( 'nabia_contact', 'text', __( 'Live chat button text', 'nabia' ) ),
 		'gchat_url'          => array( 'nabia_contact', 'url', __( 'Google Chat link (the button opens this and copies your Google Chat email)', 'nabia' ) ),
 		'contact_shortcode'  => array( 'nabia_contact', 'text', __( 'Contact form shortcode (e.g. Contact Form 7 / WPForms)', 'nabia' ) ),
 

@@ -127,6 +127,8 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 		'contact_whatsapp'   => '+92 312 1305032',
 		'whatsapp_message'   => 'Hi Nabia, I found your website and would like to talk about a project.',
 		'gchat_email'        => 'devnabiakhan@gmail.com',
+		'enable_livechat'    => true,
+		'livechat_label'     => 'Live chat',
 		'gchat_url'          => 'https://mail.google.com/chat/u/0/#chat/home',
 		'contact_shortcode'  => '',
 

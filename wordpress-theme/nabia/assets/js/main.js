@@ -121,8 +121,12 @@
 	 * ------------------------------------------------------------------ */
 	var lenis = null;
 	if (settings.smooth && window.Lenis && !reduceMotion) {
-		$$('.video-list, .mobile-menu, textarea, select').forEach(function (el) {
+		$$('.video-list, textarea, select').forEach(function (el) {
 			el.setAttribute('data-lenis-prevent-wheel', '');
+		});
+		// The menu and popups must scroll by wheel AND touch while page scrolling is paused.
+		$$('.mobile-menu, .gchat-modal').forEach(function (el) {
+			el.setAttribute('data-lenis-prevent', '');
 		});
 		lenis = new window.Lenis({
 			lerp: 0.09,
@@ -1042,6 +1046,31 @@
 			}
 		});
 	}
+
+	// "Live chat" buttons open the Tawk.to chat window. Without Tawk.to they go to the contact page.
+	$$('[data-livechat]').forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			var api = window.Tawk_API;
+			if (api && typeof api.maximize === 'function') {
+				api.maximize();
+				return;
+			}
+			if (api && document.querySelector('script[src*="embed.tawk.to"]')) {
+				// Tawk.to is still loading: open it as soon as it is ready.
+				var previous = api.onLoad;
+				api.onLoad = function () {
+					if (typeof previous === 'function') {
+						previous();
+					}
+					api.maximize();
+				};
+				return;
+			}
+			if (settings.chatUrl) {
+				window.location.href = settings.chatUrl;
+			}
+		});
+	});
 
 	// Contact card glow follows the pointer.
 	var contact = $('.contact-card');

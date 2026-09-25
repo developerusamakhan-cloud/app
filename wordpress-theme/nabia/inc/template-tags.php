@@ -27,6 +27,7 @@ function nabia_get_icon( $name ) {
 		'shield'    => '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
 		'star'      => '<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
 		'mail'      => '<rect x="2" y="4" width="20" height="16" rx="3"/><path d="m22 7-10 6L2 7"/>',
+		'chat-live' => '<path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 20.5l1.6-4.6A8 8 0 0 1 3 11.5 8.6 8.6 0 0 1 12 3a8.6 8.6 0 0 1 9 8.5z"/><circle cx="8" cy="11.5" r=".6" fill="currentColor"/><circle cx="12" cy="11.5" r=".6" fill="currentColor"/><circle cx="16" cy="11.5" r=".6" fill="currentColor"/>',
 		'gchat'     => '<path d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H9l-5 4V5a1 1 0 0 1 1-1z"/><path d="M8 9h8M8 12.5h5"/>',
 		'whatsapp'  => '<path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.1-4.7A9 9 0 1 1 21 12z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5"/>',
 		'plus'      => '<path d="M12 5v14M5 12h14"/>',
@@ -205,6 +206,29 @@ function nabia_gchat_url() {
 }
 
 /**
+ * "Live chat" button that opens the Tawk.to chat window (installed separately).
+ *
+ * @param string $class Button classes.
+ * @param bool   $echo  Print (true) or return.
+ * @return string
+ */
+function nabia_livechat_button( $class = 'btn btn-ghost btn-lg', $echo = true ) {
+	if ( ! nabia_mod( 'enable_livechat' ) ) {
+		return '';
+	}
+	$html = sprintf(
+		'<button type="button" class="%1$s" data-livechat>%2$s<span>%3$s</span></button>',
+		esc_attr( $class ),
+		nabia_get_icon( 'chat-live' ),
+		esc_html( nabia_mod( 'livechat_label' ) ? nabia_mod( 'livechat_label' ) : __( 'Live chat', 'nabia' ) )
+	);
+	if ( $echo ) {
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+	return $html;
+}
+
+/**
  * WhatsApp + Google Chat buttons for a faster reply.
  *
  * @param string $title Optional line above the buttons.
@@ -213,7 +237,8 @@ function nabia_gchat_url() {
 function nabia_quick_contact( $title = '', $class = '' ) {
 	$wa    = nabia_whatsapp_url();
 	$gchat = nabia_gchat_url();
-	if ( ! $wa && ! $gchat ) {
+	$live  = (bool) nabia_mod( 'enable_livechat' );
+	if ( ! $wa && ! $gchat && ! $live ) {
 		return;
 	}
 	?>
@@ -233,6 +258,12 @@ function nabia_quick_contact( $title = '', $class = '' ) {
 					<?php nabia_icon( 'gchat' ); ?>
 					<span><strong><?php esc_html_e( 'Google Chat', 'nabia' ); ?></strong></span>
 				</a>
+			<?php endif; ?>
+			<?php if ( $live ) : ?>
+				<button type="button" class="qc-btn qc-live" data-livechat>
+					<?php nabia_icon( 'chat-live' ); ?>
+					<span><strong><?php echo esc_html( nabia_mod( 'livechat_label' ) ? nabia_mod( 'livechat_label' ) : __( 'Live chat', 'nabia' ) ); ?></strong></span>
+				</button>
 			<?php endif; ?>
 		</div>
 	</div>

@@ -65,6 +65,14 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.14
+
+- **Header:** the "Let's talk" button is now **Free audit** (goes to the Free Audit page, or the homepage audit form). It shows on phones too, next to the menu button.
+- **Mobile menu scrolls on phones.** Smooth scrolling was blocking touch scrolling inside the open menu. The menu now scrolls by touch and wheel and uses the real screen height.
+- **Floating WhatsApp button removed.**
+- **Homepage contact buttons** are four matching tiles: Email me, WhatsApp, Google Chat and Live chat.
+- **Live chat (Tawk.to).** New "Live chat" buttons on the homepage contact tiles, the footer call to action and every WhatsApp / Google Chat block (contact form, after sending a form, mobile menu). Install Tawk.to (their plugin or code snippet) and the buttons open the Tawk.to chat window. Until Tawk.to is installed, they go to the contact page. Turn them off or rename them in Customize, Nabia Theme, Contact.
+
 ## What's new in 2.13.3
 
 - **Google Chat popup.** Every Google Chat button (contact form, after sending a form, mobile menu, footer and homepage contact) opens a small popup that shows the chat email with a Copy button, a "Copy and open chat" button and three simple steps. The WhatsApp number and chat email are no longer printed on the buttons themselves.

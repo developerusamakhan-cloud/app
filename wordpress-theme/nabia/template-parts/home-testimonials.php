@@ -37,7 +37,7 @@ if ( $nabia_query->have_posts() ) {
 <section class="section testimonials" id="testimonials">
 	<div class="container">
 		<div class="section-head-row">
-			<?php nabia_section_head( '05', __( 'Testimonials', 'nabia' ), nabia_mod( 'testimonials_title' ) ); ?>
+			<?php nabia_section_head( __( 'Testimonials', 'nabia' ), nabia_mod( 'testimonials_title' ) ); ?>
 			<div class="slider-controls">
 				<button class="slider-btn" type="button" data-slide="prev" aria-label="<?php esc_attr_e( 'Previous testimonial', 'nabia' ); ?>"><?php nabia_icon( 'arrow' ); ?></button>
 				<button class="slider-btn" type="button" data-slide="next" aria-label="<?php esc_attr_e( 'Next testimonial', 'nabia' ); ?>"><?php nabia_icon( 'arrow' ); ?></button>

@@ -8,7 +8,7 @@
 ?>
 <section class="section process section-dark" id="process">
 	<div class="container">
-		<?php nabia_section_head( '04', __( 'Process', 'nabia' ), nabia_mod( 'process_title' ) ); ?>
+		<?php nabia_section_head( __( 'Process', 'nabia' ), nabia_mod( 'process_title' ) ); ?>
 
 		<ol class="process-list">
 			<?php foreach ( nabia_process() as $nabia_index => $nabia_step ) : ?>

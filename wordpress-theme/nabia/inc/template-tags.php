@@ -40,6 +40,7 @@ function nabia_get_icon( $name ) {
 		'upwork'    => '<path d="M3 5v6a4 4 0 0 0 8 0V5M11 11c1.5 4 3 6 5.5 6a4 4 0 0 0 0-8c-2.5 0-4 2-5 5l-2 8"/>',
 		'fiverr'    => '<path d="M9 21V9h6v12M9 9V7a3 3 0 0 1 3-3h1M6 9h9"/><circle cx="18" cy="5" r="1"/>',
 		'search'    => '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+		'volume'    => '<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/>',
 	);
 
 	if ( ! isset( $paths[ $name ] ) ) {
@@ -59,9 +60,24 @@ function nabia_icon( $name ) {
 }
 
 /**
- * Site logo or text wordmark.
+ * The "N" monogram mark as inline SVG (colours follow the active scheme).
+ *
+ * @return string
  */
-function nabia_logo() {
+function nabia_logo_mark() {
+	return '<svg class="logo-mark" viewBox="0 0 48 48" width="44" height="44" aria-hidden="true" focusable="false">'
+		. '<rect class="logo-mark-bg" x="1" y="1" width="46" height="46" rx="15"/>'
+		. '<path class="logo-mark-n" d="M15 34V15.5a1.5 1.5 0 0 1 2.6-1l12.8 15a1.5 1.5 0 0 0 2.6-1V14"/>'
+		. '<circle class="logo-mark-dot" cx="36.5" cy="36" r="4"/>'
+		. '</svg>';
+}
+
+/**
+ * Site logo: uploaded custom logo, or the built-in monogram + wordmark.
+ *
+ * @param string $variant Extra class, e.g. "logo-light" for dark backgrounds.
+ */
+function nabia_logo( $variant = '' ) {
 	if ( has_custom_logo() ) {
 		the_custom_logo();
 		return;
@@ -70,10 +86,14 @@ function nabia_logo() {
 	if ( ! $name ) {
 		$name = get_bloginfo( 'name' );
 	}
+	$tagline = nabia_mod( 'brand_tagline' );
 	printf(
-		'<a class="wordmark" href="%1$s" rel="home"><span class="wordmark-dot" aria-hidden="true"></span>%2$s</a>',
+		'<a class="logo %1$s" href="%2$s" rel="home">%3$s<span class="logo-text"><span class="logo-name">%4$s<span class="logo-period">.</span></span>%5$s</span></a>',
+		esc_attr( $variant ),
 		esc_url( home_url( '/' ) ),
-		esc_html( $name )
+		nabia_logo_mark(), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		esc_html( $name ),
+		$tagline ? '<span class="logo-tagline">' . esc_html( $tagline ) . '</span>' : ''
 	);
 }
 
@@ -116,16 +136,46 @@ function nabia_social_links( $class = '' ) {
 }
 
 /**
- * Section heading with eyebrow + number.
+ * Next section number on the front page ("01", "02", …). Hidden sections don't use one.
  *
- * @param string $number  Section number e.g. "01".
+ * @return string Empty string outside the front page.
+ */
+function nabia_next_section_number() {
+	static $count = 0;
+	if ( ! is_front_page() ) {
+		return '';
+	}
+	++$count;
+	return sprintf( '%02d', $count );
+}
+
+/**
+ * Eyebrow label with the automatic section number.
+ *
+ * @param string $label Small label.
+ */
+function nabia_eyebrow( $label ) {
+	$number = nabia_next_section_number();
+	?>
+	<p class="eyebrow" data-reveal>
+		<?php if ( $number ) : ?>
+			<span class="eyebrow-num"><?php echo esc_html( $number ); ?></span>
+		<?php endif; ?>
+		<?php echo esc_html( $label ); ?>
+	</p>
+	<?php
+}
+
+/**
+ * Section heading: numbered eyebrow + big title.
+ *
  * @param string $eyebrow Small label.
  * @param string $title   Big title.
  */
-function nabia_section_head( $number, $eyebrow, $title ) {
+function nabia_section_head( $eyebrow, $title ) {
 	?>
 	<header class="section-head">
-		<p class="eyebrow" data-reveal><span class="eyebrow-num"><?php echo esc_html( $number ); ?></span><?php echo esc_html( $eyebrow ); ?></p>
+		<?php nabia_eyebrow( $eyebrow ); ?>
 		<h2 class="section-title" data-split><?php echo esc_html( $title ); ?></h2>
 	</header>
 	<?php
@@ -233,4 +283,146 @@ function nabia_menu_fallback( $args ) {
 		printf( '<li class="menu-item"><a href="%1$s">%2$s</a></li>', esc_url( $base . $hash ), esc_html( $label ) );
 	}
 	echo '</ul>';
+}
+
+/**
+ * Colour schemes offered in the Customizer.
+ *
+ * Each: label, bg, surface, ink, accent, accent_ink (text on accent), second, third.
+ *
+ * @return array
+ */
+function nabia_color_schemes() {
+	return apply_filters(
+		'nabia_color_schemes',
+		array(
+			'coral'    => array(
+				'label'      => __( 'Coral & Indigo', 'nabia' ),
+				'bg'         => '#f7f2ec',
+				'bg_alt'     => '#efe6dc',
+				'ink'        => '#16121a',
+				'accent'     => '#ff5a36',
+				'accent_ink' => '#16121a',
+				'second'     => '#4f46e5',
+				'third'      => '#ffc83d',
+			),
+			'lime'     => array(
+				'label'      => __( 'Electric Lime', 'nabia' ),
+				'bg'         => '#f4f1ea',
+				'bg_alt'     => '#ebe6db',
+				'ink'        => '#0e0e10',
+				'accent'     => '#c6ff3d',
+				'accent_ink' => '#0e0e10',
+				'second'     => '#7c5cff',
+				'third'      => '#ff8fab',
+			),
+			'ocean'    => array(
+				'label'      => __( 'Mint & Ocean', 'nabia' ),
+				'bg'         => '#f1f5f4',
+				'bg_alt'     => '#e2ebe9',
+				'ink'        => '#0b1a24',
+				'accent'     => '#3ee0bf',
+				'accent_ink' => '#0b1a24',
+				'second'     => '#2457ff',
+				'third'      => '#ffb547',
+			),
+			'grape'    => array(
+				'label'      => __( 'Lavender & Tangerine', 'nabia' ),
+				'bg'         => '#f5f3fa',
+				'bg_alt'     => '#e9e5f5',
+				'ink'        => '#15112a',
+				'accent'     => '#b9a2ff',
+				'accent_ink' => '#15112a',
+				'second'     => '#ff6a2b',
+				'third'      => '#3ddc97',
+			),
+			'sunshine' => array(
+				'label'      => __( 'Sunshine & Pink', 'nabia' ),
+				'bg'         => '#fbf8f1',
+				'bg_alt'     => '#f3ecdc',
+				'ink'        => '#141414',
+				'accent'     => '#ffd23f',
+				'accent_ink' => '#141414',
+				'second'     => '#ff3d7f',
+				'third'      => '#2ec4b6',
+			),
+		)
+	);
+}
+
+/**
+ * Build the CSS custom properties for the chosen scheme (+ optional accent override).
+ *
+ * @return string
+ */
+function nabia_scheme_css() {
+	$schemes = nabia_color_schemes();
+	$key     = nabia_mod( 'color_scheme' );
+	$scheme  = isset( $schemes[ $key ] ) ? $schemes[ $key ] : reset( $schemes );
+
+	$override = sanitize_hex_color( nabia_mod( 'accent_color' ) );
+	if ( $override ) {
+		$scheme['accent'] = $override;
+	}
+
+	$map = array(
+		'bg'         => '--bg',
+		'bg_alt'     => '--bg-alt',
+		'ink'        => '--ink',
+		'accent'     => '--accent',
+		'accent_ink' => '--accent-ink',
+		'second'     => '--second',
+		'third'      => '--third',
+	);
+	$css = '';
+	foreach ( $map as $field => $var ) {
+		$value = isset( $scheme[ $field ] ) ? sanitize_hex_color( $scheme[ $field ] ) : '';
+		if ( $value ) {
+			$css .= $var . ':' . $value . ';';
+		}
+	}
+	return ':root{' . $css . '}';
+}
+
+/**
+ * Extract a YouTube video ID from any common URL format (watch, youtu.be, shorts, embed, live).
+ *
+ * @param string $url URL or bare ID.
+ * @return string Video ID or empty string.
+ */
+function nabia_youtube_id( $url ) {
+	$url = trim( $url );
+	if ( preg_match( '/^[A-Za-z0-9_-]{11}$/', $url ) ) {
+		return $url;
+	}
+	if ( preg_match( '~(?:youtu\.be/|youtube(?:-nocookie)?\.com/(?:watch\?(?:.*&)?v=|shorts/|embed/|live/|v/))([A-Za-z0-9_-]{11})~', $url, $m ) ) {
+		return $m[1];
+	}
+	return '';
+}
+
+/**
+ * Parse the "Video reviews" Customizer field.
+ *
+ * One video per line: URL | Client name | Short caption (name and caption optional).
+ *
+ * @return array[] Each: id, name, caption, vertical (bool, true for Shorts links).
+ */
+function nabia_video_reviews() {
+	$lines  = preg_split( '/\r\n|\r|\n/', (string) nabia_mod( 'video_reviews' ) );
+	$videos = array();
+	foreach ( $lines as $line ) {
+		$parts = array_map( 'trim', explode( '|', $line ) );
+		$id    = nabia_youtube_id( $parts[0] );
+		if ( ! $id ) {
+			continue;
+		}
+		$videos[] = array(
+			'id'       => $id,
+			'name'     => isset( $parts[1] ) ? $parts[1] : '',
+			'caption'  => isset( $parts[2] ) ? $parts[2] : '',
+			'vertical' => false !== strpos( $parts[0], '/shorts/' ),
+		);
+	}
+	return $videos;
 }

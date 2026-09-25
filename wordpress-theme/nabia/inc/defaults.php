@@ -17,10 +17,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 function nabia_defaults() {
 	return array(
 		// General.
-		'accent_color'       => '#c6ff3d',
+		'color_scheme'       => 'coral',
+		'accent_color'       => '',
 		'enable_preloader'   => true,
 		'enable_cursor'      => true,
 		'brand_name'         => 'Nabia Khan',
+		'brand_tagline'      => 'WordPress & Design',
 
 		// Hero.
 		'hero_badge'         => 'Available for new projects',
@@ -63,6 +65,12 @@ function nabia_defaults() {
 		'testimonials_title' => 'Kind words from clients',
 		'faq_title'          => 'Questions? Answers.',
 
+		// Video reviews.
+		'videos_title'       => 'Hear it straight from my clients',
+		'videos_text'        => 'Real people, real projects. Press play and hear what working together feels like.',
+		'video_reviews'      => '',
+		'video_layout'       => 'auto',
+
 		// Contact.
 		'cta_title'          => "Let's build something bold.",
 		'cta_text'           => 'Tell me about your project and I will get back to you within 24 hours with ideas, a timeline and a clear quote.',
@@ -83,6 +91,9 @@ function nabia_defaults() {
 
 		// Footer.
 		'footer_text'        => 'Creative WordPress developer & graphic designer. Building websites that refuse to be boring.',
+		'footer_marquee'     => "Let's work together",
+		'footer_cta_title'   => 'Got a project in mind?',
+		'footer_cta_text'    => "Websites, stores, branding or a quick fix: tell me what you need and you'll get a plan and a quote within 24 hours.",
 	);
 }
 

@@ -40,6 +40,7 @@ function nabia_customize_register( $wp_customize ) {
 		'nabia_hero'    => __( 'Hero', 'nabia' ),
 		'nabia_stats'   => __( 'Marquee & Stats', 'nabia' ),
 		'nabia_about'   => __( 'About & Section Titles', 'nabia' ),
+		'nabia_videos'  => __( 'Video Reviews (YouTube)', 'nabia' ),
 		'nabia_contact' => __( 'Contact', 'nabia' ),
 		'nabia_social'  => __( 'Social Links', 'nabia' ),
 	);
@@ -59,10 +60,15 @@ function nabia_customize_register( $wp_customize ) {
 	 */
 	$fields = array(
 		'brand_name'         => array( 'nabia_general', 'text', __( 'Brand name (used when no logo is set)', 'nabia' ) ),
-		'accent_color'       => array( 'nabia_general', 'color', __( 'Accent colour', 'nabia' ) ),
+		'brand_tagline'      => array( 'nabia_general', 'text', __( 'Small tagline under the name in the logo', 'nabia' ) ),
+		'color_scheme'       => array( 'nabia_general', 'select', __( 'Colour scheme', 'nabia' ) ),
+		'accent_color'       => array( 'nabia_general', 'color', __( 'Custom accent colour (optional, overrides the scheme)', 'nabia' ) ),
 		'enable_preloader'   => array( 'nabia_general', 'checkbox', __( 'Show intro preloader', 'nabia' ) ),
 		'enable_cursor'      => array( 'nabia_general', 'checkbox', __( 'Custom animated cursor (desktop)', 'nabia' ) ),
 		'footer_text'        => array( 'nabia_general', 'textarea', __( 'Footer text', 'nabia' ) ),
+		'footer_marquee'     => array( 'nabia_general', 'text', __( 'Footer scrolling slogan', 'nabia' ) ),
+		'footer_cta_title'   => array( 'nabia_general', 'text', __( 'Footer call-to-action title', 'nabia' ) ),
+		'footer_cta_text'    => array( 'nabia_general', 'textarea', __( 'Footer call-to-action text', 'nabia' ) ),
 
 		'hero_badge'         => array( 'nabia_hero', 'text', __( 'Badge text', 'nabia' ) ),
 		'hero_line_1'        => array( 'nabia_hero', 'text', __( 'Headline line 1', 'nabia' ) ),
@@ -98,6 +104,11 @@ function nabia_customize_register( $wp_customize ) {
 		'testimonials_title' => array( 'nabia_about', 'text', __( 'Testimonials title', 'nabia' ) ),
 		'faq_title'          => array( 'nabia_about', 'text', __( 'FAQ title', 'nabia' ) ),
 
+		'videos_title'       => array( 'nabia_videos', 'text', __( 'Section title', 'nabia' ) ),
+		'videos_text'        => array( 'nabia_videos', 'textarea', __( 'Section intro', 'nabia' ) ),
+		'video_reviews'      => array( 'nabia_videos', 'textarea', __( 'Videos: one per line — YouTube link | Client name | Short caption', 'nabia' ) ),
+		'video_layout'       => array( 'nabia_videos', 'select', __( 'Layout', 'nabia' ) ),
+
 		'cta_title'          => array( 'nabia_contact', 'text', __( 'Contact title', 'nabia' ) ),
 		'cta_text'           => array( 'nabia_contact', 'textarea', __( 'Contact text', 'nabia' ) ),
 		'contact_email'      => array( 'nabia_contact', 'email', __( 'Email', 'nabia' ) ),
@@ -123,6 +134,20 @@ function nabia_customize_register( $wp_customize ) {
 		'checkbox' => 'nabia_sanitize_checkbox',
 		'color'    => 'sanitize_hex_color',
 		'image'    => 'esc_url_raw',
+		'select'   => 'sanitize_key',
+	);
+
+	$schemes = array();
+	foreach ( nabia_color_schemes() as $scheme_key => $scheme ) {
+		$schemes[ $scheme_key ] = $scheme['label'];
+	}
+	$choices = array(
+		'color_scheme' => $schemes,
+		'video_layout' => array(
+			'auto'     => __( 'Automatic (Shorts links = vertical)', 'nabia' ),
+			'wide'     => __( 'Wide: big player + playlist', 'nabia' ),
+			'vertical' => __( 'Vertical: row of big Shorts-style videos', 'nabia' ),
+		),
 	);
 
 	foreach ( $fields as $key => $field ) {
@@ -159,13 +184,24 @@ function nabia_customize_register( $wp_customize ) {
 					)
 				)
 			);
-		} else {
+		} elseif ( 'select' === $type ) {
 			$wp_customize->add_control(
 				$key,
 				array(
 					'label'   => $label,
 					'section' => $section,
-					'type'    => $type,
+					'type'    => 'select',
+					'choices' => $choices[ $key ],
+				)
+			);
+		} else {
+			$wp_customize->add_control(
+				$key,
+				array(
+					'label'       => $label,
+					'section'     => $section,
+					'type'        => $type,
+					'description' => 'video_reviews' === $key ? __( 'Example: https://youtu.be/abc123XYZ00 | Sarah, Bloom Botanics | New store in 2 weeks. Videos autoplay muted when visitors scroll to them; they can tap for sound.', 'nabia' ) : '',
 				)
 			);
 		}

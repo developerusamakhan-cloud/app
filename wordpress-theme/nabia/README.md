@@ -5,8 +5,13 @@ It uses the style of creative agency sites (big type, bright accent colour, play
 
 ## Features
 
-- **Hero** with a word that changes every few seconds, an "available" badge, a tilting 3D card, floating tags and a spinning badge that links down the page
-- **Animated counters** (years, projects, …) and an **intro preloader** that counts from 0 to 100
+- **Hero** with a word that changes every few seconds and an "available" badge. The visual is a live website mockup that tilts in 3D, with a PageSpeed gauge, a 5-star review card, a growing "+42% leads" chart and a "Nabia" cursor that moves around as if designing. Upload a portrait to show it inside the frame instead.
+- **Stats strip**: four animated counters on a dark bar; each card lights up on hover
+- **Intro preloader** that counts from 0 to 100
+- **Video reviews** from YouTube: a big player that starts playing (muted) when visitors scroll to it, a "Tap for sound" button and a playlist of other reviews. Shorts links show as a row of tall vertical videos. The section is hidden until you add videos.
+- **New logo**: an "N" monogram (also used as the browser tab icon) with the name and a small tagline
+- **5 colour schemes**: Coral & Indigo (default), Electric Lime, Mint & Ocean, Lavender & Tangerine, Sunshine & Pink, plus an optional custom accent colour
+- **Promotional footer**: a large scrolling "Let's work together" slogan, a call-to-action with a spinning "Start a project" button, services and contact columns, and a giant name that fills with colour as it scrolls into view
 - **Skills marquee**: an endless, tilted scrolling strip
 - **Services**: cards that fill with colour from wherever the cursor enters
 - **Portfolio**: a *Projects* post type with categories, a filterable archive at `/work/`, case-study pages and a big "Next project" link
@@ -31,12 +36,25 @@ Everything is under **Appearance → Customize → Nabia Theme**:
 
 | Section | What you can change |
 | --- | --- |
-| General | Brand name, accent colour, preloader on/off, custom cursor on/off, footer text |
+| General | Brand name, logo tagline, colour scheme, custom accent colour, preloader on/off, custom cursor on/off, footer text, footer slogan and call-to-action |
 | Hero | Badge, headline, rotating words (comma separated), intro, buttons, portrait photo |
 | Marquee & Stats | Scrolling skill words, the four numbers and labels |
 | About & Section Titles | About text and photo, titles of every section |
+| Video Reviews (YouTube) | Title, intro, your video links, layout (automatic / wide / vertical) |
 | Contact | Email, WhatsApp number, contact-form shortcode, client-portal link |
 | Social Links | LinkedIn, Instagram, Behance, Dribbble, GitHub, YouTube, Upwork, Fiverr |
+
+### Adding your YouTube reviews
+
+In **Customize → Nabia Theme → Video Reviews**, paste one video per line:
+
+```
+https://youtu.be/VIDEO_ID | Sarah Malik, Bloom Botanics | New store in 2 weeks
+https://www.youtube.com/watch?v=VIDEO_ID | James Carter | Website redesign
+https://youtube.com/shorts/VIDEO_ID | Ayesha R. | Branding + website
+```
+
+The name and caption are optional. Normal links, youtu.be links and Shorts links all work. Videos load only when visitors scroll to them, so they don't slow down the page, and they use YouTube's privacy-enhanced (no-cookie) player.
 
 Also:
 

@@ -204,7 +204,7 @@
 		})(start);
 	}
 
-	var revealTargets = $$('[data-reveal], [data-split], .skills');
+	var revealTargets = $$('[data-reveal], [data-split], .skills, .footer-giant');
 
 	if ('IntersectionObserver' in window) {
 		var io = new IntersectionObserver(
@@ -324,6 +324,88 @@
 			slider.classList.remove('is-dragging');
 		});
 	}
+
+	/* ------------------------------------------------------------------
+	 * Video reviews: load YouTube only when visible, autoplay muted.
+	 * ------------------------------------------------------------------ */
+	function embedUrl(id, muted) {
+		return 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
+			'?autoplay=1&mute=' + (muted ? 1 : 0) +
+			'&loop=1&playlist=' + encodeURIComponent(id) +
+			'&playsinline=1&rel=0&modestbranding=1';
+	}
+
+	function loadVideo(frame, muted) {
+		var id = frame.getAttribute('data-video-id');
+		if (!id) {
+			return;
+		}
+		var iframe = $('iframe', frame);
+		if (!iframe) {
+			iframe = document.createElement('iframe');
+			iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
+			iframe.setAttribute('allowfullscreen', '');
+			iframe.setAttribute('title', 'Client video review');
+			frame.appendChild(iframe);
+		}
+		iframe.src = embedUrl(id, muted);
+		frame.classList.add('is-loaded');
+		frame.classList.toggle('is-unmuted', !muted);
+	}
+
+	var frames = $$('.video-frame[data-video-id]');
+	if (frames.length) {
+		if ('IntersectionObserver' in window && !reduceMotion) {
+			var vio = new IntersectionObserver(
+				function (entries) {
+					entries.forEach(function (entry) {
+						if (entry.isIntersecting && !entry.target.classList.contains('is-loaded')) {
+							loadVideo(entry.target, true);
+							vio.unobserve(entry.target);
+						}
+					});
+				},
+				{ threshold: 0.35 }
+			);
+			frames.forEach(function (frame) {
+				vio.observe(frame);
+			});
+		}
+
+		frames.forEach(function (frame) {
+			// Click on the poster (before autoplay kicked in) plays with sound.
+			frame.addEventListener('click', function (e) {
+				if (e.target.closest('.video-sound') || !frame.classList.contains('is-loaded')) {
+					loadVideo(frame, false);
+				}
+			});
+		});
+	}
+
+	$$('[data-video-stage]').forEach(function (stage) {
+		var main = $('.video-frame', stage);
+		var caption = $('[data-video-caption]', stage);
+		$$('.video-thumb', stage).forEach(function (thumb) {
+			thumb.addEventListener('click', function () {
+				$$('.video-thumb', stage).forEach(function (t) {
+					t.classList.toggle('is-active', t === thumb);
+				});
+				main.setAttribute('data-video-id', thumb.getAttribute('data-id'));
+				var poster = $('img', main);
+				if (poster) {
+					poster.src = 'https://i.ytimg.com/vi/' + encodeURIComponent(thumb.getAttribute('data-id')) + '/hqdefault.jpg';
+				}
+				if (caption) {
+					$('strong', caption).textContent = thumb.getAttribute('data-name');
+					$('span', caption).textContent = thumb.getAttribute('data-caption');
+				}
+				loadVideo(main, false);
+				if (window.innerWidth < 900) {
+					main.scrollIntoView({ behavior: 'smooth', block: 'center' });
+				}
+			});
+		});
+	});
 
 	/* ------------------------------------------------------------------
 	 * Pointer-only effects: cursor, magnetic buttons, tilt, spotlight.

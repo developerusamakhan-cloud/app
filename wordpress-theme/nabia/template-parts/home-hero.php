@@ -8,6 +8,7 @@
 $nabia_words = nabia_mod_list( 'hero_rotating' );
 $nabia_image = nabia_mod( 'hero_image' );
 $nabia_name  = nabia_mod( 'brand_name' );
+$nabia_first = trim( strtok( $nabia_name, ' ' ) );
 ?>
 <section class="hero" aria-label="<?php esc_attr_e( 'Introduction', 'nabia' ); ?>">
 	<div class="hero-bg" aria-hidden="true">
@@ -51,22 +52,52 @@ $nabia_name  = nabia_mod( 'brand_name' );
 		</div>
 
 		<div class="hero-visual" data-reveal>
-			<div class="portrait" data-tilt>
+			<div class="stage" data-tilt>
 				<?php if ( $nabia_image ) : ?>
-					<img src="<?php echo esc_url( $nabia_image ); ?>" alt="<?php echo esc_attr( $nabia_name ); ?>" width="560" height="700" fetchpriority="high">
+					<div class="stage-photo">
+						<img src="<?php echo esc_url( $nabia_image ); ?>" alt="<?php echo esc_attr( $nabia_name ); ?>" width="560" height="700" fetchpriority="high">
+					</div>
 				<?php else : ?>
-					<div class="portrait-placeholder" aria-hidden="true">
-						<span class="ph-window"><i></i><i></i><i></i></span>
-						<span class="ph-block ph-block-1"></span>
-						<span class="ph-block ph-block-2"></span>
-						<span class="ph-block ph-block-3"></span>
-						<span class="ph-initials"><?php echo esc_html( mb_substr( $nabia_name, 0, 1 ) ); ?></span>
+					<div class="mockup" aria-hidden="true">
+						<div class="mockup-bar">
+							<span class="mockup-dots"><i></i><i></i><i></i></span>
+							<span class="mockup-url"><?php nabia_icon( 'shield' ); ?><?php echo esc_html( wp_parse_url( home_url(), PHP_URL_HOST ) ); ?></span>
+						</div>
+						<div class="mockup-body">
+							<div class="mk-nav"><span class="mk-logo"></span><span class="mk-links"><i></i><i></i><i></i></span><span class="mk-pill"></span></div>
+							<div class="mk-hero">
+								<div class="mk-copy">
+									<span class="mk-kicker"><?php esc_html_e( 'New collection', 'nabia' ); ?></span>
+									<span class="mk-heading"><?php esc_html_e( 'Grow your brand online.', 'nabia' ); ?></span>
+									<i class="mk-line"></i><i class="mk-line short"></i>
+									<span class="mk-btn"><?php esc_html_e( 'Get started', 'nabia' ); ?></span>
+								</div>
+								<div class="mk-art"><span class="mk-sun"></span><span class="mk-hill"></span></div>
+							</div>
+							<div class="mk-cards"><span></span><span></span><span></span></div>
+						</div>
 					</div>
 				<?php endif; ?>
 
-				<span class="float-tag float-tag-1"><?php nabia_icon( 'code' ); ?> WordPress</span>
-				<span class="float-tag float-tag-2"><?php nabia_icon( 'pen' ); ?> <?php esc_html_e( 'Design', 'nabia' ); ?></span>
-				<span class="float-tag float-tag-3"><?php nabia_icon( 'bolt' ); ?> <?php esc_html_e( 'Fast', 'nabia' ); ?></span>
+				<div class="chip chip-speed" aria-hidden="true">
+					<svg class="gauge" viewBox="0 0 44 44"><circle class="gauge-track" cx="22" cy="22" r="18"/><circle class="gauge-fill" cx="22" cy="22" r="18" pathLength="100"/></svg>
+					<span class="chip-text"><strong>98</strong><?php esc_html_e( 'PageSpeed', 'nabia' ); ?></span>
+				</div>
+
+				<div class="chip chip-review" aria-hidden="true">
+					<span class="chip-stars"><?php nabia_icon( 'star' ); ?><?php nabia_icon( 'star' ); ?><?php nabia_icon( 'star' ); ?><?php nabia_icon( 'star' ); ?><?php nabia_icon( 'star' ); ?></span>
+					<span class="chip-quote"><?php esc_html_e( '“Absolutely love my new website!”', 'nabia' ); ?></span>
+				</div>
+
+				<div class="chip chip-growth" aria-hidden="true">
+					<span class="chip-text"><strong>+42%</strong><?php esc_html_e( 'more leads', 'nabia' ); ?></span>
+					<span class="bars"><i></i><i></i><i></i><i></i><i></i></span>
+				</div>
+
+				<div class="collab-cursor" aria-hidden="true">
+					<svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 3l16 7.5-7 1.8L9.5 20z"/></svg>
+					<span><?php echo esc_html( $nabia_first ); ?></span>
+				</div>
 			</div>
 
 			<a class="spin-badge" href="#work" aria-label="<?php esc_attr_e( 'Scroll to work', 'nabia' ); ?>">
@@ -88,8 +119,8 @@ $nabia_name  = nabia_mod( 'brand_name' );
 					continue;
 				}
 				?>
-				<li class="stat" data-reveal>
-					<span class="stat-number"><span data-count="<?php echo esc_attr( $nabia_num ); ?>"><?php echo esc_html( $nabia_num ); ?></span><?php echo esc_html( nabia_mod( 'stat_' . $nabia_i . '_suffix' ) ); ?></span>
+				<li class="stat" data-reveal style="--i:<?php echo (int) $nabia_i; ?>">
+					<span class="stat-number"><span data-count="<?php echo esc_attr( $nabia_num ); ?>"><?php echo esc_html( $nabia_num ); ?></span><span class="stat-suffix"><?php echo esc_html( nabia_mod( 'stat_' . $nabia_i . '_suffix' ) ); ?></span></span>
 					<span class="stat-label"><?php echo esc_html( nabia_mod( 'stat_' . $nabia_i . '_label' ) ); ?></span>
 				</li>
 			<?php endfor; ?>

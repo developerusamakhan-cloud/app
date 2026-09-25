@@ -13,7 +13,7 @@ $nabia_shortcode = nabia_mod( 'contact_shortcode' );
 	<div class="container">
 		<div class="contact-card">
 			<span class="contact-glow" aria-hidden="true"></span>
-			<p class="eyebrow" data-reveal><span class="eyebrow-num">07</span><?php esc_html_e( 'Contact', 'nabia' ); ?></p>
+			<?php nabia_eyebrow( __( 'Contact', 'nabia' ) ); ?>
 			<h2 class="contact-title" data-split><?php echo esc_html( nabia_mod( 'cta_title' ) ); ?></h2>
 			<p class="contact-text" data-reveal><?php echo esc_html( nabia_mod( 'cta_text' ) ); ?></p>
 

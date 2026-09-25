@@ -91,10 +91,7 @@ add_action( 'widgets_init', 'nabia_widgets_init' );
 function nabia_scripts() {
 	wp_enqueue_style( 'nabia-style', get_stylesheet_uri(), array(), NABIA_VERSION );
 
-	$accent = sanitize_hex_color( nabia_mod( 'accent_color' ) );
-	if ( $accent ) {
-		wp_add_inline_style( 'nabia-style', ':root{--accent:' . $accent . ';}' );
-	}
+	wp_add_inline_style( 'nabia-style', nabia_scheme_css() );
 
 	wp_enqueue_script( 'nabia-main', NABIA_URI . '/assets/js/main.js', array(), NABIA_VERSION, array( 'strategy' => 'defer', 'in_footer' => true ) );
 	wp_localize_script(
@@ -124,6 +121,22 @@ function nabia_preload_fonts() {
 	}
 }
 add_action( 'wp_head', 'nabia_preload_fonts', 1 );
+
+/**
+ * Use the monogram as favicon until a Site Icon is set in the Customizer.
+ */
+function nabia_favicon() {
+	if ( has_site_icon() ) {
+		return;
+	}
+	$schemes = nabia_color_schemes();
+	$scheme  = isset( $schemes[ nabia_mod( 'color_scheme' ) ] ) ? $schemes[ nabia_mod( 'color_scheme' ) ] : reset( $schemes );
+	$accent  = sanitize_hex_color( nabia_mod( 'accent_color' ) );
+	$accent  = $accent ? $accent : $scheme['accent'];
+	$svg     = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="1" y="1" width="46" height="46" rx="15" fill="' . $scheme['ink'] . '"/><path d="M15 34V15.5a1.5 1.5 0 0 1 2.6-1l12.8 15a1.5 1.5 0 0 0 2.6-1V14" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36.5" cy="36" r="4" fill="' . $accent . '"/></svg>';
+	echo '<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,' . rawurlencode( $svg ) . '">' . "\n";
+}
+add_action( 'wp_head', 'nabia_favicon', 2 );
 
 /**
  * Add a class when JS runs so reveal animations never hide content for no-JS visitors.

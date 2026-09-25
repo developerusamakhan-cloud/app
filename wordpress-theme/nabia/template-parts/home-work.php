@@ -21,7 +21,7 @@ $nabia_projects = new WP_Query(
 <section class="section work" id="work">
 	<div class="container">
 		<div class="section-head-row">
-			<?php nabia_section_head( '02', __( 'Portfolio', 'nabia' ), nabia_mod( 'work_title' ) ); ?>
+			<?php nabia_section_head( __( 'Portfolio', 'nabia' ), nabia_mod( 'work_title' ) ); ?>
 			<a class="btn btn-ghost" href="<?php echo esc_url( get_post_type_archive_link( 'project' ) ); ?>" data-magnetic><span><?php esc_html_e( 'All projects', 'nabia' ); ?></span><?php nabia_icon( 'arrow' ); ?></a>
 		</div>
 

@@ -29,7 +29,7 @@ $nabia_skills      = array(
 		</div>
 
 		<div class="about-copy">
-			<?php nabia_section_head( '03', __( 'About me', 'nabia' ), nabia_mod( 'about_title' ) ); ?>
+			<?php nabia_section_head( __( 'About me', 'nabia' ), nabia_mod( 'about_title' ) ); ?>
 			<div class="about-text" data-reveal>
 				<?php echo wp_kses_post( wpautop( nabia_mod( 'about_text' ) ) ); ?>
 			</div>

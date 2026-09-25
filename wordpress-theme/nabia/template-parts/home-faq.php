@@ -8,7 +8,7 @@
 ?>
 <section class="section faq" id="faq">
 	<div class="container faq-grid">
-		<?php nabia_section_head( '06', __( 'FAQ', 'nabia' ), nabia_mod( 'faq_title' ) ); ?>
+		<?php nabia_section_head( __( 'FAQ', 'nabia' ), nabia_mod( 'faq_title' ) ); ?>
 
 		<div class="faq-list">
 			<?php foreach ( nabia_faq() as $nabia_index => $nabia_item ) : ?>

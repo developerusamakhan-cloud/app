@@ -45,7 +45,9 @@ Create each page yourself in **Pages → Add New**, give it any title, and choos
 | Pricing | **Pricing** | Website packages and maintenance plans (tabs), FAQ, free audit |
 | Free Website Audit | **Free audit** | Audit form, video reviews, reviews |
 | About | **About me** | Intro video and story, skills, platforms, process, video reviews, reviews |
-| Hire Me / Contact | **Contact / Hire me** | Contact block, Fiverr & Upwork, free audit form, FAQ |
+| Hire Me / Contact | **Contact / Hire me** | Contact form (saved in Dashboard, Submissions), Fiverr & Upwork, process, FAQ |
+| Portfolio (e.g. your "My works" page) | **Portfolio** | All your Websites with instant category filters, "Show more", reviews |
+| Sitemap | **Sitemap** | Every page, service, project and article in one list, plus a link to the XML sitemap |
 | Any page built with Elementor | **Full width (builder friendly)** | Only your Elementor content between the header and footer |
 
 A full service page contains: headline and intro, "What you get", 6 benefits, "Perfect for", the process, the matching prices, video reviews, an FAQ, the free audit form and links to the other services.
@@ -62,6 +64,14 @@ Tips:
 - Every message is saved in **Dashboard → Submissions → Contact messages**, with a red unread counter in the menu and a New/Read status. Open a message to see all details and reply by email. **Audit requests** are listed in the same menu.
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
+
+## What's new in 2.9
+
+- The header "Let's talk" button (and every "Hire me" / "Contact" link) goes to your page using the **Contact / Hire me** template. Order: custom link in Customize, then your Contact template page, then /hire-me/ or /contact/, then the homepage contact section.
+- Menu items with a dropdown show a small arrow that flips open. The mobile menu shows the dropdown items too.
+- Footer links now go to your real pages: all 9 service pages, Home, Services, Portfolio, Pricing, About, Blog, Free audit and Contact, plus Fiverr, Upwork, Sitemap and Privacy policy (when set in Settings, Privacy). To choose your own "Explore" links, assign a menu to the Footer location in Appearance, Menus.
+- New **Portfolio** page template: when a page uses it, every "Work", "All projects" and "Portfolio" link goes to that page.
+- New **Sitemap** page template. The footer "Sitemap" link goes to it; without it, the link goes to your XML sitemap (Rank Math / Yoast `sitemap_index.xml`, otherwise WordPress `wp-sitemap.xml`).
 
 ## What's new in 2.8
 

@@ -275,11 +275,11 @@ function nabia_menu_fallback( $args ) {
 	};
 	$items = array(
 		array( $page( 'services', '#services' ), __( 'Services', 'nabia' ) ),
-		array( $base . '#work', __( 'Work', 'nabia' ) ),
+		array( function_exists( 'nabia_portfolio_url' ) ? nabia_portfolio_url() : $base . '#work', __( 'Work', 'nabia' ) ),
 		array( $page( 'pricing', '#pricing' ), __( 'Pricing', 'nabia' ) ),
-		array( $base . '#about', __( 'About', 'nabia' ) ),
+		array( $page( 'about', '#about' ), __( 'About', 'nabia' ) ),
 		array( $page( 'audit', '#audit' ), __( 'Free audit', 'nabia' ) ),
-		array( $base . '#contact', __( 'Contact', 'nabia' ) ),
+		array( function_exists( 'nabia_hire_url' ) ? nabia_hire_url() : $base . '#contact', __( 'Contact', 'nabia' ) ),
 	);
 	$class = isset( $args['menu_class'] ) ? $args['menu_class'] : 'menu';
 	echo '<ul class="' . esc_attr( $class ) . '">';

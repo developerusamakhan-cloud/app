@@ -355,6 +355,11 @@ function nabia_portfolio_taxonomy() {
  * @return string
  */
 function nabia_portfolio_url() {
+	// A page using the "Portfolio" template wins over the automatic archive.
+	$page = function_exists( 'nabia_page_url' ) ? nabia_page_url( 'portfolio' ) : '';
+	if ( $page ) {
+		return $page;
+	}
 	$type = nabia_portfolio_type();
 	$link = get_post_type_archive_link( $type );
 	return $link ? $link : add_query_arg( 'post_type', $type, home_url( '/' ) );

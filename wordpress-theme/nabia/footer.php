@@ -71,8 +71,9 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 			<div class="footer-col">
 				<h3 class="footer-heading"><?php esc_html_e( 'Services', 'nabia' ); ?></h3>
 				<ul class="footer-menu">
-					<?php foreach ( array_slice( nabia_services(), 0, 5 ) as $nabia_service ) : ?>
-						<li><a href="<?php echo esc_url( is_front_page() ? '#services' : home_url( '/#services' ) ); ?>"><?php echo esc_html( $nabia_service['title'] ); ?></a></li>
+					<?php foreach ( nabia_services() as $nabia_service ) : ?>
+						<?php $nabia_url = nabia_service_url( $nabia_service['slug'] ); ?>
+						<li><a href="<?php echo esc_url( $nabia_url ? $nabia_url : ( is_front_page() ? '#services' : home_url( '/#services' ) ) ); ?>"><?php echo esc_html( $nabia_service['title'] ); ?></a></li>
 					<?php endforeach; ?>
 				</ul>
 			</div>
@@ -80,15 +81,34 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 			<div class="footer-col">
 				<h3 class="footer-heading"><?php esc_html_e( 'Explore', 'nabia' ); ?></h3>
 				<?php
-				wp_nav_menu(
-					array(
-						'theme_location' => 'footer',
-						'container'      => false,
-						'menu_class'     => 'footer-menu',
-						'depth'          => 1,
-						'fallback_cb'    => 'nabia_menu_fallback',
-					)
-				);
+				if ( has_nav_menu( 'footer' ) ) {
+					wp_nav_menu(
+						array(
+							'theme_location' => 'footer',
+							'container'      => false,
+							'menu_class'     => 'footer-menu',
+							'depth'          => 1,
+						)
+					);
+				} else {
+					// Automatic links to your real pages (with homepage-section fallbacks).
+					$nabia_home    = is_front_page() ? '' : home_url( '/' );
+					$nabia_explore = array(
+						array( __( 'Home', 'nabia' ), home_url( '/' ) ),
+						array( __( 'Services', 'nabia' ), nabia_page_url( 'services' ) ? nabia_page_url( 'services' ) : $nabia_home . '#services' ),
+						array( __( 'Portfolio', 'nabia' ), nabia_portfolio_url() ),
+						array( __( 'Pricing', 'nabia' ), nabia_page_url( 'pricing' ) ? nabia_page_url( 'pricing' ) : $nabia_home . '#pricing' ),
+						array( __( 'About', 'nabia' ), nabia_page_url( 'about' ) ? nabia_page_url( 'about' ) : $nabia_home . '#about' ),
+						get_option( 'page_for_posts' ) ? array( __( 'Blog', 'nabia' ), nabia_blog_url() ) : null,
+						array( __( 'Free website audit', 'nabia' ), nabia_page_url( 'audit' ) ? nabia_page_url( 'audit' ) : $nabia_home . '#audit' ),
+						array( __( 'Contact', 'nabia' ), nabia_hire_url() ),
+					);
+					echo '<ul class="footer-menu">';
+					foreach ( array_filter( $nabia_explore ) as $nabia_link ) {
+						printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( $nabia_link[1] ), esc_html( $nabia_link[0] ) );
+					}
+					echo '</ul>';
+				}
 				?>
 			</div>
 
@@ -98,8 +118,15 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 					<?php if ( $nabia_email ) : ?>
 						<li><a href="mailto:<?php echo esc_attr( antispambot( $nabia_email ) ); ?>"><?php echo esc_html( antispambot( $nabia_email ) ); ?></a></li>
 					<?php endif; ?>
+					<li><a href="<?php echo esc_url( nabia_hire_url() ); ?>"><?php esc_html_e( 'Send a message', 'nabia' ); ?></a></li>
 					<?php if ( $nabia_wa ) : ?>
 						<li><a href="<?php echo esc_url( $nabia_wa ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'WhatsApp', 'nabia' ); ?></a></li>
+					<?php endif; ?>
+					<?php if ( nabia_mod( 'social_fiverr' ) ) : ?>
+						<li><a href="<?php echo esc_url( nabia_mod( 'social_fiverr' ) ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Hire me on Fiverr', 'nabia' ); ?> ↗</a></li>
+					<?php endif; ?>
+					<?php if ( nabia_mod( 'social_upwork' ) ) : ?>
+						<li><a href="<?php echo esc_url( nabia_mod( 'social_upwork' ) ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Hire me on Upwork', 'nabia' ); ?> ↗</a></li>
 					<?php endif; ?>
 				</ul>
 			</div>
@@ -115,7 +142,13 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 
 		<div class="footer-bottom">
 			<p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php echo esc_html( nabia_mod( 'brand_name' ) ); ?>. <?php esc_html_e( 'All rights reserved.', 'nabia' ); ?></p>
-			<p class="footer-made"><?php esc_html_e( 'Designed & built in-house', 'nabia' ); ?> <span class="footer-heart" aria-hidden="true">✦</span></p>
+			<ul class="footer-legal">
+				<?php if ( get_privacy_policy_url() ) : ?>
+					<li><a href="<?php echo esc_url( get_privacy_policy_url() ); ?>"><?php esc_html_e( 'Privacy policy', 'nabia' ); ?></a></li>
+				<?php endif; ?>
+				<li><a href="<?php echo esc_url( nabia_sitemap_url() ); ?>"><?php esc_html_e( 'Sitemap', 'nabia' ); ?></a></li>
+				<li><a href="<?php echo esc_url( nabia_page_url( 'audit' ) ? nabia_page_url( 'audit' ) : home_url( '/#audit' ) ); ?>"><?php esc_html_e( 'Free audit', 'nabia' ); ?></a></li>
+			</ul>
 			<a class="back-to-top" href="#top" data-magnetic>
 				<?php esc_html_e( 'Back to top', 'nabia' ); ?>
 				<span class="back-to-top-icon"><?php nabia_icon( 'arrow-up' ); ?></span>

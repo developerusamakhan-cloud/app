@@ -298,8 +298,10 @@ function nabia_page_url( $role ) {
 			'services' => 'template-services.php',
 			'pricing'  => 'template-pricing.php',
 			'audit'    => 'template-audit.php',
-			'about'    => 'template-about.php',
-			'contact'  => 'template-contact.php',
+			'about'     => 'template-about.php',
+			'contact'   => 'template-contact.php',
+			'portfolio' => 'template-portfolio.php',
+			'sitemap'   => 'template-sitemap.php',
 		);
 		if ( isset( $templates[ $role ] ) ) {
 			$pages = get_posts(
@@ -316,4 +318,34 @@ function nabia_page_url( $role ) {
 	}
 	$cache[ $role ] = $pages ? get_permalink( $pages[0] ) : '';
 	return $cache[ $role ];
+}
+
+/**
+ * Blog address: the Posts page, or the homepage when it lists posts.
+ *
+ * @return string
+ */
+function nabia_blog_url() {
+	$page = (int) get_option( 'page_for_posts' );
+	return $page ? get_permalink( $page ) : home_url( '/' );
+}
+
+/**
+ * Sitemap address: an HTML "Sitemap" page if you made one, otherwise the XML sitemap
+ * of Rank Math / Yoast (sitemap_index.xml) or WordPress itself (wp-sitemap.xml).
+ *
+ * @param bool $xml Force the XML sitemap.
+ * @return string
+ */
+function nabia_sitemap_url( $xml = false ) {
+	if ( ! $xml ) {
+		$page = nabia_page_url( 'sitemap' );
+		if ( $page ) {
+			return $page;
+		}
+	}
+	if ( defined( 'RANK_MATH_VERSION' ) || defined( 'WPSEO_VERSION' ) || class_exists( 'RankMath' ) ) {
+		return home_url( '/sitemap_index.xml' );
+	}
+	return home_url( '/wp-sitemap.xml' );
 }

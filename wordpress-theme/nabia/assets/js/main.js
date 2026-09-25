@@ -730,6 +730,58 @@
 	}
 
 	/* ------------------------------------------------------------------
+	 * Portfolio page: instant category filter + "Show more".
+	 * ------------------------------------------------------------------ */
+	$$('[data-portfolio]').forEach(function (section) {
+		var items = $$('.pf-item', section);
+		var buttons = $$('[data-filter]', section);
+		var more = $('[data-portfolio-more]', section);
+		var empty = $('.pf-empty', section);
+		var expanded = false;
+
+		function apply(filter) {
+			var shown = 0;
+			items.forEach(function (item) {
+				var cats = (item.getAttribute('data-cats') || '').split(' ');
+				var match = filter === '*' || cats.indexOf(filter) !== -1;
+				var collapsed = filter === '*' && !expanded && item.classList.contains('is-more');
+				item.hidden = !match || collapsed;
+				if (!item.hidden) {
+					shown++;
+					item.classList.add('is-visible');
+					$$('[data-reveal]', item).forEach(function (el) {
+						el.classList.add('is-visible');
+					});
+				}
+			});
+			if (empty) {
+				empty.hidden = shown > 0;
+			}
+			if (more) {
+				more.parentNode.hidden = expanded || filter !== '*';
+			}
+		}
+
+		buttons.forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				buttons.forEach(function (b) {
+					b.classList.toggle('is-active', b === btn);
+					b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+				});
+				apply(btn.getAttribute('data-filter'));
+			});
+		});
+
+		if (more) {
+			more.addEventListener('click', function () {
+				expanded = true;
+				apply('*');
+			});
+		}
+		apply('*');
+	});
+
+	/* ------------------------------------------------------------------
 	 * Intro video: play muted while visible, pause when scrolled away.
 	 * ------------------------------------------------------------------ */
 	$$('[data-intro-video]').forEach(function (video) {

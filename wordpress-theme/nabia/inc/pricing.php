@@ -87,7 +87,8 @@ function nabia_plans( $group ) {
 }
 
 /**
- * Where "Hire me" buttons go: the Customizer link, an existing /hire-me/ page, or the contact section.
+ * Where "Hire me" / "Let's talk" buttons go: the Customizer link, your Contact page
+ * ("Contact / Hire me" template), a /hire-me/ or /contact/ page, or the contact section.
  *
  * @return string
  */
@@ -96,7 +97,16 @@ function nabia_hire_url() {
 	if ( $url ) {
 		return $url;
 	}
+	// A page using the "Contact / Hire me" template.
+	$contact = function_exists( 'nabia_page_url' ) ? nabia_page_url( 'contact' ) : '';
+	if ( $contact ) {
+		return $contact;
+	}
 	$page = get_page_by_path( 'hire-me' );
+	if ( $page && 'publish' === $page->post_status ) {
+		return get_permalink( $page );
+	}
+	$page = get_page_by_path( 'contact' );
 	if ( $page && 'publish' === $page->post_status ) {
 		return get_permalink( $page );
 	}

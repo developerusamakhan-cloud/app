@@ -52,7 +52,7 @@
 		</nav>
 
 		<div class="header-actions">
-			<a class="btn btn-accent btn-sm header-cta" href="<?php echo esc_url( is_front_page() ? '#contact' : home_url( '/#contact' ) ); ?>" data-magnetic>
+			<a class="btn btn-accent btn-sm header-cta" href="<?php echo esc_url( nabia_hire_url() ); ?>" data-magnetic>
 				<span><?php esc_html_e( "Let's talk", 'nabia' ); ?></span>
 				<?php nabia_icon( 'arrow-up' ); ?>
 			</a>
@@ -72,7 +72,7 @@
 				'theme_location' => 'primary',
 				'container'      => false,
 				'menu_class'     => 'mobile-menu-list',
-				'depth'          => 1,
+				'depth'          => 2,
 				'fallback_cb'    => 'nabia_menu_fallback',
 			)
 		);

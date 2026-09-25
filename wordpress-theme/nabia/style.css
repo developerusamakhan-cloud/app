@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.7.0
+Version: 2.8.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -2656,15 +2656,29 @@ body:not(.is-home) .site-main {
 
 /* Review wall (masonry columns) */
 .review-wall {
-	columns: 3 300px;
-	column-gap: 20px;
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 20px;
+	align-items: stretch;
+}
+
+@media (max-width: 1024px) {
+	.review-wall {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 640px) {
+	.review-wall {
+		grid-template-columns: minmax(0, 1fr);
+	}
 }
 
 .review-card {
-	display: grid;
+	display: flex;
+	flex-direction: column;
 	gap: 14px;
-	break-inside: avoid;
-	margin: 0 0 20px;
+	margin: 0;
 	padding: 24px;
 	border-radius: var(--radius);
 	background: var(--surface);
@@ -2682,7 +2696,7 @@ body:not(.is-home) .site-main {
 }
 
 .review-wall.is-expanded .review-card.is-extra {
-	display: grid;
+	display: flex;
 }
 
 .review-author {
@@ -2763,13 +2777,14 @@ body:not(.is-home) .site-main {
 
 .review-text.is-clamped p {
 	display: -webkit-box;
-	-webkit-line-clamp: 7;
+	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 }
 
 .review-readmore {
-	justify-self: start;
+	align-self: flex-start;
+	margin-top: auto;
 	padding: 0;
 	border: 0;
 	background: none;
@@ -3018,30 +3033,12 @@ body:not(.is-home) .site-main {
 	gap: 10px;
 }
 
-.plan-check {
-	display: grid;
-	place-items: center;
-	flex-shrink: 0;
-	width: 22px;
-	height: 22px;
-	border-radius: 50%;
-	background: color-mix(in srgb, var(--accent) 16%, transparent);
-	color: var(--accent);
-	font-size: 12px;
-	font-weight: 700;
-	margin-top: 2px;
-	margin-top: calc((1lh - 22px) / 2);
-	line-height: 1;
-}
 
 .plan-features .is-out {
 	opacity: 0.55;
 }
 
-.plan-features .is-out .plan-check {
-	background: color-mix(in srgb, currentColor 10%, transparent);
-	color: inherit;
-}
+
 
 .plan-cta {
 	justify-content: center;
@@ -3125,18 +3122,6 @@ body:not(.is-home) .site-main {
 	gap: 10px;
 }
 
-.audit-tick {
-	display: grid;
-	place-items: center;
-	flex-shrink: 0;
-	width: 22px;
-	height: 22px;
-	border-radius: 50%;
-	background: var(--accent);
-	color: var(--accent-ink);
-	font-size: 12px;
-	font-weight: 700;
-}
 
 .audit-promise {
 	display: flex;
@@ -3477,23 +3462,6 @@ body:not(.is-home) .site-main {
 	line-height: 1.5;
 }
 
-.check-list li > span,
-.audit-tick {
-	display: grid;
-	place-items: center;
-	flex-shrink: 0;
-	width: 22px;
-	height: 22px;
-	/* Line the tick up with the first line of text, whatever the font size. */
-	margin-top: 2px;
-	margin-top: calc((1lh - 22px) / 2);
-	border-radius: 50%;
-	background: var(--accent);
-	color: var(--accent-ink);
-	font-size: 12px;
-	font-weight: 700;
-	line-height: 1;
-}
 
 .aside-card .tags li {
 	border-color: color-mix(in srgb, #fff 30%, transparent);
@@ -3977,6 +3945,12 @@ body:not(.is-home) .site-main {
 	letter-spacing: -0.03em;
 }
 
+.single-article .featured-wide,
+.article-layout {
+	max-width: 1180px;
+	margin-inline: auto;
+}
+
 .article-layout {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) 300px;
@@ -3984,15 +3958,70 @@ body:not(.is-home) .site-main {
 	align-items: start;
 }
 
-.article-layout .entry-content {
-	margin: 0;
+/* Everything in the article column shares the same left edge and width. */
+.article-main .entry-content,
+.article-main .entry-footer,
+.article-main .post-navigation,
+.article-main .comments-area {
+	max-width: none;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.article-main .entry-footer {
+	margin-top: 40px;
+}
+
+.article-main .post-navigation {
+	margin-top: 40px;
+}
+
+.article-main .comments-area {
+	margin-top: 56px;
+}
+
+/* Images in a post fill the text column. */
+.single-article .entry-content img {
+	max-width: 100%;
+	height: auto;
+	border-radius: var(--radius);
+}
+
+.single-article .entry-content > figure,
+.single-article .entry-content .wp-block-image,
+.single-article .entry-content > p > img:only-child,
+.single-article .entry-content > p > a:only-child > img {
+	display: block;
+	width: 100%;
+	margin-inline: 0;
+}
+
+.single-article .entry-content > figure img,
+.single-article .entry-content .wp-block-image img,
+.single-article .entry-content > p > img:only-child,
+.single-article .entry-content > p > a:only-child > img {
+	width: 100%;
+}
+
+.single-article .entry-content h2 {
+	margin-top: 1.4em;
+	font-size: clamp(26px, 2.4vw, 34px);
+	scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+.single-article .entry-content h3 {
+	font-size: clamp(21px, 1.8vw, 25px);
 }
 
 .article-side {
 	position: sticky;
-	top: calc(var(--header-h) + 20px);
+	top: 24px;
 	display: grid;
 	gap: 16px;
+}
+
+.admin-bar .article-side {
+	top: 56px;
 }
 
 .toc {
@@ -4172,6 +4201,168 @@ body:not(.is-home) .site-main {
 
 	.stat-tiles strong {
 		font-size: 34px;
+	}
+}
+
+/* ==========================================================================
+   Contact form
+   ========================================================================== */
+.contact-form-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+	gap: clamp(28px, 5vw, 72px);
+	align-items: start;
+}
+
+.cf-title {
+	margin: 0 0 14px;
+	font-size: clamp(32px, 3.6vw, 52px);
+	font-weight: 800;
+	letter-spacing: -0.035em;
+	line-height: 1.05;
+}
+
+.cf-text {
+	max-width: 460px;
+	font-size: 18px;
+	color: var(--muted);
+}
+
+.cf-facts {
+	display: grid;
+	gap: 14px;
+	margin: 28px 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cf-facts li {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 14px 16px;
+	border-radius: var(--radius);
+	background: var(--surface);
+	box-shadow: 0 0 0 1px var(--line);
+	font-weight: 600;
+}
+
+.cf-facts small {
+	display: block;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+
+.cf-facts a {
+	color: var(--ink);
+	text-decoration: none;
+}
+
+.cf-facts a:hover {
+	color: var(--accent);
+}
+
+.cf-icon {
+	display: grid;
+	place-items: center;
+	flex-shrink: 0;
+	width: 44px;
+	height: 44px;
+	border-radius: 14px;
+	background: var(--accent);
+	color: var(--accent-ink);
+}
+
+.cf-icon .icon {
+	width: 20px;
+	height: 20px;
+}
+
+.contact-form-card {
+	padding: clamp(22px, 3.5vw, 40px);
+	border-radius: var(--radius-lg);
+	background: var(--surface);
+	box-shadow: 0 50px 90px -60px color-mix(in srgb, var(--ink) 55%, transparent), 0 0 0 1px var(--line);
+}
+
+.cf-form .field {
+	margin: 0 0 16px;
+}
+
+.cf-form label,
+.cf-form legend {
+	display: block;
+	margin-bottom: 6px;
+	padding: 0;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.cf-form .req {
+	color: var(--second);
+}
+
+.cf-budget {
+	margin: 0 0 16px;
+	padding: 0;
+	border: 0;
+}
+
+.cf-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.cf-chip {
+	position: relative;
+	margin: 0 !important;
+	cursor: pointer;
+}
+
+.cf-chip input {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.cf-chip span {
+	display: inline-block;
+	padding: 9px 16px;
+	border: 1.5px solid var(--line);
+	border-radius: 999px;
+	font-size: 14px;
+	font-weight: 500;
+	transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.cf-chip:hover span {
+	border-color: var(--accent);
+}
+
+.cf-chip input:checked + span {
+	background: var(--accent);
+	border-color: var(--accent);
+	color: var(--accent-ink);
+}
+
+.cf-chip input:focus-visible + span {
+	outline: 3px solid var(--second);
+	outline-offset: 2px;
+}
+
+.cf-submit {
+	justify-content: center;
+	width: 100%;
+	margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+	.contact-form-grid {
+		grid-template-columns: minmax(0, 1fr);
 	}
 }
 
@@ -5927,6 +6118,58 @@ button[type="submit"]:not(.search-submit):hover {
 
 .gallery-caption {
 	display: block;
+}
+
+/* ---------- Tick icons in lists ----------
+ * The tick keeps the list's font size and line height, so "1lh" is exactly one line of
+ * text: the circle is then centred on the first line, however long the item is.
+ */
+.tick {
+	position: relative;
+	flex-shrink: 0;
+	width: 22px;
+	height: 1lh;
+	font-size: inherit;
+	line-height: inherit;
+	color: var(--accent-ink);
+}
+
+.tick::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 22px;
+	height: 22px;
+	margin-top: -11px;
+	border-radius: 50%;
+	background: var(--accent);
+}
+
+.tick .icon {
+	position: absolute;
+	left: 5px;
+	top: 50%;
+	width: 12px;
+	height: 12px;
+	margin-top: -6px;
+	stroke-width: 3.2;
+}
+
+.plan-check {
+	color: var(--accent);
+}
+
+.plan-check::before {
+	background: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+.plan-features .is-out .plan-check {
+	color: inherit;
+}
+
+.plan-features .is-out .plan-check::before {
+	background: color-mix(in srgb, currentColor 10%, transparent);
 }
 
 /* Headline punctuation sits closer to the word before it. */

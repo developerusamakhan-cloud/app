@@ -25,7 +25,7 @@ nabia_page_header(
 		'icon'    => 'mail',
 		'title'   => get_the_title() ? get_the_title() : __( 'Hire me', 'nabia' ),
 		'intro'   => nabia_mod( 'cta_text' ),
-		'actions' => $nabia_email ? nabia_button( antispambot( $nabia_email ), 'mailto:' . antispambot( $nabia_email ) ) : '',
+		'actions' => nabia_button( __( 'Send a message', 'nabia' ), '#contact-form' ) . ( $nabia_email ? nabia_button( antispambot( $nabia_email ), 'mailto:' . antispambot( $nabia_email ), 'ghost' ) : '' ),
 		'aside'   => $nabia_aside,
 		'class'   => 'is-contact',
 	)
@@ -39,8 +39,8 @@ while ( have_posts() ) {
 		echo '</div></section>';
 	}
 }
+get_template_part( 'template-parts/contact', 'form' );
 get_template_part( 'template-parts/home', 'hire' );
 get_template_part( 'template-parts/home', 'process' );
 get_template_part( 'template-parts/home', 'faq' );
-get_template_part( 'template-parts/home', 'contact' );
 get_footer();

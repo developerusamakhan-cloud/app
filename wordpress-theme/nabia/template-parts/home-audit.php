@@ -23,7 +23,7 @@ $nabia_messages  = array(
 				<p class="audit-text" data-reveal><?php echo esc_html( nabia_mod( 'audit_text' ) ); ?></p>
 				<ul class="audit-points" data-reveal>
 					<?php foreach ( nabia_mod_list( 'audit_points' ) as $nabia_point ) : ?>
-						<li><span class="audit-tick" aria-hidden="true">&#10003;</span><?php echo esc_html( $nabia_point ); ?></li>
+						<li><span class="tick audit-tick" aria-hidden="true"><?php nabia_icon( 'check' ); ?></span><?php echo esc_html( $nabia_point ); ?></li>
 					<?php endforeach; ?>
 				</ul>
 				<p class="audit-promise" data-reveal>

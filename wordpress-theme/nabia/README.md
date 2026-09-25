@@ -56,6 +56,20 @@ Tips:
 - Portfolio pages need no template: `/websites/` and each Website post are automatic.
 - Prefer one click? **Appearance → Nabia Setup** can create all these pages and a menu for you. It never touches existing pages.
 
+## Contact form and submissions
+
+- The **Contact / Hire me** template shows a full contact form: name, email, phone/WhatsApp, service, budget (clickable chips) and message. Use `[nabia_contact_form]` to place it anywhere else.
+- Every message is saved in **Dashboard → Submissions → Contact messages**, with a red unread counter in the menu and a New/Read status. Open a message to see all details and reply by email. **Audit requests** are listed in the same menu.
+- **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
+- Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
+
+## What's new in 2.8
+
+- Tick icons are drawn as icons, centred on the first line of text in every list (audit, pricing, "What you get", checklists).
+- Single blog post: content, author box, navigation and comments share one column and edge; readable width; images fill the column; smaller in-article headings.
+- Reviews: 6 shown by default in an equal-height grid, 3 lines each with "Read more", plus "Show more reviews".
+- New contact form with WordPress submissions and a settings page (see above).
+
 ## What's new in 2.7
 
 - **Same header on every inner page**: breadcrumbs, label, title, intro and a visual on the right that fits the page (topics card on the blog, author card on posts, project details on websites, stats on Services, "what's included" on Pricing, profile card on About, a playful 404 and more).

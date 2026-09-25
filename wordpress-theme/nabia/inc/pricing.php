@@ -142,7 +142,7 @@ function nabia_render_plans( $group ) {
 				<ul class="plan-features">
 					<?php foreach ( $plan['features'] as $feature ) : ?>
 						<li class="<?php echo $feature['included'] ? 'is-in' : 'is-out'; ?>">
-							<span class="plan-check" aria-hidden="true"><?php echo $feature['included'] ? '&#10003;' : '&#10005;'; ?></span>
+							<span class="tick plan-check" aria-hidden="true"><?php nabia_icon( $feature['included'] ? 'check' : 'close' ); ?></span>
 							<span>
 								<?php if ( ! $feature['included'] ) : ?>
 									<span class="screen-reader-text"><?php esc_html_e( 'Not included:', 'nabia' ); ?></span>

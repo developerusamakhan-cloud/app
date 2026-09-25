@@ -10,7 +10,7 @@ get_header();
 
 $nabia_included = '<div class="aside-card"><p class="aside-card-title">' . esc_html__( 'Every website includes', 'nabia' ) . '</p><ul class="check-list">';
 foreach ( array( __( 'Custom design for your brand', 'nabia' ), __( 'Mobile-friendly on every screen', 'nabia' ), __( 'Speed and SEO basics', 'nabia' ), __( 'Contact form to your inbox', 'nabia' ), __( 'Video walkthrough of your site', 'nabia' ), __( 'One month of free support', 'nabia' ) ) as $nabia_item ) {
-	$nabia_included .= '<li><span aria-hidden="true">&#10003;</span>' . esc_html( $nabia_item ) . '</li>';
+	$nabia_included .= '<li><span class="tick" aria-hidden="true">' . nabia_get_icon( 'check' ) . '</span>' . esc_html( $nabia_item ) . '</li>';
 }
 $nabia_included .= '</ul></div>';
 

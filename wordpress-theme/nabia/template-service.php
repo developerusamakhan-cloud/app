@@ -29,7 +29,7 @@ while ( have_posts() ) :
 
 	$nabia_get = '<div class="aside-card get-card"><p class="aside-card-title">' . esc_html__( 'What you get', 'nabia' ) . '</p><ul class="check-list">';
 	foreach ( $nabia_service['get'] as $nabia_item ) {
-		$nabia_get .= '<li><span aria-hidden="true">&#10003;</span>' . esc_html( $nabia_item ) . '</li>';
+		$nabia_get .= '<li><span class="tick" aria-hidden="true">' . nabia_get_icon( 'check' ) . '</span>' . esc_html( $nabia_item ) . '</li>';
 	}
 	$nabia_get .= '</ul>';
 	if ( ! empty( $nabia_service['tags'] ) ) {

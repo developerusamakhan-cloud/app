@@ -346,7 +346,11 @@
 	/* ------------------------------------------------------------------
 	 * Reviews: clamp long texts with "Read more", and "Show more reviews".
 	 * ------------------------------------------------------------------ */
-	$$('[data-review-text]').forEach(function (text) {
+	function clampReview(text) {
+		if (text.hasAttribute('data-clamp-done')) {
+			return;
+		}
+		text.setAttribute('data-clamp-done', '');
 		text.classList.add('is-clamped');
 		var p = $('p', text);
 		if (!p || p.scrollHeight <= p.clientHeight + 2) {
@@ -362,6 +366,11 @@
 			btn.textContent = open ? 'Read more' : 'Read less';
 		});
 		text.parentNode.appendChild(btn);
+	}
+	$$('[data-review-text]').forEach(function (text) {
+		if (text.offsetParent !== null) {
+			clampReview(text);
+		}
 	});
 
 	$$('[data-review-more]').forEach(function (btn) {
@@ -370,6 +379,7 @@
 			wall = wall ? $('[data-review-wall]', wall) : null;
 			if (wall) {
 				wall.classList.add('is-expanded');
+				$$('[data-review-text]', wall).forEach(clampReview);
 			}
 			btn.parentNode.remove();
 		});

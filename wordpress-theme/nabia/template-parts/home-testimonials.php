@@ -10,7 +10,7 @@
 $nabia_data    = nabia_reviews_items();
 $nabia_google  = $nabia_data['google'];
 $nabia_items   = $nabia_data['items'];
-$nabia_visible = 9;
+$nabia_visible = 6;
 $nabia_summary = $nabia_google && ! empty( $nabia_google['rating'] );
 ?>
 <section class="section testimonials" id="testimonials">

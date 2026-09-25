@@ -9,7 +9,7 @@ $nabia_status    = isset( $_GET['audit'] ) ? sanitize_key( wp_unslash( $_GET['au
 $nabia_shortcode = nabia_mod( 'audit_shortcode' );
 $nabia_messages  = array(
 	'sent'    => __( 'Thank you! Your audit request is in. I will review your website and email you within 48 hours.', 'nabia' ),
-	'invalid' => __( 'Please fill in your name, a valid email and your website address.', 'nabia' ),
+	'invalid' => __( 'Please enter your website address and a valid email.', 'nabia' ),
 	'expired' => __( 'The form expired. Please try again.', 'nabia' ),
 	'limit'   => __( 'You have sent a few requests already. Please try again in an hour or email me directly.', 'nabia' ),
 );
@@ -46,34 +46,17 @@ $nabia_messages  = array(
 						<p class="audit-hp" aria-hidden="true">
 							<label>Company website <input type="text" name="company_website" tabindex="-1" autocomplete="off"></label>
 						</p>
-						<p class="field">
-							<label for="audit-site"><?php esc_html_e( 'Your website', 'nabia' ); ?></label>
-							<input id="audit-site" name="audit_site" type="text" inputmode="url" placeholder="yourwebsite.com" required>
+						<p class="audit-form-title"><?php esc_html_e( 'Get your free report', 'nabia' ); ?></p>
+						<p class="field field-icon">
+							<label for="audit-site"><?php esc_html_e( 'Website URL', 'nabia' ); ?></label>
+							<span class="field-wrap"><?php nabia_icon( 'layout' ); ?><input id="audit-site" name="audit_site" type="text" inputmode="url" placeholder="yourwebsite.com" required></span>
 						</p>
-						<div class="field-row">
-							<p class="field">
-								<label for="audit-name"><?php esc_html_e( 'Your name', 'nabia' ); ?></label>
-								<input id="audit-name" name="audit_name" type="text" autocomplete="name" required>
-							</p>
-							<p class="field">
-								<label for="audit-email"><?php esc_html_e( 'Email', 'nabia' ); ?></label>
-								<input id="audit-email" name="audit_email" type="email" autocomplete="email" required>
-							</p>
-						</div>
-						<p class="field">
-							<label for="audit-goal"><?php esc_html_e( 'Main goal', 'nabia' ); ?></label>
-							<select id="audit-goal" name="audit_goal">
-								<?php foreach ( nabia_audit_goals() as $nabia_key => $nabia_label ) : ?>
-									<option value="<?php echo esc_attr( $nabia_key ); ?>"><?php echo esc_html( $nabia_label ); ?></option>
-								<?php endforeach; ?>
-							</select>
+						<p class="field field-icon">
+							<label for="audit-email"><?php esc_html_e( 'Email address', 'nabia' ); ?></label>
+							<span class="field-wrap"><?php nabia_icon( 'mail' ); ?><input id="audit-email" name="audit_email" type="email" autocomplete="email" placeholder="you@company.com" required></span>
 						</p>
-						<p class="field">
-							<label for="audit-message"><?php esc_html_e( 'Anything I should know? (optional)', 'nabia' ); ?></label>
-							<textarea id="audit-message" name="audit_message" rows="3"></textarea>
-						</p>
-						<button class="btn btn-accent btn-lg audit-submit" type="submit"><span><?php esc_html_e( 'Get my free audit', 'nabia' ); ?></span><?php nabia_icon( 'arrow' ); ?></button>
-						<p class="audit-small"><?php esc_html_e( 'No spam, no sales pressure. Just honest feedback.', 'nabia' ); ?></p>
+						<button class="btn btn-accent btn-lg audit-submit" type="submit"><span><?php esc_html_e( 'Audit my website', 'nabia' ); ?></span><?php nabia_icon( 'arrow' ); ?></button>
+						<p class="audit-small"><?php esc_html_e( 'Free. No spam, no sales pressure.', 'nabia' ); ?></p>
 					</form>
 				<?php endif; ?>
 			</div>

@@ -3,21 +3,34 @@
  * Template Name: Contact / Hire me
  * Template Post Type: page
  *
- * Contact page: big contact block, Fiverr/Upwork, free audit form and FAQ.
- *
  * @package Nabia
  */
 
 get_header();
-?>
-<section class="page-hero">
-	<div class="container">
-		<p class="eyebrow" data-reveal><?php esc_html_e( 'Contact', 'nabia' ); ?></p>
-		<h1 class="page-title" data-split><?php the_title(); ?></h1>
-		<p class="page-intro" data-reveal><?php echo esc_html( nabia_mod( 'cta_text' ) ); ?></p>
-	</div>
-</section>
-<?php
+
+$nabia_email = nabia_mod( 'contact_email' );
+$nabia_aside = nabia_aside_card(
+	__( 'Quick facts', 'nabia' ),
+	array(
+		array( __( 'Email', 'nabia' ), antispambot( $nabia_email ) ),
+		array( __( 'Reply time', 'nabia' ), __( 'Within 24 hours', 'nabia' ) ),
+		array( __( 'Payment', 'nabia' ), __( '50% upfront, 50% on launch', 'nabia' ) ),
+		array( __( 'Also on', 'nabia' ), 'Fiverr & Upwork' ),
+	)
+);
+
+nabia_page_header(
+	array(
+		'eyebrow' => __( 'Contact', 'nabia' ),
+		'icon'    => 'mail',
+		'title'   => get_the_title() ? get_the_title() : __( 'Hire me', 'nabia' ),
+		'intro'   => nabia_mod( 'cta_text' ),
+		'actions' => $nabia_email ? nabia_button( antispambot( $nabia_email ), 'mailto:' . antispambot( $nabia_email ) ) : '',
+		'aside'   => $nabia_aside,
+		'class'   => 'is-contact',
+	)
+);
+
 while ( have_posts() ) {
 	the_post();
 	if ( '' !== trim( get_the_content() ) ) {
@@ -26,8 +39,8 @@ while ( have_posts() ) {
 		echo '</div></section>';
 	}
 }
-get_template_part( 'template-parts/home', 'contact' );
 get_template_part( 'template-parts/home', 'hire' );
-get_template_part( 'template-parts/home', 'audit' );
+get_template_part( 'template-parts/home', 'process' );
 get_template_part( 'template-parts/home', 'faq' );
+get_template_part( 'template-parts/home', 'contact' );
 get_footer();

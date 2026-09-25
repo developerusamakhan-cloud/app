@@ -83,7 +83,7 @@ function nabia_handle_audit_request() {
 		$site = 'https://' . $site;
 	}
 	$site = esc_url_raw( $site );
-	if ( '' === $name || ! is_email( $email ) || '' === $site ) {
+	if ( ! is_email( $email ) || '' === $site ) {
 		$fail( 'invalid' );
 	}
 
@@ -98,21 +98,23 @@ function nabia_handle_audit_request() {
 	$goals      = nabia_audit_goals();
 	$goal_label = isset( $goals[ $goal ] ) ? $goals[ $goal ] : '';
 
-	$body = sprintf(
-		"Name: %s\nEmail: %s\nWebsite: %s\nMain goal: %s\n\nMessage:\n%s",
-		$name,
-		$email,
-		$site,
-		$goal_label,
-		$message
-	);
+	$body = sprintf( "Website: %s\nEmail: %s", $site, $email );
+	if ( $name ) {
+		$body .= "\nName: " . $name;
+	}
+	if ( $goal_label ) {
+		$body .= "\nMain goal: " . $goal_label;
+	}
+	if ( $message ) {
+		$body .= "\n\nMessage:\n" . $message;
+	}
 
 	wp_insert_post(
 		array(
 			'post_type'    => 'audit_request',
 			'post_status'  => 'private',
-			/* translators: 1: website, 2: name */
-			'post_title'   => sprintf( __( '%1$s (%2$s)', 'nabia' ), $site, $name ),
+			/* translators: 1: website, 2: email */
+			'post_title'   => sprintf( __( '%1$s (%2$s)', 'nabia' ), $site, $email ),
 			'post_content' => $body,
 		)
 	);
@@ -123,7 +125,7 @@ function nabia_handle_audit_request() {
 		/* translators: %s: website URL */
 		sprintf( __( 'New free audit request: %s', 'nabia' ), $site ),
 		$body,
-		array( 'Reply-To: ' . $name . ' <' . $email . '>' )
+		array( 'Reply-To: ' . ( $name ? $name . ' ' : '' ) . '<' . $email . '>' )
 	);
 
 	wp_safe_redirect( add_query_arg( 'audit', 'sent', $back ) . '#audit' );

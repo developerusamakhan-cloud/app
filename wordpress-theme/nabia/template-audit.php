@@ -7,7 +7,19 @@
  */
 
 get_header();
-get_template_part( 'template-parts/home', 'audit' );
+
+nabia_page_header(
+	array(
+		'eyebrow' => __( 'Free audit', 'nabia' ),
+		'icon'    => 'search',
+		'title'   => get_the_title() ? get_the_title() : nabia_mod( 'audit_title' ),
+		'intro'   => nabia_mod( 'audit_text' ),
+		'aside'   => '<div class="promise-card"><strong>48h</strong><span>' . esc_html__( 'Personal review in your inbox within 2 working days. Free, no obligation.', 'nabia' ) . '</span></div>',
+		'class'   => 'is-audit',
+	)
+);
+
+get_template_part( 'template-parts/home', 'audit', array( 'hide_head' => true ) );
 while ( have_posts() ) {
 	the_post();
 	if ( '' !== trim( get_the_content() ) ) {
@@ -16,6 +28,7 @@ while ( have_posts() ) {
 		echo '</div></section>';
 	}
 }
-get_template_part( 'template-parts/home', 'videos' );
 get_template_part( 'template-parts/home', 'testimonials' );
+get_template_part( 'template-parts/home', 'videos' );
+get_template_part( 'template-parts/why' );
 get_footer();

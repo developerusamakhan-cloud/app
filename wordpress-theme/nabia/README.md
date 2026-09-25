@@ -56,6 +56,18 @@ Tips:
 - Portfolio pages need no template: `/websites/` and each Website post are automatic.
 - Prefer one click? **Appearance → Nabia Setup** can create all these pages and a menu for you. It never touches existing pages.
 
+## What's new in 2.7
+
+- **Same header on every inner page**: breadcrumbs, label, title, intro and a visual on the right that fits the page (topics card on the blog, author card on posts, project details on websites, stats on Services, "what's included" on Pricing, profile card on About, a playful 404 and more).
+- **New blog overview**: category filters, a large featured latest post and a "Browse topics" card.
+- **New single blog post**: automatic "On this page" contents, a sticky "Need help?" card, author box, related articles and the free audit form.
+- **New single website page**: project details card, "Visit live site" button, screenshot in a browser frame, related projects, free audit and next project.
+- **New 404 page**: animated 404, search, quick links and latest articles.
+- **Internal linking everywhere**: service pages show recent work and helpful articles; posts and projects show related content; words like "Shopify", "SEO", "website maintenance" or "WordPress" in your blog posts and project descriptions automatically link to the matching service page (the first mention only, at most 4 links per post).
+- **Free audit form**: now just website URL + email. It appears on the homepage, website service pages, single posts, single websites and the Free audit page, but not on Branding, About, Pricing or Contact.
+- **"Why work with me" band**: four reasons with icons, shown on several pages for variety.
+- Dark sections never sit next to each other any more; the Services overview no longer repeats its title; tick icons line up with their text.
+
 ## What's new in 2.6
 
 - Monthly maintenance prices: Basic $45.99 (was $69.99), Standard $79.99 (was $100), Premium $159.99 (was $200, marked "Most popular"). Each shows the crossed-out old price, a "Save %" badge, the days per month and the support note.

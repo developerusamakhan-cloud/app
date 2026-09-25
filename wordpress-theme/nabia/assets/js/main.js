@@ -677,6 +677,49 @@
 	});
 
 	/* ------------------------------------------------------------------
+	 * Blog post: "On this page" contents built from the H2 headings.
+	 * ------------------------------------------------------------------ */
+	var toc = $('[data-toc]');
+	var tocSource = $('[data-toc-source]');
+	if (toc && tocSource) {
+		var headings = $$('h2', tocSource);
+		if (headings.length >= 2) {
+			var list = $('ol', toc);
+			headings.forEach(function (h, i) {
+				if (!h.id) {
+					h.id = 'section-' + (i + 1) + '-' + h.textContent.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
+				}
+				var li = document.createElement('li');
+				var a = document.createElement('a');
+				a.href = '#' + h.id;
+				a.textContent = h.textContent;
+				li.appendChild(a);
+				list.appendChild(li);
+			});
+			toc.hidden = false;
+
+			if ('IntersectionObserver' in window) {
+				var links = $$('a', list);
+				var tocObserver = new IntersectionObserver(
+					function (entries) {
+						entries.forEach(function (entry) {
+							if (entry.isIntersecting) {
+								links.forEach(function (l) {
+									l.classList.toggle('is-active', l.getAttribute('href') === '#' + entry.target.id);
+								});
+							}
+						});
+					},
+					{ rootMargin: '0px 0px -70% 0px' }
+				);
+				headings.forEach(function (h) {
+					tocObserver.observe(h);
+				});
+			}
+		}
+	}
+
+	/* ------------------------------------------------------------------
 	 * Intro video: play muted while visible, pause when scrolled away.
 	 * ------------------------------------------------------------------ */
 	$$('[data-intro-video]').forEach(function (video) {

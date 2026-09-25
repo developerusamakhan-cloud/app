@@ -3,8 +3,7 @@
  * Template Name: Service page (automatic: page slug = service)
  * Template Post Type: page
  *
- * A complete service page: intro, benefits, deliverables, pricing, video reviews,
- * FAQ, free audit and links to the other services.
+ * Complete service page. The "Service: …" templates in /page-templates use this file.
  *
  * @package Nabia
  */
@@ -17,49 +16,45 @@ while ( have_posts() ) :
 
 	if ( ! $nabia_service ) {
 		// Not linked to a service: behave like a normal page.
-		echo '<section class="page-hero"><div class="container"><h1 class="page-title">' . esc_html( get_the_title() ) . '</h1></div></section><div class="section section-tight"><div class="container entry-content">';
+		nabia_page_header( array( 'title' => get_the_title() ) );
+		echo '<div class="section section-tight"><div class="container entry-content">';
 		the_content();
 		echo '</div></div>';
 		continue;
 	}
-	?>
-	<section class="service-hero">
-		<div class="hero-bg" aria-hidden="true"><span class="blob blob-1"></span><span class="grid-lines"></span></div>
-		<div class="container service-hero-inner">
-			<div class="service-hero-copy">
-				<nav class="breadcrumbs" aria-label="<?php esc_attr_e( 'Breadcrumb', 'nabia' ); ?>" data-reveal>
-					<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'nabia' ); ?></a>
-					<span aria-hidden="true">/</span>
-					<a href="<?php echo esc_url( nabia_page_url( 'services' ) ? nabia_page_url( 'services' ) : home_url( '/#services' ) ); ?>"><?php esc_html_e( 'Services', 'nabia' ); ?></a>
-					<span aria-hidden="true">/</span>
-					<span aria-current="page"><?php echo esc_html( $nabia_service['title'] ); ?></span>
-				</nav>
-				<p class="service-kicker" data-reveal><span class="service-icon"><?php nabia_icon( $nabia_service['icon'] ); ?></span><?php echo esc_html( $nabia_service['title'] ); ?></p>
-				<h1 class="service-title" data-split><?php echo esc_html( $nabia_service['headline'] ); ?></h1>
-				<p class="service-intro" data-reveal><?php echo esc_html( $nabia_service['intro'] ); ?></p>
-				<div class="hero-actions" data-reveal>
-					<a class="btn btn-accent btn-lg" href="#audit" data-magnetic><span><?php esc_html_e( 'Get a free audit', 'nabia' ); ?></span><?php nabia_icon( 'arrow' ); ?></a>
-					<a class="btn btn-ghost btn-lg" href="<?php echo esc_url( nabia_hire_url() ); ?>" data-magnetic><span><?php esc_html_e( 'Hire me', 'nabia' ); ?></span></a>
-				</div>
-			</div>
 
-			<aside class="service-get" data-reveal>
-				<h2><?php esc_html_e( 'What you get', 'nabia' ); ?></h2>
-				<ul>
-					<?php foreach ( $nabia_service['get'] as $nabia_item ) : ?>
-						<li><span aria-hidden="true">&#10003;</span><?php echo esc_html( $nabia_item ); ?></li>
-					<?php endforeach; ?>
-				</ul>
-				<?php if ( ! empty( $nabia_service['tags'] ) ) : ?>
-					<ul class="tags">
-						<?php foreach ( $nabia_service['tags'] as $nabia_tag ) : ?>
-							<li><?php echo esc_html( $nabia_tag ); ?></li>
-						<?php endforeach; ?>
-					</ul>
-				<?php endif; ?>
-			</aside>
-		</div>
-	</section>
+	$nabia_slug     = $nabia_service['slug'];
+	$nabia_audit    = nabia_service_has_audit( $nabia_slug );
+	$nabia_services = nabia_page_url( 'services' );
+
+	$nabia_get = '<div class="aside-card get-card"><p class="aside-card-title">' . esc_html__( 'What you get', 'nabia' ) . '</p><ul class="check-list">';
+	foreach ( $nabia_service['get'] as $nabia_item ) {
+		$nabia_get .= '<li><span aria-hidden="true">&#10003;</span>' . esc_html( $nabia_item ) . '</li>';
+	}
+	$nabia_get .= '</ul>';
+	if ( ! empty( $nabia_service['tags'] ) ) {
+		$nabia_get .= '<ul class="tags">';
+		foreach ( $nabia_service['tags'] as $nabia_tag ) {
+			$nabia_get .= '<li>' . esc_html( $nabia_tag ) . '</li>';
+		}
+		$nabia_get .= '</ul>';
+	}
+	$nabia_get .= '</div>';
+
+	nabia_page_header(
+		array(
+			'eyebrow' => $nabia_service['title'],
+			'icon'    => $nabia_service['icon'],
+			'title'   => $nabia_service['headline'],
+			'intro'   => $nabia_service['intro'],
+			'crumbs'  => array( array( __( 'Services', 'nabia' ), $nabia_services ? $nabia_services : home_url( '/#services' ) ) ),
+			'actions' => ( $nabia_audit ? nabia_button( __( 'Get a free audit', 'nabia' ), '#audit' ) : nabia_button( __( 'Hire me', 'nabia' ), nabia_hire_url() ) )
+				. ( ! empty( $nabia_service['plans'] ) ? nabia_button( __( 'See prices', 'nabia' ), '#pricing', 'ghost' ) : nabia_button( __( 'See my work', 'nabia' ), nabia_portfolio_url(), 'ghost' ) ),
+			'aside'   => $nabia_get,
+			'class'   => 'is-service',
+		)
+	);
+	?>
 
 	<section class="section section-tight service-features">
 		<div class="container">
@@ -86,11 +81,7 @@ while ( have_posts() ) :
 	</section>
 
 	<?php
-	get_template_part( 'template-parts/home', 'process' );
-
-	if ( ! empty( $nabia_service['plans'] ) ) {
-		get_template_part( 'template-parts/home', 'pricing', array( 'only' => $nabia_service['plans'] ) );
-	}
+	get_template_part( 'template-parts/why' );
 
 	if ( '' !== trim( get_the_content() ) ) {
 		echo '<section class="section section-tight"><div class="container entry-content">';
@@ -98,6 +89,14 @@ while ( have_posts() ) :
 		echo '</div></section>';
 	}
 
+	// Real examples (internal links to portfolio).
+	nabia_related_websites_section( __( 'Recent work', 'nabia' ) );
+
+	if ( ! empty( $nabia_service['plans'] ) ) {
+		get_template_part( 'template-parts/home', 'pricing', array( 'only' => $nabia_service['plans'] ) );
+	}
+
+	// Dark video reviews sit between two light sections.
 	get_template_part( 'template-parts/home', 'videos' );
 	?>
 
@@ -115,7 +114,11 @@ while ( have_posts() ) :
 		</div>
 	</section>
 
-	<?php get_template_part( 'template-parts/home', 'audit' ); ?>
+	<?php
+	if ( $nabia_audit ) {
+		get_template_part( 'template-parts/home', 'audit' );
+	}
+	?>
 
 	<section class="section section-tight more-services">
 		<div class="container">
@@ -123,7 +126,7 @@ while ( have_posts() ) :
 			<ul class="service-links">
 				<?php foreach ( nabia_services() as $nabia_other ) : ?>
 					<?php
-					if ( $nabia_other['slug'] === $nabia_service['slug'] ) {
+					if ( $nabia_other['slug'] === $nabia_slug ) {
 						continue;
 					}
 					$nabia_url = nabia_service_url( $nabia_other['slug'] );
@@ -139,7 +142,9 @@ while ( have_posts() ) :
 			</ul>
 		</div>
 	</section>
+
 	<?php
+	nabia_related_posts_section( __( 'Helpful articles', 'nabia' ) );
 endwhile;
 
 get_footer();

@@ -9,17 +9,20 @@ get_header();
 
 while ( have_posts() ) :
 	the_post();
+	$nabia_parent = wp_get_post_parent_id( get_the_ID() );
+	nabia_page_header(
+		array(
+			'eyebrow' => $nabia_parent ? get_the_title( $nabia_parent ) : '',
+			'title'   => get_the_title(),
+			'intro'   => has_excerpt() ? get_the_excerpt() : '',
+			'crumbs'  => $nabia_parent ? array( array( get_the_title( $nabia_parent ), get_permalink( $nabia_parent ) ) ) : array(),
+		)
+	);
 	?>
-	<section class="page-hero">
-		<div class="container">
-			<h1 class="page-title" data-split><?php the_title(); ?></h1>
-		</div>
-	</section>
-
 	<article <?php post_class( 'section section-tight' ); ?>>
 		<div class="container">
 			<?php if ( has_post_thumbnail() ) : ?>
-				<figure class="featured-media" data-reveal><?php the_post_thumbnail( 'full' ); ?></figure>
+				<figure class="featured-media featured-wide" data-reveal><?php the_post_thumbnail( 'full' ); ?></figure>
 			<?php endif; ?>
 			<div class="entry-content">
 				<?php

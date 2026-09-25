@@ -4,7 +4,7 @@ Tags: website audit, seo audit, lead generation, pdf report
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 
 Free website audit form that scores any website in real time and sends a branded PDF report.
@@ -36,7 +36,7 @@ Free website audit form that scores any website in real time and sends a branded
 == Privacy and security ==
 
 * Only public http and https websites can be audited (no local or private addresses).
-* PDF reports are stored in wp-content/uploads/nabia-audits, which is blocked from direct access. They are only served through links with a secret key.
+* PDF reports are never stored on your website. They are built at the moment someone downloads them (only through links with a secret key), and for the email a temporary file is used and deleted straight away. Only the scores and results are saved with each audit.
 * Spam protection: nonce, hidden trap field, a minimum time on the form, the math captcha and a limit of finished reports per visitor per hour (admins are never limited).
 
 == If a website blocks the scan ==
@@ -48,6 +48,9 @@ Some websites use firewalls (Cloudflare, Wordfence, host security) that block au
 PDF creation uses FPDF (http://www.fpdf.org), a free PHP library. Its license is in lib/fpdf/license.txt.
 
 == Changelog ==
+
+= 1.3.1 =
+* PDFs are no longer saved on the website. They are built at runtime for downloads, and emails use a temporary file that is deleted right after sending. The old uploads/nabia-audits folder is removed automatically.
 
 = 1.3.0 =
 * Every problem in the report now explains why it matters for the business, next to how to fix it.

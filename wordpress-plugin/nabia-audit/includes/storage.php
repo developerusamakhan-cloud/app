@@ -1,6 +1,6 @@
 <?php
 /**
- * Audit records, protected PDF storage and secure download links.
+ * Audit records and secure download links. PDFs are built at runtime and never stored.
  *
  * @package NabiaAudit
  */
@@ -41,24 +41,26 @@ function nwa_register_post_type() {
 add_action( 'init', 'nwa_register_post_type' );
 
 /**
- * Folder for PDF reports, blocked from direct access.
- *
- * @return string Path with trailing slash.
+ * Earlier versions saved PDF files in uploads/nabia-audits. Reports are now built at
+ * runtime only, so remove that folder once.
  */
-function nwa_reports_dir() {
+function nwa_remove_stored_pdfs() {
+	if ( get_option( 'nwa_pdfs_removed' ) ) {
+		return;
+	}
 	$upload = wp_upload_dir();
 	$dir    = trailingslashit( $upload['basedir'] ) . 'nabia-audits/';
-	if ( ! is_dir( $dir ) ) {
-		wp_mkdir_p( $dir );
+	if ( is_dir( $dir ) ) {
+		foreach ( (array) glob( $dir . '{*,.htaccess}', GLOB_BRACE ) as $file ) {
+			if ( is_file( $file ) ) {
+				wp_delete_file( $file );
+			}
+		}
+		@rmdir( $dir ); // phpcs:ignore WordPress.PHP.NoSilencedErrors, WordPress.WP.AlternativeFunctions
 	}
-	if ( ! file_exists( $dir . '.htaccess' ) ) {
-		file_put_contents( $dir . '.htaccess', "Require all denied\nDeny from all\n" ); // phpcs:ignore WordPress.WP.AlternativeFunctions
-	}
-	if ( ! file_exists( $dir . 'index.php' ) ) {
-		file_put_contents( $dir . 'index.php', "<?php\n// Silence is golden.\n" ); // phpcs:ignore WordPress.WP.AlternativeFunctions
-	}
-	return $dir;
+	update_option( 'nwa_pdfs_removed', 1, false );
 }
+add_action( 'admin_init', 'nwa_remove_stored_pdfs' );
 
 /**
  * Secret key for an audit (used in links).
@@ -125,25 +127,17 @@ function nwa_pdf_name( $id ) {
 }
 
 /**
- * Path of the stored PDF, building it on the fly when missing.
+ * Build the PDF for an audit in memory (nothing is saved on the website).
  *
- * @param int  $id    Audit ID.
- * @param bool $fresh Rebuild even if it exists.
- * @return string Empty on failure.
+ * @param int $id Audit ID.
+ * @return string PDF bytes, empty on failure.
  */
-function nwa_pdf_path( $id, $fresh = false ) {
+function nwa_pdf_bytes( $id ) {
 	$result = nwa_result( $id );
 	if ( empty( $result['ok'] ) ) {
 		return '';
 	}
-	$path = nwa_reports_dir() . 'audit-' . (int) $id . '-' . nwa_key( $id ) . '.pdf';
-	if ( $fresh || ! file_exists( $path ) ) {
-		$pdf = nwa_build_pdf( $result, nwa_lead( $id ) );
-		if ( ! $pdf || false === file_put_contents( $path, $pdf ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions
-			return '';
-		}
-	}
-	return $path;
+	return (string) nwa_build_pdf( $result, nwa_lead( $id ) );
 }
 
 /**
@@ -192,32 +186,16 @@ function nwa_serve_pdf() {
 	if ( ! nwa_key_ok( $id, $key ) && ! current_user_can( 'edit_post', $id ) ) {
 		wp_die( esc_html__( 'This report link is not valid.', 'nabia-audit' ), '', array( 'response' => 403 ) );
 	}
-	$path = nwa_pdf_path( $id );
-	if ( ! $path ) {
+	$pdf = nwa_pdf_bytes( $id );
+	if ( '' === $pdf ) {
 		wp_die( esc_html__( 'The report could not be created.', 'nabia-audit' ), '', array( 'response' => 500 ) );
 	}
 	nocache_headers();
 	header( 'Content-Type: application/pdf' );
 	header( 'Content-Disposition: ' . ( isset( $_GET['view'] ) ? 'inline' : 'attachment' ) . '; filename="' . nwa_pdf_name( $id ) . '"' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	header( 'Content-Length: ' . filesize( $path ) );
+	header( 'Content-Length: ' . strlen( $pdf ) );
 	header( 'X-Robots-Tag: noindex' );
-	readfile( $path ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+	echo $pdf; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	exit;
 }
 add_action( 'template_redirect', 'nwa_serve_pdf', 1 );
-
-/**
- * Delete the PDF when an audit is deleted.
- *
- * @param int $id Post ID.
- */
-function nwa_delete_pdf( $id ) {
-	if ( 'nabia_audit' !== get_post_type( $id ) ) {
-		return;
-	}
-	$path = nwa_reports_dir() . 'audit-' . (int) $id . '-' . get_post_meta( $id, '_nwa_key', true ) . '.pdf';
-	if ( file_exists( $path ) ) {
-		wp_delete_file( $path );
-	}
-}
-add_action( 'before_delete_post', 'nwa_delete_pdf' );

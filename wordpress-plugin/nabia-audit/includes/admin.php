@@ -310,7 +310,6 @@ function nwa_admin_action() {
 			foreach ( $result['categories'] as $key => $cat ) {
 				update_post_meta( $id, '_nwa_score_' . $key, (int) $cat['score'] );
 			}
-			nwa_pdf_path( $id, true );
 			$msg = __( 'Audit updated.', 'nabia-audit' );
 		} else {
 			update_post_meta( $id, '_nwa_status', 'unreachable' );

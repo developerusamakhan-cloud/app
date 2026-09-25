@@ -109,18 +109,19 @@ function nwa_send_emails( $id ) {
 	if ( empty( $result['ok'] ) ) {
 		return $sent;
 	}
-	$path   = nwa_pdf_path( $id );
-	$files  = $path ? array( $path ) : array();
+	$files  = array();
 	$name   = get_post_meta( $id, '_nwa_name', true );
 	$email  = get_post_meta( $id, '_nwa_email', true );
 	$domain = preg_replace( '/^www\./', '', (string) wp_parse_url( $result['final_url'], PHP_URL_HOST ) );
 	$html   = array( 'Content-Type: text/html; charset=UTF-8' );
 
-	// Attachments with a friendly file name.
+	// The PDF exists only as a temporary file while the email is sent, then it is deleted.
 	$renamed = '';
-	if ( $path ) {
-		$renamed = trailingslashit( get_temp_dir() ) . nwa_pdf_name( $id );
-		if ( @copy( $path, $renamed ) ) { // phpcs:ignore WordPress.PHP.NoSilencedErrors
+	$tmp_dir = trailingslashit( get_temp_dir() ) . 'nwa-' . wp_generate_password( 12, false ) . '/';
+	$pdf     = nwa_pdf_bytes( $id );
+	if ( '' !== $pdf && wp_mkdir_p( $tmp_dir ) ) {
+		$renamed = $tmp_dir . nwa_pdf_name( $id );
+		if ( false !== file_put_contents( $renamed, $pdf ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions
 			$files = array( $renamed );
 		}
 	}
@@ -147,6 +148,9 @@ function nwa_send_emails( $id ) {
 	}
 	if ( $renamed && file_exists( $renamed ) ) {
 		wp_delete_file( $renamed );
+	}
+	if ( is_dir( $tmp_dir ) ) {
+		@rmdir( $tmp_dir ); // phpcs:ignore WordPress.PHP.NoSilencedErrors, WordPress.WP.AlternativeFunctions
 	}
 	return $sent;
 }

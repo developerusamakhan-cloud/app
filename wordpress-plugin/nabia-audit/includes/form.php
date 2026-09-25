@@ -167,7 +167,6 @@ function nwa_handle_submit() {
 	foreach ( $result['categories'] as $key => $cat ) {
 		update_post_meta( $id, '_nwa_score_' . $key, (int) $cat['score'] );
 	}
-	nwa_pdf_path( $id, true );
 	nwa_send_emails( $id );
 	if ( ! $unlimited ) {
 		set_transient( $ip_key, $count + 1, HOUR_IN_SECONDS );

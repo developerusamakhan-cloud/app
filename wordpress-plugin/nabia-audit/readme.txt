@@ -4,7 +4,7 @@ Tags: website audit, seo audit, lead generation, pdf report
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 
 Free website audit form that scores any website in real time and sends a branded PDF report.
@@ -48,6 +48,11 @@ Some websites use firewalls (Cloudflare, Wordfence, host security) that block au
 PDF creation uses FPDF (http://www.fpdf.org), a free PHP library. Its license is in lib/fpdf/license.txt.
 
 == Changelog ==
+
+= 1.2.1 =
+* When Google's own test tool can not load a website either, the report says so clearly as a high impact problem ("Google can load your homepage").
+* Quick reports only list robots.txt and sitemap when they are confirmed, so a blocked file no longer counts against the site.
+* Clearer wording for the business email check.
 
 = 1.2.0 =
 * The page scan and Google PageSpeed now run at the same time, so Google gets the whole time budget even on hosts that stop PHP after 30 seconds.

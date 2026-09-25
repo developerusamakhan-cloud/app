@@ -299,7 +299,7 @@ function nwa_run_audit( $url ) {
 			$notes[]   = 'PageSpeed: ' . $psi->get_error_message();
 			$psi_error = $psi->get_error_message();
 			// 4. Quick base report, never an error.
-			$result = nwa_base_report( $url, $blocked );
+			$result = nwa_base_report( $url, $blocked, nwa_google_blocked( $psi_error ) );
 		}
 	}
 
@@ -463,7 +463,7 @@ function nwa_domain_checks( $url ) {
 		if ( is_array( $mx ) && ( $mx || ! empty( $a_rec ) ) ) {
 			$out['speed'][] = $mx
 				? nwa_check( 'Business email', 'pass', 1, sprintf( 'Email is set up for @%s, which looks professional and builds trust.', $domain ) )
-				: nwa_check( 'Business email', 'warn', 1, sprintf( 'No email service found for @%s.', $domain ), sprintf( 'Use an email address like hello@%s instead of Gmail or Yahoo. It looks far more professional.', $domain ) );
+				: nwa_check( 'Business email', 'warn', 1, sprintf( 'No email (MX) records found for @%s.', $domain ), sprintf( 'If you do not have one yet, use an address like hello@%s instead of Gmail or Yahoo. It looks far more professional. If you do, check the MX records in your DNS.', $domain ) );
 		}
 		if ( $mx ) {
 			$out['speed'][] = $spf
@@ -1349,7 +1349,7 @@ function nwa_audit_from_pagespeed( $lh, $url ) {
  * @param bool   $blocked Did a firewall answer?
  * @return array
  */
-function nwa_base_report( $url, $blocked ) {
+function nwa_base_report( $url, $blocked, $google = '' ) {
 	$host   = (string) wp_parse_url( $url, PHP_URL_HOST );
 	$dns    = filter_var( $host, FILTER_VALIDATE_IP ) || gethostbyname( $host ) !== $host;
 	$groups = array(
@@ -1364,13 +1364,15 @@ function nwa_base_report( $url, $blocked ) {
 		),
 		'speed'   => array(
 			nwa_check( 'Domain', $dns ? 'pass' : 'fail', 2, $dns ? sprintf( '%s is online and resolves correctly.', $host ) : sprintf( '%s does not resolve. Check the spelling or your DNS settings.', $host ), 'Check the domain name and DNS settings with your domain provider.' ),
-			nwa_check(
-				'Open to search engines and scanners',
-				'warn',
-				3,
-				$blocked ? 'A firewall or security plugin blocked our automated scanner.' : 'The website did not answer our scanner in time.',
-				$blocked ? 'Make sure Cloudflare, Wordfence or your host firewall does not block Google and other good bots, or you may lose rankings too.' : 'A slow server can also slow down Google. Check your hosting and caching.'
-			),
+			$google
+				? nwa_check( 'Google can load your homepage', 'fail', 3, 'Google\'s own test tool (PageSpeed Insights) could not load your homepage either' . ( 'yes' !== $google ? ' (' . $google . ')' : '' ) . '. If Google can not load it, it can not rank it well.', 'Check your firewall, Cloudflare bot settings or security plugin and make sure Google is allowed in. Then test the page at pagespeed.web.dev and in Google Search Console.' )
+				: nwa_check(
+					'Open to search engines and scanners',
+					'warn',
+					3,
+					$blocked ? 'A firewall or security plugin blocked our automated scanner.' : 'The website did not answer our scanner in time.',
+					$blocked ? 'Make sure Cloudflare, Wordfence or your host firewall does not block Google and other good bots, or you may lose rankings too.' : 'A slow server can also slow down Google. Check your hosting and caching.'
+				),
 		),
 	);
 	// Small files are often allowed even when the homepage is behind a firewall.
@@ -1385,9 +1387,10 @@ function nwa_base_report( $url, $blocked ) {
 	if ( $dns ) {
 		$robots  = $get( '/robots.txt' );
 		$has_bot = $robots && false !== stripos( $robots, 'user-agent' );
-		$groups['seo'][] = $has_bot
-			? nwa_check( 'robots.txt', 'pass', 1, 'A robots.txt file guides search engines.' )
-			: nwa_check( 'robots.txt', 'warn', 1, 'A robots.txt file could not be confirmed.', 'Add a robots.txt file that points search engines to your sitemap.' );
+		// Only confirmed findings count here: a blocked file says nothing about the site.
+		if ( $has_bot ) {
+			$groups['seo'][] = nwa_check( 'robots.txt', 'pass', 1, 'A robots.txt file guides search engines.' );
+		}
 		$map = $has_bot && preg_match( '/^\s*sitemap:/im', $robots );
 		if ( ! $map ) {
 			foreach ( array( '/sitemap_index.xml', '/sitemap.xml', '/wp-sitemap.xml' ) as $path ) {
@@ -1398,9 +1401,9 @@ function nwa_base_report( $url, $blocked ) {
 				}
 			}
 		}
-		$groups['seo'][] = $map
-			? nwa_check( 'XML sitemap', 'pass', 2, 'An XML sitemap helps Google find all your pages.' )
-			: nwa_check( 'XML sitemap', 'warn', 2, 'An XML sitemap could not be confirmed.', 'Create an XML sitemap (Yoast, Rank Math or WordPress core) and submit it in Google Search Console.' );
+		if ( $map ) {
+			$groups['seo'][] = nwa_check( 'XML sitemap', 'pass', 2, 'An XML sitemap helps Google find all your pages.' );
+		}
 		$icon = $get( '/favicon.ico' );
 		if ( $icon ) {
 			$groups['design'][] = nwa_check( 'Favicon', 'pass', 1, 'A browser tab icon is set.' );
@@ -1424,4 +1427,17 @@ function nwa_base_report( $url, $blocked ) {
 		),
 	);
 	return nwa_finish( $result, $groups );
+}
+
+/**
+ * Did Google PageSpeed fail because the site blocked or could not serve the page?
+ *
+ * @param string $error PageSpeed error message.
+ * @return string Empty when not, otherwise a short reason (or "yes").
+ */
+function nwa_google_blocked( $error ) {
+	if ( ! $error || ! preg_match( '/(FAILED_DOCUMENT_REQUEST|ERRORED_DOCUMENT_REQUEST|NO_FCP|NO_NAVSTART|unable to reliably load|Status code: \d{3}|DNS_FAILURE|INSECURE_DOCUMENT_REQUEST)/i', $error ) ) {
+		return '';
+	}
+	return preg_match( '/Status code: (\d{3})/i', $error, $m ) ? 'status ' . $m[1] : 'yes';
 }

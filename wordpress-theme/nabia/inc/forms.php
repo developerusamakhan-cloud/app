@@ -4,7 +4,7 @@
  *
  * Dashboard → Submissions lists every message (unread ones are counted in the menu).
  * Dashboard → Submissions → Form settings controls recipients, fields, messages and the
- * automatic reply. Free audit requests are listed in the same menu.
+ * automatic reply. Free audit requests have their own Audit Requests menu.
  *
  * Shortcode anywhere: [nabia_contact_form]
  *
@@ -63,7 +63,7 @@ function nabia_form_recipients() {
 }
 
 /**
- * Register the Submissions post type (admin only) and move audit requests under it.
+ * Register the Submissions post type (admin only).
  */
 function nabia_register_submissions() {
 	register_post_type(
@@ -92,23 +92,6 @@ function nabia_register_submissions() {
 	);
 }
 add_action( 'init', 'nabia_register_submissions', 5 );
-
-/**
- * Show audit requests inside the Submissions menu.
- *
- * @param array  $args      Post type args.
- * @param string $post_type Post type.
- * @return array
- */
-function nabia_audit_in_submissions( $args, $post_type ) {
-	if ( 'audit_request' === $post_type ) {
-		$args['show_in_menu']          = 'edit.php?post_type=nabia_submission';
-		$args['labels']['all_items']   = __( 'Audit requests', 'nabia' );
-		$args['labels']['menu_name']   = __( 'Audit requests', 'nabia' );
-	}
-	return $args;
-}
-add_filter( 'register_post_type_args', 'nabia_audit_in_submissions', 10, 2 );
 
 /**
  * Unread count bubble on the Submissions menu + settings submenu.
@@ -519,3 +502,16 @@ function nabia_submission_row_actions( $actions, $post ) {
 	return $actions;
 }
 add_filter( 'post_row_actions', 'nabia_submission_row_actions', 10, 2 );
+
+/**
+ * Show 20 messages per page by default (changeable under Screen Options).
+ *
+ * @param int $per_page Items per page.
+ * @return int
+ */
+function nabia_submission_per_page( $per_page ) {
+	$saved = (int) get_user_option( 'edit_nabia_submission_per_page' );
+	return $saved > 0 ? $saved : 20;
+}
+add_filter( 'edit_nabia_submission_per_page', 'nabia_submission_per_page' );
+add_filter( 'edit_audit_request_per_page', 'nabia_submission_per_page' );

@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.12.0
+Version: 2.12.1
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -726,6 +726,7 @@ body:not(.is-home) .site-main {
 
 .menu-toggle {
 	display: none;
+	transition: background 0.25s, color 0.25s;
 	width: 48px;
 	height: 48px;
 	border: 0;
@@ -787,9 +788,12 @@ body:not(.is-home) .site-main {
 	backdrop-filter: none;
 }
 
-.menu-open .menu-toggle {
+.menu-open .menu-toggle,
+.menu-toggle:hover,
+.menu-toggle:active,
+.menu-toggle:focus-visible {
 	background: var(--accent);
-	color: var(--accent-ink);
+	color: #fff;
 }
 
 .mobile-menu-list {

@@ -1,69 +1,111 @@
 <?php
 /**
- * Testimonials slider.
+ * Reviews: Google rating summary + a wall of Google reviews and Testimonials posts.
+ *
+ * Also used by the [nabia_google_reviews] shortcode.
  *
  * @package Nabia
  */
 
-$nabia_query = new WP_Query(
-	array(
-		'post_type'      => 'testimonial',
-		'posts_per_page' => 12,
-		'orderby'        => array(
-			'menu_order' => 'ASC',
-			'date'       => 'DESC',
-		),
-		'no_found_rows'  => true,
-	)
-);
-
-$nabia_items = array();
-if ( $nabia_query->have_posts() ) {
-	while ( $nabia_query->have_posts() ) {
-		$nabia_query->the_post();
-		$nabia_items[] = array(
-			'name'   => get_the_title(),
-			'role'   => get_post_meta( get_the_ID(), '_nabia_author_role', true ),
-			'quote'  => wp_strip_all_tags( get_the_content() ),
-			'rating' => (int) get_post_meta( get_the_ID(), '_nabia_rating', true ),
-			'avatar' => get_the_post_thumbnail_url( get_the_ID(), 'thumbnail' ),
-		);
-	}
-	wp_reset_postdata();
-} else {
-	$nabia_items = nabia_demo_testimonials();
-}
+$nabia_data    = nabia_reviews_items();
+$nabia_google  = $nabia_data['google'];
+$nabia_items   = $nabia_data['items'];
+$nabia_visible = 9;
+$nabia_summary = $nabia_google && ! empty( $nabia_google['rating'] );
 ?>
 <section class="section testimonials" id="testimonials">
 	<div class="container">
-		<div class="section-head-row">
+		<div class="reviews-head">
 			<?php nabia_section_head( __( 'Testimonials', 'nabia' ), nabia_mod( 'testimonials_title' ) ); ?>
-			<div class="slider-controls">
-				<button class="slider-btn" type="button" data-slide="prev" aria-label="<?php esc_attr_e( 'Previous testimonial', 'nabia' ); ?>"><?php nabia_icon( 'arrow' ); ?></button>
-				<button class="slider-btn" type="button" data-slide="next" aria-label="<?php esc_attr_e( 'Next testimonial', 'nabia' ); ?>"><?php nabia_icon( 'arrow' ); ?></button>
-			</div>
+
+			<?php if ( $nabia_summary ) : ?>
+				<div class="rating-card" data-reveal>
+					<div class="rating-card-top">
+						<?php echo nabia_google_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<span><?php esc_html_e( 'Google Reviews', 'nabia' ); ?></span>
+					</div>
+					<div class="rating-card-score">
+						<strong><?php echo esc_html( number_format_i18n( $nabia_google['rating'], 1 ) ); ?></strong>
+						<span>
+							<span class="stars stars-lg" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: rating */ __( 'Rated %s out of 5', 'nabia' ), $nabia_google['rating'] ) ); ?>" style="--rating:<?php echo esc_attr( $nabia_google['rating'] ); ?>"></span>
+							<span class="rating-card-total">
+								<?php
+								/* translators: %s: number of reviews */
+								echo esc_html( sprintf( _n( 'Based on %s review', 'Based on %s reviews', $nabia_google['total'], 'nabia' ), number_format_i18n( $nabia_google['total'] ) ) );
+								?>
+							</span>
+						</span>
+					</div>
+					<div class="rating-card-actions">
+						<a class="btn btn-accent btn-sm" href="<?php echo esc_url( $nabia_google['write_url'] ); ?>" target="_blank" rel="noopener noreferrer"><span><?php esc_html_e( 'Write a review', 'nabia' ); ?></span></a>
+						<?php if ( $nabia_google['maps_url'] ) : ?>
+							<a class="btn btn-ghost btn-sm" href="<?php echo esc_url( $nabia_google['maps_url'] ); ?>" target="_blank" rel="noopener noreferrer"><span><?php esc_html_e( 'See all on Google', 'nabia' ); ?></span></a>
+						<?php endif; ?>
+					</div>
+				</div>
+			<?php endif; ?>
 		</div>
 
-		<div class="slider" data-slider>
-			<?php foreach ( $nabia_items as $nabia_item ) : ?>
-				<?php $nabia_rating = ! empty( $nabia_item['rating'] ) ? min( 5, max( 1, $nabia_item['rating'] ) ) : 5; ?>
-				<figure class="quote-card">
+		<?php if ( current_user_can( 'edit_theme_options' ) ) : ?>
+			<?php if ( ! nabia_google_configured() ) : ?>
+				<p class="admin-hint"><?php esc_html_e( 'Only you can see this: connect your Google reviews in Customize → Nabia Theme → Google Reviews (Place ID + API key) and they will appear here automatically.', 'nabia' ); ?></p>
+			<?php elseif ( $nabia_google && ! empty( $nabia_google['error'] ) ) : ?>
+				<p class="admin-hint">
+					<?php
+					/* translators: %s: error message from Google */
+					echo esc_html( sprintf( __( 'Only you can see this: Google reviews could not be loaded (%s). Check the Place ID and that “Places API (New)” is enabled for your API key.', 'nabia' ), $nabia_google['error'] ) );
+					?>
+				</p>
+			<?php endif; ?>
+		<?php endif; ?>
+
+		<div class="review-wall" data-review-wall>
+			<?php foreach ( $nabia_items as $nabia_index => $nabia_item ) : ?>
+				<?php $nabia_rating = ! empty( $nabia_item['rating'] ) ? min( 5, max( 1, (int) $nabia_item['rating'] ) ) : 5; ?>
+				<figure class="review-card<?php echo $nabia_index >= $nabia_visible ? ' is-extra' : ''; ?>">
+					<figcaption class="review-author">
+						<?php if ( ! empty( $nabia_item['avatar'] ) ) : ?>
+							<img class="avatar" src="<?php echo esc_url( $nabia_item['avatar'] ); ?>" alt="" width="44" height="44" loading="lazy" referrerpolicy="no-referrer">
+						<?php else : ?>
+							<span class="avatar avatar-initial" aria-hidden="true"><?php echo esc_html( mb_substr( $nabia_item['name'] ? $nabia_item['name'] : '★', 0, 1 ) ); ?></span>
+						<?php endif; ?>
+						<span class="review-who">
+							<strong><?php echo esc_html( $nabia_item['name'] ); ?></strong>
+							<span><?php echo esc_html( $nabia_item['role'] ); ?></span>
+						</span>
+						<?php if ( ! empty( $nabia_item['google'] ) ) : ?>
+							<?php if ( ! empty( $nabia_item['url'] ) ) : ?>
+								<a class="review-source" href="<?php echo esc_url( $nabia_item['url'] ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'View on Google', 'nabia' ); ?>"><?php echo nabia_google_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+							<?php else : ?>
+								<span class="review-source"><?php echo nabia_google_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+							<?php endif; ?>
+						<?php endif; ?>
+					</figcaption>
 					<div class="stars" aria-label="<?php echo esc_attr( sprintf( /* translators: %d: rating */ __( '%d out of 5 stars', 'nabia' ), $nabia_rating ) ); ?>">
-						<?php for ( $nabia_s = 0; $nabia_s < $nabia_rating; $nabia_s++ ) : ?>
-							<?php nabia_icon( 'star' ); ?>
+						<?php for ( $nabia_s = 0; $nabia_s < 5; $nabia_s++ ) : ?>
+							<span class="<?php echo $nabia_s < $nabia_rating ? 'is-on' : ''; ?>"><?php nabia_icon( 'star' ); ?></span>
 						<?php endfor; ?>
 					</div>
-					<blockquote><p><?php echo esc_html( $nabia_item['quote'] ); ?></p></blockquote>
-					<figcaption>
-						<?php if ( ! empty( $nabia_item['avatar'] ) ) : ?>
-							<img class="avatar" src="<?php echo esc_url( $nabia_item['avatar'] ); ?>" alt="" width="48" height="48" loading="lazy">
-						<?php else : ?>
-							<span class="avatar avatar-initial" aria-hidden="true"><?php echo esc_html( mb_substr( $nabia_item['name'], 0, 1 ) ); ?></span>
-						<?php endif; ?>
-						<span><strong><?php echo esc_html( $nabia_item['name'] ); ?></strong><?php echo esc_html( $nabia_item['role'] ); ?></span>
-					</figcaption>
+					<blockquote class="review-text" data-review-text><p><?php echo nl2br( esc_html( $nabia_item['quote'] ) ); ?></p></blockquote>
 				</figure>
 			<?php endforeach; ?>
 		</div>
+
+		<?php if ( count( $nabia_items ) > $nabia_visible ) : ?>
+			<div class="review-more">
+				<button class="btn btn-ghost" type="button" data-review-more>
+					<span>
+						<?php
+						/* translators: %d: number of hidden reviews */
+						echo esc_html( sprintf( __( 'Show %d more reviews', 'nabia' ), count( $nabia_items ) - $nabia_visible ) );
+						?>
+					</span>
+				</button>
+			</div>
+		<?php endif; ?>
+
+		<?php if ( $nabia_summary ) : ?>
+			<p class="review-attribution"><?php echo nabia_google_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php esc_html_e( 'Reviews from Google', 'nabia' ); ?></p>
+		<?php endif; ?>
 	</div>
 </section>

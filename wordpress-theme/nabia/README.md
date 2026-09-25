@@ -21,9 +21,20 @@ It uses the style of creative agency sites (big type, bright accent colour, play
 - **Contact** card with a glow that follows the cursor, optional contact-form shortcode, WhatsApp button and social links
 - Custom cursor, magnetic buttons, scroll-reveal animations, a scroll-progress bar, and a header that hides while scrolling down
 - Full-screen animated mobile menu
-- Self-hosted fonts (Syne + Inter): no Google Fonts requests and GDPR-friendly
+- Self-hosted fonts (Plus Jakarta Sans + Inter): no Google Fonts requests and GDPR-friendly
 - Respects "reduced motion" settings; content stays visible without JavaScript
 - Blog, single post (with reading time), page, search, 404 and a *Full width* template for Elementor/block-editor pages
+
+## What's new in 2.0
+
+- **Cache fix**: CSS/JS URLs now change with every upload, so browsers and caching plugins never show an old, broken layout again.
+- **New font**: Plus Jakarta Sans for headings (clean and professional), Inter for text.
+- **New colours**: Violet & Pink by default, plus Navy & Gold, Coral & Indigo, Mint & Ocean, Electric Lime and Sunshine & Pink.
+- **Your existing portfolio**: the homepage and `?post_type=websites` use your **Websites** posts (featured image, title, category, "Visit site" link). Change it in Customize → Nabia Theme → Portfolio.
+- **Video Reviews menu** in the dashboard for YouTube testimonials, shown in a large player with a playlist.
+- **Google reviews** fetched automatically, with a rating summary card and a review wall.
+- **Intro video** in a phone frame.
+- The old page-builder content of the static front page is no longer mixed into the homepage.
 
 ## Install
 
@@ -45,9 +56,21 @@ Everything is under **Appearance → Customize → Nabia Theme**:
 | Contact | Email, WhatsApp number, contact-form shortcode, client-portal link |
 | Social Links | LinkedIn, Instagram, Behance, Dribbble, GitHub, YouTube, Upwork, Fiverr |
 
+### Adding your Google reviews
+
+1. Find your **Place ID**: open https://developers.google.com/maps/documentation/places/web-service/place-id, search your business name, and copy the ID (starts with `ChIJ…`).
+2. Create an **API key**: in https://console.cloud.google.com create a project, enable **Places API (New)**, then go to *Credentials → Create credentials → API key*. Restrict the key to "Places API (New)". Google requires a billing account, and review lookups fit well inside the monthly free usage.
+3. In **Customize → Nabia Theme → Google Reviews**, paste both and click **Publish**.
+
+The section shows your average rating, total count, "Write a review" and "See all on Google" buttons, and a wall of reviews. Your **Testimonials** posts appear in the same wall. Reviews refresh every 12 hours. Google only returns up to 5 reviews per request, so the theme keeps every review it has ever received and the wall grows over time. If Google is unreachable, the last reviews keep showing. Put the section on any page with the shortcode `[nabia_google_reviews]`.
+
 ### Adding your YouTube reviews
 
-In **Customize → Nabia Theme → Video Reviews**, paste one video per line:
+**Dashboard → Video Reviews → Add video review**: title = client name, then paste the YouTube link, company and a short caption. Use *Order* to choose which video plays first.
+
+Or, in the Customizer list:
+
+In **Customize → Nabia Theme → Video Reviews**, one video per line:
 
 ```
 https://youtu.be/VIDEO_ID | Sarah Malik, Bloom Botanics | New store in 2 weeks
@@ -83,5 +106,5 @@ Available filters: `nabia_services`, `nabia_process`, `nabia_faq`, `nabia_skills
 
 ## Credits
 
-- Fonts: [Syne](https://gitlab.com/bonjour-monde/fonderie/syne-typeface) and [Inter](https://rsms.me/inter/), SIL Open Font License 1.1 (see `assets/fonts`).
+- Fonts: [Plus Jakarta Sans](https://github.com/tokotype/PlusJakartaSans) and [Inter](https://rsms.me/inter/), SIL Open Font License 1.1 (see `assets/fonts`).
 - License: GPL v2 or later.

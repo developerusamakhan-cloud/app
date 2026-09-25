@@ -40,7 +40,9 @@ function nabia_customize_register( $wp_customize ) {
 		'nabia_hero'    => __( 'Hero', 'nabia' ),
 		'nabia_stats'   => __( 'Marquee & Stats', 'nabia' ),
 		'nabia_about'   => __( 'About & Section Titles', 'nabia' ),
+		'nabia_portfolio' => __( 'Portfolio', 'nabia' ),
 		'nabia_videos'  => __( 'Video Reviews (YouTube)', 'nabia' ),
+		'nabia_google'  => __( 'Google Reviews', 'nabia' ),
 		'nabia_contact' => __( 'Contact', 'nabia' ),
 		'nabia_social'  => __( 'Social Links', 'nabia' ),
 	);
@@ -107,10 +109,17 @@ function nabia_customize_register( $wp_customize ) {
 		'testimonials_title' => array( 'nabia_about', 'text', __( 'Testimonials title', 'nabia' ) ),
 		'faq_title'          => array( 'nabia_about', 'text', __( 'FAQ title', 'nabia' ) ),
 
+		'portfolio_post_type' => array( 'nabia_portfolio', 'select', __( 'Which posts are your portfolio?', 'nabia' ) ),
+		'portfolio_count'    => array( 'nabia_portfolio', 'text', __( 'How many projects on the homepage', 'nabia' ) ),
+
 		'videos_title'       => array( 'nabia_videos', 'text', __( 'Section title', 'nabia' ) ),
 		'videos_text'        => array( 'nabia_videos', 'textarea', __( 'Section intro', 'nabia' ) ),
 		'video_reviews'      => array( 'nabia_videos', 'textarea', __( 'Videos: one per line — YouTube link | Client name | Short caption', 'nabia' ) ),
 		'video_layout'       => array( 'nabia_videos', 'select', __( 'Layout', 'nabia' ) ),
+
+		'google_place_id'    => array( 'nabia_google', 'text', __( 'Google Place ID', 'nabia' ) ),
+		'google_api_key'     => array( 'nabia_google', 'text', __( 'Google Places API key', 'nabia' ) ),
+		'google_min_rating'  => array( 'nabia_google', 'select', __( 'Only show reviews with at least', 'nabia' ) ),
 
 		'cta_title'          => array( 'nabia_contact', 'text', __( 'Contact title', 'nabia' ) ),
 		'cta_text'           => array( 'nabia_contact', 'textarea', __( 'Contact text', 'nabia' ) ),
@@ -144,13 +153,35 @@ function nabia_customize_register( $wp_customize ) {
 	foreach ( nabia_color_schemes() as $scheme_key => $scheme ) {
 		$schemes[ $scheme_key ] = $scheme['label'];
 	}
+	$post_types = array();
+	foreach ( get_post_types( array( 'public' => true ), 'objects' ) as $post_type ) {
+		if ( ! in_array( $post_type->name, array( 'attachment', 'page', 'post', 'testimonial', 'video_review' ), true ) ) {
+			$post_types[ $post_type->name ] = $post_type->labels->name . ' (' . $post_type->name . ')';
+		}
+	}
+	if ( ! isset( $post_types['websites'] ) ) {
+		$post_types['websites'] = __( 'Websites (websites)', 'nabia' );
+	}
 	$choices = array(
+		'google_min_rating'   => array(
+			'1' => __( '1 star (show all)', 'nabia' ),
+			'3' => __( '3 stars', 'nabia' ),
+			'4' => __( '4 stars', 'nabia' ),
+			'5' => __( '5 stars only', 'nabia' ),
+		),
+		'portfolio_post_type' => $post_types,
 		'color_scheme' => $schemes,
 		'video_layout' => array(
 			'auto'     => __( 'Automatic (Shorts links = vertical)', 'nabia' ),
 			'wide'     => __( 'Wide: big player + playlist', 'nabia' ),
 			'vertical' => __( 'Vertical: row of big Shorts-style videos', 'nabia' ),
 		),
+	);
+
+	$descriptions = array(
+		'video_reviews'   => __( 'Easier: use Dashboard → Video Reviews. Or list extra videos here, one per line: https://youtu.be/abc123XYZ00 | Sarah, Bloom Botanics | New store in 2 weeks', 'nabia' ),
+		'google_place_id' => __( 'Find it at developers.google.com/maps/documentation/places/web-service/place-id — search your business name and copy the ID (starts with “ChIJ…”).', 'nabia' ),
+		'google_api_key'  => __( 'Google Cloud Console → enable “Places API (New)” → Credentials → Create API key (restrict it to Places API). Stored on your server only; visitors never see it. Reviews refresh every 12 hours.', 'nabia' ),
 	);
 
 	foreach ( $fields as $key => $field ) {
@@ -204,7 +235,7 @@ function nabia_customize_register( $wp_customize ) {
 					'label'       => $label,
 					'section'     => $section,
 					'type'        => $type,
-					'description' => 'video_reviews' === $key ? __( 'Example: https://youtu.be/abc123XYZ00 | Sarah, Bloom Botanics | New store in 2 weeks. Videos autoplay muted when visitors scroll to them; they can tap for sound.', 'nabia' ) : '',
+					'description' => isset( $descriptions[ $key ] ) ? $descriptions[ $key ] : '',
 				)
 			);
 		}

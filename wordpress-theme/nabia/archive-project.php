@@ -7,13 +7,14 @@
 
 get_header();
 
-$nabia_terms   = get_terms(
+$nabia_tax     = nabia_portfolio_taxonomy();
+$nabia_terms   = $nabia_tax ? get_terms(
 	array(
-		'taxonomy'   => 'project_type',
+		'taxonomy'   => $nabia_tax,
 		'hide_empty' => true,
 	)
-);
-$nabia_current = is_tax( 'project_type' ) ? get_queried_object_id() : 0;
+) : array();
+$nabia_current = ( $nabia_tax && is_tax( $nabia_tax ) ) ? get_queried_object_id() : 0;
 ?>
 <section class="page-hero">
 	<div class="container">
@@ -22,7 +23,7 @@ $nabia_current = is_tax( 'project_type' ) ? get_queried_object_id() : 0;
 
 		<?php if ( $nabia_terms && ! is_wp_error( $nabia_terms ) ) : ?>
 			<ul class="filter-pills" data-reveal>
-				<li><a class="<?php echo $nabia_current ? '' : 'is-active'; ?>" href="<?php echo esc_url( get_post_type_archive_link( 'project' ) ); ?>"><?php esc_html_e( 'All', 'nabia' ); ?></a></li>
+				<li><a class="<?php echo $nabia_current ? '' : 'is-active'; ?>" href="<?php echo esc_url( nabia_portfolio_url() ); ?>"><?php esc_html_e( 'All', 'nabia' ); ?></a></li>
 				<?php foreach ( $nabia_terms as $nabia_term ) : ?>
 					<li><a class="<?php echo $nabia_current === $nabia_term->term_id ? 'is-active' : ''; ?>" href="<?php echo esc_url( get_term_link( $nabia_term ) ); ?>"><?php echo esc_html( $nabia_term->name ); ?></a></li>
 				<?php endforeach; ?>

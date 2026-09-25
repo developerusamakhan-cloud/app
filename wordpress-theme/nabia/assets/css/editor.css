@@ -1,9 +1,9 @@
 /* Block editor styles: match the front-end typography. */
 @font-face {
-	font-family: "Syne";
-	font-weight: 400 800;
+	font-family: "Plus Jakarta Sans";
+	font-weight: 200 800;
 	font-display: swap;
-	src: url("../fonts/syne.woff2") format("woff2");
+	src: url("../fonts/jakarta.woff2") format("woff2");
 }
 
 @font-face {
@@ -28,7 +28,7 @@ h4,
 h5,
 h6,
 .editor-post-title__input {
-	font-family: "Syne", "Helvetica Neue", Arial, sans-serif;
+	font-family: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
 	font-weight: 700;
 	line-height: 1.05;
 	letter-spacing: -0.03em;
@@ -41,6 +41,6 @@ a {
 blockquote {
 	border-left: 4px solid #c6ff3d;
 	padding-left: 28px;
-	font-family: "Syne", sans-serif;
+	font-family: "Plus Jakarta Sans", sans-serif;
 	font-size: 1.3em;
 }

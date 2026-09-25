@@ -28,6 +28,7 @@ $nabia_skills      = array(
 						</button>
 						<span class="intro-badge"><span class="pulse" aria-hidden="true"></span><?php esc_html_e( 'My intro', 'nabia' ); ?></span>
 					</div>
+					<span class="intro-hello" aria-hidden="true"><span class="intro-hello-wave">👋</span><?php esc_html_e( 'Hi, I’m', 'nabia' ); ?> <?php echo esc_html( trim( strtok( nabia_mod( 'brand_name' ), ' ' ) ) ); ?>!</span>
 					</div>
 					<figcaption class="intro-caption"><?php echo esc_html( nabia_mod( 'intro_video_caption' ) ); ?></figcaption>
 				</figure>

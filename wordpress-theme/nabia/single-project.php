@@ -14,12 +14,12 @@ while ( have_posts() ) :
 		__( 'Year', 'nabia' )     => get_post_meta( get_the_ID(), '_nabia_year', true ),
 		__( 'Services', 'nabia' ) => get_post_meta( get_the_ID(), '_nabia_role', true ),
 	);
-	$nabia_live = get_post_meta( get_the_ID(), '_nabia_url', true );
+	$nabia_live = nabia_project_live_url( get_the_ID() );
 	?>
 	<article <?php post_class(); ?>>
 		<section class="page-hero">
 			<div class="container">
-				<p class="eyebrow" data-reveal><a href="<?php echo esc_url( get_post_type_archive_link( 'project' ) ); ?>">← <?php esc_html_e( 'All work', 'nabia' ); ?></a></p>
+				<p class="eyebrow" data-reveal><a href="<?php echo esc_url( nabia_portfolio_url() ); ?>">← <?php esc_html_e( 'All work', 'nabia' ); ?></a></p>
 				<h1 class="page-title" data-split><?php the_title(); ?></h1>
 				<?php if ( has_excerpt() ) : ?>
 					<p class="page-intro" data-reveal><?php echo esc_html( get_the_excerpt() ); ?></p>
@@ -54,7 +54,7 @@ while ( have_posts() ) :
 		if ( ! $nabia_next ) {
 			$nabia_first = get_posts(
 				array(
-					'post_type'      => 'project',
+					'post_type'      => get_post_type(),
 					'posts_per_page' => 1,
 					'order'          => 'ASC',
 					'post__not_in'   => array( get_the_ID() ),

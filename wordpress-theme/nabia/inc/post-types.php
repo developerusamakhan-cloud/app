@@ -66,6 +66,27 @@ function nabia_register_post_types() {
 			'supports'            => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
 		)
 	);
+
+	register_post_type(
+		'video_review',
+		array(
+			'labels'              => array(
+				'name'          => __( 'Video Reviews', 'nabia' ),
+				'singular_name' => __( 'Video Review', 'nabia' ),
+				'add_new'       => __( 'Add video review', 'nabia' ),
+				'add_new_item'  => __( 'Add video review', 'nabia' ),
+				'edit_item'     => __( 'Edit video review', 'nabia' ),
+				'all_items'     => __( 'All video reviews', 'nabia' ),
+			),
+			'public'              => false,
+			'show_ui'             => true,
+			'exclude_from_search' => true,
+			'menu_icon'           => 'dashicons-video-alt3',
+			'menu_position'       => 7,
+			'show_in_rest'        => false,
+			'supports'            => array( 'title', 'page-attributes' ),
+		)
+	);
 }
 add_action( 'init', 'nabia_register_post_types' );
 
@@ -95,6 +116,11 @@ function nabia_meta_fields() {
 			'_nabia_author_role' => __( 'Role / company', 'nabia' ),
 			'_nabia_rating'      => __( 'Rating (1–5)', 'nabia' ),
 		),
+		'video_review' => array(
+			'_nabia_youtube'       => __( 'YouTube link (normal, youtu.be or Shorts)', 'nabia' ),
+			'_nabia_video_role'    => __( 'Company / role', 'nabia' ),
+			'_nabia_video_caption' => __( 'Short caption, e.g. “New store in 2 weeks”', 'nabia' ),
+		),
 	);
 }
 
@@ -103,7 +129,7 @@ function nabia_meta_fields() {
  */
 function nabia_add_meta_boxes() {
 	foreach ( array_keys( nabia_meta_fields() ) as $type ) {
-		add_meta_box( 'nabia_details', __( 'Details', 'nabia' ), 'nabia_render_meta_box', $type, 'side' );
+		add_meta_box( 'nabia_details', __( 'Details', 'nabia' ), 'nabia_render_meta_box', $type, 'video_review' === $type ? 'normal' : 'side', 'high' );
 	}
 }
 add_action( 'add_meta_boxes', 'nabia_add_meta_boxes' );
@@ -126,6 +152,9 @@ function nabia_render_meta_box( $post ) {
 			esc_html( $label ),
 			esc_attr( get_post_meta( $post->ID, $key, true ) )
 		);
+	}
+	if ( 'video_review' === $post->post_type ) {
+		echo '<p class="description">' . esc_html__( 'Title = client name. Use “Order” to choose which video shows first.', 'nabia' ) . '</p>';
 	}
 	if ( 'testimonial' === $post->post_type ) {
 		echo '<p class="description">' . esc_html__( 'Title = client name, content = the quote, featured image = avatar.', 'nabia' ) . '</p>';
@@ -157,8 +186,172 @@ function nabia_save_meta( $post_id ) {
 			continue;
 		}
 		$value = wp_unslash( $_POST[ $key ] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized below.
-		$value = '_nabia_url' === $key ? esc_url_raw( $value ) : sanitize_text_field( $value );
+		$value = in_array( $key, array( '_nabia_url', '_nabia_youtube' ), true ) ? esc_url_raw( $value ) : sanitize_text_field( $value );
 		update_post_meta( $post_id, $key, $value );
 	}
 }
 add_action( 'save_post', 'nabia_save_meta' );
+
+/**
+ * Keep existing "websites" portfolio posts visible even if the plugin that created
+ * the post type is deactivated: register it only when nobody else has and posts exist.
+ */
+function nabia_register_websites_fallback() {
+	if ( post_type_exists( 'websites' ) ) {
+		return;
+	}
+	$has_posts = get_transient( 'nabia_has_websites' );
+	if ( false === $has_posts ) {
+		global $wpdb;
+		$has_posts = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(1) FROM {$wpdb->posts} WHERE post_type = %s", 'websites' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		set_transient( 'nabia_has_websites', $has_posts, DAY_IN_SECONDS );
+	}
+	if ( ! $has_posts ) {
+		return;
+	}
+	register_post_type(
+		'websites',
+		array(
+			'labels'       => array(
+				'name'          => __( 'Websites', 'nabia' ),
+				'singular_name' => __( 'Website', 'nabia' ),
+			),
+			'public'       => true,
+			'has_archive'  => true,
+			'menu_icon'    => 'dashicons-admin-site-alt3',
+			'show_in_rest' => true,
+			'supports'     => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields', 'page-attributes' ),
+		)
+	);
+}
+add_action( 'init', 'nabia_register_websites_fallback', 99 );
+
+/**
+ * The post type shown as the portfolio ("websites" by default, falls back to the theme's Projects).
+ *
+ * @return string
+ */
+function nabia_portfolio_type() {
+	$type = nabia_mod( 'portfolio_post_type' );
+	return ( $type && post_type_exists( $type ) ) ? $type : 'project';
+}
+
+/**
+ * First taxonomy attached to the portfolio post type (used for filters and card labels).
+ *
+ * @return string Taxonomy name or empty string.
+ */
+function nabia_portfolio_taxonomy() {
+	$taxonomies = get_object_taxonomies( nabia_portfolio_type(), 'objects' );
+	foreach ( $taxonomies as $taxonomy ) {
+		if ( $taxonomy->public && $taxonomy->show_ui && 'post_format' !== $taxonomy->name ) {
+			return $taxonomy->name;
+		}
+	}
+	return '';
+}
+
+/**
+ * Link to the full portfolio listing.
+ *
+ * @return string
+ */
+function nabia_portfolio_url() {
+	$type = nabia_portfolio_type();
+	$link = get_post_type_archive_link( $type );
+	return $link ? $link : add_query_arg( 'post_type', $type, home_url( '/' ) );
+}
+
+/**
+ * Live website URL of a portfolio item, from the theme field or common custom-field names.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function nabia_project_live_url( $post_id ) {
+	$keys = apply_filters( 'nabia_live_url_meta_keys', array( '_nabia_url', 'website_url', 'website_link', 'live_url', 'site_url', 'project_url', 'url', 'link' ) );
+	foreach ( $keys as $key ) {
+		$value = get_post_meta( $post_id, $key, true );
+		if ( is_string( $value ) && preg_match( '#^https?://#i', $value ) ) {
+			return $value;
+		}
+	}
+	return '';
+}
+
+/**
+ * Use the theme's portfolio templates for whichever post type is the portfolio.
+ *
+ * @param string[] $templates Candidate templates.
+ * @return string[]
+ */
+function nabia_portfolio_archive_templates( $templates ) {
+	if ( is_post_type_archive( nabia_portfolio_type() ) || ( nabia_portfolio_taxonomy() && is_tax( nabia_portfolio_taxonomy() ) ) ) {
+		array_unshift( $templates, 'archive-project.php' );
+	}
+	return $templates;
+}
+add_filter( 'archive_template_hierarchy', 'nabia_portfolio_archive_templates' );
+add_filter( 'taxonomy_template_hierarchy', 'nabia_portfolio_archive_templates' );
+
+/**
+ * Case-study layout for single portfolio items.
+ *
+ * @param string[] $templates Candidate templates.
+ * @return string[]
+ */
+function nabia_portfolio_single_templates( $templates ) {
+	if ( is_singular( nabia_portfolio_type() ) ) {
+		array_unshift( $templates, 'single-project.php' );
+	}
+	return $templates;
+}
+add_filter( 'single_template_hierarchy', 'nabia_portfolio_single_templates' );
+
+/**
+ * "?post_type=websites" without an archive still gets the portfolio grid.
+ *
+ * @param string $template Template path.
+ * @return string
+ */
+function nabia_portfolio_query_template( $template ) {
+	$type = nabia_portfolio_type();
+	if ( ! is_admin() && ! is_singular() && ! is_post_type_archive() && get_query_var( 'post_type' ) === $type ) {
+		$archive = locate_template( 'archive-project.php' );
+		if ( $archive ) {
+			return $archive;
+		}
+	}
+	return $template;
+}
+add_filter( 'template_include', 'nabia_portfolio_query_template' );
+
+/**
+ * Show the YouTube thumbnail in the Video Reviews list.
+ *
+ * @param array $columns Columns.
+ * @return array
+ */
+function nabia_video_review_columns( $columns ) {
+	return array_slice( $columns, 0, 1, true ) + array( 'nabia_thumb' => __( 'Video', 'nabia' ) ) + array_slice( $columns, 1, null, true );
+}
+add_filter( 'manage_video_review_posts_columns', 'nabia_video_review_columns' );
+
+/**
+ * Render the thumbnail column.
+ *
+ * @param string $column  Column key.
+ * @param int    $post_id Post ID.
+ */
+function nabia_video_review_column( $column, $post_id ) {
+	if ( 'nabia_thumb' !== $column ) {
+		return;
+	}
+	$id = nabia_youtube_id( (string) get_post_meta( $post_id, '_nabia_youtube', true ) );
+	if ( $id ) {
+		printf( '<img src="%s" alt="" width="120" style="border-radius:6px">', esc_url( 'https://i.ytimg.com/vi/' . $id . '/mqdefault.jpg' ) );
+	} else {
+		echo '<em>' . esc_html__( 'No valid YouTube link', 'nabia' ) . '</em>';
+	}
+}
+add_action( 'manage_video_review_posts_custom_column', 'nabia_video_review_column', 10, 2 );

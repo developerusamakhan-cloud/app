@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NABIA_VERSION', '1.0.0' );
+define( 'NABIA_VERSION', '2.0.0' );
 define( 'NABIA_DIR', get_template_directory() );
 define( 'NABIA_URI', get_template_directory_uri() );
 
@@ -17,6 +17,7 @@ require NABIA_DIR . '/inc/defaults.php';
 require NABIA_DIR . '/inc/customizer.php';
 require NABIA_DIR . '/inc/post-types.php';
 require NABIA_DIR . '/inc/template-tags.php';
+require NABIA_DIR . '/inc/google-reviews.php';
 
 /**
  * Theme setup.
@@ -86,14 +87,26 @@ function nabia_widgets_init() {
 add_action( 'widgets_init', 'nabia_widgets_init' );
 
 /**
+ * Cache-busting version string for a theme file.
+ *
+ * @param string $file Path relative to the theme folder.
+ * @return string
+ */
+function nabia_asset_version( $file ) {
+	$path = NABIA_DIR . '/' . $file;
+	return NABIA_VERSION . ( file_exists( $path ) ? '.' . filemtime( $path ) : '' );
+}
+
+/**
  * Enqueue styles and scripts.
  */
 function nabia_scripts() {
-	wp_enqueue_style( 'nabia-style', get_stylesheet_uri(), array(), NABIA_VERSION );
+	// Version = theme version + file time, so browsers and caches always pick up a new upload.
+	wp_enqueue_style( 'nabia-style', get_stylesheet_uri(), array(), nabia_asset_version( 'style.css' ) );
 
 	wp_add_inline_style( 'nabia-style', nabia_scheme_css() );
 
-	wp_enqueue_script( 'nabia-main', NABIA_URI . '/assets/js/main.js', array(), NABIA_VERSION, array( 'strategy' => 'defer', 'in_footer' => true ) );
+	wp_enqueue_script( 'nabia-main', NABIA_URI . '/assets/js/main.js', array(), nabia_asset_version( 'assets/js/main.js' ), array( 'strategy' => 'defer', 'in_footer' => true ) );
 	wp_localize_script(
 		'nabia-main',
 		'nabiaSettings',
@@ -113,7 +126,7 @@ add_action( 'wp_enqueue_scripts', 'nabia_scripts' );
  * Preload the self-hosted fonts so headlines render without a flash.
  */
 function nabia_preload_fonts() {
-	foreach ( array( 'syne', 'inter' ) as $font ) {
+	foreach ( array( 'jakarta', 'inter' ) as $font ) {
 		printf(
 			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
 			esc_url( NABIA_URI . '/assets/fonts/' . $font . '.woff2' )

@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function nabia_defaults() {
 	return array(
 		// General.
-		'color_scheme'       => 'coral',
+		'color_scheme'       => 'violet',
 		'accent_color'       => '',
 		'enable_preloader'   => true,
 		'enable_cursor'      => true,
@@ -61,6 +61,10 @@ function nabia_defaults() {
 		'intro_video_poster' => '',
 		'intro_video_caption' => 'Hi, I’m Nabia 👋 Meet the person behind your next website.',
 
+		// Portfolio.
+		'portfolio_post_type' => 'websites',
+		'portfolio_count'    => '8',
+
 		// Sections.
 		'services_title'     => 'What I can do for you',
 		'work_title'         => 'Selected work',
@@ -73,6 +77,11 @@ function nabia_defaults() {
 		'videos_text'        => 'Real people, real projects. Press play and hear what working together feels like.',
 		'video_reviews'      => '',
 		'video_layout'       => 'auto',
+
+		// Google reviews.
+		'google_api_key'     => '',
+		'google_place_id'    => '',
+		'google_min_rating'  => '4',
 
 		// Contact.
 		'cta_title'          => "Let's build something bold.",

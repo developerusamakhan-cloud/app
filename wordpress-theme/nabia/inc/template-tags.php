@@ -296,55 +296,71 @@ function nabia_color_schemes() {
 	return apply_filters(
 		'nabia_color_schemes',
 		array(
-			'coral'    => array(
-				'label'      => __( 'Coral & Indigo', 'nabia' ),
-				'bg'         => '#f7f2ec',
-				'bg_alt'     => '#efe6dc',
-				'ink'        => '#16121a',
-				'accent'     => '#ff5a36',
-				'accent_ink' => '#16121a',
-				'second'     => '#4f46e5',
-				'third'      => '#ffc83d',
+			'violet'   => array(
+				'label'       => __( 'Violet & Pink (default)', 'nabia' ),
+				'bg'          => '#fbfaff',
+				'bg_alt'      => '#f1edfd',
+				'ink'         => '#1a1433',
+				'accent'      => '#7c3aed',
+				'accent_ink'  => '#ffffff',
+				'accent_dark' => '#b9a4ff',
+				'second'      => '#ec4899',
+				'third'       => '#fbbf24',
 			),
-			'lime'     => array(
-				'label'      => __( 'Electric Lime', 'nabia' ),
-				'bg'         => '#f4f1ea',
-				'bg_alt'     => '#ebe6db',
-				'ink'        => '#0e0e10',
-				'accent'     => '#c6ff3d',
-				'accent_ink' => '#0e0e10',
-				'second'     => '#7c5cff',
-				'third'      => '#ff8fab',
+			'navy'     => array(
+				'label'       => __( 'Navy & Gold', 'nabia' ),
+				'bg'          => '#f8f7f4',
+				'bg_alt'      => '#eeebe4',
+				'ink'         => '#0f1b2d',
+				'accent'      => '#1d4ed8',
+				'accent_ink'  => '#ffffff',
+				'accent_dark' => '#8fb0ff',
+				'second'      => '#f59e0b',
+				'third'       => '#10b981',
+			),
+			'coral'    => array(
+				'label'       => __( 'Coral & Indigo', 'nabia' ),
+				'bg'          => '#f7f2ec',
+				'bg_alt'      => '#efe6dc',
+				'ink'         => '#16121a',
+				'accent'      => '#ff5a36',
+				'accent_ink'  => '#16121a',
+				'accent_dark' => '#ff7a5c',
+				'second'      => '#4f46e5',
+				'third'       => '#ffc83d',
 			),
 			'ocean'    => array(
-				'label'      => __( 'Mint & Ocean', 'nabia' ),
-				'bg'         => '#f1f5f4',
-				'bg_alt'     => '#e2ebe9',
-				'ink'        => '#0b1a24',
-				'accent'     => '#3ee0bf',
-				'accent_ink' => '#0b1a24',
-				'second'     => '#2457ff',
-				'third'      => '#ffb547',
+				'label'       => __( 'Mint & Ocean', 'nabia' ),
+				'bg'          => '#f1f5f4',
+				'bg_alt'      => '#e2ebe9',
+				'ink'         => '#0b1a24',
+				'accent'      => '#0f9d84',
+				'accent_ink'  => '#ffffff',
+				'accent_dark' => '#3ee0bf',
+				'second'      => '#2457ff',
+				'third'       => '#ffb547',
 			),
-			'grape'    => array(
-				'label'      => __( 'Lavender & Tangerine', 'nabia' ),
-				'bg'         => '#f5f3fa',
-				'bg_alt'     => '#e9e5f5',
-				'ink'        => '#15112a',
-				'accent'     => '#b9a2ff',
-				'accent_ink' => '#15112a',
-				'second'     => '#ff6a2b',
-				'third'      => '#3ddc97',
+			'lime'     => array(
+				'label'       => __( 'Electric Lime', 'nabia' ),
+				'bg'          => '#f4f1ea',
+				'bg_alt'      => '#ebe6db',
+				'ink'         => '#0e0e10',
+				'accent'      => '#c6ff3d',
+				'accent_ink'  => '#0e0e10',
+				'accent_dark' => '#c6ff3d',
+				'second'      => '#7c5cff',
+				'third'       => '#ff8fab',
 			),
 			'sunshine' => array(
-				'label'      => __( 'Sunshine & Pink', 'nabia' ),
-				'bg'         => '#fbf8f1',
-				'bg_alt'     => '#f3ecdc',
-				'ink'        => '#141414',
-				'accent'     => '#ffd23f',
-				'accent_ink' => '#141414',
-				'second'     => '#ff3d7f',
-				'third'      => '#2ec4b6',
+				'label'       => __( 'Sunshine & Pink', 'nabia' ),
+				'bg'          => '#fbf8f1',
+				'bg_alt'      => '#f3ecdc',
+				'ink'         => '#141414',
+				'accent'      => '#ffd23f',
+				'accent_ink'  => '#141414',
+				'accent_dark' => '#ffd23f',
+				'second'      => '#ff3d7f',
+				'third'       => '#2ec4b6',
 			),
 		)
 	);
@@ -362,7 +378,8 @@ function nabia_scheme_css() {
 
 	$override = sanitize_hex_color( nabia_mod( 'accent_color' ) );
 	if ( $override ) {
-		$scheme['accent'] = $override;
+		$scheme['accent']      = $override;
+		$scheme['accent_dark'] = $override;
 	}
 
 	$map = array(
@@ -371,6 +388,7 @@ function nabia_scheme_css() {
 		'ink'        => '--ink',
 		'accent'     => '--accent',
 		'accent_ink' => '--accent-ink',
+		'accent_dark' => '--accent-dk',
 		'second'     => '--second',
 		'third'      => '--third',
 	);
@@ -402,15 +420,42 @@ function nabia_youtube_id( $url ) {
 }
 
 /**
- * Parse the "Video reviews" Customizer field.
+ * All video reviews: from Dashboard → Video Reviews first, then the Customizer list.
  *
- * One video per line: URL | Client name | Short caption (name and caption optional).
+ * Customizer format, one per line: URL | Client name | Short caption.
  *
- * @return array[] Each: id, name, caption, vertical (bool, true for Shorts links).
+ * @return array[] Each: id, name, role, caption, vertical (bool, true for Shorts links).
  */
 function nabia_video_reviews() {
-	$lines  = preg_split( '/\r\n|\r|\n/', (string) nabia_mod( 'video_reviews' ) );
 	$videos = array();
+
+	$posts = get_posts(
+		array(
+			'post_type'      => 'video_review',
+			'posts_per_page' => 50,
+			'orderby'        => array(
+				'menu_order' => 'ASC',
+				'date'       => 'DESC',
+			),
+			'no_found_rows'  => true,
+		)
+	);
+	foreach ( $posts as $post ) {
+		$url = (string) get_post_meta( $post->ID, '_nabia_youtube', true );
+		$id  = nabia_youtube_id( $url );
+		if ( ! $id ) {
+			continue;
+		}
+		$videos[] = array(
+			'id'       => $id,
+			'name'     => get_the_title( $post ),
+			'role'     => (string) get_post_meta( $post->ID, '_nabia_video_role', true ),
+			'caption'  => (string) get_post_meta( $post->ID, '_nabia_video_caption', true ),
+			'vertical' => false !== strpos( $url, '/shorts/' ),
+		);
+	}
+
+	$lines = preg_split( '/\r\n|\r|\n/', (string) nabia_mod( 'video_reviews' ) );
 	foreach ( $lines as $line ) {
 		$parts = array_map( 'trim', explode( '|', $line ) );
 		$id    = nabia_youtube_id( $parts[0] );
@@ -420,6 +465,7 @@ function nabia_video_reviews() {
 		$videos[] = array(
 			'id'       => $id,
 			'name'     => isset( $parts[1] ) ? $parts[1] : '',
+			'role'     => '',
 			'caption'  => isset( $parts[2] ) ? $parts[2] : '',
 			'vertical' => false !== strpos( $parts[0], '/shorts/' ),
 		);

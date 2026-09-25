@@ -326,6 +326,38 @@
 	}
 
 	/* ------------------------------------------------------------------
+	 * Reviews: clamp long texts with "Read more", and "Show more reviews".
+	 * ------------------------------------------------------------------ */
+	$$('[data-review-text]').forEach(function (text) {
+		text.classList.add('is-clamped');
+		var p = $('p', text);
+		if (!p || p.scrollHeight <= p.clientHeight + 2) {
+			text.classList.remove('is-clamped');
+			return;
+		}
+		var btn = document.createElement('button');
+		btn.type = 'button';
+		btn.className = 'review-readmore';
+		btn.textContent = 'Read more';
+		btn.addEventListener('click', function () {
+			var open = text.classList.toggle('is-clamped');
+			btn.textContent = open ? 'Read more' : 'Read less';
+		});
+		text.parentNode.appendChild(btn);
+	});
+
+	$$('[data-review-more]').forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			var wall = btn.closest('.section, .nabia-reviews-embed');
+			wall = wall ? $('[data-review-wall]', wall) : null;
+			if (wall) {
+				wall.classList.add('is-expanded');
+			}
+			btn.parentNode.remove();
+		});
+	});
+
+	/* ------------------------------------------------------------------
 	 * Video reviews: load YouTube only when visible, autoplay muted.
 	 * ------------------------------------------------------------------ */
 	function embedUrl(id, muted) {
@@ -384,25 +416,59 @@
 
 	$$('[data-video-stage]').forEach(function (stage) {
 		var main = $('.video-frame', stage);
-		var caption = $('[data-video-caption]', stage);
-		$$('.video-thumb', stage).forEach(function (thumb) {
+		var thumbs = $$('.video-thumb', stage);
+		var nameEl = $('[data-caption-name]', stage);
+		var metaEl = $('[data-caption-meta]', stage);
+		var avatarEl = $('.video-caption-avatar', stage);
+		var list = $('.video-list', stage);
+		var current = 0;
+
+		function select(index, withSound) {
+			current = (index + thumbs.length) % thumbs.length;
+			var thumb = thumbs[current];
+			thumbs.forEach(function (t, i) {
+				t.classList.toggle('is-active', i === current);
+			});
+			var id = thumb.getAttribute('data-id');
+			main.setAttribute('data-video-id', id);
+			var poster = $('img', main);
+			if (poster) {
+				poster.src = 'https://i.ytimg.com/vi/' + encodeURIComponent(id) + '/hqdefault.jpg';
+			}
+			var name = thumb.getAttribute('data-name');
+			if (nameEl) {
+				nameEl.textContent = name;
+			}
+			if (metaEl) {
+				metaEl.textContent = thumb.getAttribute('data-meta');
+			}
+			if (avatarEl) {
+				avatarEl.textContent = (name || '★').charAt(0);
+			}
+			// Keep the active item visible inside the playlist without scrolling the page.
+			if (list) {
+				var li = thumb.parentNode;
+				if (list.scrollHeight > list.clientHeight) {
+					list.scrollTo({ top: li.offsetTop - list.offsetTop - 8, behavior: 'smooth' });
+				} else if (list.scrollWidth > list.clientWidth) {
+					list.scrollTo({ left: li.offsetLeft - list.offsetLeft, behavior: 'smooth' });
+				}
+			}
+			loadVideo(main, !withSound);
+		}
+
+		thumbs.forEach(function (thumb, i) {
 			thumb.addEventListener('click', function () {
-				$$('.video-thumb', stage).forEach(function (t) {
-					t.classList.toggle('is-active', t === thumb);
-				});
-				main.setAttribute('data-video-id', thumb.getAttribute('data-id'));
-				var poster = $('img', main);
-				if (poster) {
-					poster.src = 'https://i.ytimg.com/vi/' + encodeURIComponent(thumb.getAttribute('data-id')) + '/hqdefault.jpg';
-				}
-				if (caption) {
-					$('strong', caption).textContent = thumb.getAttribute('data-name');
-					$('span', caption).textContent = thumb.getAttribute('data-caption');
-				}
-				loadVideo(main, false);
+				select(i, true);
 				if (window.innerWidth < 900) {
 					main.scrollIntoView({ behavior: 'smooth', block: 'center' });
 				}
+			});
+		});
+
+		$$('[data-video-step]', stage).forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				select(current + parseInt(btn.getAttribute('data-video-step'), 10), true);
 			});
 		});
 	});
@@ -413,7 +479,17 @@
 	$$('[data-intro-video]').forEach(function (video) {
 		var frame = video.parentNode;
 		var soundBtn = $('[data-intro-sound]', frame);
+		var figure = video.closest('.intro-video');
 		video.removeAttribute('controls');
+
+		// Landscape clips switch the phone mockup to a widescreen card.
+		function checkShape() {
+			if (figure && video.videoWidth && video.videoWidth > video.videoHeight) {
+				figure.classList.add('is-landscape');
+			}
+		}
+		video.addEventListener('loadedmetadata', checkShape);
+		checkShape();
 
 		function play() {
 			var p = video.play();

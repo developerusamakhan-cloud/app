@@ -372,15 +372,68 @@ function nabia_portfolio_url() {
  * @return string
  */
 function nabia_project_live_url( $post_id ) {
-	$keys = apply_filters( 'nabia_live_url_meta_keys', array( '_nabia_url', 'website_url', 'website_link', 'live_url', 'site_url', 'project_url', 'url', 'link' ) );
+	$keys = apply_filters( 'nabia_live_url_meta_keys', array( 'live_link', '_nabia_url', 'website_url', 'website_link', 'live_url', 'site_url', 'project_url', 'url', 'link' ) );
 	foreach ( $keys as $key ) {
-		$value = get_post_meta( $post_id, $key, true );
+		$value = ( 'live_link' === $key && function_exists( 'get_field' ) ) ? get_field( 'live_link', $post_id, false ) : get_post_meta( $post_id, $key, true );
+		if ( is_array( $value ) && isset( $value['url'] ) ) {
+			$value = $value['url']; // ACF "Link" field.
+		}
+		$value = is_string( $value ) ? trim( $value ) : $value;
 		if ( is_string( $value ) && preg_match( '#^https?://#i', $value ) ) {
 			return $value;
 		}
 	}
 	return '';
 }
+
+/**
+ * Where a portfolio item links to: its live website (ACF "live_link"), or the portfolio page when none is set.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function nabia_project_url( $post_id ) {
+	$live = nabia_project_live_url( $post_id );
+	return $live ? $live : nabia_portfolio_url();
+}
+
+/**
+ * No detail pages for portfolio items for now: send visitors straight to the live website.
+ */
+function nabia_redirect_project_single() {
+	if ( ! is_singular( nabia_portfolio_type() ) || ! apply_filters( 'nabia_redirect_projects', true ) ) {
+		return;
+	}
+	wp_redirect( nabia_project_url( get_queried_object_id() ), 302, 'Nabia' ); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
+	exit;
+}
+add_action( 'template_redirect', 'nabia_redirect_project_single', 1 );
+
+/**
+ * Keep the redirecting portfolio items out of the XML sitemaps (WordPress core and Yoast).
+ *
+ * @param array $types Post types.
+ * @return array
+ */
+function nabia_sitemap_hide_projects( $types ) {
+	if ( apply_filters( 'nabia_redirect_projects', true ) ) {
+		unset( $types[ nabia_portfolio_type() ] );
+	}
+	return $types;
+}
+add_filter( 'wp_sitemaps_post_types', 'nabia_sitemap_hide_projects' );
+
+/**
+ * Yoast SEO: exclude the portfolio post type from its sitemap too.
+ *
+ * @param bool   $excluded  Whether excluded.
+ * @param string $post_type Post type.
+ * @return bool
+ */
+function nabia_yoast_hide_projects( $excluded, $post_type ) {
+	return ( $post_type === nabia_portfolio_type() && apply_filters( 'nabia_redirect_projects', true ) ) ? true : $excluded;
+}
+add_filter( 'wpseo_sitemap_exclude_post_type', 'nabia_yoast_hide_projects', 10, 2 );
 
 /**
  * Use the theme's portfolio templates for whichever post type is the portfolio.

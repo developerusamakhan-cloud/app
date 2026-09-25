@@ -96,7 +96,7 @@ while ( have_posts() ) :
 	}
 	if ( $nabia_next ) :
 		?>
-		<a class="next-project" href="<?php echo esc_url( get_permalink( $nabia_next ) ); ?>" data-cursor="<?php esc_attr_e( 'Next', 'nabia' ); ?>">
+		<a class="next-project" href="<?php echo esc_url( nabia_project_url( $nabia_next->ID ) ); ?>" data-cursor="<?php esc_attr_e( 'Next', 'nabia' ); ?>">
 			<div class="container">
 				<span class="eyebrow"><?php esc_html_e( 'Next project', 'nabia' ); ?></span>
 				<span class="next-project-title"><?php echo esc_html( get_the_title( $nabia_next ) ); ?> <?php nabia_icon( 'arrow' ); ?></span>

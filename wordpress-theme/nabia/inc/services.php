@@ -132,6 +132,10 @@ function nabia_service_details() {
 			'faq'      => array(
 				array( __( 'Will an AI chatbot say wrong things about my business?', 'nabia' ), __( 'It only answers from the information you approve, and hands over to you when it is not sure.', 'nabia' ) ),
 				array( __( 'Does it work with my current website?', 'nabia' ), __( 'Yes. AI features can be added to WordPress, Shopify, Wix, Webflow, Squarespace and custom sites.', 'nabia' ) ),
+				array( __( 'Which AI tools do you work with?', 'nabia' ), __( 'I work with leading models like ChatGPT, Claude and Gemini, plus tools such as Zapier and Make for automations. I pick what fits your budget and your needs, not whatever is trending this week.', 'nabia' ) ),
+				array( __( 'How much does it cost to run AI on my website?', 'nabia' ), __( 'For most small businesses the monthly AI usage costs only a few dollars. I set sensible limits so there are never surprise bills, and I show you exactly where the costs come from.', 'nabia' ) ),
+				array( __( 'Can AI help me write blog posts and product descriptions?', 'nabia' ), __( 'Yes. I can set up a workflow that drafts SEO friendly posts and product descriptions in your brand voice. You stay in control: nothing goes live until you have read and approved it.', 'nabia' ) ),
+				array( __( 'Will AI replace the human touch with my customers?', 'nabia' ), __( 'Not at all. AI handles the quick, repetitive questions so you have more time for real conversations. Customers can always reach a real person, and the chatbot tells them when they are talking to AI.', 'nabia' ) ),
 			),
 		),
 		'branding-graphic-design' => array(

@@ -65,6 +65,12 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.11
+
+- **Websites link straight to the live site.** Every portfolio card (home, portfolio page, archive, related work, HTML sitemap) opens the URL saved in the ACF field `live_link` in a new tab. Opening a single website URL redirects to that live link, or to the portfolio page when no link is set. There are no detail pages for now, so websites are also kept out of the XML sitemaps (WordPress core and Yoast). To bring detail pages back later, add `add_filter( 'nabia_redirect_projects', '__return_false' );` and point the cards back to the permalink.
+- **Math captcha on the contact form.** Visitors answer a small sum like "5 + 8 =" before sending. The answer is never in the page: only a signed hash is sent with the form, and a wrong answer shows a friendly message. It works alongside the honeypot, time check and rate limit.
+- **AI FAQs.** Five new homepage FAQs explain how AI is used (as an assistant, never a replacement), speed and cost, human sounding content, data safety and what a chatbot can do. The AI Website Solutions service page has four more (tools, running costs, AI blog content, the human touch).
+
 ## What's new in 2.10
 
 - Blog page: plain grid of posts (no category buttons, no big featured post).

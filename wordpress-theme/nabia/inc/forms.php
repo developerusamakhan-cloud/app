@@ -349,6 +349,39 @@ function nabia_form_token() {
 }
 
 /**
+ * A simple math question for the contact form, e.g. "What is 3 + 4?".
+ * The answer is never printed: only a signed hash travels with the form.
+ *
+ * @return array { a, b, key }
+ */
+function nabia_math_captcha() {
+	$a    = wp_rand( 1, 9 );
+	$b    = wp_rand( 1, 9 );
+	$time = time();
+	return array(
+		'a'   => $a,
+		'b'   => $b,
+		'key' => $time . '.' . wp_hash( 'nabia_math_' . $time . '|' . ( $a + $b ) ),
+	);
+}
+
+/**
+ * Check a math captcha answer against its signed key (valid for one day).
+ *
+ * @param string $key    Signed key from the form.
+ * @param string $answer Visitor's answer.
+ * @return bool
+ */
+function nabia_math_captcha_ok( $key, $answer ) {
+	$parts  = explode( '.', (string) $key );
+	$answer = trim( (string) $answer );
+	if ( 2 !== count( $parts ) || ! preg_match( '/^\d{1,2}$/', $answer ) || time() - (int) $parts[0] > DAY_IN_SECONDS ) {
+		return false;
+	}
+	return hash_equals( wp_hash( 'nabia_math_' . $parts[0] . '|' . (int) $answer ), $parts[1] );
+}
+
+/**
  * Handle a contact form submission.
  */
 function nabia_handle_contact() {
@@ -371,6 +404,13 @@ function nabia_handle_contact() {
 	$parts = explode( '.', $token );
 	if ( 2 !== count( $parts ) || ! hash_equals( wp_hash( 'nabia_form_' . $parts[0] ), $parts[1] ) || time() - (int) $parts[0] < 3 ) {
 		$go( 'expired' );
+	}
+
+	// Math captcha.
+	$math_key = isset( $_POST['nabia_cq'] ) ? sanitize_text_field( wp_unslash( $_POST['nabia_cq'] ) ) : '';
+	$math_ans = isset( $_POST['cf_math'] ) ? sanitize_text_field( wp_unslash( $_POST['cf_math'] ) ) : '';
+	if ( ! nabia_math_captcha_ok( $math_key, $math_ans ) ) {
+		$go( 'captcha' );
 	}
 
 	$settings = nabia_form_settings();

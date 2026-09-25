@@ -356,6 +356,26 @@ function nabia_faq() {
 				'a' => __( 'Yes. I can add an AI chatbot that answers customer questions, smart contact forms, AI-assisted blog and product content, and automations that connect your site to email, CRM and booking tools.', 'nabia' ),
 			),
 			array(
+				'q' => __( 'How do you use AI in your own work?', 'nabia' ),
+				'a' => __( 'AI is my assistant, never my replacement. I use it to research your industry and competitors, brainstorm layout ideas, draft first versions of copy, write and check code faster, and test pages for speed and accessibility. Every design decision, line of code and word on your site is still reviewed and polished by me by hand.', 'nabia' ),
+			),
+			array(
+				'q' => __( 'Does using AI make my project faster or cheaper?', 'nabia' ),
+				'a' => __( 'Faster, yes. The boring, repetitive parts take minutes instead of hours, so I can spend more time on what matters: design details, conversion and testing. That usually means an earlier launch and more value for the same budget.', 'nabia' ),
+			),
+			array(
+				'q' => __( 'Will my website content sound robotic or generic?', 'nabia' ),
+				'a' => __( 'No. AI only gives me a starting point. I rewrite everything in your tone of voice, add your real stories, services and prices, and make sure it reads like a human wrote it for humans. Google rewards helpful, original content, and that is exactly what you get.', 'nabia' ),
+			),
+			array(
+				'q' => __( 'Is my data safe when you use AI tools?', 'nabia' ),
+				'a' => __( 'Yes. I never paste passwords, customer details or private business data into AI tools. For AI features on your site, like a chatbot, I use trusted providers, keep your information on your own website where possible, and explain in plain English what is stored and why.', 'nabia' ),
+			),
+			array(
+				'q' => __( 'What can an AI chatbot actually do for my business?', 'nabia' ),
+				'a' => __( 'Think of it as a helpful team member who never sleeps. It answers common questions instantly, suggests the right product or service, collects leads and booking requests at 2 am, and sends the tricky questions straight to you. Most clients see fewer repeat emails and more enquiries.', 'nabia' ),
+			),
+			array(
 				'q' => __( 'Will I be able to edit the website myself?', 'nabia' ),
 				'a' => __( 'Yes. Every site is built so you can change text, images, products and blog posts yourself. You also get a personal video walkthrough.', 'nabia' ),
 			),

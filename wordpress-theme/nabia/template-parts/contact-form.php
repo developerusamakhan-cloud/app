@@ -12,7 +12,9 @@ $nabia_msgs   = array(
 	'invalid' => __( 'Please add your name, a valid email and a short message.', 'nabia' ),
 	'expired' => __( 'The form expired. Please try again.', 'nabia' ),
 	'limit'   => __( 'You have sent a few messages already. Please try again later or email me directly.', 'nabia' ),
+	'captcha' => __( 'That sum was not quite right. Please solve the little math question and send again.', 'nabia' ),
 );
+$nabia_math   = nabia_math_captcha();
 $nabia_email  = nabia_mod( 'contact_email' );
 $nabia_budget = array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', (string) $nabia_s['budget_options'] ) ) );
 $nabia_uid    = wp_unique_id( 'cf-' );
@@ -119,6 +121,17 @@ $nabia_uid    = wp_unique_id( 'cf-' );
 						<label for="<?php echo esc_attr( $nabia_uid ); ?>-message"><?php esc_html_e( 'Your message', 'nabia' ); ?> <span class="req" aria-hidden="true">*</span></label>
 						<textarea id="<?php echo esc_attr( $nabia_uid ); ?>-message" name="cf_message" rows="5" required placeholder="<?php esc_attr_e( 'What would you like to build or improve?', 'nabia' ); ?>"></textarea>
 					</p>
+
+					<div class="field cf-math">
+						<input type="hidden" name="nabia_cq" value="<?php echo esc_attr( $nabia_math['key'] ); ?>">
+						<label for="<?php echo esc_attr( $nabia_uid ); ?>-math">
+							<?php esc_html_e( 'Quick check, are you human?', 'nabia' ); ?> <span class="req" aria-hidden="true">*</span>
+						</label>
+						<div class="cf-math-row">
+							<span class="cf-math-q" aria-hidden="true"><?php echo esc_html( $nabia_math['a'] ); ?> <b>+</b> <?php echo esc_html( $nabia_math['b'] ); ?> <b>=</b></span>
+							<input id="<?php echo esc_attr( $nabia_uid ); ?>-math" name="cf_math" type="text" inputmode="numeric" pattern="[0-9]{1,2}" maxlength="2" autocomplete="off" required placeholder="?" aria-label="<?php echo esc_attr( sprintf( /* translators: 1: number, 2: number */ __( 'What is %1$d plus %2$d?', 'nabia' ), $nabia_math['a'], $nabia_math['b'] ) ); ?>">
+						</div>
+					</div>
 
 					<button class="btn btn-accent btn-lg cf-submit" type="submit"><span><?php echo esc_html( $nabia_s['button_label'] ); ?></span><?php nabia_icon( 'arrow' ); ?></button>
 					<?php if ( $nabia_s['privacy_note'] ) : ?>

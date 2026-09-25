@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.10.0
+Version: 2.11.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -4509,6 +4509,43 @@ body:not(.is-home) .site-main {
 
 .cf-form .req {
 	color: var(--second);
+}
+
+.cf-math-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.cf-math-q {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 52px;
+	padding: 0 18px;
+	box-sizing: border-box;
+	border-radius: 12px;
+	background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+	font-family: var(--font-display);
+	font-size: 20px;
+	font-weight: 800;
+	letter-spacing: 0.02em;
+	white-space: nowrap;
+	user-select: none;
+}
+
+.cf-math-q b {
+	color: var(--accent);
+	font-weight: 800;
+}
+
+.cf-form .cf-math-row input[name="cf_math"] {
+	flex: 0 0 110px;
+	width: 110px;
+	min-height: 52px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: 700;
 }
 
 .cf-budget {

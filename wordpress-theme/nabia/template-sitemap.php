@@ -66,7 +66,7 @@ $nabia_sites = get_posts(
 				<h2><a href="<?php echo esc_url( nabia_portfolio_url() ); ?>"><?php esc_html_e( 'Portfolio', 'nabia' ); ?></a></h2>
 				<ul>
 					<?php foreach ( $nabia_sites as $nabia_site ) : ?>
-						<li><a href="<?php echo esc_url( get_permalink( $nabia_site ) ); ?>"><?php echo esc_html( get_the_title( $nabia_site ) ); ?></a></li>
+						<li><a href="<?php echo esc_url( nabia_project_url( $nabia_site->ID ) ); ?>"<?php echo nabia_project_live_url( $nabia_site->ID ) ? ' target="_blank" rel="noopener"' : ''; ?>><?php echo esc_html( get_the_title( $nabia_site ) ); ?></a></li>
 					<?php endforeach; ?>
 				</ul>
 			<?php endif; ?>

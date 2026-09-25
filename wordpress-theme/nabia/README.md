@@ -65,6 +65,10 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.13.3
+
+- **Google Chat popup.** Every Google Chat button (contact form, after sending a form, mobile menu, footer and homepage contact) opens a small popup that shows the chat email with a Copy button, a "Copy and open chat" button and three simple steps. The WhatsApp number and chat email are no longer printed on the buttons themselves.
+
 ## What's new in 2.13.1
 
 - **Mobile menu** items are smaller and tidier, with thin dividers, a one column submenu, and WhatsApp and Google Chat buttons at the bottom.

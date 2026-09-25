@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.13.2
+Version: 2.13.3
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -6685,25 +6685,168 @@ button[type="submit"]:not(.search-submit):hover {
 	margin-top: 12px;
 }
 
-.nabia-toast {
-	position: fixed;
-	left: 50%;
-	bottom: 24px;
-	z-index: 200;
-	max-width: calc(100% - 32px);
-	padding: 12px 18px;
-	border-radius: 12px;
-	background: var(--ink);
-	color: var(--bg);
-	font-size: 14px;
-	font-weight: 600;
-	box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.5);
-	opacity: 0;
-	transform: translate(-50%, 12px);
-	transition: opacity 0.3s, transform 0.3s;
+.gchat-modal {
+	width: min(440px, calc(100% - 32px));
+	max-height: calc(100% - 32px);
+	margin: auto;
+	padding: 32px 28px 26px;
+	border: 0;
+	border-radius: var(--radius-lg);
+	background: var(--surface);
+	color: var(--ink);
+	text-align: center;
+	box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.55);
 }
 
-.nabia-toast.is-in {
-	opacity: 1;
-	transform: translate(-50%, 0);
+.gchat-modal::backdrop {
+	background: color-mix(in srgb, var(--ink) 55%, transparent);
+	backdrop-filter: blur(4px);
+}
+
+.gchat-modal[open] {
+	animation: gchat-in 0.35s var(--ease);
+}
+
+@keyframes gchat-in {
+	from {
+		opacity: 0;
+		transform: translateY(16px) scale(0.97);
+	}
+}
+
+.gchat-close {
+	position: absolute;
+	top: 14px;
+	right: 14px;
+	display: grid;
+	place-items: center;
+	width: 38px;
+	height: 38px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: color-mix(in srgb, var(--ink) 7%, transparent);
+	color: var(--ink);
+	cursor: pointer;
+}
+
+.gchat-close:hover {
+	background: var(--accent);
+	color: #fff;
+}
+
+.gchat-close .icon {
+	width: 18px;
+	height: 18px;
+}
+
+.gchat-badge {
+	display: inline-grid;
+	place-items: center;
+	width: 60px;
+	height: 60px;
+	margin-bottom: 14px;
+	border-radius: 18px;
+	background: #1a73e8;
+	color: #fff;
+}
+
+.gchat-badge .icon {
+	width: 30px;
+	height: 30px;
+}
+
+.gchat-title {
+	margin: 0 0 8px;
+	font-family: var(--font-display);
+	font-size: 22px;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+}
+
+.gchat-text {
+	margin: 0 0 20px;
+	color: var(--muted);
+	font-size: 15px;
+}
+
+.gchat-email {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 14px;
+	padding: 14px 12px 12px;
+	border: 1.5px dashed color-mix(in srgb, var(--accent) 50%, transparent);
+	border-radius: 14px;
+	background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+}
+
+.gchat-email [data-gchat-email] {
+	max-width: 100%;
+	font-size: 17px;
+	font-weight: 800;
+	text-align: center;
+	overflow-wrap: anywhere;
+	user-select: all;
+}
+
+.gchat-copy {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	gap: 6px;
+	padding: 10px 14px;
+	border: 0;
+	border-radius: 10px;
+	background: var(--ink);
+	color: var(--bg);
+	font: inherit;
+	font-size: 14px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+
+.gchat-copy .icon {
+	display: none;
+	width: 16px;
+	height: 16px;
+}
+
+.gchat-copy.is-done {
+	background: #1faa55;
+	color: #fff;
+}
+
+.gchat-copy.is-done .icon {
+	display: block;
+}
+
+.gchat-open {
+	width: 100%;
+	justify-content: center;
+}
+
+.gchat-steps {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 6px 16px;
+	margin: 18px 0 0;
+	padding: 0;
+	list-style: none;
+	counter-reset: gstep;
+	color: var(--muted);
+	font-size: 13px;
+}
+
+.gchat-steps li {
+	counter-increment: gstep;
+}
+
+.gchat-steps li::before {
+	content: counter(gstep) ". ";
+	font-weight: 700;
+	color: var(--accent);
 }

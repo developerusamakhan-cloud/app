@@ -163,6 +163,25 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 	</div>
 </footer>
 
+<?php if ( nabia_gchat_url() ) : ?>
+	<dialog class="gchat-modal" id="gchat-modal" aria-labelledby="gchat-title">
+		<button class="gchat-close" type="button" data-gchat-close aria-label="<?php esc_attr_e( 'Close', 'nabia' ); ?>"><?php nabia_icon( 'close' ); ?></button>
+		<span class="gchat-badge" aria-hidden="true"><?php nabia_icon( 'gchat' ); ?></span>
+		<h2 class="gchat-title" id="gchat-title"><?php esc_html_e( 'Chat with me on Google Chat', 'nabia' ); ?></h2>
+		<p class="gchat-text"><?php esc_html_e( 'Copy my chat address below, then start a new chat with it in Google Chat. I usually reply within minutes.', 'nabia' ); ?></p>
+		<div class="gchat-email">
+			<span data-gchat-email><?php echo esc_html( nabia_mod( 'gchat_email' ) ); ?></span>
+			<button class="gchat-copy" type="button" data-gchat-copy data-done="<?php esc_attr_e( 'Copied', 'nabia' ); ?>"><?php nabia_icon( 'check' ); ?><span><?php esc_html_e( 'Copy', 'nabia' ); ?></span></button>
+		</div>
+		<a class="btn btn-accent btn-lg gchat-open" href="<?php echo esc_url( nabia_gchat_url() ); ?>" target="_blank" rel="noopener noreferrer" data-gchat-open><span><?php esc_html_e( 'Copy and open chat', 'nabia' ); ?></span><?php nabia_icon( 'arrow-up' ); ?></a>
+		<ol class="gchat-steps">
+			<li><?php esc_html_e( 'Open Google Chat', 'nabia' ); ?></li>
+			<li><?php esc_html_e( 'Tap "New chat"', 'nabia' ); ?></li>
+			<li><?php esc_html_e( 'Paste my address and say hi', 'nabia' ); ?></li>
+		</ol>
+	</dialog>
+<?php endif; ?>
+
 <?php if ( $nabia_wa ) : ?>
 	<a class="float-chat" href="<?php echo esc_url( $nabia_wa ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Chat on WhatsApp', 'nabia' ); ?>" data-magnetic>
 		<?php nabia_icon( 'whatsapp' ); ?>

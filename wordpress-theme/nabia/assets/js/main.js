@@ -980,31 +980,68 @@
 			.catch(function () {});
 	}
 
-	// Google Chat buttons: copy the chat email so it can be pasted in Google Chat.
-	$$('[data-copy]').forEach(function (link) {
-		link.addEventListener('click', function () {
-			var text = link.getAttribute('data-copy');
-			if (!text || !navigator.clipboard) {
+	// Google Chat buttons open a popup with the chat email, a Copy button and "Copy and open".
+	var gchat = document.getElementById('gchat-modal');
+	var copyText = function (text) {
+		if (navigator.clipboard && window.isSecureContext) {
+			return navigator.clipboard.writeText(text);
+		}
+		var area = document.createElement('textarea');
+		area.value = text;
+		area.setAttribute('readonly', '');
+		area.style.position = 'fixed';
+		area.style.opacity = '0';
+		document.body.appendChild(area);
+		area.select();
+		try {
+			document.execCommand('copy');
+		} catch (err) {}
+		area.remove();
+		return Promise.resolve();
+	};
+	if (gchat && typeof gchat.showModal === 'function') {
+		var email = ($('[data-gchat-email]', gchat) || {}).textContent || '';
+		var copyBtn = $('[data-gchat-copy]', gchat);
+		var copyLabel = copyBtn ? copyBtn.querySelector('span').textContent : '';
+		var markCopied = function () {
+			if (!copyBtn) {
 				return;
 			}
-			navigator.clipboard.writeText(text).then(function () {
-				var toast = document.createElement('div');
-				toast.className = 'nabia-toast';
-				toast.setAttribute('role', 'status');
-				toast.textContent = settings.copied || 'Copied';
-				document.body.appendChild(toast);
-				setTimeout(function () {
-					toast.classList.add('is-in');
-				}, 20);
-				setTimeout(function () {
-					toast.classList.remove('is-in');
-					setTimeout(function () {
-						toast.remove();
-					}, 400);
-				}, 4200);
-			}).catch(function () {});
+			copyBtn.classList.add('is-done');
+			copyBtn.querySelector('span').textContent = copyBtn.getAttribute('data-done');
+			setTimeout(function () {
+				copyBtn.classList.remove('is-done');
+				copyBtn.querySelector('span').textContent = copyLabel;
+			}, 2500);
+		};
+		$$('[data-copy]').forEach(function (link) {
+			link.addEventListener('click', function (e) {
+				e.preventDefault();
+				gchat.showModal();
+			});
 		});
-	});
+		if (copyBtn) {
+			copyBtn.addEventListener('click', function () {
+				copyText(email.trim()).then(markCopied).catch(function () {});
+			});
+		}
+		var openBtn = $('[data-gchat-open]', gchat);
+		if (openBtn) {
+			openBtn.addEventListener('click', function () {
+				copyText(email.trim()).then(markCopied).catch(function () {});
+			});
+		}
+		$$('[data-gchat-close]', gchat).forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				gchat.close();
+			});
+		});
+		gchat.addEventListener('click', function (e) {
+			if (e.target === gchat) {
+				gchat.close();
+			}
+		});
+	}
 
 	// Contact card glow follows the pointer.
 	var contact = $('.contact-card');

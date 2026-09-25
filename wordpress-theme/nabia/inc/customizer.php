@@ -1,0 +1,174 @@
+<?php
+/**
+ * Customizer options (Appearance → Customize → Nabia Theme).
+ *
+ * @package Nabia
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Sanitize a checkbox.
+ *
+ * @param mixed $value Value.
+ * @return bool
+ */
+function nabia_sanitize_checkbox( $value ) {
+	return (bool) $value;
+}
+
+/**
+ * Register Customizer settings.
+ *
+ * @param WP_Customize_Manager $wp_customize Customizer manager.
+ */
+function nabia_customize_register( $wp_customize ) {
+	$defaults = nabia_defaults();
+
+	$wp_customize->add_panel(
+		'nabia_panel',
+		array(
+			'title'    => __( 'Nabia Theme', 'nabia' ),
+			'priority' => 30,
+		)
+	);
+
+	$sections = array(
+		'nabia_general' => __( 'General', 'nabia' ),
+		'nabia_hero'    => __( 'Hero', 'nabia' ),
+		'nabia_stats'   => __( 'Marquee & Stats', 'nabia' ),
+		'nabia_about'   => __( 'About & Section Titles', 'nabia' ),
+		'nabia_contact' => __( 'Contact', 'nabia' ),
+		'nabia_social'  => __( 'Social Links', 'nabia' ),
+	);
+	foreach ( $sections as $id => $title ) {
+		$wp_customize->add_section(
+			$id,
+			array(
+				'title' => $title,
+				'panel' => 'nabia_panel',
+			)
+		);
+	}
+
+	/*
+	 * Each field: key => array( section, type, label ).
+	 * Types: text, textarea, url, email, checkbox, color, image.
+	 */
+	$fields = array(
+		'brand_name'         => array( 'nabia_general', 'text', __( 'Brand name (used when no logo is set)', 'nabia' ) ),
+		'accent_color'       => array( 'nabia_general', 'color', __( 'Accent colour', 'nabia' ) ),
+		'enable_preloader'   => array( 'nabia_general', 'checkbox', __( 'Show intro preloader', 'nabia' ) ),
+		'enable_cursor'      => array( 'nabia_general', 'checkbox', __( 'Custom animated cursor (desktop)', 'nabia' ) ),
+		'footer_text'        => array( 'nabia_general', 'textarea', __( 'Footer text', 'nabia' ) ),
+
+		'hero_badge'         => array( 'nabia_hero', 'text', __( 'Badge text', 'nabia' ) ),
+		'hero_line_1'        => array( 'nabia_hero', 'text', __( 'Headline line 1', 'nabia' ) ),
+		'hero_line_2'        => array( 'nabia_hero', 'text', __( 'Headline line 2', 'nabia' ) ),
+		'hero_rotating'      => array( 'nabia_hero', 'text', __( 'Rotating endings (comma separated)', 'nabia' ) ),
+		'hero_text'          => array( 'nabia_hero', 'textarea', __( 'Intro text', 'nabia' ) ),
+		'hero_cta_label'     => array( 'nabia_hero', 'text', __( 'Primary button label', 'nabia' ) ),
+		'hero_cta_url'       => array( 'nabia_hero', 'url', __( 'Primary button link', 'nabia' ) ),
+		'hero_cta2_label'    => array( 'nabia_hero', 'text', __( 'Secondary button label', 'nabia' ) ),
+		'hero_cta2_url'      => array( 'nabia_hero', 'url', __( 'Secondary button link', 'nabia' ) ),
+		'hero_image'         => array( 'nabia_hero', 'image', __( 'Portrait / hero image', 'nabia' ) ),
+
+		'marquee_items'      => array( 'nabia_stats', 'textarea', __( 'Marquee words (comma separated)', 'nabia' ) ),
+		'stat_1_number'      => array( 'nabia_stats', 'text', __( 'Stat 1 number', 'nabia' ) ),
+		'stat_1_suffix'      => array( 'nabia_stats', 'text', __( 'Stat 1 suffix', 'nabia' ) ),
+		'stat_1_label'       => array( 'nabia_stats', 'text', __( 'Stat 1 label', 'nabia' ) ),
+		'stat_2_number'      => array( 'nabia_stats', 'text', __( 'Stat 2 number', 'nabia' ) ),
+		'stat_2_suffix'      => array( 'nabia_stats', 'text', __( 'Stat 2 suffix', 'nabia' ) ),
+		'stat_2_label'       => array( 'nabia_stats', 'text', __( 'Stat 2 label', 'nabia' ) ),
+		'stat_3_number'      => array( 'nabia_stats', 'text', __( 'Stat 3 number', 'nabia' ) ),
+		'stat_3_suffix'      => array( 'nabia_stats', 'text', __( 'Stat 3 suffix', 'nabia' ) ),
+		'stat_3_label'       => array( 'nabia_stats', 'text', __( 'Stat 3 label', 'nabia' ) ),
+		'stat_4_number'      => array( 'nabia_stats', 'text', __( 'Stat 4 number', 'nabia' ) ),
+		'stat_4_suffix'      => array( 'nabia_stats', 'text', __( 'Stat 4 suffix', 'nabia' ) ),
+		'stat_4_label'       => array( 'nabia_stats', 'text', __( 'Stat 4 label', 'nabia' ) ),
+
+		'about_title'        => array( 'nabia_about', 'text', __( 'About title', 'nabia' ) ),
+		'about_text'         => array( 'nabia_about', 'textarea', __( 'About text', 'nabia' ) ),
+		'about_image'        => array( 'nabia_about', 'image', __( 'About image', 'nabia' ) ),
+		'services_title'     => array( 'nabia_about', 'text', __( 'Services title', 'nabia' ) ),
+		'work_title'         => array( 'nabia_about', 'text', __( 'Work title', 'nabia' ) ),
+		'process_title'      => array( 'nabia_about', 'text', __( 'Process title', 'nabia' ) ),
+		'testimonials_title' => array( 'nabia_about', 'text', __( 'Testimonials title', 'nabia' ) ),
+		'faq_title'          => array( 'nabia_about', 'text', __( 'FAQ title', 'nabia' ) ),
+
+		'cta_title'          => array( 'nabia_contact', 'text', __( 'Contact title', 'nabia' ) ),
+		'cta_text'           => array( 'nabia_contact', 'textarea', __( 'Contact text', 'nabia' ) ),
+		'contact_email'      => array( 'nabia_contact', 'email', __( 'Email', 'nabia' ) ),
+		'contact_whatsapp'   => array( 'nabia_contact', 'text', __( 'WhatsApp number (digits with country code)', 'nabia' ) ),
+		'contact_shortcode'  => array( 'nabia_contact', 'text', __( 'Contact form shortcode (e.g. Contact Form 7 / WPForms)', 'nabia' ) ),
+		'portal_url'         => array( 'nabia_contact', 'url', __( 'Client portal link (leave empty to hide)', 'nabia' ) ),
+
+		'social_linkedin'    => array( 'nabia_social', 'url', 'LinkedIn' ),
+		'social_instagram'   => array( 'nabia_social', 'url', 'Instagram' ),
+		'social_behance'     => array( 'nabia_social', 'url', 'Behance' ),
+		'social_dribbble'    => array( 'nabia_social', 'url', 'Dribbble' ),
+		'social_github'      => array( 'nabia_social', 'url', 'GitHub' ),
+		'social_youtube'     => array( 'nabia_social', 'url', 'YouTube' ),
+		'social_upwork'      => array( 'nabia_social', 'url', 'Upwork' ),
+		'social_fiverr'      => array( 'nabia_social', 'url', 'Fiverr' ),
+	);
+
+	$sanitizers = array(
+		'text'     => 'sanitize_text_field',
+		'textarea' => 'sanitize_textarea_field',
+		'url'      => 'esc_url_raw',
+		'email'    => 'sanitize_email',
+		'checkbox' => 'nabia_sanitize_checkbox',
+		'color'    => 'sanitize_hex_color',
+		'image'    => 'esc_url_raw',
+	);
+
+	foreach ( $fields as $key => $field ) {
+		list( $section, $type, $label ) = $field;
+
+		$wp_customize->add_setting(
+			$key,
+			array(
+				'default'           => isset( $defaults[ $key ] ) ? $defaults[ $key ] : '',
+				'sanitize_callback' => $sanitizers[ $type ],
+				'transport'         => 'refresh',
+			)
+		);
+
+		if ( 'color' === $type ) {
+			$wp_customize->add_control(
+				new WP_Customize_Color_Control(
+					$wp_customize,
+					$key,
+					array(
+						'label'   => $label,
+						'section' => $section,
+					)
+				)
+			);
+		} elseif ( 'image' === $type ) {
+			$wp_customize->add_control(
+				new WP_Customize_Image_Control(
+					$wp_customize,
+					$key,
+					array(
+						'label'   => $label,
+						'section' => $section,
+					)
+				)
+			);
+		} else {
+			$wp_customize->add_control(
+				$key,
+				array(
+					'label'   => $label,
+					'section' => $section,
+					'type'    => $type,
+				)
+			);
+		}
+	}
+}
+add_action( 'customize_register', 'nabia_customize_register' );

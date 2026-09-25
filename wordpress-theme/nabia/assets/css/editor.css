@@ -1,0 +1,46 @@
+/* Block editor styles: match the front-end typography. */
+@font-face {
+	font-family: "Syne";
+	font-weight: 400 800;
+	font-display: swap;
+	src: url("../fonts/syne.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Inter";
+	font-weight: 100 900;
+	font-display: swap;
+	src: url("../fonts/inter.woff2") format("woff2");
+}
+
+body {
+	background: #f4f1ea;
+	color: #0e0e10;
+	font-family: "Inter", system-ui, sans-serif;
+	font-size: 18px;
+	line-height: 1.65;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.editor-post-title__input {
+	font-family: "Syne", "Helvetica Neue", Arial, sans-serif;
+	font-weight: 700;
+	line-height: 1.05;
+	letter-spacing: -0.03em;
+}
+
+a {
+	color: #7c5cff;
+}
+
+blockquote {
+	border-left: 4px solid #c6ff3d;
+	padding-left: 28px;
+	font-family: "Syne", sans-serif;
+	font-size: 1.3em;
+}

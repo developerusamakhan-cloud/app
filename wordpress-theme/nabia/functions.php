@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NABIA_VERSION', '2.12.1' );
+define( 'NABIA_VERSION', '2.12.2' );
 define( 'NABIA_DIR', get_template_directory() );
 define( 'NABIA_URI', get_template_directory_uri() );
 
@@ -163,6 +163,14 @@ function nabia_favicon() {
 	echo '<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,' . rawurlencode( $svg ) . '">' . "\n";
 }
 add_action( 'wp_head', 'nabia_favicon', 2 );
+
+/**
+ * Print the theme version in the page source, handy to check that an update is live.
+ */
+function nabia_version_comment() {
+	echo '<!-- Nabia theme ' . esc_html( NABIA_VERSION ) . ' -->' . "\n";
+}
+add_action( 'wp_head', 'nabia_version_comment', 0 );
 
 /**
  * Add a class when JS runs so reveal animations never hide content for no-JS visitors.

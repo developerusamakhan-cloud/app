@@ -555,7 +555,7 @@ function nabia_tight( $text ) {
  * @return array
  */
 function nabia_author_avatar( $args, $id_or_email ) {
-	$photo = nabia_mod( 'author_image' );
+	$photo = nabia_author_photo_url();
 	if ( ! $photo ) {
 		return $args;
 	}
@@ -578,4 +578,34 @@ function nabia_author_avatar( $args, $id_or_email ) {
 	}
 	return $args;
 }
-add_filter( 'pre_get_avatar_data', 'nabia_author_avatar', 10, 2 );
+add_filter( 'pre_get_avatar_data', 'nabia_author_avatar', 99, 2 );
+
+/**
+ * Author photo URL: the Customizer setting, or the built in default when it is empty.
+ *
+ * @return string
+ */
+function nabia_author_photo_url() {
+	$photo = get_theme_mod( 'author_image', '' );
+	if ( ! $photo ) {
+		$defaults = nabia_defaults();
+		$photo    = $defaults['author_image'];
+	}
+	return apply_filters( 'nabia_author_photo', $photo );
+}
+
+/**
+ * The author photo as an <img>, printed directly so avatar plugins or the
+ * "Show Avatars" setting can never swap it for the grey default.
+ *
+ * @param int $size Size in pixels.
+ * @return string
+ */
+function nabia_author_photo( $size = 64 ) {
+	return sprintf(
+		'<img class="avatar avatar-%1$d photo" src="%2$s" alt="%3$s" width="%1$d" height="%1$d" loading="lazy" decoding="async">',
+		(int) $size,
+		esc_url( nabia_author_photo_url() ),
+		esc_attr( get_the_author() ? get_the_author() : nabia_mod( 'brand_name' ) )
+	);
+}

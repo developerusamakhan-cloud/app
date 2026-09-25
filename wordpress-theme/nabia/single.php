@@ -16,7 +16,7 @@ while ( have_posts() ) :
 	$nabia_crumbs = array( array( __( 'Blog', 'nabia' ), $nabia_blog ) );
 	$nabia_author = get_the_author();
 	$nabia_aside  = '<div class="aside-card author-card">'
-		. '<span class="author-avatar">' . get_avatar( get_the_author_meta( 'ID' ), 64, '', '', array( 'force_display' => true ) ) . '</span>'
+		. '<span class="author-avatar">' . nabia_author_photo( 64 ) . '</span>'
 		. '<p class="aside-card-title">' . esc_html__( 'Written by', 'nabia' ) . '</p>'
 		. '<p class="author-name">' . esc_html( $nabia_author ) . '</p>'
 		. '<p class="author-role">' . esc_html__( 'WordPress developer & graphic designer', 'nabia' ) . '</p>'
@@ -61,7 +61,7 @@ while ( have_posts() ) :
 					<footer class="entry-footer">
 						<?php the_tags( '<ul class="tags"><li>', '</li><li>', '</li></ul>' ); ?>
 						<div class="author-box">
-							<span class="author-avatar"><?php echo get_avatar( get_the_author_meta( 'ID' ), 72, '', '', array( 'force_display' => true ) ); ?></span>
+							<span class="author-avatar"><?php echo nabia_author_photo( 72 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 							<div>
 								<p class="author-name"><?php echo esc_html( $nabia_author ); ?></p>
 								<p><?php echo esc_html( nabia_mod( 'footer_text' ) ); ?></p>

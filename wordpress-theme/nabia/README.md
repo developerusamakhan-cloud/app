@@ -1,4 +1,4 @@
-# Nabia — WordPress theme for nabiakhan.com
+# Nabia - WordPress theme for nabiakhan.com
 
 A bold, animated one-page portfolio theme for a WordPress developer & graphic designer.
 It uses the style of creative agency sites (big type, bright accent colour, playful motion) and adds more interaction.
@@ -24,6 +24,15 @@ It uses the style of creative agency sites (big type, bright accent colour, play
 - Self-hosted fonts (Plus Jakarta Sans + Inter): no Google Fonts requests and GDPR-friendly
 - Respects "reduced motion" settings; content stays visible without JavaScript
 - Blog, single post (with reading time), page, search, 404 and a *Full width* template for Elementor/block-editor pages
+
+## What's new in 2.4
+
+- **New logo**: an animated "Nabia Khan" wordmark with no tagline, in the header and footer. The dot on the "i" bounces, "Khan" has a gradient, and an underline draws in on hover. To use an uploaded logo image instead, tick the option in Customize, Nabia Theme, General.
+- **Social links**: a single Linktree button ("All my links") replaces all social icons.
+- **Fiverr and Upwork** are stacked, Upwork below Fiverr. Add your Upwork link in Customize, Nabia Theme, Links.
+- **More content**: 9 services, now including Shopify, Wix/Webflow/Squarespace, custom-coded sites and AI website solutions (chatbots, AI content, automation). A new "Platforms" section and new FAQ answers about platforms and AI.
+- Video section: the review count and YouTube button are removed.
+- No long dashes anywhere in the site text.
 
 ## What's new in 2.3
 

@@ -3,7 +3,7 @@
  * Template Name: Full width (builder friendly)
  * Template Post Type: page, post
  *
- * A blank canvas between header and footer — ideal for Elementor or the block editor.
+ * A blank canvas between header and footer Ideal for Elementor or the block editor.
  *
  * @package Nabia
  */

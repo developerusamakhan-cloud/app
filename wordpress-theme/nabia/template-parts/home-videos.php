@@ -23,7 +23,6 @@ if ( $nabia_has_files ) {
 	$nabia_vertical = $nabia_videos && count( wp_list_filter( $nabia_videos, array( 'vertical' => true ) ) ) === $nabia_count;
 	$nabia_layout   = $nabia_vertical ? 'vertical' : 'wide';
 }
-$nabia_channel = nabia_mod( 'social_youtube' );
 ?>
 <section class="section videos section-dark" id="reviews">
 	<div class="container">
@@ -33,14 +32,6 @@ $nabia_channel = nabia_mod( 'social_youtube' );
 				<?php if ( nabia_mod( 'videos_text' ) ) : ?>
 					<p class="videos-intro"><?php echo esc_html( nabia_mod( 'videos_text' ) ); ?></p>
 				<?php endif; ?>
-				<div class="videos-actions">
-					<?php if ( $nabia_count ) : ?>
-						<span class="videos-count"><strong><?php echo (int) $nabia_count; ?></strong> <?php echo esc_html( _n( 'video review', 'video reviews', $nabia_count, 'nabia' ) ); ?></span>
-					<?php endif; ?>
-					<?php if ( $nabia_channel ) : ?>
-						<a class="btn btn-ghost btn-sm" href="<?php echo esc_url( $nabia_channel ); ?>" target="_blank" rel="noopener noreferrer"><?php nabia_icon( 'youtube' ); ?><span><?php esc_html_e( 'More on YouTube', 'nabia' ); ?></span></a>
-					<?php endif; ?>
-				</div>
 			</div>
 		</div>
 

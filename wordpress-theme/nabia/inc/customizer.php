@@ -44,7 +44,7 @@ function nabia_customize_register( $wp_customize ) {
 		'nabia_videos'  => __( 'Video Reviews', 'nabia' ),
 		'nabia_google'  => __( 'Google Reviews', 'nabia' ),
 		'nabia_contact' => __( 'Contact', 'nabia' ),
-		'nabia_social'  => __( 'Social Links', 'nabia' ),
+		'nabia_social'  => __( 'Links: Linktree, Fiverr & Upwork', 'nabia' ),
 	);
 	foreach ( $sections as $id => $title ) {
 		$wp_customize->add_section(
@@ -62,7 +62,7 @@ function nabia_customize_register( $wp_customize ) {
 	 */
 	$fields = array(
 		'brand_name'         => array( 'nabia_general', 'text', __( 'Brand name (used when no logo is set)', 'nabia' ) ),
-		'brand_tagline'      => array( 'nabia_general', 'text', __( 'Small tagline under the name in the logo', 'nabia' ) ),
+		'use_custom_logo'    => array( 'nabia_general', 'checkbox', __( 'Use my uploaded logo image (Site Identity) instead of the animated name logo', 'nabia' ) ),
 		'color_scheme'       => array( 'nabia_general', 'select', __( 'Colour scheme', 'nabia' ) ),
 		'accent_color'       => array( 'nabia_general', 'color', __( 'Custom accent colour (optional, overrides the scheme)', 'nabia' ) ),
 		'enable_preloader'   => array( 'nabia_general', 'checkbox', __( 'Show intro preloader', 'nabia' ) ),
@@ -104,6 +104,8 @@ function nabia_customize_register( $wp_customize ) {
 		'intro_video_poster' => array( 'nabia_about', 'image', __( 'Intro video cover image (optional)', 'nabia' ) ),
 		'intro_video_caption' => array( 'nabia_about', 'text', __( 'Intro video caption', 'nabia' ) ),
 		'services_title'     => array( 'nabia_about', 'text', __( 'Services title', 'nabia' ) ),
+		'platforms_title'    => array( 'nabia_about', 'text', __( 'Platforms title', 'nabia' ) ),
+		'platforms_text'     => array( 'nabia_about', 'textarea', __( 'Platforms intro', 'nabia' ) ),
 		'work_title'         => array( 'nabia_about', 'text', __( 'Work title', 'nabia' ) ),
 		'process_title'      => array( 'nabia_about', 'text', __( 'Process title', 'nabia' ) ),
 		'testimonials_title' => array( 'nabia_about', 'text', __( 'Testimonials title', 'nabia' ) ),
@@ -114,7 +116,7 @@ function nabia_customize_register( $wp_customize ) {
 
 		'videos_title'       => array( 'nabia_videos', 'text', __( 'Section title', 'nabia' ) ),
 		'videos_text'        => array( 'nabia_videos', 'textarea', __( 'Section intro', 'nabia' ) ),
-		'video_reviews'      => array( 'nabia_videos', 'textarea', __( 'Videos: one per line — MP4 or YouTube link | Client name | Short caption', 'nabia' ) ),
+		'video_reviews'      => array( 'nabia_videos', 'textarea', __( 'Videos: one per line: MP4 or YouTube link | Client name | Short caption', 'nabia' ) ),
 		'video_layout'       => array( 'nabia_videos', 'select', __( 'Layout', 'nabia' ) ),
 
 		'google_place_id'    => array( 'nabia_google', 'text', __( 'Google Place ID', 'nabia' ) ),
@@ -127,20 +129,13 @@ function nabia_customize_register( $wp_customize ) {
 		'contact_whatsapp'   => array( 'nabia_contact', 'text', __( 'WhatsApp number (digits with country code)', 'nabia' ) ),
 		'contact_shortcode'  => array( 'nabia_contact', 'text', __( 'Contact form shortcode (e.g. Contact Form 7 / WPForms)', 'nabia' ) ),
 
-		'social_linkedin'    => array( 'nabia_social', 'url', 'LinkedIn' ),
-		'social_instagram'   => array( 'nabia_social', 'url', 'Instagram' ),
-		'social_behance'     => array( 'nabia_social', 'url', 'Behance' ),
-		'social_dribbble'    => array( 'nabia_social', 'url', 'Dribbble' ),
-		'social_github'      => array( 'nabia_social', 'url', 'GitHub' ),
-		'social_youtube'     => array( 'nabia_social', 'url', 'YouTube' ),
-		'social_upwork'      => array( 'nabia_social', 'url', 'Upwork' ),
+		'social_upwork'      => array( 'nabia_social', 'url', __( 'Upwork profile link', 'nabia' ) ),
 		'hire_title'         => array( 'nabia_social', 'text', __( 'Fiverr / Upwork section: title', 'nabia' ) ),
 		'hire_text'          => array( 'nabia_social', 'textarea', __( 'Fiverr / Upwork section: text', 'nabia' ) ),
 		'fiverr_note'        => array( 'nabia_social', 'text', __( 'Fiverr button text', 'nabia' ) ),
 		'upwork_note'        => array( 'nabia_social', 'text', __( 'Upwork button text', 'nabia' ) ),
-		'social_fiverr'      => array( 'nabia_social', 'url', 'Fiverr' ),
-		'social_tiktok'      => array( 'nabia_social', 'url', 'TikTok' ),
-		'social_linktree'    => array( 'nabia_social', 'url', 'Linktree' ),
+		'social_fiverr'      => array( 'nabia_social', 'url', __( 'Fiverr profile link', 'nabia' ) ),
+		'social_linktree'    => array( 'nabia_social', 'url', __( 'Linktree link (the only social button shown on the site)', 'nabia' ) ),
 	);
 
 	$sanitizers = array(
@@ -185,7 +180,7 @@ function nabia_customize_register( $wp_customize ) {
 
 	$descriptions = array(
 		'video_reviews'   => __( 'Paste MP4 links from your Media Library (or YouTube links), one per line. The client name is read from the file name, or add it after a | sign: https://…/review.mp4 | Sarah Malik | New store in 2 weeks. You can also use Dashboard → Video Reviews.', 'nabia' ),
-		'google_place_id' => __( 'Find it at developers.google.com/maps/documentation/places/web-service/place-id — search your business name and copy the ID (starts with “ChIJ…”).', 'nabia' ),
+		'google_place_id' => __( 'Find it at developers.google.com/maps/documentation/places/web-service/place-id, search your business name and copy the ID (starts with “ChIJ…”).', 'nabia' ),
 		'google_api_key'  => __( 'Google Cloud Console → enable “Places API (New)” → Credentials → Create API key (restrict it to Places API). Stored on your server only; visitors never see it. Reviews refresh every 12 hours.', 'nabia' ),
 	);
 

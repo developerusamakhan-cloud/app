@@ -39,7 +39,7 @@ if ( ! $nabia_platforms && ! $nabia_is_admin ) {
 
 			<div class="hire-platforms">
 				<?php if ( ! $nabia_platforms ) : ?>
-					<p class="admin-hint"><?php esc_html_e( 'Only you can see this: add your Fiverr and/or Upwork profile links in Customize → Nabia Theme → Social Links and this section appears for visitors.', 'nabia' ); ?></p>
+					<p class="admin-hint"><?php esc_html_e( 'Only you can see this: add your Fiverr and/or Upwork profile links in Customize → Nabia Theme → Links and this section appears for visitors.', 'nabia' ); ?></p>
 				<?php endif; ?>
 
 				<?php if ( isset( $nabia_platforms['fiverr'] ) ) : ?>
@@ -47,6 +47,13 @@ if ( ! $nabia_platforms && ! $nabia_is_admin ) {
 						<span class="platform-logo" aria-label="Fiverr">fiverr<span>.</span></span>
 						<span class="platform-note"><?php echo esc_html( $nabia_platforms['fiverr']['note'] ); ?></span>
 						<span class="platform-arrow" aria-hidden="true"><?php nabia_icon( 'arrow-up' ); ?></span>
+					</a>
+				<?php endif; ?>
+
+				<?php if ( ! isset( $nabia_platforms['upwork'] ) && $nabia_is_admin ) : ?>
+					<a class="platform platform-upwork platform-missing" href="<?php echo esc_url( admin_url( 'customize.php?autofocus[control]=social_upwork' ) ); ?>">
+						<span class="platform-logo">Upwork</span>
+						<span class="platform-note"><?php esc_html_e( 'Only you see this: click to add your Upwork profile link', 'nabia' ); ?></span>
 					</a>
 				<?php endif; ?>
 

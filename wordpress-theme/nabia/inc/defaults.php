@@ -22,14 +22,14 @@ function nabia_defaults() {
 		'enable_preloader'   => true,
 		'enable_cursor'      => true,
 		'brand_name'         => 'Nabia Khan',
-		'brand_tagline'      => 'WordPress & Design',
+		'use_custom_logo'    => false,
 
 		// Hero.
 		'hero_badge'         => 'Available for new projects',
 		'hero_line_1'        => 'I design & build',
 		'hero_line_2'        => 'websites that',
 		'hero_rotating'      => 'stand out., sell more., load fast., wow people.',
-		'hero_text'          => 'WordPress developer & graphic designer with 5+ years of experience crafting bold, fast and conversion-focused websites for brands around the world.',
+		'hero_text'          => 'WordPress developer & graphic designer with 5+ years of experience. I build fast, conversion-focused websites on WordPress, Shopify, Wix, Webflow and custom code, with smart AI features built in.',
 		'hero_cta_label'     => 'Start a project',
 		'hero_cta_url'       => '#contact',
 		'hero_cta2_label'    => 'See my work',
@@ -37,7 +37,7 @@ function nabia_defaults() {
 		'hero_image'         => '',
 
 		// Marquee.
-		'marquee_items'      => 'WordPress, Elementor, WooCommerce, UI / UX Design, Branding, Graphic Design, PHP, HTML & CSS, jQuery, Bootstrap, Speed Optimisation, SEO',
+		'marquee_items'      => 'WordPress, Shopify, Wix, Webflow, Squarespace, WooCommerce, Elementor, AI Chatbots, Custom Code, UI / UX Design, Branding, SEO',
 
 		// Stats.
 		'stat_1_number'      => '5',
@@ -65,8 +65,12 @@ function nabia_defaults() {
 		'portfolio_post_type' => 'websites',
 		'portfolio_count'    => '6',
 
+		// Platforms.
+		'platforms_title'    => 'One developer, every platform',
+		'platforms_text'     => 'Already on a platform, or not sure which one to pick? I design and build on all the big ones, and add AI where it helps.',
+
 		// Sections.
-		'services_title'     => 'What I can do for you',
+		'services_title'     => 'Everything your website needs',
 		'work_title'         => 'Selected work',
 		'process_title'      => 'How we will work together',
 		'testimonials_title' => 'Kind words from clients',
@@ -106,7 +110,7 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 		'social_behance'     => '',
 		'social_dribbble'    => '',
 		'social_github'      => '',
-		'social_youtube'     => 'https://www.youtube.com/channel/UCDi-EYBfzHqvHDzAGK8uEiw',
+		'social_youtube'     => '',
 		'social_upwork'      => '',
 		'social_fiverr'      => 'https://www.fiverr.com/nabia_khan',
 		'social_tiktok'      => '',
@@ -154,31 +158,49 @@ function nabia_services() {
 			array(
 				'icon'  => 'layout',
 				'title' => __( 'Web Design', 'nabia' ),
-				'text'  => __( 'Interfaces that look sharp, feel effortless and guide visitors straight to the “contact me” button.', 'nabia' ),
+				'text'  => __( 'Interfaces that look sharp, feel effortless and guide visitors straight to the contact button.', 'nabia' ),
 				'tags'  => array( 'UI / UX', 'Wireframes', 'Figma' ),
 			),
 			array(
 				'icon'  => 'code',
 				'title' => __( 'WordPress Development', 'nabia' ),
-				'text'  => __( 'Custom themes, Elementor builds, plugin customisation and pixel-perfect clones — fast, secure and easy to edit.', 'nabia' ),
+				'text'  => __( 'Custom themes, Elementor builds, plugin customisation and pixel-perfect clones. Fast, secure and easy to edit.', 'nabia' ),
 				'tags'  => array( 'Custom themes', 'Elementor', 'PHP' ),
 			),
 			array(
 				'icon'  => 'cart',
-				'title' => __( 'E-commerce', 'nabia' ),
-				'text'  => __( 'WooCommerce stores with smooth checkouts, payment integrations and product pages that actually sell.', 'nabia' ),
-				'tags'  => array( 'WooCommerce', 'Stripe', 'PayPal' ),
+				'title' => __( 'Shopify & WooCommerce Stores', 'nabia' ),
+				'text'  => __( 'Online stores with smooth checkouts, payment integrations and product pages that actually sell.', 'nabia' ),
+				'tags'  => array( 'Shopify', 'WooCommerce', 'Stripe' ),
+			),
+			array(
+				'icon'  => 'grid',
+				'title' => __( 'Wix, Webflow & Squarespace', 'nabia' ),
+				'text'  => __( 'Beautiful sites on the no-code platform you love, set up so you can change everything yourself.', 'nabia' ),
+				'tags'  => array( 'Wix', 'Webflow', 'Squarespace' ),
+			),
+			array(
+				'icon'  => 'terminal',
+				'title' => __( 'Custom-Coded Websites', 'nabia' ),
+				'text'  => __( 'Hand-built HTML, CSS, JavaScript and PHP sites for when you need total freedom and top speed.', 'nabia' ),
+				'tags'  => array( 'HTML & CSS', 'JavaScript', 'PHP' ),
+			),
+			array(
+				'icon'  => 'sparkles',
+				'title' => __( 'AI Website Solutions', 'nabia' ),
+				'text'  => __( 'AI chatbots, smart forms, AI-assisted content and automations that answer customers and save you hours every week.', 'nabia' ),
+				'tags'  => array( 'AI chatbots', 'AI content', 'Automation' ),
 			),
 			array(
 				'icon'  => 'pen',
 				'title' => __( 'Branding & Graphic Design', 'nabia' ),
-				'text'  => __( 'Logos, visual identities, social media kits and print — a consistent look that people remember.', 'nabia' ),
+				'text'  => __( 'Logos, visual identities, social media kits and print, for a consistent look that people remember.', 'nabia' ),
 				'tags'  => array( 'Logo', 'Identity', 'Social kits' ),
 			),
 			array(
 				'icon'  => 'bolt',
 				'title' => __( 'Speed & SEO', 'nabia' ),
-				'text'  => __( 'Core Web Vitals tuning, on-page SEO and clean markup so Google — and your visitors — love your site.', 'nabia' ),
+				'text'  => __( 'Core Web Vitals tuning, on-page SEO and clean markup, so Google and your visitors love your site.', 'nabia' ),
 				'tags'  => array( 'Core Web Vitals', 'On-page SEO' ),
 			),
 			array(
@@ -186,6 +208,67 @@ function nabia_services() {
 				'title' => __( 'Care & Maintenance', 'nabia' ),
 				'text'  => __( 'Updates, backups, security hardening and small edits every month, so you can focus on your business.', 'nabia' ),
 				'tags'  => array( 'Updates', 'Backups', 'Security' ),
+			),
+		)
+	);
+}
+
+/**
+ * Platforms section.
+ *
+ * @return array
+ */
+function nabia_platforms() {
+	return apply_filters(
+		'nabia_platforms',
+		array(
+			array(
+				'name'  => 'WordPress',
+				'mark'  => 'W',
+				'color' => '#21759b',
+				'text'  => __( 'Custom themes, Elementor and plugins', 'nabia' ),
+			),
+			array(
+				'name'  => 'Shopify',
+				'mark'  => 'S',
+				'color' => '#5e8e3e',
+				'text'  => __( 'Stores, themes and apps setup', 'nabia' ),
+			),
+			array(
+				'name'  => 'WooCommerce',
+				'mark'  => 'Wc',
+				'color' => '#7f54b3',
+				'text'  => __( 'WordPress shops that convert', 'nabia' ),
+			),
+			array(
+				'name'  => 'Wix',
+				'mark'  => 'Wx',
+				'color' => '#0c6efc',
+				'text'  => __( 'Editor X and Wix Studio sites', 'nabia' ),
+			),
+			array(
+				'name'  => 'Webflow',
+				'mark'  => 'Wf',
+				'color' => '#146ef5',
+				'text'  => __( 'Pixel-perfect, animated builds', 'nabia' ),
+			),
+			array(
+				'name'  => 'Squarespace',
+				'mark'  => 'Sq',
+				'color' => '#111111',
+				'text'  => __( 'Elegant sites, easy to manage', 'nabia' ),
+			),
+			array(
+				'name'  => __( 'Custom code', 'nabia' ),
+				'mark'  => '</>',
+				'color' => '#e34c26',
+				'text'  => __( 'HTML, CSS, JavaScript and PHP', 'nabia' ),
+			),
+			array(
+				'name'  => __( 'AI tools', 'nabia' ),
+				'mark'  => 'AI',
+				'color' => '#7c3aed',
+				'text'  => __( 'Chatbots, content and automation', 'nabia' ),
 			),
 		)
 	);
@@ -206,11 +289,11 @@ function nabia_process() {
 			),
 			array(
 				'title' => __( 'Design', 'nabia' ),
-				'text'  => __( 'Moodboard, wireframes and a polished design you can click through — we refine it together until it feels right.', 'nabia' ),
+				'text'  => __( 'Moodboard, wireframes and a polished design you can click through. We refine it together until it feels right.', 'nabia' ),
 			),
 			array(
 				'title' => __( 'Develop', 'nabia' ),
-				'text'  => __( 'I build it in WordPress: responsive, fast, SEO-ready and simple for you to update without touching code.', 'nabia' ),
+				'text'  => __( 'I build it on the platform that suits you best: responsive, fast, SEO-ready and simple for you to update.', 'nabia' ),
 			),
 			array(
 				'title' => __( 'Launch & grow', 'nabia' ),
@@ -231,23 +314,31 @@ function nabia_faq() {
 		array(
 			array(
 				'q' => __( 'How long does a website take?', 'nabia' ),
-				'a' => __( 'A landing page usually takes 3–5 days, a full business website 1–3 weeks and an online store 2–4 weeks, depending on content and features.', 'nabia' ),
+				'a' => __( 'A landing page usually takes 3 to 5 days, a full business website 1 to 3 weeks and an online store 2 to 4 weeks, depending on content and features.', 'nabia' ),
+			),
+			array(
+				'q' => __( 'Do you only work with WordPress?', 'nabia' ),
+				'a' => __( 'No. WordPress is my speciality, but I also build on Shopify, Wix, Webflow and Squarespace, and I hand-code custom websites. I will recommend the platform that fits your budget and goals.', 'nabia' ),
+			),
+			array(
+				'q' => __( 'Can you add AI features to my website?', 'nabia' ),
+				'a' => __( 'Yes. I can add an AI chatbot that answers customer questions, smart contact forms, AI-assisted blog and product content, and automations that connect your site to email, CRM and booking tools.', 'nabia' ),
 			),
 			array(
 				'q' => __( 'Will I be able to edit the website myself?', 'nabia' ),
 				'a' => __( 'Yes. Every site is built so you can change text, images, products and blog posts yourself. You also get a personal video walkthrough.', 'nabia' ),
 			),
 			array(
-				'q' => __( 'Can you redesign or fix my existing WordPress site?', 'nabia' ),
-				'a' => __( 'Absolutely. I can refresh the design, fix bugs, speed it up, move it to a new host or rebuild it completely — whatever gives you the best result.', 'nabia' ),
+				'q' => __( 'Can you redesign or fix my existing website?', 'nabia' ),
+				'a' => __( 'Absolutely. I can refresh the design, fix bugs, speed it up, move it to a new host or platform, or rebuild it completely. Whatever gives you the best result.', 'nabia' ),
 			),
 			array(
 				'q' => __( 'Do you also design logos and branding?', 'nabia' ),
-				'a' => __( 'Yes — as a graphic designer I create logos, brand identities, social media templates and print materials, so your website and brand match perfectly.', 'nabia' ),
+				'a' => __( 'Yes. As a graphic designer I create logos, brand identities, social media templates and print materials, so your website and brand match perfectly.', 'nabia' ),
 			),
 			array(
 				'q' => __( 'How do payments work?', 'nabia' ),
-				'a' => __( 'Typically 50% upfront and 50% on launch. For larger projects we can split it into milestones. I work through direct payment or freelance platforms.', 'nabia' ),
+				'a' => __( 'Usually 50% upfront and 50% on launch. Larger projects can be split into milestones. You can pay me directly or hire me through Fiverr or Upwork.', 'nabia' ),
 			),
 		)
 	);

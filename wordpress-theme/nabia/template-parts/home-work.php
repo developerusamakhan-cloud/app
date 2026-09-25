@@ -52,7 +52,7 @@ $nabia_projects = new WP_Query(
 					</article>
 				<?php endforeach; ?>
 				<?php if ( current_user_can( 'edit_posts' ) ) : ?>
-					<p class="admin-hint"><?php esc_html_e( 'These are placeholders — add your work under Dashboard → Projects (or choose your portfolio post type in Customize → Nabia Theme → Portfolio).', 'nabia' ); ?></p>
+					<p class="admin-hint"><?php esc_html_e( 'These are placeholders. Add your work under Dashboard → Projects (or choose your portfolio post type in Customize → Nabia Theme → Portfolio).', 'nabia' ); ?></p>
 				<?php endif; ?>
 			<?php endif; ?>
 		</div>

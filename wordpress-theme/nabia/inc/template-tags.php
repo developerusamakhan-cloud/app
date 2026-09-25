@@ -42,6 +42,9 @@ function nabia_get_icon( $name ) {
 		'search'    => '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
 		'tiktok'    => '<path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.5 2.8 2.3 4.5 5 4.8"/>',
 		'linktree'  => '<path d="M12 22v-8M5 9h14M7.5 4.5 12 9l4.5-4.5M7.5 13.5 12 9l4.5 4.5"/>',
+		'grid'      => '<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',
+		'terminal'  => '<rect x="2" y="4" width="20" height="16" rx="3"/><path d="m6 9 3 3-3 3M12 15h6"/>',
+		'sparkles'  => '<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>',
 		'volume'    => '<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/>',
 	);
 
@@ -75,66 +78,59 @@ function nabia_logo_mark() {
 }
 
 /**
- * Site logo: uploaded custom logo, or the built-in monogram + wordmark.
+ * Site logo: the built-in animated "Nabia Khan" wordmark (or an uploaded logo if enabled).
+ *
+ * The first word's "i" gets an accent dot that bounces on hover; the last word is a gradient.
  *
  * @param string $variant Extra class, e.g. "logo-light" for dark backgrounds.
  */
 function nabia_logo( $variant = '' ) {
-	if ( has_custom_logo() ) {
+	if ( has_custom_logo() && nabia_mod( 'use_custom_logo' ) ) {
 		the_custom_logo();
 		return;
 	}
-	$name = nabia_mod( 'brand_name' );
-	if ( ! $name ) {
+	$name = trim( (string) nabia_mod( 'brand_name' ) );
+	if ( '' === $name ) {
 		$name = get_bloginfo( 'name' );
 	}
-	$tagline = nabia_mod( 'brand_tagline' );
+	$words = preg_split( '/\s+/', $name, 2 );
+	$first = esc_html( $words[0] );
+	$last  = isset( $words[1] ) ? esc_html( $words[1] ) : '';
+
+	// Replace the first lowercase "i" with a dotless i + animated dot.
+	$pos = strpos( $words[0], 'i' );
+	if ( false !== $pos ) {
+		$first = esc_html( substr( $words[0], 0, $pos ) ) . '<span class="logo-i">&#305;<span class="logo-dot" aria-hidden="true"></span></span>' . esc_html( substr( $words[0], $pos + 1 ) );
+	}
+
 	printf(
-		'<a class="logo %1$s" href="%2$s" rel="home">%3$s<span class="logo-text"><span class="logo-name">%4$s<span class="logo-period">.</span></span>%5$s</span></a>',
+		'<a class="logo %1$s" href="%2$s" rel="home" aria-label="%3$s"><span class="logo-word" aria-hidden="true"><span class="logo-first">%4$s</span>%5$s</span><svg class="logo-swoosh" viewBox="0 0 120 10" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7c30-6 80-7 116-2"/></svg></a>',
 		esc_attr( $variant ),
 		esc_url( home_url( '/' ) ),
-		nabia_logo_mark(), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		esc_html( $name ),
-		$tagline ? '<span class="logo-tagline">' . esc_html( $tagline ) . '</span>' : ''
+		esc_attr( $name ),
+		$first, // Escaped above.
+		$last ? ' <span class="logo-last">' . $last . '</span>' : ''
 	);
 }
 
 /**
- * Configured social links.
- *
- * @return array network => url
- */
-function nabia_socials() {
-	$out = array();
-	foreach ( array( 'linkedin', 'instagram', 'behance', 'dribbble', 'github', 'youtube', 'tiktok', 'upwork', 'fiverr', 'linktree' ) as $network ) {
-		$url = nabia_mod( 'social_' . $network );
-		if ( $url ) {
-			$out[ $network ] = $url;
-		}
-	}
-	return $out;
-}
-
-/**
- * Print social link list.
+ * Social link: one Linktree button that leads to every profile.
  *
  * @param string $class Extra class.
  */
 function nabia_social_links( $class = '' ) {
-	$socials = nabia_socials();
-	if ( ! $socials ) {
+	$url = nabia_mod( 'social_linktree' );
+	if ( ! $url ) {
 		return;
 	}
-	echo '<ul class="socials ' . esc_attr( $class ) . '">';
-	foreach ( $socials as $network => $url ) {
-		printf(
-			'<li><a href="%1$s" target="_blank" rel="noopener noreferrer" aria-label="%2$s" data-magnetic>%3$s</a></li>',
-			esc_url( $url ),
-			esc_attr( 'tiktok' === $network ? 'TikTok' : ( 'linkedin' === $network ? 'LinkedIn' : ( 'youtube' === $network ? 'YouTube' : ucfirst( $network ) ) ) ),
-			nabia_get_icon( $network ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		);
-	}
-	echo '</ul>';
+	printf(
+		'<a class="linktree-btn %1$s" href="%2$s" target="_blank" rel="noopener noreferrer" data-magnetic><span class="linktree-icon" aria-hidden="true">%3$s</span><span>%4$s</span><span class="linktree-arrow" aria-hidden="true">%5$s</span></a>',
+		esc_attr( $class ),
+		esc_url( $url ),
+		nabia_get_icon( 'linktree' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		esc_html__( 'All my links', 'nabia' ),
+		nabia_get_icon( 'arrow-up' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	);
 }
 
 /**

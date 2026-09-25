@@ -3,7 +3,7 @@
  * Post types: Websites (portfolio), Testimonials and Video Reviews.
  *
  * The theme's older "Projects" type only appears if it already has posts or is chosen
- * as the portfolio in the Customizer — "Websites" is the portfolio by default.
+ * as the portfolio in the Customizer. "Websites" is the portfolio by default.
  *
  * @package Nabia
  */
@@ -144,7 +144,7 @@ function nabia_meta_fields() {
 		),
 		'testimonial' => array(
 			'_nabia_author_role' => __( 'Role / company', 'nabia' ),
-			'_nabia_rating'      => __( 'Rating (1–5)', 'nabia' ),
+			'_nabia_rating'      => __( 'Rating (1 to 5)', 'nabia' ),
 		),
 		'video_review' => array(
 			'_nabia_youtube'       => __( 'Video link: MP4 from your Media Library, or a YouTube link', 'nabia' ),
@@ -225,7 +225,7 @@ add_action( 'save_post', 'nabia_save_meta' );
 /**
  * The "Websites" portfolio post type (your ?post_type=websites posts), built into the theme
  * so it no longer depends on a plugin. If a plugin (e.g. Custom Post Type UI) still registers
- * it, that registration simply takes over — the posts are the same either way.
+ * it, that registration simply takes over; the posts are the same either way.
  */
 function nabia_register_websites() {
 	register_post_type(

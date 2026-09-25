@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.15.0
+Version: 2.16.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -6954,4 +6954,385 @@ button[type="submit"]:not(.search-submit):hover {
 	content: counter(gstep) ". ";
 	font-weight: 700;
 	color: var(--accent);
+}
+
+/* Quick contact buttons: always one row */
+.quick-contact {
+	container-type: inline-size;
+}
+
+.quick-contact .quick-contact-buttons {
+	grid-template-columns: none;
+	grid-auto-flow: column;
+	grid-auto-columns: minmax(0, 1fr);
+}
+
+.quick-contact .qc-btn {
+	justify-content: center;
+	padding: 12px 12px;
+}
+
+.qc-btn strong {
+	white-space: nowrap;
+}
+
+@container (max-width: 520px) {
+	.quick-contact .qc-btn {
+		flex-direction: column;
+		gap: 6px;
+		padding: 12px 6px;
+		text-align: center;
+	}
+
+	.quick-contact .qc-btn strong {
+		font-size: 13px;
+	}
+
+	.quick-contact .qc-btn .icon {
+		width: 22px;
+		height: 22px;
+	}
+}
+
+/* ==========================================================================
+   Free audit popup
+   ========================================================================== */
+.audit-pop {
+	width: min(820px, calc(100% - 24px));
+	max-height: calc(100% - 24px);
+	margin: auto;
+	padding: 0;
+	overflow: auto;
+	border: 0;
+	border-radius: var(--radius-lg);
+	background: var(--surface);
+	color: var(--ink);
+	box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.55);
+}
+
+.audit-pop::backdrop {
+	background: color-mix(in srgb, var(--ink) 60%, transparent);
+	backdrop-filter: blur(5px);
+}
+
+.audit-pop[open] {
+	animation: audit-pop-in 0.5s var(--ease);
+}
+
+@keyframes audit-pop-in {
+	from {
+		opacity: 0;
+		transform: translateY(24px) scale(0.96);
+	}
+}
+
+.audit-pop-close {
+	position: absolute;
+	top: 14px;
+	right: 14px;
+	z-index: 2;
+	display: grid;
+	place-items: center;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: color-mix(in srgb, var(--ink) 8%, transparent);
+	color: var(--ink);
+	cursor: pointer;
+}
+
+.audit-pop-close:hover {
+	background: var(--accent);
+	color: #fff;
+}
+
+.audit-pop-close .icon {
+	width: 18px;
+	height: 18px;
+}
+
+.audit-pop-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+}
+
+.audit-pop-visual {
+	position: relative;
+	display: grid;
+	align-content: center;
+	justify-items: center;
+	gap: 18px;
+	padding: 36px 28px;
+	overflow: hidden;
+	background: var(--ink);
+	color: #fff;
+}
+
+.audit-pop-visual::before {
+	content: "";
+	position: absolute;
+	top: -80px;
+	right: -80px;
+	width: 220px;
+	height: 220px;
+	border-radius: 50%;
+	background: var(--accent);
+	opacity: 0.45;
+	filter: blur(10px);
+}
+
+.audit-pop-score {
+	position: relative;
+	width: 132px;
+	height: 132px;
+}
+
+.audit-pop-score svg {
+	display: block;
+	transform: rotate(-90deg);
+}
+
+.audit-pop-score circle {
+	fill: none;
+	stroke-width: 10;
+}
+
+.audit-pop-score .track {
+	stroke: rgba(255, 255, 255, 0.14);
+}
+
+.audit-pop-score .fill {
+	stroke: var(--third, #fbbf24);
+	stroke-linecap: round;
+	stroke-dasharray: 314;
+	stroke-dashoffset: 314;
+}
+
+.audit-pop[open] .audit-pop-score .fill {
+	animation: audit-pop-ring 2.4s var(--ease) 0.3s infinite alternate;
+}
+
+@keyframes audit-pop-ring {
+	to {
+		stroke-dashoffset: 90;
+	}
+}
+
+.audit-pop-score span {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-content: center;
+	text-align: center;
+	line-height: 1;
+}
+
+.audit-pop-score strong {
+	font-family: var(--font-display);
+	font-size: 40px;
+	font-weight: 800;
+}
+
+.audit-pop-score small {
+	opacity: 0.7;
+	font-size: 12px;
+}
+
+.audit-pop-bars {
+	position: relative;
+	display: grid;
+	gap: 9px;
+	width: 100%;
+	max-width: 230px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 13px;
+}
+
+.audit-pop-bars li {
+	display: grid;
+	grid-template-columns: 62px 1fr;
+	align-items: center;
+	gap: 10px;
+}
+
+.audit-pop-bars i {
+	display: block;
+	height: 7px;
+	border-radius: 7px;
+	background: linear-gradient(90deg, var(--accent) var(--w), rgba(255, 255, 255, 0.14) var(--w));
+}
+
+.audit-pop-pdf {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	padding: 8px 14px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.1);
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.audit-pop-pdf .icon {
+	width: 16px;
+	height: 16px;
+	color: #4ade80;
+}
+
+.audit-pop-body {
+	padding: 40px 36px 32px;
+	outline: none;
+}
+
+.audit-pop-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 12px;
+	padding: 6px 12px;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+	color: var(--accent);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.audit-pop-eyebrow .icon {
+	width: 14px;
+	height: 14px;
+}
+
+.audit-pop-title {
+	margin: 0 0 10px;
+	font-family: var(--font-display);
+	font-size: clamp(24px, 3.2vw, 32px);
+	font-weight: 800;
+	line-height: 1.12;
+	letter-spacing: -0.03em;
+}
+
+.audit-pop-text {
+	margin: 0 0 20px;
+	color: var(--muted);
+}
+
+.audit-pop-form {
+	display: grid;
+	gap: 10px;
+	margin: 0 0 14px;
+}
+
+.audit-pop-field {
+	position: relative;
+	display: block;
+}
+
+.audit-pop-field .icon {
+	position: absolute;
+	top: 50%;
+	left: 16px;
+	width: 20px;
+	height: 20px;
+	color: var(--muted);
+	transform: translateY(-50%);
+}
+
+.audit-pop .audit-pop-field input[type="text"] {
+	width: 100%;
+	min-height: 54px;
+	padding: 12px 16px 12px 48px !important;
+	border: 1.5px solid var(--line);
+	border-radius: 14px;
+	background: var(--bg);
+	font: inherit;
+}
+
+.audit-pop .audit-pop-field input[type="text"]:focus {
+	border-color: var(--accent);
+	outline: none;
+	box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.audit-pop-submit {
+	justify-content: center;
+	width: 100%;
+	min-height: 54px;
+}
+
+.audit-pop-trust {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 16px;
+	margin: 0 0 12px;
+	padding: 0;
+	list-style: none;
+	color: var(--muted);
+	font-size: 13px;
+}
+
+.audit-pop-trust li {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.audit-pop-trust .icon {
+	width: 14px;
+	height: 14px;
+	color: #16a34a;
+}
+
+.audit-pop-alt {
+	margin: 0;
+	font-size: 13px;
+	color: var(--muted);
+}
+
+.audit-pop-alt a {
+	color: var(--accent);
+	font-weight: 600;
+}
+
+@media (max-width: 700px) {
+	.audit-pop-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.audit-pop-visual {
+		grid-template-columns: auto 1fr;
+		justify-items: start;
+		gap: 16px;
+		padding: 22px 64px 22px 20px;
+	}
+
+	.audit-pop-score {
+		grid-row: span 2;
+		width: 96px;
+		height: 96px;
+	}
+
+	.audit-pop-score strong {
+		font-size: 30px;
+	}
+
+	.audit-pop-pdf {
+		display: none;
+	}
+
+	.audit-pop-body {
+		padding: 24px 20px 22px;
+	}
+
+	.audit-pop-close {
+		background: rgba(255, 255, 255, 0.16);
+		color: #fff;
+	}
 }

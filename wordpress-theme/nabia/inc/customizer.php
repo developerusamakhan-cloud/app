@@ -144,6 +144,10 @@ function nabia_customize_register( $wp_customize ) {
 		'audit_text'         => array( 'nabia_audit', 'textarea', __( 'Text', 'nabia' ) ),
 		'audit_points'       => array( 'nabia_audit', 'textarea', __( 'What you check (comma separated)', 'nabia' ) ),
 		'audit_shortcode'    => array( 'nabia_audit', 'text', __( 'Use my own form instead (shortcode, optional)', 'nabia' ) ),
+		'enable_popup'       => array( 'nabia_audit', 'checkbox', __( 'Show the free audit popup (once every 24 hours per visitor)', 'nabia' ) ),
+		'popup_delay'        => array( 'nabia_audit', 'text', __( 'Popup: seconds before it appears (it also appears at half the page or when a desktop visitor is about to leave)', 'nabia' ) ),
+		'popup_title'        => array( 'nabia_audit', 'text', __( 'Popup title', 'nabia' ) ),
+		'popup_text'         => array( 'nabia_audit', 'textarea', __( 'Popup text', 'nabia' ) ),
 
 		'cta_title'          => array( 'nabia_contact', 'text', __( 'Contact title', 'nabia' ) ),
 		'cta_text'           => array( 'nabia_contact', 'textarea', __( 'Contact text', 'nabia' ) ),

@@ -14,7 +14,7 @@ nabia_page_header(
 		'icon'    => 'search',
 		'title'   => get_the_title() ? get_the_title() : nabia_mod( 'audit_title' ),
 		'intro'   => nabia_mod( 'audit_text' ),
-		'aside'   => '<div class="promise-card"><strong>48h</strong><span>' . esc_html__( 'Personal review in your inbox within 2 working days. Free, no obligation.', 'nabia' ) . '</span></div>',
+		'aside'   => '<div class="promise-card"><strong>60s</strong><span>' . esc_html__( 'Instant score for design, SEO, content and speed, plus a PDF report in your inbox. Free, no obligation.', 'nabia' ) . '</span></div>',
 		'class'   => 'is-audit',
 	)
 );

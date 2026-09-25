@@ -12,7 +12,7 @@ if ( ! $nabia_shortcode && shortcode_exists( 'nabia_website_audit' ) ) {
 	$nabia_shortcode = '[nabia_website_audit]';
 }
 $nabia_messages  = array(
-	'sent'    => __( 'Thank you! Your audit request is in. I will review your website and email you within 48 hours.', 'nabia' ),
+	'sent'    => __( 'Thank you! Your audit request is in. Your report is on its way to your inbox.', 'nabia' ),
 	'invalid' => __( 'Please enter your website address and a valid email.', 'nabia' ),
 	'expired' => __( 'The form expired. Please try again.', 'nabia' ),
 	'limit'   => __( 'You have sent a few requests already. Please try again in an hour or email me directly.', 'nabia' ),
@@ -31,13 +31,8 @@ $nabia_messages  = array(
 					<?php endforeach; ?>
 				</ul>
 				<p class="audit-promise" data-reveal>
-					<?php if ( shortcode_exists( 'nabia_website_audit' ) ) : ?>
-						<strong>60s</strong>
-						<span><?php esc_html_e( 'Instant score for design, SEO, content and speed, plus a PDF report in your inbox.', 'nabia' ); ?></span>
-					<?php else : ?>
-						<strong>48h</strong>
-						<span><?php esc_html_e( 'Personal review, delivered to your inbox within 2 working days.', 'nabia' ); ?></span>
-					<?php endif; ?>
+					<strong>60s</strong>
+					<span><?php esc_html_e( 'Instant score for design, SEO, content and speed, plus a PDF report in your inbox.', 'nabia' ); ?></span>
 				</p>
 			</div>
 
@@ -62,7 +57,7 @@ $nabia_messages  = array(
 						<p class="audit-form-title"><?php esc_html_e( 'Get your free report', 'nabia' ); ?></p>
 						<p class="field field-icon">
 							<label for="audit-site"><?php esc_html_e( 'Website URL', 'nabia' ); ?></label>
-							<span class="field-wrap"><?php nabia_icon( 'layout' ); ?><input id="audit-site" name="audit_site" type="text" inputmode="url" placeholder="yourwebsite.com" required></span>
+							<span class="field-wrap"><?php nabia_icon( 'layout' ); ?><input id="audit-site" name="audit_site" type="text" inputmode="url" placeholder="yourwebsite.com" value="<?php echo esc_attr( isset( $_GET['audit_url'] ) ? sanitize_text_field( wp_unslash( $_GET['audit_url'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>" required></span>
 						</p>
 						<p class="field field-icon">
 							<label for="audit-email"><?php esc_html_e( 'Email address', 'nabia' ); ?></label>

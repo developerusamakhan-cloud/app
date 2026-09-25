@@ -164,6 +164,13 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 	</div>
 </footer>
 
+<?php
+// Free audit popup: not on the audit page itself or while a report is shown.
+if ( nabia_mod( 'enable_popup' ) && ! is_page_template( 'template-audit.php' ) && ! isset( $_GET['nwa_report'] ) && ! isset( $_GET['audit_url'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	get_template_part( 'template-parts/popup', 'audit' );
+}
+?>
+
 <?php if ( nabia_gchat_url() ) : ?>
 	<dialog class="gchat-modal" id="gchat-modal" aria-labelledby="gchat-title">
 		<button class="gchat-close" type="button" data-gchat-close aria-label="<?php esc_attr_e( 'Close', 'nabia' ); ?>"><?php nabia_icon( 'close' ); ?></button>

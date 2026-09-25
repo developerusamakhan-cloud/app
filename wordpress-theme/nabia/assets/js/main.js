@@ -125,7 +125,7 @@
 			el.setAttribute('data-lenis-prevent-wheel', '');
 		});
 		// The menu and popups must scroll by wheel AND touch while page scrolling is paused.
-		$$('.mobile-menu, .gchat-modal').forEach(function (el) {
+		$$('.mobile-menu, .gchat-modal, .audit-pop').forEach(function (el) {
 			el.setAttribute('data-lenis-prevent', '');
 		});
 		lenis = new window.Lenis({
@@ -872,83 +872,6 @@
 		});
 	});
 
-	/* ------------------------------------------------------------------
-	 * Pointer-only effects: cursor, magnetic buttons, tilt, spotlight.
-	 * ------------------------------------------------------------------ */
-	if (!finePointer || reduceMotion) {
-		return;
-	}
-
-	// Custom cursor.
-	var cursor = $('.cursor');
-	if (cursor && settings.cursor) {
-		var label = $('.cursor-label', cursor);
-		var cx = window.innerWidth / 2;
-		var cy = window.innerHeight / 2;
-		var tx = cx;
-		var ty = cy;
-
-		window.addEventListener('pointermove', function (e) {
-			tx = e.clientX;
-			ty = e.clientY;
-			cursor.classList.add('is-visible');
-		});
-		document.addEventListener('pointerleave', function () {
-			cursor.classList.remove('is-visible');
-		});
-
-		(function loop() {
-			cx += (tx - cx) * 0.2;
-			cy += (ty - cy) * 0.2;
-			cursor.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
-			requestAnimationFrame(loop);
-		})();
-
-		document.addEventListener('pointerover', function (e) {
-			var labelled = e.target.closest('[data-cursor]');
-			var interactive = e.target.closest('a, button, summary, input, textarea, select, label');
-			if (labelled) {
-				label.textContent = labelled.getAttribute('data-cursor');
-				cursor.classList.add('has-label');
-				cursor.classList.remove('is-hover');
-			} else {
-				cursor.classList.remove('has-label');
-				cursor.classList.toggle('is-hover', !!interactive);
-			}
-		});
-	}
-
-	// Magnetic elements.
-	$$('[data-magnetic]').forEach(function (el) {
-		el.addEventListener('pointermove', function (e) {
-			var r = el.getBoundingClientRect();
-			var x = e.clientX - r.left - r.width / 2;
-			var y = e.clientY - r.top - r.height / 2;
-			el.style.transform = 'translate(' + x * 0.25 + 'px,' + y * 0.35 + 'px)';
-		});
-		el.addEventListener('pointerleave', function () {
-			el.style.transform = '';
-		});
-	});
-
-	// 3D tilt + service card spotlight origin.
-	$$('[data-tilt]').forEach(function (el) {
-		var isPortrait = el.classList.contains('portrait');
-		el.addEventListener('pointermove', function (e) {
-			var r = el.getBoundingClientRect();
-			var px = (e.clientX - r.left) / r.width;
-			var py = (e.clientY - r.top) / r.height;
-			el.style.setProperty('--mx', px * 100 + '%');
-			el.style.setProperty('--my', py * 100 + '%');
-			if (isPortrait) {
-				el.style.transform = 'perspective(900px) rotateY(' + (px - 0.5) * 10 + 'deg) rotateX(' + (0.5 - py) * 10 + 'deg)';
-			}
-		});
-		el.addEventListener('pointerleave', function () {
-			el.style.transform = '';
-		});
-	});
-
 	// Cached pages can hold an old copy of the form: fetch fresh security fields.
 	var forms = $$('[data-nabia-form]');
 	if (forms.length && settings.formKeys && !document.body.classList.contains('logged-in') && window.fetch) {
@@ -1069,6 +992,166 @@
 			if (settings.chatUrl) {
 				window.location.href = settings.chatUrl;
 			}
+		});
+	});
+
+	// Free audit popup: once every 24 hours per visitor (cookie), after a delay,
+	// at half the page, or when a desktop visitor moves to leave.
+	var pop = $('[data-audit-pop]');
+	if (pop && typeof pop.showModal === 'function') {
+		var seen = /(^|; )nabia_audit_pop=1/.test(document.cookie);
+		var shown = false;
+		var remember = function () {
+			document.cookie = 'nabia_audit_pop=1; max-age=86400; path=/; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '');
+		};
+		var auditInView = function () {
+			var target = $('#nabia-audit') || $('#audit');
+			if (!target) {
+				return false;
+			}
+			var r = target.getBoundingClientRect();
+			return r.top < window.innerHeight && r.bottom > 0;
+		};
+		var showPop = function () {
+			if (shown || seen || document.body.classList.contains('menu-open') || document.querySelector('dialog[open]') || auditInView()) {
+				return;
+			}
+			shown = true;
+			remember();
+			pop.showModal();
+			if (window.nabiaLenis) {
+				window.nabiaLenis.stop();
+			}
+		};
+		var close = function () {
+			if (pop.open) {
+				pop.close();
+			}
+		};
+		pop.addEventListener('close', function () {
+			if (window.nabiaLenis) {
+				window.nabiaLenis.start();
+			}
+		});
+		$$('[data-audit-pop-close]', pop).forEach(function (btn) {
+			btn.addEventListener('click', close);
+		});
+		pop.addEventListener('click', function (e) {
+			if (e.target === pop) {
+				close();
+			}
+		});
+		var form = $('[data-audit-pop-form]', pop);
+		if (form) {
+			form.addEventListener('submit', function (e) {
+				e.preventDefault();
+				var url = form.querySelector('input').value.trim();
+				if (!url) {
+					return;
+				}
+				var dest = new URL(form.getAttribute('action'), location.href);
+				dest.searchParams.set('audit_url', url);
+				dest.hash = form.getAttribute('data-anchor') || '';
+				window.location.href = dest.toString();
+			});
+		}
+		if (!seen) {
+			var delay = parseInt(pop.getAttribute('data-delay'), 10) || 15;
+			var timer = setTimeout(showPop, delay * 1000);
+			var onScroll = function () {
+				var max = document.documentElement.scrollHeight - window.innerHeight;
+				if (max > 0 && window.scrollY / max > 0.5) {
+					window.removeEventListener('scroll', onScroll);
+					clearTimeout(timer);
+					showPop();
+				}
+			};
+			window.addEventListener('scroll', onScroll, { passive: true });
+			if (window.matchMedia('(pointer: fine)').matches) {
+				document.addEventListener('mouseout', function (e) {
+					if (!e.relatedTarget && e.clientY <= 0) {
+						clearTimeout(timer);
+						showPop();
+					}
+				});
+			}
+		}
+	}
+
+	/* ------------------------------------------------------------------
+	 * Pointer-only effects: cursor, magnetic buttons, tilt, spotlight.
+	 * ------------------------------------------------------------------ */
+	if (!finePointer || reduceMotion) {
+		return;
+	}
+
+	// Custom cursor.
+	var cursor = $('.cursor');
+	if (cursor && settings.cursor) {
+		var label = $('.cursor-label', cursor);
+		var cx = window.innerWidth / 2;
+		var cy = window.innerHeight / 2;
+		var tx = cx;
+		var ty = cy;
+
+		window.addEventListener('pointermove', function (e) {
+			tx = e.clientX;
+			ty = e.clientY;
+			cursor.classList.add('is-visible');
+		});
+		document.addEventListener('pointerleave', function () {
+			cursor.classList.remove('is-visible');
+		});
+
+		(function loop() {
+			cx += (tx - cx) * 0.2;
+			cy += (ty - cy) * 0.2;
+			cursor.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
+			requestAnimationFrame(loop);
+		})();
+
+		document.addEventListener('pointerover', function (e) {
+			var labelled = e.target.closest('[data-cursor]');
+			var interactive = e.target.closest('a, button, summary, input, textarea, select, label');
+			if (labelled) {
+				label.textContent = labelled.getAttribute('data-cursor');
+				cursor.classList.add('has-label');
+				cursor.classList.remove('is-hover');
+			} else {
+				cursor.classList.remove('has-label');
+				cursor.classList.toggle('is-hover', !!interactive);
+			}
+		});
+	}
+
+	// Magnetic elements.
+	$$('[data-magnetic]').forEach(function (el) {
+		el.addEventListener('pointermove', function (e) {
+			var r = el.getBoundingClientRect();
+			var x = e.clientX - r.left - r.width / 2;
+			var y = e.clientY - r.top - r.height / 2;
+			el.style.transform = 'translate(' + x * 0.25 + 'px,' + y * 0.35 + 'px)';
+		});
+		el.addEventListener('pointerleave', function () {
+			el.style.transform = '';
+		});
+	});
+
+	// 3D tilt + service card spotlight origin.
+	$$('[data-tilt]').forEach(function (el) {
+		var isPortrait = el.classList.contains('portrait');
+		el.addEventListener('pointermove', function (e) {
+			var r = el.getBoundingClientRect();
+			var px = (e.clientX - r.left) / r.width;
+			var py = (e.clientY - r.top) / r.height;
+			el.style.setProperty('--mx', px * 100 + '%');
+			el.style.setProperty('--my', py * 100 + '%');
+			if (isPortrait) {
+				el.style.transform = 'perspective(900px) rotateY(' + (px - 0.5) * 10 + 'deg) rotateX(' + (0.5 - py) * 10 + 'deg)';
+			}
+		});
+		el.addEventListener('pointerleave', function () {
+			el.style.transform = '';
 		});
 	});
 

@@ -105,7 +105,11 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 
 		// Free audit.
 		'audit_title'        => 'Get a free website audit',
-		'audit_text'         => 'Not sure what is holding your website back? Send me your link and I will review it personally, then send you a short report with clear, practical fixes. No cost, no obligation.',
+		'audit_text'         => 'Not sure what is holding your website back? Enter your link and get an instant score for design, SEO, content and speed, plus a branded PDF report with clear, practical fixes. No cost, no obligation.',
+		'enable_popup'       => true,
+		'popup_delay'        => '15',
+		'popup_title'        => 'Is your website costing you customers?',
+		'popup_text'         => 'Get an instant score for design, SEO, content and speed, plus a PDF report with clear fixes. It takes about 60 seconds.',
 		'audit_points'       => 'Speed & Core Web Vitals, SEO basics & Google visibility, Mobile experience, Security & updates, Design & trust signals, Conversion: calls to action & forms',
 		'audit_shortcode'    => '',
 

@@ -71,6 +71,19 @@
 		});
 	});
 
+	// Arriving from a popup with the website filled in: continue with the email.
+	var filled = document.querySelector('[data-nwa-form] [name="nwa_url"]');
+	if (filled && filled.value) {
+		setTimeout(function () {
+			var form = filled.closest('form');
+			form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			var email = form.querySelector('[name="nwa_email"]');
+			if (email) {
+				email.focus({ preventScroll: true });
+			}
+		}, 400);
+	}
+
 	// Opening an emailed report link: bring the results into view.
 	var results = document.querySelector('.nwa-results');
 	if (results && location.hash === '#nabia-audit') {

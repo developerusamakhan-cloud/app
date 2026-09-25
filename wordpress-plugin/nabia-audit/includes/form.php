@@ -240,6 +240,7 @@ function nwa_render_form() {
 	);
 	$math   = nwa_captcha();
 	$uid    = wp_unique_id( 'nwa-' );
+	$prefil = isset( $_GET['audit_url'] ) ? sanitize_text_field( wp_unslash( $_GET['audit_url'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	?>
 	<form class="nwa-form" method="post" action="<?php echo esc_url( remove_query_arg( array( 'nwa_error', 'nwa_site', 'nwa_report', 'key' ) ) ); ?>" data-nwa-form novalidate>
 		<p class="nwa-form-title"><?php echo esc_html( $s['form_title'] ); ?></p>
@@ -254,7 +255,7 @@ function nwa_render_form() {
 
 		<p class="nwa-field">
 			<label for="<?php echo esc_attr( $uid ); ?>-url">Website URL</label>
-			<input id="<?php echo esc_attr( $uid ); ?>-url" name="nwa_url" type="text" inputmode="url" autocomplete="url" placeholder="yourwebsite.com" required>
+			<input id="<?php echo esc_attr( $uid ); ?>-url" name="nwa_url" type="text" inputmode="url" autocomplete="url" placeholder="yourwebsite.com" value="<?php echo esc_attr( $prefil ); ?>" required>
 		</p>
 		<p class="nwa-field">
 			<label for="<?php echo esc_attr( $uid ); ?>-email">Email for the report</label>

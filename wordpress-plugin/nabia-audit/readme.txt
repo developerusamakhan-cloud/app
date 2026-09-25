@@ -4,7 +4,7 @@ Tags: website audit, seo audit, lead generation, pdf report
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 
 Free website audit form that scores any website in real time and sends a branded PDF report.
@@ -48,6 +48,9 @@ Some websites use firewalls (Cloudflare, Wordfence, host security) that block au
 PDF creation uses FPDF (http://www.fpdf.org), a free PHP library. Its license is in lib/fpdf/license.txt.
 
 == Changelog ==
+
+= 1.3.2 =
+* The form fills in the website from a link like ?audit_url=example.com (used by the Nabia theme popup) and moves the cursor to the email field.
 
 = 1.3.1 =
 * PDFs are no longer saved on the website. They are built at runtime for downloads, and emails use a temporary file that is deleted right after sending. The old uploads/nabia-audits folder is removed automatically.

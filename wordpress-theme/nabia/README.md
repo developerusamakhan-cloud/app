@@ -65,6 +65,13 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.16
+
+- **Free audit popup.** "Is your website costing you customers?" with a small score preview and a website field. Visitors type their site and land on the audit form with it filled in, ready for their email. It appears after 15 seconds, at half the page, or when a desktop visitor moves to leave, then stays away for 24 hours (cookie). It never shows on the Free Audit page. Settings: Customize, Nabia Theme, Free audit (on or off, delay, title, text).
+- **No more "48h".** The audit texts now promise an instant score and PDF report.
+- **WhatsApp, Google Chat and Live chat buttons sit in one row** everywhere, with the icon above the label in narrow spaces like the mobile menu.
+- **Fix: on phones and for visitors who prefer reduced motion**, the Google Chat popup, the Live chat button and the cache-safe contact form refresh did not run. They now work on every device.
+
 ## What's new in 2.15
 
 - **Works with the Nabia Website Audit plugin.** When the plugin is active, the homepage and Free Audit page show its form automatically (live scores for design, SEO, content and speed, plus a PDF report by email). The promise under the audit text changes from "48h personal review" to "60s instant score". Without the plugin the theme's simple audit form works as before.

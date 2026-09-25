@@ -77,6 +77,7 @@
 			)
 		);
 		?>
+		<?php nabia_quick_contact( __( 'Fastest reply: message me directly', 'nabia' ) ); ?>
 		<div class="mobile-menu-foot">
 			<a href="mailto:<?php echo esc_attr( antispambot( nabia_mod( 'contact_email' ) ) ); ?>"><?php echo esc_html( antispambot( nabia_mod( 'contact_email' ) ) ); ?></a>
 			<?php nabia_social_links(); ?>

@@ -32,7 +32,7 @@ nabia_page_header(
 	)
 );
 ?>
-<section class="section section-tight work">
+<section class="section section-tight work portfolio-page">
 	<div class="container">
 		<?php if ( have_posts() ) : ?>
 			<div class="work-grid">

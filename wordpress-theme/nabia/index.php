@@ -24,23 +24,20 @@ if ( ! $nabia_intro ) {
 	$nabia_intro = __( 'Practical tips on WordPress, web design, SEO, e-commerce and AI, to help your website work harder for your business.', 'nabia' );
 }
 
-// "Browse topics" card for the header.
-$nabia_cats  = get_categories(
-	array(
-		'orderby'    => 'count',
-		'order'      => 'DESC',
-		'number'     => 6,
-		'hide_empty' => true,
-	)
-);
-$nabia_aside = '';
-if ( $nabia_cats ) {
-	$nabia_aside = '<div class="aside-card"><p class="aside-card-title">' . esc_html__( 'Browse topics', 'nabia' ) . '</p><ul class="topic-list">';
-	foreach ( $nabia_cats as $nabia_cat ) {
-		$nabia_aside .= '<li><a href="' . esc_url( get_category_link( $nabia_cat ) ) . '"><span>' . esc_html( $nabia_cat->name ) . '</span><em>' . (int) $nabia_cat->count . '</em></a></li>';
-	}
-	$nabia_aside .= '</ul></div>';
-}
+// Author card for the header: who writes here, plus a way to ask a question.
+$nabia_posts = (int) wp_count_posts( 'post' )->publish;
+$nabia_aside = '<div class="aside-card author-card">'
+	. '<span class="author-avatar">' . nabia_author_photo( 64 ) . '</span>'
+	. '<p class="aside-card-title">' . esc_html__( 'Written by', 'nabia' ) . '</p>'
+	. '<p class="author-name">' . esc_html( nabia_mod( 'brand_name' ) ) . '</p>'
+	. '<p class="author-role">' . esc_html__( 'WordPress developer & graphic designer', 'nabia' ) . '</p>'
+	. '<dl class="aside-rows">'
+	. '<div><dt>' . esc_html__( 'Articles', 'nabia' ) . '</dt><dd>' . esc_html( number_format_i18n( $nabia_posts ) ) . '</dd></div>'
+	. '<div><dt>' . esc_html__( 'Experience', 'nabia' ) . '</dt><dd>' . esc_html( nabia_mod( 'stat_1_number' ) . nabia_mod( 'stat_1_suffix' ) . ' ' . __( 'years', 'nabia' ) ) . '</dd></div>'
+	. '<div><dt>' . esc_html__( 'Written for', 'nabia' ) . '</dt><dd>' . esc_html__( 'Business owners', 'nabia' ) . '</dd></div>'
+	. '</dl>'
+	. nabia_button( __( 'Ask me a question', 'nabia' ), nabia_hire_url() )
+	. '</div>';
 
 nabia_page_header(
 	array(

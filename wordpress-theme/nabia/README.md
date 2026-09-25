@@ -65,6 +65,14 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.13.1
+
+- **Mobile menu** items are smaller and tidier, with thin dividers, a one column submenu, and WhatsApp and Google Chat buttons at the bottom.
+- **Portfolio on phones** is a proper two column grid on the Portfolio page and the Websites archive, with no sideways scrolling.
+- **Blog page header** shows an author card (photo, articles, experience and an "Ask me a question" button) instead of categories. Blog cards show the reading time instead of the category.
+- **FAQ** icon turns white on violet when a question is open or hovered.
+- **Fiverr and Upwork cards** on phones put the logo and arrow on top and the note on its own line.
+
 ## What's new in 2.13
 
 - **Contact form delivery fixed.** The forms now post to the page they are on instead of `/wp-admin/admin-post.php`, which security plugins and hosts often block for visitors. Pages served from a cache fetch fresh security fields when they load, so an old cached copy of the form no longer rejects real messages (every check still runs). After sending, visitors now stay on the same page instead of being sent to the homepage.

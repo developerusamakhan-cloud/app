@@ -217,7 +217,10 @@ function nabia_get_service( $slug ) {
  * @return array|null
  */
 function nabia_current_service() {
-	$slug = get_post_meta( get_the_ID(), '_nabia_service', true );
+	$slug = get_query_var( 'nabia_service' );
+	if ( ! $slug ) {
+		$slug = get_post_meta( get_the_ID(), '_nabia_service', true );
+	}
 	if ( ! $slug ) {
 		$slug = get_post_field( 'post_name', get_the_ID() );
 	}
@@ -246,6 +249,24 @@ function nabia_service_url( $slug ) {
 		foreach ( $pages as $page ) {
 			$map[ get_post_meta( $page->ID, '_nabia_service', true ) ] = get_permalink( $page );
 		}
+		// Pages you created yourself with a "Service: …" template.
+		$templated = get_posts(
+			array(
+				'post_type'      => 'page',
+				'post_status'    => 'publish',
+				'posts_per_page' => 50,
+				'meta_key'       => '_wp_page_template', // phpcs:ignore WordPress.DB.SlowDBQuery
+				'meta_value'     => 'page-templates/service-', // phpcs:ignore WordPress.DB.SlowDBQuery
+				'meta_compare'   => 'LIKE',
+				'no_found_rows'  => true,
+			)
+		);
+		foreach ( $templated as $page ) {
+			$template = get_post_meta( $page->ID, '_wp_page_template', true );
+			if ( preg_match( '#page-templates/service-([a-z0-9-]+)\.php$#', $template, $m ) && ! isset( $map[ $m[1] ] ) ) {
+				$map[ $m[1] ] = get_permalink( $page );
+			}
+		}
 	}
 	return isset( $map[ $slug ] ) ? $map[ $slug ] : '';
 }
@@ -257,6 +278,10 @@ function nabia_service_url( $slug ) {
  * @return string
  */
 function nabia_page_url( $role ) {
+	static $cache = array();
+	if ( isset( $cache[ $role ] ) ) {
+		return $cache[ $role ];
+	}
 	$pages = get_posts(
 		array(
 			'post_type'      => 'page',
@@ -267,5 +292,28 @@ function nabia_page_url( $role ) {
 			'no_found_rows'  => true,
 		)
 	);
-	return $pages ? get_permalink( $pages[0] ) : '';
+	if ( ! $pages ) {
+		// Or a page you created yourself with the matching template.
+		$templates = array(
+			'services' => 'template-services.php',
+			'pricing'  => 'template-pricing.php',
+			'audit'    => 'template-audit.php',
+			'about'    => 'template-about.php',
+			'contact'  => 'template-contact.php',
+		);
+		if ( isset( $templates[ $role ] ) ) {
+			$pages = get_posts(
+				array(
+					'post_type'      => 'page',
+					'post_status'    => 'publish',
+					'posts_per_page' => 1,
+					'meta_key'       => '_wp_page_template', // phpcs:ignore WordPress.DB.SlowDBQuery
+					'meta_value'     => $templates[ $role ], // phpcs:ignore WordPress.DB.SlowDBQuery
+					'no_found_rows'  => true,
+				)
+			);
+		}
+	}
+	$cache[ $role ] = $pages ? get_permalink( $pages[0] ) : '';
+	return $cache[ $role ];
 }

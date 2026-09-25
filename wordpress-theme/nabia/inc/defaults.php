@@ -95,9 +95,10 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 		'plan_web_2'         => "Business Website\n$799\nCustom theme\nOptimised images\n5 pages\nHosting setup\nContent + product upload (20)\nContact form + login forms\nSocial icons\nFree support (1 month)\n- Domain & hosting not included",
 		'plan_web_3'         => "E-Commerce Store\n$1199\nCustom theme\nOptimised images\n8 pages\nHosting setup\nContent + product upload (30)\nContact form + booking forms\nSocial icons + email integration\nFree support (1 month)\n- Domain & hosting not included",
 		'plan_popular'       => '2',
-		'plan_care_1'        => "Basic Care\n\nWordPress, theme & plugin updates\nWeekly backups\nUptime monitoring\nMonthly security scan\n30 minutes of small edits\nMonthly report",
-		'plan_care_2'        => "Growth Care\n\nEverything in Basic Care\nDaily backups\nMalware removal included\nSpeed check & optimisation\n2 hours of edits\nPriority support (24h reply)",
-		'plan_care_3'        => "Premium Care\n\nEverything in Growth Care\nReal-time backups\nStaging site for safe changes\n5 hours of edits\nSEO health check\nSame-day support",
+		'plan_care_1'        => "Basic\n$45.99\nWas: $69.99\nSubtitle: 1 day in a month\nPlugin & theme updates\nWordPress backup\nSpeed optimisation\nBug fixing\nSpam comment removal\nResponsive issues\nContent management\nSEO health check\nDatabase optimisation\nNote: 3 days support",
+		'plan_care_2'        => "Standard\n$79.99\nWas: $100\nSubtitle: 15 days in a month\nPlugin & theme updates\nWordPress backup\nSpeed optimisation\nBug fixing\nSpam comment removal\nResponsive issues\nContent management\nSEO health check\nDatabase optimisation\nNote: 15 days support",
+		'plan_care_3'        => "Premium\n$159.99\nWas: $200\nSubtitle: 30 days in a month\nPlugin & theme updates\nWordPress backup\nSpeed optimisation\nBug fixing\nSpam comment removal\nResponsive issues\nContent management\nSEO health check\nDatabase optimisation\nNote: 30 days support",
+		'care_popular'       => '3',
 		'care_period'        => '/month',
 
 		// Free audit.

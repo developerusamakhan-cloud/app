@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.5.0
+Version: 2.6.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -2904,6 +2904,67 @@ body:not(.is-home) .site-main {
 .plan-name {
 	margin: 0 0 18px;
 	font-size: 22px;
+}
+
+.plan-subtitle {
+	margin: -12px 0 18px;
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--accent);
+}
+
+.plan-price {
+	flex-wrap: wrap;
+}
+
+.plan-was {
+	flex-basis: 100%;
+	margin-bottom: 4px;
+	font-size: 17px;
+	color: var(--muted);
+	text-decoration-thickness: 2px;
+	text-decoration-color: color-mix(in srgb, #ef4444 70%, transparent);
+}
+
+.plan.is-popular .plan-was {
+	color: color-mix(in srgb, #fff 55%, transparent);
+}
+
+.plan-save {
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: color-mix(in srgb, #22c55e 16%, transparent);
+	color: #15803d;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 700;
+	align-self: center;
+}
+
+.plan.is-popular .plan-save {
+	background: color-mix(in srgb, #22c55e 25%, transparent);
+	color: #86efac;
+}
+
+.plan-note {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	margin: 14px 0 0;
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--muted);
+}
+
+.plan.is-popular .plan-note {
+	color: color-mix(in srgb, #fff 70%, transparent);
+}
+
+.plan-note .icon {
+	width: 16px;
+	height: 16px;
+	color: var(--accent);
 }
 
 .plan-price {

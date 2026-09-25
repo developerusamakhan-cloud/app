@@ -265,21 +265,3 @@ function nabia_setup_screen() {
 	</div>
 	<?php
 }
-
-/**
- * Remind admins to run the setup once.
- */
-function nabia_setup_notice() {
-	$screen = get_current_screen();
-	if ( ! current_user_can( 'edit_pages' ) || ( $screen && 'appearance_page_nabia-setup' === $screen->id ) || nabia_setup_find( 'services' ) ) {
-		return;
-	}
-	printf(
-		'<div class="notice notice-info"><p><strong>%1$s</strong> %2$s <a class="button button-primary" href="%3$s">%4$s</a></p></div>',
-		esc_html__( 'Nabia theme:', 'nabia' ),
-		esc_html__( 'create your service, pricing and free audit pages in one click.', 'nabia' ),
-		esc_url( admin_url( 'themes.php?page=nabia-setup' ) ),
-		esc_html__( 'Open Nabia Setup', 'nabia' )
-	);
-}
-add_action( 'admin_notices', 'nabia_setup_notice' );

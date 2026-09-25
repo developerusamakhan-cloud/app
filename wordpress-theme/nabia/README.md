@@ -25,6 +25,42 @@ It uses the style of creative agency sites (big type, bright accent colour, play
 - Respects "reduced motion" settings; content stays visible without JavaScript
 - Blog, single post (with reading time), page, search, 404 and a *Full width* template for Elementor/block-editor pages
 
+## Pages and templates
+
+Create each page yourself in **Pages → Add New**, give it any title, and choose the template in the sidebar (**Page Attributes / Template**). Every template fills the page automatically. Anything you type in the page editor appears as an extra section.
+
+| Page to create | Template to choose | What the page shows |
+| --- | --- | --- |
+| Home | none (automatic) | Set in Settings → Reading → "A static page". The homepage design is used automatically. |
+| Services | **Services overview** | All 9 services, platforms, process, pricing, free audit |
+| Web Design | **Service: Web Design** | Full service page (see below) |
+| WordPress Development | **Service: WordPress Development** | Full service page |
+| Shopify & WooCommerce | **Service: Shopify & WooCommerce Stores** | Full service page |
+| Wix, Webflow & Squarespace | **Service: Wix, Webflow & Squarespace** | Full service page |
+| Custom Websites | **Service: Custom-Coded Websites** | Full service page |
+| AI Website Solutions | **Service: AI Website Solutions** | Full service page |
+| Branding & Graphic Design | **Service: Branding & Graphic Design** | Full service page |
+| Speed & SEO | **Service: Speed & SEO** | Full service page |
+| Monthly Website Maintenance | **Service: Care & Maintenance (Monthly Maintenance)** | Full service page with the Basic / Standard / Premium maintenance prices |
+| Pricing | **Pricing** | Website packages and maintenance plans (tabs), FAQ, free audit |
+| Free Website Audit | **Free audit** | Audit form, video reviews, reviews |
+| About | **About me** | Intro video and story, skills, platforms, process, video reviews, reviews |
+| Hire Me / Contact | **Contact / Hire me** | Contact block, Fiverr & Upwork, free audit form, FAQ |
+| Any page built with Elementor | **Full width (builder friendly)** | Only your Elementor content between the header and footer |
+
+A full service page contains: headline and intro, "What you get", 6 benefits, "Perfect for", the process, the matching prices, video reviews, an FAQ, the free audit form and links to the other services.
+
+Tips:
+- Homepage service cards and the menu link to your pages automatically once they use these templates.
+- Your existing `/monthly-website-maintenance/` and `/hire-me/` pages can simply switch to the matching template. They keep their address.
+- Portfolio pages need no template: `/websites/` and each Website post are automatic.
+- Prefer one click? **Appearance → Nabia Setup** can create all these pages and a menu for you. It never touches existing pages.
+
+## What's new in 2.6
+
+- Monthly maintenance prices: Basic $45.99 (was $69.99), Standard $79.99 (was $100), Premium $159.99 (was $200, marked "Most popular"). Each shows the crossed-out old price, a "Save %" badge, the days per month and the support note.
+- One template per page (see the table above), so you can create pages yourself and just pick a template.
+
 ## What's new in 2.5
 
 - **Pricing section** on the homepage with two tabs:

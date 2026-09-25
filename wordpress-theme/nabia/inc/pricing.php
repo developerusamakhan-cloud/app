@@ -5,6 +5,7 @@
  * Plans are edited in Customize → Nabia Theme → Pricing as plain text:
  * line 1 = plan name, line 2 = price (leave empty for "Custom quote"),
  * then one feature per line. Start a feature with "-" to show it as not included.
+ * Optional lines: "Was: $69.99" (crossed-out old price), "Subtitle: …", "Note: …".
  *
  * @package Nabia
  */
@@ -25,22 +26,47 @@ function nabia_parse_plan( $key ) {
 	if ( empty( $lines[0] ) ) {
 		return null;
 	}
-	$features = array();
+	$plan = array(
+		'name'     => $lines[0],
+		'price'    => isset( $lines[1] ) ? $lines[1] : '',
+		'was'      => '',
+		'subtitle' => '',
+		'note'     => '',
+		'features' => array(),
+	);
 	foreach ( array_slice( $lines, 2 ) as $line ) {
 		if ( '' === $line ) {
 			continue;
 		}
-		$excluded   = 0 === strpos( $line, '-' );
-		$features[] = array(
+		// Optional labelled lines: "Was: $69.99", "Subtitle: 1 Day In A Month", "Note: 3 Days Support".
+		if ( preg_match( '/^(was|subtitle|note):\s*(.+)$/i', $line, $m ) ) {
+			$plan[ strtolower( $m[1] ) ] = $m[2];
+			continue;
+		}
+		$excluded           = 0 === strpos( $line, '-' );
+		$plan['features'][] = array(
 			'text'     => $excluded ? ltrim( substr( $line, 1 ) ) : $line,
 			'included' => ! $excluded,
 		);
 	}
-	return array(
-		'name'     => $lines[0],
-		'price'    => isset( $lines[1] ) ? $lines[1] : '',
-		'features' => $features,
-	);
+	return $plan;
+}
+
+/**
+ * "Save 34%" from an old and a new price, when both are numbers.
+ *
+ * @param string $was Old price.
+ * @param string $now New price.
+ * @return string
+ */
+function nabia_plan_saving( $was, $now ) {
+	$old = (float) preg_replace( '/[^0-9.]/', '', $was );
+	$new = (float) preg_replace( '/[^0-9.]/', '', $now );
+	if ( $old <= 0 || $new <= 0 || $new >= $old ) {
+		return '';
+	}
+	/* translators: %d: percentage saved */
+	return sprintf( __( 'Save %d%%', 'nabia' ), round( ( 1 - $new / $old ) * 100 ) );
 }
 
 /**
@@ -84,7 +110,7 @@ function nabia_hire_url() {
  */
 function nabia_render_plans( $group ) {
 	$plans   = nabia_plans( $group );
-	$popular = (int) nabia_mod( 'plan_popular' ) - 1;
+	$popular = (int) nabia_mod( 'care' === $group ? 'care_popular' : 'plan_popular' ) - 1;
 	$period  = 'care' === $group ? nabia_mod( 'care_period' ) : __( 'one-time', 'nabia' );
 	?>
 	<div class="plan-grid">
@@ -95,10 +121,20 @@ function nabia_render_plans( $group ) {
 					<span class="plan-badge"><?php esc_html_e( 'Most popular', 'nabia' ); ?></span>
 				<?php endif; ?>
 				<h3 class="plan-name"><?php echo esc_html( $plan['name'] ); ?></h3>
+				<?php if ( $plan['subtitle'] ) : ?>
+					<p class="plan-subtitle"><?php echo esc_html( $plan['subtitle'] ); ?></p>
+				<?php endif; ?>
 				<p class="plan-price">
 					<?php if ( '' !== $plan['price'] ) : ?>
+						<?php if ( $plan['was'] ) : ?>
+							<del class="plan-was"><span class="screen-reader-text"><?php esc_html_e( 'Was', 'nabia' ); ?></span><?php echo esc_html( $plan['was'] ); ?></del>
+						<?php endif; ?>
 						<strong><?php echo esc_html( $plan['price'] ); ?></strong>
 						<span><?php echo esc_html( $period ); ?></span>
+						<?php $saving = nabia_plan_saving( $plan['was'], $plan['price'] ); ?>
+						<?php if ( $saving ) : ?>
+							<em class="plan-save"><?php echo esc_html( $saving ); ?></em>
+						<?php endif; ?>
 					<?php else : ?>
 						<strong class="plan-quote"><?php esc_html_e( 'Custom quote', 'nabia' ); ?></strong>
 					<?php endif; ?>
@@ -119,6 +155,9 @@ function nabia_render_plans( $group ) {
 				<a class="btn <?php echo $is_popular ? 'btn-accent' : 'btn-ghost'; ?> plan-cta" href="<?php echo esc_url( nabia_hire_url() ); ?>" data-magnetic>
 					<span><?php echo '' !== $plan['price'] ? esc_html__( 'Hire me', 'nabia' ) : esc_html__( 'Get a quote', 'nabia' ); ?></span><?php nabia_icon( 'arrow' ); ?>
 				</a>
+				<?php if ( $plan['note'] ) : ?>
+					<p class="plan-note"><?php nabia_icon( 'shield' ); ?><?php echo esc_html( $plan['note'] ); ?></p>
+				<?php endif; ?>
 			</article>
 		<?php endforeach; ?>
 	</div>

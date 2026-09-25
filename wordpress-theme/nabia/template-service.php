@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Service page
+ * Template Name: Service page (automatic: page slug = service)
  * Template Post Type: page
  *
  * A complete service page: intro, benefits, deliverables, pricing, video reviews,

@@ -134,6 +134,7 @@ function nabia_customize_register( $wp_customize ) {
 		'plan_care_1'        => array( 'nabia_pricing', 'textarea', __( 'Maintenance plan 1', 'nabia' ) ),
 		'plan_care_2'        => array( 'nabia_pricing', 'textarea', __( 'Maintenance plan 2', 'nabia' ) ),
 		'plan_care_3'        => array( 'nabia_pricing', 'textarea', __( 'Maintenance plan 3', 'nabia' ) ),
+		'care_popular'       => array( 'nabia_pricing', 'select', __( 'Maintenance: highlight as “Most popular”', 'nabia' ) ),
 		'care_period'        => array( 'nabia_pricing', 'text', __( 'Maintenance price period (e.g. /month)', 'nabia' ) ),
 		'hire_url'           => array( 'nabia_pricing', 'url', __( '“Hire me” button link (empty = your /hire-me/ page or the contact section)', 'nabia' ) ),
 
@@ -181,7 +182,14 @@ function nabia_customize_register( $wp_customize ) {
 	if ( ! isset( $post_types['websites'] ) ) {
 		$post_types['websites'] = __( 'Websites (websites)', 'nabia' );
 	}
+	$popular_choices = array(
+		'0' => __( 'None', 'nabia' ),
+		'1' => __( 'Plan 1', 'nabia' ),
+		'2' => __( 'Plan 2', 'nabia' ),
+		'3' => __( 'Plan 3', 'nabia' ),
+	);
 	$choices = array(
+		'care_popular'        => $popular_choices,
 		'plan_popular'        => array(
 			'0' => __( 'None', 'nabia' ),
 			'1' => __( 'Plan 1', 'nabia' ),
@@ -207,7 +215,7 @@ function nabia_customize_register( $wp_customize ) {
 		'video_reviews'   => __( 'Paste MP4 links from your Media Library (or YouTube links), one per line. The client name is read from the file name, or add it after a | sign: https://…/review.mp4 | Sarah Malik | New store in 2 weeks. You can also use Dashboard → Video Reviews.', 'nabia' ),
 		'google_place_id' => __( 'Find it at developers.google.com/maps/documentation/places/web-service/place-id, search your business name and copy the ID (starts with “ChIJ…”).', 'nabia' ),
 		'plan_web_1'      => __( 'Line 1: plan name. Line 2: price (leave the line empty for “Custom quote”). Then one feature per line. Start a line with - to show it as not included.', 'nabia' ),
-		'plan_care_1'     => __( 'Same format. Add your monthly price on line 2, e.g. $49', 'nabia' ),
+		'plan_care_1'     => __( 'Same format. Optional extra lines: “Was: $69.99” shows a crossed-out old price, “Subtitle: 1 day in a month” and “Note: 3 days support”.', 'nabia' ),
 		'google_api_key'  => __( 'Google Cloud Console → enable “Places API (New)” → Credentials → Create API key (restrict it to Places API). Stored on your server only; visitors never see it. Reviews refresh every 12 hours.', 'nabia' ),
 	);
 

@@ -57,6 +57,9 @@ function nabia_defaults() {
 		'about_title'        => 'Design that looks sharp. Code that works hard.',
 		'about_text'         => "I'm Nabia, a full-time WordPress developer, front-end developer and graphic designer. I believe great design and smart development go hand in hand, so I handle both: from the first sketch to the final line of code, under one roof.\n\nWhether you need a brand-new website, a WooCommerce store, a redesign or a pixel-perfect clone of a design you love, I'll build it fast, responsive and easy for you to manage.",
 		'about_image'        => '',
+		'intro_video'        => 'https://nabiakhan.com/wp-content/uploads/2026/09/WhatsApp-Video-2026-04-16-at-2.38.06-PM.mp4',
+		'intro_video_poster' => '',
+		'intro_video_caption' => 'Hi, I’m Nabia 👋 Meet the person behind your next website.',
 
 		// Sections.
 		'services_title'     => 'What I can do for you',

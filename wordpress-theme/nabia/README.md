@@ -7,6 +7,7 @@ It uses the style of creative agency sites (big type, bright accent colour, play
 
 - **Hero** with a word that changes every few seconds and an "available" badge. The visual is a live website mockup that tilts in 3D, with a PageSpeed gauge, a 5-star review card, a growing "+42% leads" chart and a "Nabia" cursor that moves around as if designing. Upload a portrait to show it inside the frame instead.
 - **Stats strip**: four animated counters on a dark bar; each card lights up on hover
+- **Intro video** in the About section: plays muted while visible, pauses when scrolled away, "Tap for sound" button, plus a "Watch my intro" link in the hero. Set the MP4 link, cover image and caption in Customize → Nabia Theme → About & Section Titles.
 - **Intro preloader** that counts from 0 to 100
 - **Video reviews** from YouTube: a big player that starts playing (muted) when visitors scroll to it, a "Tap for sound" button and a playlist of other reviews. Shorts links show as a row of tall vertical videos. The section is hidden until you add videos.
 - **New logo**: an "N" monogram (also used as the browser tab icon) with the name and a small tagline

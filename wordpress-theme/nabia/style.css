@@ -998,8 +998,34 @@ body:not(.is-home) .site-main {
 .hero-actions {
 	display: flex;
 	flex-wrap: wrap;
+	align-items: center;
 	gap: 12px;
 	margin-top: 32px;
+}
+
+.intro-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	margin-left: 8px;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.intro-link-play {
+	display: grid;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	background: var(--ink);
+	color: var(--accent);
+	box-shadow: 0 0 0 6px color-mix(in srgb, var(--ink) 10%, transparent);
+	transition: transform 0.4s var(--ease);
+}
+
+.intro-link:hover .intro-link-play {
+	transform: scale(1.1);
 }
 
 /* Visual: website mockup + floating proof chips */
@@ -2028,6 +2054,84 @@ body:not(.is-home) .site-main {
 	font-size: clamp(48px, 7vw, 96px);
 	color: var(--ink);
 	mix-blend-mode: multiply;
+}
+
+.about {
+	overflow-x: clip;
+}
+
+.intro-video {
+	margin: 0;
+}
+
+.intro-video-stack {
+	position: relative;
+	isolation: isolate;
+}
+
+.intro-video-stack::before {
+	content: "";
+	position: absolute;
+	inset: 24px -18px -18px 24px;
+	z-index: -1;
+	border-radius: var(--radius-lg);
+	background: var(--accent);
+	rotate: 3deg;
+}
+
+.intro-video-frame {
+	position: relative;
+	aspect-ratio: 4 / 5;
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+	background: var(--ink);
+	box-shadow: 0 40px 70px -35px color-mix(in srgb, var(--ink) 55%, transparent);
+}
+
+.intro-video-frame video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.intro-video-frame .intro-sound {
+	display: inline-flex;
+	left: 20px;
+	bottom: 20px;
+}
+
+.intro-video-frame.is-unmuted .intro-sound {
+	display: none;
+}
+
+.intro-badge {
+	position: absolute;
+	top: 18px;
+	left: 18px;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 7px 14px 7px 10px;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--ink) 60%, transparent);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	color: #fff;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.intro-badge .pulse {
+	background: #ef4444;
+}
+
+.intro-caption {
+	margin-top: 28px;
+	font-family: var(--font-display);
+	font-weight: 700;
+	font-size: 20px;
+	letter-spacing: -0.02em;
+	color: var(--ink);
 }
 
 .about-copy .section-head {

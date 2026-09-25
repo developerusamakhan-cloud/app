@@ -97,7 +97,10 @@ function nabia_customize_register( $wp_customize ) {
 
 		'about_title'        => array( 'nabia_about', 'text', __( 'About title', 'nabia' ) ),
 		'about_text'         => array( 'nabia_about', 'textarea', __( 'About text', 'nabia' ) ),
-		'about_image'        => array( 'nabia_about', 'image', __( 'About image', 'nabia' ) ),
+		'about_image'        => array( 'nabia_about', 'image', __( 'About image (shown when no intro video is set)', 'nabia' ) ),
+		'intro_video'        => array( 'nabia_about', 'url', __( 'Intro video (MP4 link from your Media Library)', 'nabia' ) ),
+		'intro_video_poster' => array( 'nabia_about', 'image', __( 'Intro video cover image (optional)', 'nabia' ) ),
+		'intro_video_caption' => array( 'nabia_about', 'text', __( 'Intro video caption', 'nabia' ) ),
 		'services_title'     => array( 'nabia_about', 'text', __( 'Services title', 'nabia' ) ),
 		'work_title'         => array( 'nabia_about', 'text', __( 'Work title', 'nabia' ) ),
 		'process_title'      => array( 'nabia_about', 'text', __( 'Process title', 'nabia' ) ),

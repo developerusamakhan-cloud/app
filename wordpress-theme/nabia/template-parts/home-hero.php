@@ -48,6 +48,12 @@ $nabia_first = trim( strtok( $nabia_name, ' ' ) );
 						<span><?php echo esc_html( nabia_mod( 'hero_cta2_label' ) ); ?></span>
 					</a>
 				<?php endif; ?>
+				<?php if ( nabia_mod( 'intro_video' ) ) : ?>
+					<a class="intro-link" href="#about">
+						<span class="intro-link-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+						<?php esc_html_e( 'Watch my intro', 'nabia' ); ?>
+					</a>
+				<?php endif; ?>
 			</div>
 		</div>
 

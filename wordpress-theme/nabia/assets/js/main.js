@@ -408,6 +408,57 @@
 	});
 
 	/* ------------------------------------------------------------------
+	 * Intro video: play muted while visible, pause when scrolled away.
+	 * ------------------------------------------------------------------ */
+	$$('[data-intro-video]').forEach(function (video) {
+		var frame = video.parentNode;
+		var soundBtn = $('[data-intro-sound]', frame);
+		video.removeAttribute('controls');
+
+		function play() {
+			var p = video.play();
+			if (p && p.catch) {
+				p.catch(function () {
+					video.setAttribute('controls', '');
+				});
+			}
+		}
+
+		if ('IntersectionObserver' in window && !reduceMotion) {
+			new IntersectionObserver(
+				function (entries) {
+					entries.forEach(function (entry) {
+						if (entry.isIntersecting) {
+							play();
+						} else {
+							video.pause();
+						}
+					});
+				},
+				{ threshold: 0.4 }
+			).observe(video);
+		} else {
+			video.setAttribute('controls', '');
+		}
+
+		function unmute() {
+			video.muted = false;
+			video.setAttribute('controls', '');
+			frame.classList.add('is-unmuted');
+			play();
+		}
+
+		if (soundBtn) {
+			soundBtn.addEventListener('click', unmute);
+		}
+		video.addEventListener('click', function () {
+			if (video.muted) {
+				unmute();
+			}
+		});
+	});
+
+	/* ------------------------------------------------------------------
 	 * Pointer-only effects: cursor, magnetic buttons, tilt, spotlight.
 	 * ------------------------------------------------------------------ */
 	if (!finePointer || reduceMotion) {

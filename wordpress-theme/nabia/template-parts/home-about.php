@@ -6,6 +6,8 @@
  */
 
 $nabia_about_image = nabia_mod( 'about_image' );
+$nabia_intro_video = nabia_mod( 'intro_video' );
+$nabia_intro_thumb = nabia_mod( 'intro_video_poster' );
 $nabia_skills      = array(
 	'WordPress & Elementor' => 95,
 	'Graphic Design'        => 90,
@@ -16,7 +18,20 @@ $nabia_skills      = array(
 <section class="section about" id="about">
 	<div class="container about-grid">
 		<div class="about-media" data-reveal>
-			<?php if ( $nabia_about_image ) : ?>
+			<?php if ( $nabia_intro_video ) : ?>
+				<figure class="intro-video">
+					<div class="intro-video-stack">
+					<div class="intro-video-frame">
+						<video src="<?php echo esc_url( $nabia_intro_video ); ?>" <?php echo $nabia_intro_thumb ? 'poster="' . esc_url( $nabia_intro_thumb ) . '"' : ''; ?> muted loop playsinline controls preload="metadata" data-intro-video></video>
+						<button class="video-sound intro-sound" type="button" data-intro-sound>
+							<?php nabia_icon( 'volume' ); ?><span><?php esc_html_e( 'Tap for sound', 'nabia' ); ?></span>
+						</button>
+						<span class="intro-badge"><span class="pulse" aria-hidden="true"></span><?php esc_html_e( 'My intro', 'nabia' ); ?></span>
+					</div>
+					</div>
+					<figcaption class="intro-caption"><?php echo esc_html( nabia_mod( 'intro_video_caption' ) ); ?></figcaption>
+				</figure>
+			<?php elseif ( $nabia_about_image ) : ?>
 				<img src="<?php echo esc_url( $nabia_about_image ); ?>" alt="<?php echo esc_attr( nabia_mod( 'brand_name' ) ); ?>" loading="lazy" width="600" height="720">
 			<?php else : ?>
 				<div class="about-art" aria-hidden="true">

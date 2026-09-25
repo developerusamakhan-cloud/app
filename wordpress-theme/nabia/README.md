@@ -65,6 +65,10 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.15
+
+- **Works with the Nabia Website Audit plugin.** When the plugin is active, the homepage and Free Audit page show its form automatically (live scores for design, SEO, content and speed, plus a PDF report by email). The promise under the audit text changes from "48h personal review" to "60s instant score". Without the plugin the theme's simple audit form works as before.
+
 ## What's new in 2.14
 
 - **Header:** the "Let's talk" button is now **Free audit** (goes to the Free Audit page, or the homepage audit form). It shows on phones too, next to the menu button.

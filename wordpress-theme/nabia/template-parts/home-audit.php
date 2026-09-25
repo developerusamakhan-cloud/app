@@ -7,6 +7,10 @@
 
 $nabia_status    = isset( $_GET['audit'] ) ? sanitize_key( wp_unslash( $_GET['audit'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $nabia_shortcode = nabia_mod( 'audit_shortcode' );
+// The Nabia Website Audit plugin (live scores + PDF report) takes over when it is active.
+if ( ! $nabia_shortcode && shortcode_exists( 'nabia_website_audit' ) ) {
+	$nabia_shortcode = '[nabia_website_audit]';
+}
 $nabia_messages  = array(
 	'sent'    => __( 'Thank you! Your audit request is in. I will review your website and email you within 48 hours.', 'nabia' ),
 	'invalid' => __( 'Please enter your website address and a valid email.', 'nabia' ),
@@ -27,8 +31,13 @@ $nabia_messages  = array(
 					<?php endforeach; ?>
 				</ul>
 				<p class="audit-promise" data-reveal>
-					<strong>48h</strong>
-					<span><?php esc_html_e( 'Personal review, delivered to your inbox within 2 working days.', 'nabia' ); ?></span>
+					<?php if ( shortcode_exists( 'nabia_website_audit' ) ) : ?>
+						<strong>60s</strong>
+						<span><?php esc_html_e( 'Instant score for design, SEO, content and speed, plus a PDF report in your inbox.', 'nabia' ); ?></span>
+					<?php else : ?>
+						<strong>48h</strong>
+						<span><?php esc_html_e( 'Personal review, delivered to your inbox within 2 working days.', 'nabia' ); ?></span>
+					<?php endif; ?>
 				</p>
 			</div>
 

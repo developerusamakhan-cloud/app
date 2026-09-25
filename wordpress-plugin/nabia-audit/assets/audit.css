@@ -1,0 +1,540 @@
+/* Nabia Website Audit: form and results. Colours come from the plugin settings. */
+.nwa {
+	--nwa-main: #7c3aed;
+	--nwa-dark: #1a1433;
+	--nwa-accent: #ec4899;
+	--nwa-good: #16a34a;
+	--nwa-ok: #f59e0b;
+	--nwa-bad: #ef4444;
+	--nwa-line: #e7e2f5;
+	--nwa-muted: #6b6780;
+	position: relative;
+	color: var(--nwa-dark);
+	font-size: 15px;
+	line-height: 1.5;
+	scroll-margin-top: 120px;
+	container-type: inline-size;
+}
+
+.nwa *,
+.nwa *::before,
+.nwa *::after {
+	box-sizing: border-box;
+}
+
+/* Form ------------------------------------------------------------------ */
+.nwa-form {
+	position: relative;
+	display: grid;
+	gap: 14px;
+	margin: 0;
+}
+
+.nwa-form-title {
+	margin: 0 0 2px;
+	font-size: 20px;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+}
+
+.nwa-field {
+	display: grid;
+	gap: 6px;
+	margin: 0;
+	min-width: 0;
+}
+
+.nwa-field label {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.nwa-field input {
+	width: 100%;
+	min-height: 50px;
+	padding: 12px 16px;
+	border: 1.5px solid var(--nwa-line);
+	border-radius: 14px;
+	background: #fff;
+	color: var(--nwa-dark);
+	font: inherit;
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.nwa-field input:focus {
+	border-color: var(--nwa-main);
+	outline: none;
+	box-shadow: 0 0 0 4px color-mix(in srgb, var(--nwa-main) 18%, transparent);
+}
+
+.nwa-row {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 12px;
+}
+
+.nwa-math-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.nwa-math-q {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 50px;
+	padding: 0 16px;
+	border-radius: 14px;
+	background: color-mix(in srgb, var(--nwa-main) 12%, #fff);
+	font-size: 19px;
+	font-weight: 800;
+	white-space: nowrap;
+	user-select: none;
+}
+
+.nwa-math-q b {
+	color: var(--nwa-main);
+}
+
+.nwa-math-row input {
+	width: 96px;
+	flex: 0 0 96px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.nwa-hp {
+	position: absolute !important;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.nwa-submit,
+.nwa-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	min-height: 54px;
+	padding: 0 20px;
+	white-space: nowrap;
+	border: 0;
+	border-radius: 999px;
+	font: inherit;
+	font-weight: 700;
+	text-decoration: none;
+	cursor: pointer;
+	transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+}
+
+.nwa .nwa-submit {
+	width: 100%;
+	background: var(--nwa-main) !important;
+	color: #fff !important;
+	font-size: 16px;
+}
+
+.nwa-submit:hover,
+.nwa-btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 18px 30px -16px color-mix(in srgb, var(--nwa-main) 70%, transparent);
+}
+
+.nwa-small {
+	margin: 0;
+	color: var(--nwa-muted);
+	font-size: 13px;
+}
+
+.nwa-small a {
+	color: var(--nwa-main);
+	font-weight: 600;
+}
+
+.nwa-alert {
+	margin: 0;
+	padding: 12px 14px;
+	border-radius: 12px;
+	background: #fee2e2;
+	color: #991b1b;
+	font-weight: 600;
+}
+
+/* Loading */
+.nwa-loading {
+	position: absolute;
+	inset: -6px;
+	z-index: 5;
+	display: grid;
+	align-content: center;
+	justify-items: center;
+	gap: 10px;
+	padding: 24px;
+	border-radius: 20px;
+	background: rgba(255, 255, 255, 0.96);
+	text-align: center;
+}
+
+.nwa-loading[hidden] {
+	display: none;
+}
+
+.nwa-spinner {
+	width: 54px;
+	height: 54px;
+	border: 5px solid color-mix(in srgb, var(--nwa-main) 18%, #fff);
+	border-top-color: var(--nwa-main);
+	border-radius: 50%;
+	animation: nwa-spin 0.9s linear infinite;
+}
+
+@keyframes nwa-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.nwa-loading-title {
+	margin: 4px 0 0;
+	font-size: 18px;
+	font-weight: 800;
+}
+
+.nwa-steps {
+	display: grid;
+	gap: 6px;
+	margin: 4px 0;
+	padding: 0;
+	list-style: none;
+	text-align: left;
+}
+
+.nwa-steps li {
+	position: relative;
+	padding-left: 26px;
+	color: var(--nwa-muted);
+	font-size: 14px;
+	transition: color 0.3s;
+}
+
+.nwa-steps li::before {
+	content: "";
+	position: absolute;
+	top: 3px;
+	left: 0;
+	width: 16px;
+	height: 16px;
+	border: 2px solid var(--nwa-line);
+	border-radius: 50%;
+}
+
+.nwa-steps li.is-active {
+	color: var(--nwa-dark);
+	font-weight: 700;
+}
+
+.nwa-steps li.is-active::before {
+	border-color: var(--nwa-main);
+	border-right-color: transparent;
+	animation: nwa-spin 0.8s linear infinite;
+}
+
+.nwa-steps li.is-done {
+	color: var(--nwa-dark);
+}
+
+.nwa-steps li.is-done::before {
+	border-color: var(--nwa-good);
+	background: var(--nwa-good) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m6 12 4 4 8-8' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* Results --------------------------------------------------------------- */
+.nwa-results {
+	display: grid;
+	gap: 18px;
+}
+
+.nwa-hero {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	padding: 20px;
+	border-radius: 22px;
+	background: var(--nwa-dark);
+	color: #fff;
+}
+
+.nwa-score {
+	position: relative;
+	flex-shrink: 0;
+	width: 120px;
+	height: 120px;
+}
+
+.nwa-ring {
+	display: block;
+	transform: rotate(-90deg);
+}
+
+.nwa-ring circle {
+	fill: none;
+	stroke-width: 10;
+}
+
+.nwa-ring-track {
+	stroke: rgba(255, 255, 255, 0.14);
+}
+
+.nwa-ring-fill {
+	stroke-linecap: round;
+	animation: nwa-ring 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes nwa-ring {
+	from {
+		stroke-dashoffset: var(--nwa-dash);
+	}
+}
+
+.nwa-ring.is-good .nwa-ring-fill {
+	stroke: var(--nwa-good);
+}
+
+.nwa-ring.is-ok .nwa-ring-fill {
+	stroke: var(--nwa-ok);
+}
+
+.nwa-ring.is-bad .nwa-ring-fill {
+	stroke: var(--nwa-bad);
+}
+
+.nwa-score-num {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-content: center;
+	text-align: center;
+	line-height: 1;
+}
+
+.nwa-score-num strong {
+	font-size: 38px;
+	font-weight: 800;
+}
+
+.nwa-score-num small {
+	margin-top: 2px;
+	opacity: 0.7;
+	font-size: 12px;
+}
+
+.nwa-grade {
+	position: absolute;
+	top: -4px;
+	right: -4px;
+	display: grid;
+	place-items: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	background: var(--nwa-accent);
+	color: #fff;
+	font-weight: 800;
+}
+
+.nwa-hero-text {
+	min-width: 0;
+}
+
+.nwa-eyebrow {
+	margin: 0;
+	color: color-mix(in srgb, var(--nwa-main) 45%, #fff);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.nwa-domain {
+	margin: 2px 0 6px;
+	overflow-wrap: anywhere;
+	font-size: 22px;
+	font-weight: 800;
+}
+
+.nwa-verdict {
+	margin: 0;
+	opacity: 0.85;
+	font-size: 14px;
+}
+
+.nwa-bars {
+	display: grid;
+	gap: 12px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.nwa-bars li {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 6px 12px;
+	align-items: center;
+}
+
+.nwa-bar-label {
+	font-weight: 600;
+}
+
+.nwa-bar-score {
+	font-weight: 800;
+}
+
+.nwa-bar {
+	grid-column: 1 / -1;
+	height: 8px;
+	overflow: hidden;
+	border-radius: 8px;
+	background: var(--nwa-line);
+}
+
+.nwa-bar i {
+	display: block;
+	width: var(--w);
+	height: 100%;
+	border-radius: inherit;
+	animation: nwa-bar 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes nwa-bar {
+	from {
+		width: 0;
+	}
+}
+
+.nwa-bars .is-good i,
+.nwa-bars .is-good .nwa-bar-score {
+	background: var(--nwa-good);
+	color: var(--nwa-good);
+}
+
+.nwa-bars .is-ok i,
+.nwa-bars .is-ok .nwa-bar-score {
+	background: var(--nwa-ok);
+	color: var(--nwa-ok);
+}
+
+.nwa-bars .is-bad i,
+.nwa-bars .is-bad .nwa-bar-score {
+	background: var(--nwa-bad);
+	color: var(--nwa-bad);
+}
+
+.nwa-bars .nwa-bar-score {
+	background: none !important;
+}
+
+.nwa-subtitle {
+	margin: 4px 0 -6px;
+	font-size: 17px;
+	font-weight: 800;
+}
+
+.nwa-fixes {
+	display: grid;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	counter-reset: nwa;
+}
+
+.nwa-fixes li {
+	position: relative;
+	display: grid;
+	gap: 2px;
+	padding: 12px 14px 12px 50px;
+	border: 1px solid var(--nwa-line);
+	border-radius: 14px;
+	background: #fff;
+	counter-increment: nwa;
+	font-size: 14px;
+}
+
+.nwa-fixes li::before {
+	content: counter(nwa);
+	position: absolute;
+	top: 12px;
+	left: 14px;
+	display: grid;
+	place-items: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: var(--nwa-ok);
+	color: #fff;
+	font-size: 13px;
+	font-weight: 800;
+}
+
+.nwa-fixes li.is-fail::before {
+	background: var(--nwa-bad);
+}
+
+.nwa-fixes span {
+	color: var(--nwa-muted);
+}
+
+.nwa-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.nwa .nwa-btn,
+.nwa .nwa-btn:hover,
+.nwa .nwa-btn:focus {
+	flex: 1 1 200px;
+	color: #fff !important;
+	text-decoration: none !important;
+}
+
+.nwa-btn-main {
+	background: var(--nwa-main);
+}
+
+.nwa-btn-wa {
+	background: #1faa55;
+}
+
+.nwa-btn-dark {
+	background: var(--nwa-dark);
+}
+
+@media (max-width: 560px) {
+	.nwa-row {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.nwa-hero {
+		flex-direction: column;
+		text-align: center;
+	}
+}
+
+/* Narrow containers (for example a sidebar or the theme's audit card) */
+@container (max-width: 520px) {
+	.nwa-row {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.nwa-hero {
+		flex-direction: column;
+		text-align: center;
+	}
+}

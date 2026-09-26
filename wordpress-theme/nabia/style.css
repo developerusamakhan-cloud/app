@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.18.0
+Version: 2.18.1
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -7720,5 +7720,74 @@ a.auto-link:focus-visible {
 	.cookie-card.is-in .cookie-crumb {
 		transition: none;
 		animation: none;
+	}
+}
+
+/* Small cookie button after the visitor has chosen: opens the cookie settings again */
+.cookie-fab {
+	position: fixed;
+	left: 20px;
+	bottom: 20px;
+	z-index: 140;
+	display: grid;
+	place-items: center;
+	width: 48px;
+	height: 48px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: var(--ink);
+	box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+	cursor: pointer;
+	opacity: 0;
+	transform: scale(0.6);
+	transition: opacity 0.35s var(--ease), transform 0.35s var(--ease), box-shadow 0.25s;
+}
+
+.cookie-fab[hidden] {
+	display: none;
+}
+
+.cookie-fab.is-in {
+	opacity: 1;
+	transform: none;
+}
+
+.cookie-fab svg {
+	transition: transform 0.4s var(--ease);
+}
+
+.cookie-fab:hover,
+.cookie-fab:focus-visible {
+	box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 45%, transparent), 0 14px 30px -12px rgba(0, 0, 0, 0.5);
+}
+
+.cookie-fab:hover svg {
+	transform: rotate(-18deg) scale(1.08);
+}
+
+.menu-open .cookie-fab {
+	opacity: 0;
+	pointer-events: none;
+}
+
+@media (max-width: 560px) {
+	.cookie-fab {
+		left: 12px;
+		bottom: 12px;
+		width: 42px;
+		height: 42px;
+	}
+
+	.cookie-fab svg {
+		width: 22px;
+		height: 22px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cookie-fab,
+	.cookie-fab svg {
+		transition: none;
 	}
 }

@@ -1107,15 +1107,32 @@
 				customize.setAttribute('aria-expanded', withPrefs ? 'true' : 'false');
 				customize.textContent = withPrefs ? customize.getAttribute('data-save') : customizeLabel;
 			}
+			setFab(false);
 			cookieCard.hidden = false;
 			requestAnimationFrame(function () {
 				cookieCard.classList.add('is-in');
 			});
 		};
+		var fab = $('[data-cookie-fab]');
+		var setFab = function (visible) {
+			if (!fab) {
+				return;
+			}
+			if (visible) {
+				fab.hidden = false;
+				requestAnimationFrame(function () {
+					fab.classList.add('is-in');
+				});
+			} else {
+				fab.classList.remove('is-in');
+				fab.hidden = true;
+			}
+		};
 		var hideCard = function () {
 			cookieCard.classList.remove('is-in');
 			setTimeout(function () {
 				cookieCard.hidden = true;
+				setFab(!!readConsent());
 			}, 450);
 		};
 		var saveConsent = function (analytics, marketing) {
@@ -1164,6 +1181,8 @@
 			setTimeout(function () {
 				showCard(false);
 			}, 1200);
+		} else {
+			setFab(true);
 		}
 	}
 

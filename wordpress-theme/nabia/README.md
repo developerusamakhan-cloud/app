@@ -65,6 +65,10 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.18.1
+
+- **Cookie button**: after a visitor answers the cookie question, a small round cookie button stays in the bottom left corner. Clicking it opens the cookie settings again. It hides while the popup or the mobile menu is open.
+
 ## What's new in 2.18
 
 - **Cookie consent popup** in the theme style: a dark card with an animated cookie, bottom left on desktop and full width on phones. Buttons: Accept all, Essential only and Customize (switches for Analytics and Marketing). The choice is saved for 6 months in the "nabia_consent" cookie, and a "Cookie settings" link in the footer opens it again. It uses Google Consent Mode v2, so Google Analytics and ads only track after the visitor agrees. The free audit popup waits until the cookie question is answered. Settings: Customize, Nabia Theme, General (on or off, title, text). Set your privacy page under Settings, Privacy and it is linked in the popup.

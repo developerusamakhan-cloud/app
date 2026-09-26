@@ -65,3 +65,13 @@ $nabia_privacy = get_privacy_policy_url();
 		<button class="cookie-btn" type="button" data-cookie-customize aria-expanded="false" data-save="<?php esc_attr_e( 'Save choices', 'nabia' ); ?>"><?php esc_html_e( 'Customize', 'nabia' ); ?></button>
 	</div>
 </div>
+
+<button class="cookie-fab" type="button" data-cookie-open data-cookie-fab aria-label="<?php esc_attr_e( 'Cookie settings', 'nabia' ); ?>" title="<?php esc_attr_e( 'Cookie settings', 'nabia' ); ?>" hidden>
+	<svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true">
+		<path class="cookie-dough" d="M32 6a26 26 0 1 0 25.6 30.5A8 8 0 0 1 47 28a8 8 0 0 1-8-8 8 8 0 0 1-3.5-13.7A26 26 0 0 0 32 6z"/>
+		<circle class="cookie-chip" cx="22" cy="23" r="3.2"/>
+		<circle class="cookie-chip" cx="34" cy="33" r="2.6"/>
+		<circle class="cookie-chip" cx="23" cy="42" r="3"/>
+		<circle class="cookie-chip" cx="40" cy="46" r="2.4"/>
+	</svg>
+</button>

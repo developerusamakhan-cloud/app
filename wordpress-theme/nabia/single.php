@@ -101,6 +101,7 @@ while ( have_posts() ) :
 	</article>
 	<?php
 	nabia_related_posts_section( __( 'Keep reading', 'nabia' ), get_the_ID() );
+	nabia_explore_section();
 	get_template_part( 'template-parts/home', 'audit' );
 endwhile;
 

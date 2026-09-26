@@ -38,6 +38,7 @@ while ( have_posts() ) :
 		</div>
 	</article>
 	<?php
+	nabia_explore_section();
 endwhile;
 
 get_footer();

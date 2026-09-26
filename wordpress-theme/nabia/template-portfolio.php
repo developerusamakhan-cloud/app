@@ -88,4 +88,5 @@ while ( have_posts() ) {
 }
 get_template_part( 'template-parts/why' );
 get_template_part( 'template-parts/home', 'testimonials' );
+nabia_explore_section();
 get_footer();

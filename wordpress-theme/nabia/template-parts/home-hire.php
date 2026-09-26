@@ -34,7 +34,7 @@ if ( ! $nabia_platforms && ! $nabia_is_admin ) {
 			<div class="hire-copy">
 				<p class="hire-kicker"><span class="pulse" aria-hidden="true"></span><?php esc_html_e( 'Also available on', 'nabia' ); ?></p>
 				<h2 class="hire-title"><?php echo esc_html( nabia_mod( 'hire_title' ) ); ?></h2>
-				<p class="hire-text"><?php echo esc_html( nabia_mod( 'hire_text' ) ); ?></p>
+				<p class="hire-text"><?php echo nabia_link_text( nabia_mod( 'hire_text' ), 2 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 			</div>
 
 			<div class="hire-platforms">

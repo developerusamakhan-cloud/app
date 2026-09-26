@@ -12,7 +12,7 @@ $nabia_only = isset( $args['only'] ) ? $args['only'] : '';
 		<?php if ( empty( $args['hide_head'] ) ) : ?>
 			<div class="pricing-head">
 				<?php nabia_section_head( __( 'Pricing', 'nabia' ), nabia_mod( 'pricing_title' ) ); ?>
-				<p class="pricing-text" data-reveal><?php echo esc_html( nabia_mod( 'pricing_text' ) ); ?></p>
+				<p class="pricing-text" data-reveal><?php echo nabia_link_text( nabia_mod( 'pricing_text' ), 2 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 			</div>
 		<?php endif; ?>
 

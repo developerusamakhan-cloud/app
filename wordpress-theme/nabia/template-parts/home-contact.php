@@ -15,7 +15,7 @@ $nabia_shortcode = nabia_mod( 'contact_shortcode' );
 			<span class="contact-glow" aria-hidden="true"></span>
 			<?php nabia_eyebrow( __( 'Contact', 'nabia' ) ); ?>
 			<h2 class="contact-title" data-split><?php echo esc_html( nabia_mod( 'cta_title' ) ); ?></h2>
-			<p class="contact-text" data-reveal><?php echo esc_html( nabia_mod( 'cta_text' ) ); ?></p>
+			<p class="contact-text" data-reveal><?php echo nabia_link_text( nabia_mod( 'cta_text' ), 2 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 
 			<?php if ( $nabia_shortcode ) : ?>
 				<div class="contact-form" data-reveal><?php echo do_shortcode( $nabia_shortcode ); ?></div>

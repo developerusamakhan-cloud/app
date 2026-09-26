@@ -18,13 +18,13 @@ $nabia_messages  = array(
 	'limit'   => __( 'You have sent a few requests already. Please try again in an hour or email me directly.', 'nabia' ),
 );
 ?>
-<section class="section audit" id="audit">
+<section class="section audit<?php echo is_front_page() ? ' section-dark audit-dark' : ''; ?>" id="audit">
 	<div class="container">
 		<div class="audit-card">
 			<div class="audit-copy">
 				<?php nabia_eyebrow( __( 'Free audit', 'nabia' ) ); ?>
 				<h2 class="audit-title" data-split><?php echo esc_html( nabia_mod( 'audit_title' ) ); ?></h2>
-				<p class="audit-text" data-reveal><?php echo esc_html( nabia_mod( 'audit_text' ) ); ?></p>
+				<p class="audit-text" data-reveal><?php echo nabia_link_text( nabia_mod( 'audit_text' ), 2 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 				<ul class="audit-points" data-reveal>
 					<?php foreach ( nabia_mod_list( 'audit_points' ) as $nabia_point ) : ?>
 						<li><span class="tick audit-tick" aria-hidden="true"><?php nabia_icon( 'check' ); ?></span><?php echo esc_html( $nabia_point ); ?></li>

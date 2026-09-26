@@ -47,7 +47,7 @@ $nabia_skills      = array(
 		<div class="about-copy">
 			<?php nabia_section_head( __( 'About me', 'nabia' ), nabia_mod( 'about_title' ) ); ?>
 			<div class="about-text" data-reveal>
-				<?php echo wp_kses_post( wpautop( nabia_mod( 'about_text' ) ) ); ?>
+				<?php echo nabia_link_html( wp_kses_post( wpautop( nabia_mod( 'about_text' ) ) ), 4 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
 
 			<ul class="skills" data-reveal>

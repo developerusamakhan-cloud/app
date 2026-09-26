@@ -31,4 +31,5 @@ while ( have_posts() ) {
 get_template_part( 'template-parts/home', 'testimonials' );
 get_template_part( 'template-parts/home', 'videos' );
 get_template_part( 'template-parts/why' );
+nabia_explore_section();
 get_footer();

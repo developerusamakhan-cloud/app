@@ -65,6 +65,13 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.17
+
+- **Favicon set**: SVG monogram in your colour scheme plus ICO and PNG icons for browsers, iPhone and Android home screens (`assets/favicon`). A Site Icon set in Customize → Site Identity still takes over.
+- **Animated favicon**: the "N" draws itself in, the dot bounces every few seconds, and a waving hand 👋 calls visitors back when they switch tabs. Respects "reduce motion". Toggle: Customize → Nabia Theme → General → Animated favicon.
+- **Internal links everywhere** (`inc/interlinks.php`): keywords in homepage sections, page intros, service details, FAQ answers and your own page/post content link to the matching service page, pricing, free audit, portfolio, about and contact pages. Each page is linked once per page, a page never links to itself, and only published pages are linked. Platform tiles link to their service page.
+- **Keep exploring block**: cross-links to the other main pages at the end of every inner page, service page, blog post and default page.
+
 ## What's new in 2.16
 
 - **Free audit popup.** "Is your website costing you customers?" with a small score preview and a website field. Visitors type their site and land on the audit form with it filled in, ready for their email. It appears after 15 seconds, at half the page, or when a desktop visitor moves to leave, then stays away for 24 hours (cookie). It never shows on the Free Audit page. Settings: Customize, Nabia Theme, Free audit (on or off, delay, title, text).

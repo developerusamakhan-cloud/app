@@ -43,4 +43,5 @@ get_template_part( 'template-parts/contact', 'form' );
 get_template_part( 'template-parts/home', 'hire' );
 get_template_part( 'template-parts/home', 'process' );
 get_template_part( 'template-parts/home', 'faq' );
+nabia_explore_section();
 get_footer();

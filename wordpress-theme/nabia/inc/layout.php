@@ -67,7 +67,7 @@ function nabia_page_header( $a ) {
 				<h1 class="inner-title"><?php echo nabia_tight( $a['title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
 
 				<?php if ( $a['intro'] ) : ?>
-					<p class="inner-intro"><?php echo esc_html( $a['intro'] ); ?></p>
+					<p class="inner-intro"><?php echo nabia_link_text( $a['intro'], 3 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped, then linked. ?></p>
 				<?php endif; ?>
 
 				<?php if ( $a['meta'] ) : ?>
@@ -303,6 +303,10 @@ function nabia_autolink_keywords() {
  * @return string
  */
 function nabia_autolink_content( $content ) {
+	// Kept for child themes that call it directly; the site-wide version is nabia_interlink_content().
+	if ( function_exists( 'nabia_interlink_content' ) ) {
+		return nabia_interlink_content( $content );
+	}
 	if ( ! is_singular( array( 'post', nabia_portfolio_type() ) ) || ! in_the_loop() || ! is_main_query() ) {
 		return $content;
 	}
@@ -358,4 +362,4 @@ function nabia_autolink_content( $content ) {
 	}
 	return implode( '', $parts );
 }
-add_filter( 'the_content', 'nabia_autolink_content', 20 );
+// Hooked through nabia_interlink_content() in inc/interlinks.php (pages, posts and projects).

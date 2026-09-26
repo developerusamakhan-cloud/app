@@ -64,7 +64,7 @@ while ( have_posts() ) :
 					<article class="feature" data-reveal style="--i:<?php echo (int) $nabia_index % 3; ?>">
 						<span class="feature-num"><?php echo esc_html( sprintf( '%02d', $nabia_index + 1 ) ); ?></span>
 						<h3><?php echo esc_html( $nabia_feature[0] ); ?></h3>
-						<p><?php echo esc_html( $nabia_feature[1] ); ?></p>
+						<p><?php echo nabia_link_text( $nabia_feature[1], 1 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 					</article>
 				<?php endforeach; ?>
 			</div>
@@ -73,7 +73,7 @@ while ( have_posts() ) :
 				<h3><?php esc_html_e( 'Perfect for', 'nabia' ); ?></h3>
 				<ul>
 					<?php foreach ( $nabia_service['for'] as $nabia_item ) : ?>
-						<li><?php echo esc_html( $nabia_item ); ?></li>
+						<li><?php echo nabia_link_text( $nabia_item, 1 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></li>
 					<?php endforeach; ?>
 				</ul>
 			</div>
@@ -107,7 +107,7 @@ while ( have_posts() ) :
 				<?php foreach ( array_merge( $nabia_service['faq'], array_map( 'array_values', array_slice( nabia_faq(), 0, 2 ) ) ) as $nabia_index => $nabia_item ) : ?>
 					<details class="faq-item" data-reveal <?php echo 0 === $nabia_index ? 'open' : ''; ?>>
 						<summary><span><?php echo esc_html( $nabia_item[0] ); ?></span><span class="faq-icon" aria-hidden="true"><?php nabia_icon( 'plus' ); ?></span></summary>
-						<div class="faq-answer"><p><?php echo esc_html( $nabia_item[1] ); ?></p></div>
+						<div class="faq-answer"><p><?php echo nabia_link_text( $nabia_item[1], 1 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p></div>
 					</details>
 				<?php endforeach; ?>
 			</div>
@@ -145,6 +145,7 @@ while ( have_posts() ) :
 
 	<?php
 	nabia_related_posts_section( __( 'Helpful articles', 'nabia' ) );
+	nabia_explore_section();
 endwhile;
 
 get_footer();

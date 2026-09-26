@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NABIA_VERSION', '2.16.0' );
+define( 'NABIA_VERSION', '2.17.0' );
 define( 'NABIA_DIR', get_template_directory() );
 define( 'NABIA_URI', get_template_directory_uri() );
 
@@ -23,6 +23,7 @@ require NABIA_DIR . '/inc/pricing.php';
 require NABIA_DIR . '/inc/audit.php';
 require NABIA_DIR . '/inc/setup.php';
 require NABIA_DIR . '/inc/layout.php';
+require NABIA_DIR . '/inc/interlinks.php';
 require NABIA_DIR . '/inc/forms.php';
 
 /**
@@ -151,20 +152,65 @@ function nabia_preload_fonts() {
 add_action( 'wp_head', 'nabia_preload_fonts', 1 );
 
 /**
- * Use the monogram as favicon until a Site Icon is set in the Customizer.
+ * Favicon colours: follow the colour scheme and the custom accent.
+ *
+ * @return array ink, accent, second.
+ */
+function nabia_favicon_colors() {
+	$schemes = nabia_color_schemes();
+	$scheme  = isset( $schemes[ nabia_mod( 'color_scheme' ) ] ) ? $schemes[ nabia_mod( 'color_scheme' ) ] : reset( $schemes );
+	$accent  = sanitize_hex_color( nabia_mod( 'accent_color' ) );
+	return array(
+		'ink'    => $scheme['ink'],
+		'accent' => $accent ? $accent : $scheme['accent'],
+		'second' => $accent ? $accent : ( isset( $scheme['second'] ) ? $scheme['second'] : $scheme['accent'] ),
+	);
+}
+
+/**
+ * The "N" monogram favicon as SVG markup.
+ *
+ * @return string
+ */
+function nabia_favicon_svg() {
+	$c = nabia_favicon_colors();
+	return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">'
+		. '<defs><linearGradient id="d" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' . $c['accent'] . '"/><stop offset="1" stop-color="' . $c['second'] . '"/></linearGradient></defs>'
+		. '<rect x="1" y="1" width="46" height="46" rx="15" fill="' . $c['ink'] . '"/>'
+		. '<path d="M15 34V15.5a1.5 1.5 0 0 1 2.6-1l12.8 15a1.5 1.5 0 0 0 2.6-1V14" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>'
+		. '<circle cx="36.5" cy="36" r="4" fill="url(#d)"/></svg>';
+}
+
+/**
+ * Favicon set (until a Site Icon is set in Customize → Site Identity):
+ * ICO for old browsers, the SVG monogram in your scheme colours, and PNG icons
+ * for iPhone / Android home screens (files in assets/favicon).
  */
 function nabia_favicon() {
 	if ( has_site_icon() ) {
 		return;
 	}
-	$schemes = nabia_color_schemes();
-	$scheme  = isset( $schemes[ nabia_mod( 'color_scheme' ) ] ) ? $schemes[ nabia_mod( 'color_scheme' ) ] : reset( $schemes );
-	$accent  = sanitize_hex_color( nabia_mod( 'accent_color' ) );
-	$accent  = $accent ? $accent : $scheme['accent'];
-	$svg     = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="1" y="1" width="46" height="46" rx="15" fill="' . $scheme['ink'] . '"/><path d="M15 34V15.5a1.5 1.5 0 0 1 2.6-1l12.8 15a1.5 1.5 0 0 0 2.6-1V14" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36.5" cy="36" r="4" fill="' . $accent . '"/></svg>';
-	echo '<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,' . rawurlencode( $svg ) . '">' . "\n";
+	$dir = NABIA_URI . '/assets/favicon/';
+	printf( '<link rel="icon" href="%s" sizes="32x32">' . "\n", esc_url( $dir . 'favicon.ico' ) );
+	echo '<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,' . rawurlencode( nabia_favicon_svg() ) . '">' . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG, colours sanitised.
+	printf( '<link rel="icon" type="image/png" sizes="192x192" href="%s">' . "\n", esc_url( $dir . 'icon-192.png' ) );
+	printf( '<link rel="apple-touch-icon" href="%s">' . "\n", esc_url( $dir . 'apple-touch-icon.png' ) );
 }
 add_action( 'wp_head', 'nabia_favicon', 2 );
+
+/**
+ * Animated favicon: the "N" draws itself in, the dot bounces now and then,
+ * and a waving hand calls visitors back when they switch to another tab.
+ * Off with Customize → Nabia Theme → General, or when a Site Icon is set.
+ */
+function nabia_favicon_script() {
+	if ( has_site_icon() || ! nabia_mod( 'enable_favicon_anim' ) ) {
+		return;
+	}
+	wp_enqueue_script( 'nabia-favicon', NABIA_URI . '/assets/js/favicon.js', array(), nabia_asset_version( 'assets/js/favicon.js' ), array( 'strategy' => 'defer', 'in_footer' => true ) );
+	wp_localize_script( 'nabia-favicon', 'nabiaFavicon', nabia_favicon_colors() );
+}
+add_action( 'wp_enqueue_scripts', 'nabia_favicon_script' );
 
 /**
  * Print the theme version in the page source, handy to check that an update is live.

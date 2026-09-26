@@ -35,7 +35,7 @@ $nabia_first = trim( strtok( $nabia_name, ' ' ) );
 				<?php endif; ?>
 			</h1>
 
-			<p class="hero-text" data-reveal><?php echo esc_html( nabia_mod( 'hero_text' ) ); ?></p>
+			<p class="hero-text" data-reveal><?php echo nabia_link_text( nabia_mod( 'hero_text' ), 3 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 
 			<div class="hero-actions" data-reveal>
 				<?php if ( nabia_mod( 'hero_cta_label' ) ) : ?>

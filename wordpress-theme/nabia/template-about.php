@@ -46,4 +46,5 @@ get_template_part( 'template-parts/why' );
 get_template_part( 'template-parts/home', 'process' );
 get_template_part( 'template-parts/home', 'testimonials' );
 get_template_part( 'template-parts/home', 'platforms' );
+nabia_explore_section();
 get_footer();

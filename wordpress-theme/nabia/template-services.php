@@ -38,4 +38,5 @@ get_template_part( 'template-parts/why' );
 get_template_part( 'template-parts/home', 'platforms' );
 get_template_part( 'template-parts/home', 'process' );
 get_template_part( 'template-parts/home', 'pricing' );
+nabia_explore_section();
 get_footer();

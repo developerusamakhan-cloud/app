@@ -30,7 +30,7 @@ $nabia_reasons = apply_filters(
 				<li class="why-item" data-reveal style="--i:<?php echo (int) $nabia_index; ?>">
 					<span class="why-icon"><?php nabia_icon( $nabia_reason[0] ); ?></span>
 					<strong><?php echo esc_html( $nabia_reason[1] ); ?></strong>
-					<span><?php echo esc_html( $nabia_reason[2] ); ?></span>
+					<span><?php echo nabia_link_text( $nabia_reason[2], 1 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 				</li>
 			<?php endforeach; ?>
 		</ul>

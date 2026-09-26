@@ -1016,6 +1016,12 @@
 			if (shown || seen || document.body.classList.contains('menu-open') || document.querySelector('dialog[open]') || auditInView()) {
 				return;
 			}
+			// Let the visitor answer the cookie question first.
+			var cookieOpen = document.querySelector('[data-cookie]:not([hidden])');
+			if (cookieOpen) {
+				setTimeout(showPop, 8000);
+				return;
+			}
 			shown = true;
 			remember();
 			pop.showModal();
@@ -1075,6 +1081,89 @@
 					}
 				});
 			}
+		}
+	}
+
+	// Cookie consent: saved for 6 months, passed to Google Consent Mode, reopened from the footer.
+	var cookieCard = $('[data-cookie]');
+	if (cookieCard) {
+		var readConsent = function () {
+			var m = document.cookie.match(/(?:^|; )nabia_consent=([^;]+)/);
+			return m ? decodeURIComponent(m[1]) : '';
+		};
+		var prefs = $('[data-cookie-prefs]', cookieCard);
+		var customize = $('[data-cookie-customize]', cookieCard);
+		var customizeLabel = customize ? customize.textContent : '';
+		var switches = $$('[data-cookie-type]', cookieCard);
+		var showCard = function (withPrefs) {
+			var current = readConsent();
+			switches.forEach(function (input) {
+				input.checked = current.indexOf(input.getAttribute('data-cookie-type') + '1') > -1;
+			});
+			if (prefs) {
+				prefs.hidden = !withPrefs;
+			}
+			if (customize) {
+				customize.setAttribute('aria-expanded', withPrefs ? 'true' : 'false');
+				customize.textContent = withPrefs ? customize.getAttribute('data-save') : customizeLabel;
+			}
+			cookieCard.hidden = false;
+			requestAnimationFrame(function () {
+				cookieCard.classList.add('is-in');
+			});
+		};
+		var hideCard = function () {
+			cookieCard.classList.remove('is-in');
+			setTimeout(function () {
+				cookieCard.hidden = true;
+			}, 450);
+		};
+		var saveConsent = function (analytics, marketing) {
+			var value = 'v1.a' + (analytics ? 1 : 0) + '.m' + (marketing ? 1 : 0);
+			document.cookie = 'nabia_consent=' + encodeURIComponent(value) + '; max-age=' + (180 * 86400) + '; path=/; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '');
+			if (typeof window.gtag === 'function') {
+				var ads = marketing ? 'granted' : 'denied';
+				window.gtag('consent', 'update', { analytics_storage: analytics ? 'granted' : 'denied', ad_storage: ads, ad_user_data: ads, ad_personalization: ads });
+			}
+			try {
+				document.dispatchEvent(new CustomEvent('nabia:consent', { detail: { analytics: analytics, marketing: marketing } }));
+			} catch (err) {}
+			hideCard();
+		};
+		var accept = $('[data-cookie-accept]', cookieCard);
+		if (accept) {
+			accept.addEventListener('click', function () {
+				saveConsent(true, true);
+			});
+		}
+		var essential = $('[data-cookie-essential]', cookieCard);
+		if (essential) {
+			essential.addEventListener('click', function () {
+				saveConsent(false, false);
+			});
+		}
+		if (customize) {
+			customize.addEventListener('click', function () {
+				if (prefs && prefs.hidden) {
+					showCard(true);
+					return;
+				}
+				var pick = { a: false, m: false };
+				switches.forEach(function (input) {
+					pick[input.getAttribute('data-cookie-type')] = input.checked;
+				});
+				saveConsent(pick.a, pick.m);
+			});
+		}
+		$$('[data-cookie-open]').forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				showCard(true);
+			});
+		});
+		if (!readConsent()) {
+			setTimeout(function () {
+				showCard(false);
+			}, 1200);
 		}
 	}
 

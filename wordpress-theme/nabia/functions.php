@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NABIA_VERSION', '2.17.0' );
+define( 'NABIA_VERSION', '2.18.0' );
 define( 'NABIA_DIR', get_template_directory() );
 define( 'NABIA_URI', get_template_directory_uri() );
 
@@ -219,6 +219,30 @@ function nabia_version_comment() {
 	echo '<!-- Nabia theme ' . esc_html( NABIA_VERSION ) . ' -->' . "\n";
 }
 add_action( 'wp_head', 'nabia_version_comment', 0 );
+
+/**
+ * Google Consent Mode v2 defaults: nothing is tracked until the visitor agrees in the
+ * cookie popup. Printed first in the head so analytics tags loaded later respect it.
+ */
+function nabia_consent_defaults() {
+	if ( ! nabia_mod( 'enable_cookies' ) ) {
+		return;
+	}
+	?>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	(function () {
+		var m = document.cookie.match(/(?:^|; )nabia_consent=([^;]+)/);
+		var c = m ? decodeURIComponent(m[1]) : '';
+		var a = c.indexOf('a1') > -1 ? 'granted' : 'denied';
+		var k = c.indexOf('m1') > -1 ? 'granted' : 'denied';
+		gtag('consent', 'default', { analytics_storage: a, ad_storage: k, ad_user_data: k, ad_personalization: k, wait_for_update: 500 });
+	})();
+	</script>
+	<?php
+}
+add_action( 'wp_head', 'nabia_consent_defaults', 1 );
 
 /**
  * Add a class when JS runs so reveal animations never hide content for no-JS visitors.

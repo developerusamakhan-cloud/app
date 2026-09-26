@@ -154,6 +154,9 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 					<li><a href="<?php echo esc_url( get_privacy_policy_url() ); ?>"><?php esc_html_e( 'Privacy policy', 'nabia' ); ?></a></li>
 				<?php endif; ?>
 				<li><a href="<?php echo esc_url( nabia_sitemap_url() ); ?>"><?php esc_html_e( 'Sitemap', 'nabia' ); ?></a></li>
+				<?php if ( nabia_mod( 'enable_cookies' ) ) : ?>
+					<li><button class="cookie-reopen" type="button" data-cookie-open><?php esc_html_e( 'Cookie settings', 'nabia' ); ?></button></li>
+				<?php endif; ?>
 				<li><a href="<?php echo esc_url( nabia_page_url( 'audit' ) ? nabia_page_url( 'audit' ) : home_url( '/#audit' ) ); ?>"><?php esc_html_e( 'Free audit', 'nabia' ); ?></a></li>
 			</ul>
 			<a class="back-to-top" href="#top" data-magnetic>
@@ -165,6 +168,10 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 </footer>
 
 <?php
+if ( nabia_mod( 'enable_cookies' ) ) {
+	get_template_part( 'template-parts/cookie', 'consent' );
+}
+
 // Free audit popup: not on the audit page itself or while a report is shown.
 if ( nabia_mod( 'enable_popup' ) && ! is_page_template( 'template-audit.php' ) && ! isset( $_GET['nwa_report'] ) && ! isset( $_GET['audit_url'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	get_template_part( 'template-parts/popup', 'audit' );

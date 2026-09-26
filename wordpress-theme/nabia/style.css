@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.17.0
+Version: 2.18.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -7398,4 +7398,327 @@ a.auto-link:focus-visible {
 /* "Keep exploring" block at the end of inner pages. */
 .explore-links {
 	grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+/* ==========================================================================
+   Cookie consent card
+   ========================================================================== */
+.cookie-card {
+	position: fixed;
+	left: 20px;
+	bottom: 20px;
+	z-index: 150;
+	width: min(420px, calc(100% - 40px));
+	padding: 20px;
+	border-radius: 26px;
+	background: var(--ink);
+	color: #fff;
+	box-shadow: 0 30px 70px -24px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.06);
+	opacity: 0;
+	transform: translateY(24px) scale(0.97);
+	transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+	overflow: hidden;
+}
+
+.cookie-card::before {
+	content: "";
+	position: absolute;
+	top: -70px;
+	right: -60px;
+	width: 180px;
+	height: 180px;
+	border-radius: 50%;
+	background: var(--accent);
+	opacity: 0.35;
+	filter: blur(30px);
+	pointer-events: none;
+}
+
+.cookie-card.is-in {
+	opacity: 1;
+	transform: none;
+}
+
+.cookie-card[hidden] {
+	display: none;
+}
+
+.cookie-top {
+	position: relative;
+	display: flex;
+	gap: 14px;
+	align-items: flex-start;
+}
+
+.cookie-art {
+	flex-shrink: 0;
+	display: grid;
+	place-items: center;
+	width: 60px;
+	height: 60px;
+	border-radius: 18px;
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.cookie-art svg {
+	display: block;
+	width: 44px;
+	height: 44px;
+	transform-origin: 50% 60%;
+}
+
+.cookie-card.is-in .cookie-art svg {
+	animation: cookie-wobble 2.6s var(--ease) 0.4s 2;
+}
+
+@keyframes cookie-wobble {
+	0%,
+	100% {
+		transform: rotate(0);
+	}
+
+	20% {
+		transform: rotate(-12deg) scale(1.05);
+	}
+
+	40% {
+		transform: rotate(9deg);
+	}
+
+	60% {
+		transform: rotate(-5deg);
+	}
+}
+
+.cookie-dough {
+	fill: var(--third, #fbbf24);
+}
+
+.cookie-chip {
+	fill: #5b3a1e;
+}
+
+.cookie-crumb {
+	fill: var(--third, #fbbf24);
+}
+
+.cookie-card.is-in .cookie-crumb {
+	animation: cookie-crumb 2.6s ease-in 0.8s 2;
+}
+
+.cookie-card.is-in .cookie-crumb.c2 {
+	animation-delay: 1s;
+}
+
+.cookie-card.is-in .cookie-crumb.c3 {
+	animation-delay: 1.15s;
+}
+
+@keyframes cookie-crumb {
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+
+	40%,
+	100% {
+		transform: translate(2px, 14px);
+		opacity: 0;
+	}
+}
+
+.cookie-copy {
+	min-width: 0;
+}
+
+.cookie-title {
+	margin: 2px 0 4px;
+	font-family: var(--font-display);
+	font-size: 17px;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+}
+
+.cookie-text {
+	margin: 0;
+	color: rgba(255, 255, 255, 0.72);
+	font-size: 13.5px;
+	line-height: 1.55;
+}
+
+.cookie-text a {
+	color: #fff;
+	font-weight: 600;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.cookie-prefs {
+	position: relative;
+	display: grid;
+	gap: 8px;
+	margin-top: 16px;
+}
+
+.cookie-prefs[hidden] {
+	display: none;
+}
+
+.cookie-pref {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 10px 12px;
+	border-radius: 14px;
+	background: rgba(255, 255, 255, 0.06);
+	cursor: pointer;
+}
+
+.cookie-pref-text {
+	display: grid;
+	gap: 2px;
+	min-width: 0;
+}
+
+.cookie-pref-text strong {
+	font-size: 14px;
+}
+
+.cookie-pref-text small {
+	color: rgba(255, 255, 255, 0.6);
+	font-size: 12px;
+	line-height: 1.4;
+}
+
+.cookie-always {
+	flex-shrink: 0;
+	color: #4ade80;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.cookie-switch {
+	position: relative;
+	flex-shrink: 0;
+	width: 44px;
+	height: 26px;
+	margin: 0;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.2);
+	cursor: pointer;
+	appearance: none;
+	-webkit-appearance: none;
+	transition: background 0.25s;
+}
+
+.cookie-switch::after {
+	content: "";
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	transition: transform 0.25s var(--ease);
+}
+
+.cookie-switch:checked {
+	background: var(--accent);
+}
+
+.cookie-switch:checked::after {
+	transform: translateX(18px);
+}
+
+.cookie-switch:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 2px;
+}
+
+.cookie-actions {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-top: 16px;
+}
+
+.cookie-actions .cookie-accept {
+	flex: 1 1 auto;
+	justify-content: center;
+}
+
+.cookie-btn {
+	padding: 10px 14px;
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	border-radius: 999px;
+	background: transparent;
+	color: #fff;
+	font: inherit;
+	font-size: 13.5px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s, border-color 0.2s;
+}
+
+.cookie-btn:hover,
+.cookie-btn:focus-visible {
+	border-color: #fff;
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.cookie-reopen {
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+}
+
+.cookie-reopen:hover {
+	text-decoration: underline;
+}
+
+@media (max-width: 560px) {
+	.cookie-card {
+		left: 12px;
+		right: 12px;
+		bottom: 12px;
+		width: auto;
+		padding: 16px;
+		border-radius: 22px;
+	}
+
+	.cookie-art {
+		width: 48px;
+		height: 48px;
+		border-radius: 14px;
+	}
+
+	.cookie-art svg {
+		width: 36px;
+		height: 36px;
+	}
+
+	.cookie-actions .cookie-accept {
+		flex-basis: 100%;
+	}
+
+	.cookie-btn {
+		flex: 1 1 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cookie-card,
+	.cookie-card.is-in .cookie-art svg,
+	.cookie-card.is-in .cookie-crumb {
+		transition: none;
+		animation: none;
+	}
 }

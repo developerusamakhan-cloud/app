@@ -995,8 +995,8 @@
 		});
 	});
 
-	// Free audit popup: once every 24 hours per visitor (cookie), after a delay,
-	// at half the page, or when a desktop visitor moves to leave.
+	// Free audit popup: once every 24 hours per visitor (cookie), after scrolling
+	// through half of the page.
 	var pop = $('[data-audit-pop]');
 	if (pop && typeof pop.showModal === 'function') {
 		var seen = /(^|; )nabia_audit_pop=1/.test(document.cookie);
@@ -1014,6 +1014,12 @@
 		};
 		var showPop = function () {
 			if (shown || seen || document.body.classList.contains('menu-open') || document.querySelector('dialog[open]') || auditInView()) {
+				return;
+			}
+			// Never while the preloader is still on screen.
+			var loader = document.querySelector('.preloader');
+			if (loader && !loader.classList.contains('is-done')) {
+				setTimeout(showPop, 1500);
 				return;
 			}
 			// Let the visitor answer the cookie question first.
@@ -1061,26 +1067,16 @@
 				window.location.href = dest.toString();
 			});
 		}
+		// Only after the visitor has scrolled through half of the page.
 		if (!seen) {
-			var delay = parseInt(pop.getAttribute('data-delay'), 10) || 15;
-			var timer = setTimeout(showPop, delay * 1000);
 			var onScroll = function () {
 				var max = document.documentElement.scrollHeight - window.innerHeight;
-				if (max > 0 && window.scrollY / max > 0.5) {
+				if (max > 0 && window.scrollY / max >= 0.5) {
 					window.removeEventListener('scroll', onScroll);
-					clearTimeout(timer);
 					showPop();
 				}
 			};
 			window.addEventListener('scroll', onScroll, { passive: true });
-			if (window.matchMedia('(pointer: fine)').matches) {
-				document.addEventListener('mouseout', function (e) {
-					if (!e.relatedTarget && e.clientY <= 0) {
-						clearTimeout(timer);
-						showPop();
-					}
-				});
-			}
 		}
 	}
 

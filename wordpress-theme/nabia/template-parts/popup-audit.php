@@ -1,7 +1,7 @@
 <?php
 /**
- * Free audit popup. Shown once every 24 hours per visitor (cookie), after a delay,
- * at half the page or on exit intent. Settings: Customize > Nabia Theme > Free audit.
+ * Free audit popup. Shown once every 24 hours per visitor (cookie), when they have
+ * scrolled through half of the page. Settings: Customize > Nabia Theme > Free audit.
  *
  * @package Nabia
  */
@@ -13,7 +13,7 @@ if ( ! $nabia_target ) {
 }
 $nabia_wa = nabia_whatsapp_url();
 ?>
-<dialog class="audit-pop" id="audit-pop" aria-labelledby="audit-pop-title" data-audit-pop data-delay="<?php echo esc_attr( max( 3, (int) nabia_mod( 'popup_delay' ) ) ); ?>">
+<dialog class="audit-pop" id="audit-pop" aria-labelledby="audit-pop-title" data-audit-pop>
 	<button class="audit-pop-close" type="button" data-audit-pop-close aria-label="<?php esc_attr_e( 'Close', 'nabia' ); ?>"><?php nabia_icon( 'close' ); ?></button>
 	<div class="audit-pop-grid">
 		<div class="audit-pop-visual" aria-hidden="true">

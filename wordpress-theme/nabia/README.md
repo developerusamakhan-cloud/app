@@ -65,6 +65,10 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.18.3
+
+- **Every contact message is saved.** The spam checks (math answer, hidden bot field, sending speed, expired form, more than 5 messages an hour) no longer block anything. Suspicious messages are saved in Submissions marked "Possible spam" with the reason, and emailed to you with "[Possible spam]" in the subject. They do not get the automatic reply. The visitor always sees the thank you message. Only messages without a name, a valid email or a message are sent back to the visitor to complete.
+
 ## What's new in 2.18.2
 
 - **Free audit popup only on scroll**: it now appears only after the visitor has scrolled through half of the page (no timer, no exit intent), never while the preloader is still showing, and after the cookie question is answered. Still once every 24 hours.

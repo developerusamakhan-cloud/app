@@ -161,6 +161,10 @@ function nabia_submission_column( $column, $post_id ) {
 			echo esc_html( trim( get_post_meta( $post_id, '_nabia_service', true ) . ' / ' . get_post_meta( $post_id, '_nabia_budget', true ), ' /' ) );
 			break;
 		case 'nabia_status':
+			$spam = get_post_meta( $post_id, '_nabia_spam', true );
+			if ( $spam ) {
+				echo '<strong style="color:#b45309">' . esc_html__( 'Possible spam', 'nabia' ) . '</strong><br><small style="color:#646970">' . esc_html( $spam ) . '</small><br>';
+			}
 			echo '1' === get_post_meta( $post_id, '_nabia_read', true )
 				? '<span style="color:#646970">' . esc_html__( 'Read', 'nabia' ) . '</span>'
 				: '<strong style="color:#7c3aed">&#9679; ' . esc_html__( 'New', 'nabia' ) . '</strong>';
@@ -193,6 +197,7 @@ function nabia_submission_details( $post ) {
 		__( 'Budget', 'nabia' )   => get_post_meta( $post->ID, '_nabia_budget', true ),
 		__( 'Sent from', 'nabia' ) => get_post_meta( $post->ID, '_nabia_source', true ),
 		__( 'Received', 'nabia' ) => get_the_date( '', $post ) . ' ' . get_the_time( '', $post ),
+		__( 'Possible spam', 'nabia' ) => get_post_meta( $post->ID, '_nabia_spam', true ),
 	);
 	echo '<table class="widefat striped" style="margin-bottom:16px"><tbody>';
 	foreach ( $rows as $label => $value ) {
@@ -427,28 +432,6 @@ function nabia_handle_contact() {
 		exit;
 	};
 
-	if ( ! isset( $_POST['nabia_contact_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nabia_contact_nonce'] ) ), 'nabia_contact' ) ) {
-		$go( 'expired' );
-	}
-	if ( ! empty( $_POST['company_website'] ) ) {
-		nabia_form_log( 'contact', 'honeypot' );
-		$go( 'sent', false ); // Honeypot.
-	}
-
-	// Reject forms sent less than 3 seconds after loading (bots).
-	$token = isset( $_POST['nabia_t'] ) ? sanitize_text_field( wp_unslash( $_POST['nabia_t'] ) ) : '';
-	$parts = explode( '.', $token );
-	if ( 2 !== count( $parts ) || ! hash_equals( wp_hash( 'nabia_form_' . $parts[0] ), $parts[1] ) || time() - (int) $parts[0] < 3 ) {
-		$go( 'expired' );
-	}
-
-	// Math captcha.
-	$math_key = isset( $_POST['nabia_cq'] ) ? sanitize_text_field( wp_unslash( $_POST['nabia_cq'] ) ) : '';
-	$math_ans = isset( $_POST['cf_math'] ) ? sanitize_text_field( wp_unslash( $_POST['cf_math'] ) ) : '';
-	if ( ! nabia_math_captcha_ok( $math_key, $math_ans ) ) {
-		$go( 'captcha' );
-	}
-
 	$settings = nabia_form_settings();
 	$name     = isset( $_POST['cf_name'] ) ? sanitize_text_field( wp_unslash( $_POST['cf_name'] ) ) : '';
 	$email    = isset( $_POST['cf_email'] ) ? sanitize_email( wp_unslash( $_POST['cf_email'] ) ) : '';
@@ -462,10 +445,29 @@ function nabia_handle_contact() {
 		$go( 'invalid' );
 	}
 
+	// No message is ever thrown away: anything that looks like spam is still saved,
+	// marked "Possible spam" with the reason, so the site owner decides.
+	$spam = array();
+	if ( ! isset( $_POST['nabia_contact_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nabia_contact_nonce'] ) ), 'nabia_contact' ) ) {
+		$spam[] = __( 'form security code expired', 'nabia' );
+	}
+	if ( ! empty( $_POST['company_website'] ) ) {
+		$spam[] = __( 'hidden bot field was filled', 'nabia' );
+	}
+	$token = isset( $_POST['nabia_t'] ) ? sanitize_text_field( wp_unslash( $_POST['nabia_t'] ) ) : '';
+	$parts = explode( '.', $token );
+	if ( 2 !== count( $parts ) || ! hash_equals( wp_hash( 'nabia_form_' . $parts[0] ), $parts[1] ) || time() - (int) $parts[0] < 3 ) {
+		$spam[] = __( 'sent very fast or without the form token', 'nabia' );
+	}
+	$math_key = isset( $_POST['nabia_cq'] ) ? sanitize_text_field( wp_unslash( $_POST['nabia_cq'] ) ) : '';
+	$math_ans = isset( $_POST['cf_math'] ) ? sanitize_text_field( wp_unslash( $_POST['cf_math'] ) ) : '';
+	if ( ! nabia_math_captcha_ok( $math_key, $math_ans ) ) {
+		$spam[] = __( 'wrong math answer', 'nabia' );
+	}
 	$ip_key = 'nabia_cf_' . md5( isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '' );
 	$count  = (int) get_transient( $ip_key );
 	if ( $count >= 5 ) {
-		$go( 'limit' );
+		$spam[] = __( 'more than 5 messages in one hour', 'nabia' );
 	}
 	set_transient( $ip_key, $count + 1, HOUR_IN_SECONDS );
 
@@ -482,6 +484,9 @@ function nabia_handle_contact() {
 			update_post_meta( $id, '_nabia_' . $key, $value );
 		}
 		update_post_meta( $id, '_nabia_read', '0' );
+		if ( $spam ) {
+			update_post_meta( $id, '_nabia_spam', implode( ', ', $spam ) );
+		}
 	}
 
 	$lines = array(
@@ -500,15 +505,22 @@ function nabia_handle_contact() {
 	}
 	$body .= "\n" . $message . "\n\n" . __( 'See all messages:', 'nabia' ) . ' ' . admin_url( 'edit.php?post_type=nabia_submission' );
 
-	$mailed = wp_mail( nabia_form_recipients(), $settings['subject'] . ': ' . $name, $body, array( 'Reply-To: ' . $name . ' <' . $email . '>' ) );
+	if ( $spam ) {
+		$body = __( 'Possible spam', 'nabia' ) . ': ' . implode( ', ', $spam ) . "\n\n" . $body;
+	}
+	$mailed = wp_mail( nabia_form_recipients(), ( $spam ? '[' . __( 'Possible spam', 'nabia' ) . '] ' : '' ) . $settings['subject'] . ': ' . $name, $body, array( 'Reply-To: ' . $name . ' <' . $email . '>' ) );
 	if ( ! $mailed ) {
 		nabia_form_log( 'contact', 'mail_failed', nabia_last_mail_error() );
 	}
 
-	if ( ! empty( $settings['autoreply'] ) ) {
+	if ( ! empty( $settings['autoreply'] ) && ! $spam ) {
 		wp_mail( $email, $settings['autoreply_subject'], str_replace( '{name}', $name, $settings['autoreply_message'] ) );
 	}
 
+	if ( $spam && $mailed ) {
+		nabia_form_log( 'contact', 'sent', __( 'saved as possible spam', 'nabia' ) . ': ' . implode( ', ', $spam ) );
+		$go( 'sent', false );
+	}
 	$go( 'sent', $mailed );
 }
 add_action( 'admin_post_nopriv_nabia_contact', 'nabia_handle_contact' );

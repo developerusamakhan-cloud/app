@@ -1,0 +1,14 @@
+{
+	"name": "Nabia Khan",
+	"short_name": "Nabia Khan",
+	"description": "WordPress developer and graphic designer",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#fbfaff",
+	"theme_color": "#1a1433",
+	"icons": [
+		{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+		{ "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+		{ "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+	]
+}

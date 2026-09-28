@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NABIA_VERSION', '2.18.3' );
+define( 'NABIA_VERSION', '2.19.0' );
 define( 'NABIA_DIR', get_template_directory() );
 define( 'NABIA_URI', get_template_directory_uri() );
 
@@ -25,6 +25,7 @@ require NABIA_DIR . '/inc/setup.php';
 require NABIA_DIR . '/inc/layout.php';
 require NABIA_DIR . '/inc/interlinks.php';
 require NABIA_DIR . '/inc/forms.php';
+require NABIA_DIR . '/inc/branding.php';
 
 /**
  * Theme setup.

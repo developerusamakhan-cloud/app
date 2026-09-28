@@ -109,6 +109,7 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 		'audit_text'         => 'Not sure what is holding your website back? Enter your link and get an instant score for design, SEO, content and speed, plus a branded PDF report with clear, practical fixes. No cost, no obligation.',
 		'enable_popup'       => true,
 		'enable_cookies'     => true,
+		'share_image'        => '',
 		'cookie_title'       => 'A few cookies, if that is okay?',
 		'cookie_text'        => 'I use cookies to keep this site running smoothly and, with your okay, to see which pages help people most. You choose what is on.',
 		'popup_delay'        => '15',

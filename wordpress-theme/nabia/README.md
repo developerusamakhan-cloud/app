@@ -65,6 +65,12 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.19
+
+- **Brand kit** in `assets/brand` (see its README): the logo (icon + name) as SVG and PNG in dark and white versions, the name on its own, the "N" icon in dark and white, a 1080 x 1080 profile picture for Fiverr, Upwork, LinkedIn and Google Business, and a 1200 x 630 share image. Letters in the SVG logos are outlined, so they look right in any app.
+- **Share previews**: every page now has Open Graph and Twitter tags (title, description, image), so links shared on WhatsApp, Facebook, LinkedIn and X show a proper card. Posts and pages use their featured image, everything else uses the brand share image. Change it in Customize, Nabia Theme, General, "Social share image". With Yoast or Rank Math active, the plugin stays in charge and only gets the brand image as a fallback.
+- **Meta description, theme colour and web app manifest** (Android "Add to home screen" shows the icon and name), plus ProfessionalService schema with the logo on the homepage for Google.
+
 ## What's new in 2.18.3
 
 - **Every contact message is saved.** The spam checks (math answer, hidden bot field, sending speed, expired form, more than 5 messages an hour) no longer block anything. Suspicious messages are saved in Submissions marked "Possible spam" with the reason, and emailed to you with "[Possible spam]" in the subject. They do not get the automatic reply. The visitor always sees the thank you message. Only messages without a name, a valid email or a message are sent back to the visitor to complete.

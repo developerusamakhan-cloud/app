@@ -1,0 +1,17 @@
+/*
+Theme Name: ClaimFairly
+Theme URI: https://claimfairly.com/
+Author: ClaimFairly
+Author URI: https://claimfairly.com/about/
+Description: Fast, trust-first theme for ClaimFairly.com. Clean light design, one self-hosted font, colored tool cards, sourced trust blocks, structured data and a one-click setup that imports every page from the 90-day plan. Pair with the ClaimFairly Tools plugin.
+Version: 2.0.0
+Requires at least: 6.4
+Tested up to: 6.8
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: claimfairly
+Tags: one-column, custom-menu, custom-logo, accessibility-ready, translation-ready
+*/
+
+/* All front-end styles live in assets/css/main.css (loaded by functions.php). */

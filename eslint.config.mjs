@@ -13,7 +13,7 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     // WordPress theme (separate project, not part of the Next.js app).
-    "wordpress-theme/**",
+    "claimfairly-wp/**",
   ]),
 ]);
 

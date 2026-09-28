@@ -1,6 +1,6 @@
 <?php
 /**
- * Single blog article.
+ * Single guide (a WordPress post).
  *
  * Reading progress bar, header, content, share buttons, trust blocks,
  * related articles and previous / next links.
@@ -42,10 +42,10 @@ while ( have_posts() ) :
 					<div class="section__head">
 						<div>
 							<p class="eyebrow"><?php esc_html_e( 'Keep reading', 'claimfairly' ); ?></p>
-							<h2 id="more-title" class="section__title"><?php esc_html_e( 'More from the blog', 'claimfairly' ); ?></h2>
+							<h2 id="more-title" class="section__title"><?php esc_html_e( 'More guides', 'claimfairly' ); ?></h2>
 						</div>
 						<?php if ( get_option( 'page_for_posts' ) ) : ?>
-							<a class="text-link" href="<?php echo esc_url( get_permalink( (int) get_option( 'page_for_posts' ) ) ); ?>"><?php esc_html_e( 'All articles', 'claimfairly' ); ?> <?php echo claimfairly_icon( 'arrow', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+							<a class="text-link" href="<?php echo esc_url( get_permalink( (int) get_option( 'page_for_posts' ) ) ); ?>"><?php esc_html_e( 'All guides', 'claimfairly' ); ?> <?php echo claimfairly_icon( 'arrow', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 						<?php endif; ?>
 					</div>
 					<ul class="guide-grid">
@@ -64,10 +64,10 @@ while ( have_posts() ) :
 		$claimfairly_next = get_next_post();
 		if ( $claimfairly_prev || $claimfairly_next ) :
 			?>
-			<nav class="wrap post-nav" aria-label="<?php esc_attr_e( 'More articles', 'claimfairly' ); ?>">
+			<nav class="wrap post-nav" aria-label="<?php esc_attr_e( 'More guides', 'claimfairly' ); ?>">
 				<?php if ( $claimfairly_prev ) : ?>
 					<a class="post-nav__link post-nav__link--prev" href="<?php echo esc_url( get_permalink( $claimfairly_prev ) ); ?>">
-						<span class="post-nav__label"><?php esc_html_e( 'Previous article', 'claimfairly' ); ?></span>
+						<span class="post-nav__label"><?php esc_html_e( 'Previous guide', 'claimfairly' ); ?></span>
 						<span class="post-nav__title"><?php echo esc_html( get_the_title( $claimfairly_prev ) ); ?></span>
 					</a>
 				<?php else : ?>
@@ -75,7 +75,7 @@ while ( have_posts() ) :
 				<?php endif; ?>
 				<?php if ( $claimfairly_next ) : ?>
 					<a class="post-nav__link post-nav__link--next" href="<?php echo esc_url( get_permalink( $claimfairly_next ) ); ?>">
-						<span class="post-nav__label"><?php esc_html_e( 'Next article', 'claimfairly' ); ?></span>
+						<span class="post-nav__label"><?php esc_html_e( 'Next guide', 'claimfairly' ); ?></span>
 						<span class="post-nav__title"><?php echo esc_html( get_the_title( $claimfairly_next ) ); ?></span>
 					</a>
 				<?php endif; ?>

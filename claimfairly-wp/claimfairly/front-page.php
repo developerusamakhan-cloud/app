@@ -160,11 +160,11 @@ if ( $claimfairly_guides ) :
 	<div class="wrap">
 		<div class="section__head">
 			<div>
-				<p class="eyebrow"><?php esc_html_e( 'From the blog', 'claimfairly' ); ?></p>
+				<p class="eyebrow"><?php esc_html_e( 'Guides', 'claimfairly' ); ?></p>
 				<h2 id="guides-title" class="section__title"><?php esc_html_e( 'Plain-English answers to the questions adjusters dodge', 'claimfairly' ); ?></h2>
 			</div>
 			<?php if ( $claimfairly_guides_id ) : ?>
-				<a class="text-link" href="<?php echo esc_url( get_permalink( $claimfairly_guides_id ) ); ?>"><?php esc_html_e( 'All articles', 'claimfairly' ); ?> <?php echo claimfairly_icon( 'arrow', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+				<a class="text-link" href="<?php echo esc_url( get_permalink( $claimfairly_guides_id ) ); ?>"><?php esc_html_e( 'All guides', 'claimfairly' ); ?> <?php echo claimfairly_icon( 'arrow', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 			<?php endif; ?>
 		</div>
 		<ul class="guide-grid">

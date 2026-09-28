@@ -166,9 +166,10 @@ function cft_state_table_shortcode() {
 		'slight_gross' => __( 'Slight / gross', 'claimfairly-tools' ),
 	);
 	foreach ( cft_states() as $state ) {
-		$page = get_page_by_path( 'states/' . $state['slug'] );
-		$name = esc_html( $state['name'] );
-		if ( $page && 'publish' === $page->post_status ) {
+		$published = cft_published_state_pages();
+		$page      = isset( $published[ $state['slug'] ] ) ? $published[ $state['slug'] ] : null;
+		$name      = esc_html( $state['name'] );
+		if ( $page ) {
 			$name = '<a href="' . esc_url( get_permalink( $page ) ) . '">' . $name . '</a>';
 		}
 		$html .= '<tr><th scope="row">' . $name . '</th>';
@@ -208,8 +209,9 @@ function cft_state_siblings_shortcode( $atts ) {
 		if ( $code === $state['code'] || $other['rule'] !== $state['rule'] ) {
 			continue;
 		}
-		$page = get_page_by_path( 'states/' . $other['slug'] );
-		if ( $page && 'publish' === $page->post_status ) {
+		$published = cft_published_state_pages();
+		$page      = isset( $published[ $other['slug'] ] ) ? $published[ $other['slug'] ] : null;
+		if ( $page ) {
 			$links[] = '<li><a href="' . esc_url( get_permalink( $page ) ) . '">' . esc_html( sprintf( /* translators: %s: state name. */ __( '%s car accident claims', 'claimfairly-tools' ), $other['name'] ) ) . '</a></li>';
 		}
 		if ( count( $links ) >= (int) $atts['limit'] ) {

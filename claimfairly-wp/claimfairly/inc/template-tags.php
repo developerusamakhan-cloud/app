@@ -140,7 +140,7 @@ function claimfairly_kicker( $post_id ) {
 	if ( 'post' === get_post_type( $post_id ) ) {
 		$cats = get_the_category( $post_id );
 		return array(
-			'label' => $cats ? $cats[0]->name : __( 'Blog', 'claimfairly' ),
+			'label' => $cats ? $cats[0]->name : __( 'Guide', 'claimfairly' ),
 			'icon'  => 'book',
 		);
 	}
@@ -311,7 +311,12 @@ function claimfairly_get_author_box( $post_id = null ) {
  * @return WP_Post[]
  */
 function claimfairly_get_tools( $limit = -1, $exclude = 0 ) {
-	return get_posts(
+	static $cache = array();
+	$key = $limit . ':' . $exclude;
+	if ( isset( $cache[ $key ] ) ) {
+		return $cache[ $key ];
+	}
+	return $cache[ $key ] = get_posts(
 		array(
 			'post_type'      => 'page',
 			'post_status'    => 'publish',
@@ -373,7 +378,7 @@ function claimfairly_post_look( $post ) {
 	return array(
 		'color'     => $look[0],
 		'icon'      => $look[1],
-		'category'  => $cats ? $cats[0]->name : ( 'page' === $post->post_type ? __( 'Guide', 'claimfairly' ) : __( 'Blog', 'claimfairly' ) ),
+		'category'  => $cats ? $cats[0]->name : ( 'page' === $post->post_type ? __( 'Guide', 'claimfairly' ) : __( 'Guide', 'claimfairly' ) ),
 		'own_share' => $thumb_id && 0 === strpos( (string) get_post_meta( $thumb_id, '_cf_source_file', true ), 'claimfairly-' ),
 	);
 }

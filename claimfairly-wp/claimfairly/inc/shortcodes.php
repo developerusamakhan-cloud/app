@@ -206,10 +206,10 @@ function claimfairly_html_sitemap_shortcode() {
 
 	$html = '<div class="html-sitemap">';
 
-	// Blog articles, grouped by category.
+	// Guides (posts), grouped by category.
 	$cats = get_categories( array( 'hide_empty' => true ) );
 	if ( $cats ) {
-		$html .= '<section class="html-sitemap__group html-sitemap__group--wide"><h2>' . claimfairly_icon( 'book', 20 ) . esc_html__( 'Blog', 'claimfairly' ) . '</h2><div class="html-sitemap__cols">';
+		$html .= '<section class="html-sitemap__group html-sitemap__group--wide"><h2>' . claimfairly_icon( 'book', 20 ) . esc_html__( 'Guides', 'claimfairly' ) . '</h2><div class="html-sitemap__cols">';
 		foreach ( $cats as $cat ) {
 			$posts = get_posts(
 				array(

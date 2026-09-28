@@ -30,9 +30,9 @@ It is safe to run setup again. Pages you have edited are never overwritten.
 
 ## After importing (do these before you promote the site)
 
-1. **Users > Profile:** set your real **Display name** and a short **Biographical Info**. The author box, bylines, About page and homepage note all use them.
+1. **Appearance > Customize > ClaimFairly settings:** check the owner name (**James**) and write a short bio. The author box, bylines, About page, homepage note and schema all use them.
 2. **About page:** open it while logged in. A yellow box, visible only to you, marks where to add a few lines about yourself. Write them, then delete the box.
-3. **Appearance > Customize > ClaimFairly settings:** upload your photo for the homepage founder note, and add your profile links (LinkedIn, X and so on).
+3. **Same Customizer panel:** upload your photo for the homepage founder note, and add your profile links (LinkedIn, X and so on).
 4. **State pages (Pages > States):** each one is a draft. Check the facts box against the state's official statute and insurance department. Add the source links in `wp-content/plugins/claimfairly-tools/data/states.json` and set `"verified": true`, then publish the page. Start with the first 10: CA, TX, FL, NY, GA, PA, IL, OH, NC, MI.
 5. **SEO plugin:** install **Rank Math** or **Yoast** (one only). The importer already filled in each page's SEO title, meta description and focus keyword for both plugins.
 6. In Google Search Console, submit the sitemap your SEO plugin creates.
@@ -50,14 +50,15 @@ It is safe to run setup again. Pages you have edited are never overwritten.
 
 Every page also has its own share image in `assets/og/`, showing its title and its own color. The importer uploads each one to the Media Library and sets it as the page's featured image, so Facebook, X, LinkedIn, WhatsApp and SEO plugins all pick it up automatically. To regenerate the images after changing titles, run `node build/og-images.mjs` (requires Node and Playwright).
 
-## Blog
+## Guides
 
-The articles live in a proper blog at `/blog/` (sites set up earlier are moved over automatically, and `/guides/` redirects there):
+The articles live in the Guides section at `/guides/`, as the plan says. It works like a full blog:
 
-- **Blog page:** the newest article as a large featured card, category chips with post counts, a search box that only searches articles, and a grid of cards.
-- **Articles:** a reading progress bar, a meta card (author, reviewed date, reading time, number of sources), share buttons (X, Facebook, LinkedIn, WhatsApp, email and copy link; plain links, no tracking scripts), related articles from the same category, and previous / next links.
+- **Guides page:** the newest guide as a large featured card, category chips with post counts, a search box that only searches guides, and a grid of cards.
+- **Guides:** a reading progress bar, a meta card (author, reviewed date, reading time, number of sources), share buttons (X, Facebook, LinkedIn, WhatsApp, email and copy link; plain links, no tracking scripts), related articles from the same category, and previous / next links.
 - **Categories:** each has its own page and description.
-- **New articles:** write a normal WordPress post, pick a category, add a featured image if you like, and fill in the Trust & SEO box. Everything else is automatic.
+- **New guides:** write a normal WordPress post, pick a category, add a featured image if you like, and fill in the Trust & SEO box. Everything else is automatic.
+- **Moving from theme 2.3:** that version kept the articles at `/blog/`. Run *Appearance > ClaimFairly Setup* once after updating: the Guides page becomes the posts page again, menus are updated, the old Blog page is set to draft, and `/blog/` redirects to `/guides/` with a permanent (301) redirect.
 
 ## Author
 

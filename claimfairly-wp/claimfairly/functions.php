@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CLAIMFAIRLY_VERSION', '2.3.0' );
+define( 'CLAIMFAIRLY_VERSION', '2.4.0' );
 // Bump when the logo, favicon or share images change, so setup replaces the old ones.
 define( 'CLAIMFAIRLY_BRAND_VERSION', 'navy' );
 define( 'CLAIMFAIRLY_DIR', get_template_directory() );

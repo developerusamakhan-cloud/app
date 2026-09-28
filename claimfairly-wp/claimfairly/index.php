@@ -1,8 +1,8 @@
 <?php
 /**
- * Blog index, category archives and search results.
+ * Guides index (the posts page), category archives and search results.
  *
- * On the first page of the blog, the newest article is shown as a large
+ * On the first page of the guides, the newest guide is shown as a large
  * featured card. Categories are shown as filter chips with post counts.
  *
  * @package ClaimFairly
@@ -21,15 +21,15 @@ if ( is_search() ) {
 } elseif ( is_category() ) {
 	$claimfairly_title = single_cat_title( '', false );
 	$claimfairly_intro = wp_strip_all_tags( category_description() );
-	$claimfairly_kick  = __( 'Blog category', 'claimfairly' );
+	$claimfairly_kick  = __( 'Guide category', 'claimfairly' );
 } elseif ( is_archive() ) {
 	$claimfairly_title = wp_strip_all_tags( get_the_archive_title() );
 	$claimfairly_intro = wp_strip_all_tags( get_the_archive_description() );
-	$claimfairly_kick  = __( 'Blog', 'claimfairly' );
+	$claimfairly_kick  = __( 'Guides', 'claimfairly' );
 } else {
-	$claimfairly_title = __( 'The ClaimFairly Blog', 'claimfairly' );
-	$claimfairly_intro = $claimfairly_blog_id && has_excerpt( $claimfairly_blog_id ) ? get_the_excerpt( $claimfairly_blog_id ) : __( 'Plain-English articles on how car accident claims actually work.', 'claimfairly' );
-	$claimfairly_kick  = __( 'Blog', 'claimfairly' );
+	$claimfairly_title = __( 'Car Accident Claim Guides', 'claimfairly' );
+	$claimfairly_intro = $claimfairly_blog_id && has_excerpt( $claimfairly_blog_id ) ? get_the_excerpt( $claimfairly_blog_id ) : __( 'Plain-English guides to how car accident claims actually work.', 'claimfairly' );
+	$claimfairly_kick  = __( 'Guides', 'claimfairly' );
 }
 $claimfairly_featured = is_home() && ! is_paged() && have_posts();
 ?>
@@ -58,7 +58,7 @@ $claimfairly_featured = is_home() && ! is_paged() && have_posts();
 		);
 		if ( $claimfairly_cats ) :
 			?>
-			<nav class="blog-cats" aria-label="<?php esc_attr_e( 'Blog categories', 'claimfairly' ); ?>">
+			<nav class="blog-cats" aria-label="<?php esc_attr_e( 'Guide categories', 'claimfairly' ); ?>">
 				<ul class="chips">
 					<li><a class="chip<?php echo is_home() ? ' chip--dark' : ''; ?>" href="<?php echo esc_url( $claimfairly_blog ); ?>"><?php esc_html_e( 'All', 'claimfairly' ); ?> <span class="chip__count"><?php echo (int) wp_count_posts()->publish; ?></span></a></li>
 					<?php foreach ( $claimfairly_cats as $claimfairly_cat ) : ?>
@@ -91,7 +91,7 @@ $claimfairly_featured = is_home() && ! is_paged() && have_posts();
 						<?php endif; ?>
 					</span>
 					<span class="featured-post__body">
-						<span class="featured-post__label"><?php esc_html_e( 'Latest article', 'claimfairly' ); ?><?php echo $claimfairly_cats_f ? ' · ' . esc_html( $claimfairly_cats_f[0]->name ) : ''; ?></span>
+						<span class="featured-post__label"><?php esc_html_e( 'Latest guide', 'claimfairly' ); ?><?php echo $claimfairly_cats_f ? ' · ' . esc_html( $claimfairly_cats_f[0]->name ) : ''; ?></span>
 						<span class="featured-post__title"><?php the_title(); ?></span>
 						<span class="featured-post__text"><?php echo esc_html( claimfairly_card_summary( get_post() ) ); ?></span>
 						<span class="featured-post__meta">
@@ -103,7 +103,7 @@ $claimfairly_featured = is_home() && ! is_paged() && have_posts();
 							echo esc_html( sprintf( __( '%d min read', 'claimfairly' ), claimfairly_read_minutes( get_the_ID() ) ) );
 							?>
 						</span>
-						<span class="btn btn--dark btn--sm featured-post__cta"><?php esc_html_e( 'Read the article', 'claimfairly' ); ?></span>
+						<span class="btn btn--dark btn--sm featured-post__cta"><?php esc_html_e( 'Read the guide', 'claimfairly' ); ?></span>
 					</span>
 				</a>
 			</article>

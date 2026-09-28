@@ -139,3 +139,29 @@ function cft_states_for_js() {
 	}
 	return $out;
 }
+
+/**
+ * Published state pages (children of /states/), keyed by slug. One query per request.
+ *
+ * @return array<string,WP_Post>
+ */
+function cft_published_state_pages() {
+	static $pages = null;
+	if ( null !== $pages ) {
+		return $pages;
+	}
+	$pages = array();
+	$hub   = get_page_by_path( 'states' );
+	if ( ! $hub ) {
+		return $pages;
+	}
+	foreach ( get_pages(
+		array(
+			'parent'      => $hub->ID,
+			'post_status' => 'publish',
+		)
+	) as $page ) {
+		$pages[ $page->post_name ] = $page;
+	}
+	return $pages;
+}

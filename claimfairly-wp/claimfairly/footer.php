@@ -9,7 +9,7 @@ $claimfairly_email   = claimfairly_opt( 'cf_contact_email' );
 $claimfairly_same_as = array_filter( preg_split( '/\r\n|\r|\n/', claimfairly_opt( 'cf_same_as' ) ) );
 $claimfairly_menus   = array(
 	'footer-tools' => __( 'Calculators', 'claimfairly' ),
-	'footer-learn' => __( 'From the blog', 'claimfairly' ),
+	'footer-learn' => __( 'Guides', 'claimfairly' ),
 	'footer-site'  => __( 'ClaimFairly', 'claimfairly' ),
 );
 ?>

@@ -753,7 +753,7 @@ function claimfairly_run_import( $update = false ) {
 			$page['meta']['order'] = $i + 1;
 			claimfairly_upsert( $page['meta'], claimfairly_md_to_blocks( $page['body'] ), $update, $report );
 		}
-		$report['notes'][] = __( '40 state pages were created as drafts. Verify each one, then publish.', 'claimfairly' );
+		$report['notes'][] = __( 'The 40 state pages start as drafts. Verify each one, then publish.', 'claimfairly' );
 	} else {
 		$report['notes'][] = __( 'State pages were not created because the ClaimFairly Tools plugin is not active. Activate it and run setup again.', 'claimfairly' );
 	}
@@ -771,9 +771,8 @@ function claimfairly_run_import( $update = false ) {
 		update_option( 'show_on_front', 'page' );
 		update_option( 'page_on_front', $ids['home'] );
 	}
-	if ( isset( $ids['blog'] ) ) {
-		update_option( 'page_for_posts', $ids['blog'] );
-		claimfairly_migrate_guides_to_blog( (int) $ids['blog'], $report );
+	if ( isset( $ids['guides'] ) ) {
+		claimfairly_set_posts_page( (int) $ids['guides'], array( 'blog' ), $report );
 	}
 	claimfairly_category_descriptions();
 	if ( '/%postname%/' !== get_option( 'permalink_structure' ) ) {
@@ -811,51 +810,72 @@ function claimfairly_run_import( $update = false ) {
 }
 
 /**
- * Sites set up before the blog module had a "Guides" posts page. Point any
- * menu items at the new Blog page and unpublish the old empty page (a 301
- * redirect from /guides/ to /blog/ is handled in claimfairly_redirect_guides()).
+ * Make a page the posts page (the Guides index) and retire older posts pages.
  *
- * @param int   $blog_id New blog page ID.
- * @param array $report  Report (by reference).
+ * Version 2.3 briefly used a "Blog" page at /blog/. For sites set up with it,
+ * this republishes Guides, points menu items at it, unpublishes the empty old
+ * page and records a 301 redirect from the old address.
+ *
+ * @param int      $page_id   The posts page to use.
+ * @param string[] $old_slugs Slugs of earlier posts pages.
+ * @param array    $report    Report (by reference).
  */
-function claimfairly_migrate_guides_to_blog( $blog_id, &$report ) {
-	$old = get_page_by_path( 'guides' );
-	if ( ! $old || (int) $old->ID === $blog_id ) {
-		return;
-	}
-	foreach ( wp_get_nav_menus() as $menu ) {
-		foreach ( (array) wp_get_nav_menu_items( $menu->term_id ) as $item ) {
-			if ( 'post_type' === $item->type && (int) $item->object_id === (int) $old->ID ) {
-				wp_update_nav_menu_item(
-					$menu->term_id,
-					$item->ID,
-					array(
-						'menu-item-object-id' => $blog_id,
-						'menu-item-object'    => 'page',
-						'menu-item-type'      => 'post_type',
-						'menu-item-title'     => 'All guides' === $item->title ? 'All articles' : 'Blog',
-						'menu-item-parent-id' => $item->menu_item_parent,
-						'menu-item-position'  => $item->menu_order,
-						'menu-item-status'    => 'publish',
-					)
-				);
-			}
-		}
-	}
-	if ( '' === trim( $old->post_content ) ) {
+function claimfairly_set_posts_page( $page_id, $old_slugs, &$report ) {
+	if ( 'publish' !== get_post_status( $page_id ) ) {
 		wp_update_post(
 			array(
-				'ID'          => $old->ID,
-				'post_status' => 'draft',
+				'ID'          => $page_id,
+				'post_status' => 'publish',
 			)
 		);
 	}
-	update_option( 'claimfairly_guides_redirect', 1 );
-	$report['notes'][] = __( 'Guides moved to the new Blog page. /guides/ now redirects to /blog/.', 'claimfairly' );
+	update_option( 'page_for_posts', $page_id );
+
+	$redirects = (array) get_option( 'claimfairly_redirects', array() );
+	foreach ( $old_slugs as $old_slug ) {
+		$old = get_page_by_path( $old_slug );
+		if ( ! $old || (int) $old->ID === $page_id ) {
+			continue;
+		}
+		foreach ( wp_get_nav_menus() as $menu ) {
+			foreach ( (array) wp_get_nav_menu_items( $menu->term_id ) as $item ) {
+				if ( 'post_type' === $item->type && (int) $item->object_id === (int) $old->ID ) {
+					wp_update_nav_menu_item(
+						$menu->term_id,
+						$item->ID,
+						array(
+							'menu-item-object-id' => $page_id,
+							'menu-item-object'    => 'page',
+							'menu-item-type'      => 'post_type',
+							'menu-item-title'     => ( false !== stripos( $item->title, 'all' ) ) ? 'All guides' : 'Guides',
+							'menu-item-parent-id' => $item->menu_item_parent,
+							'menu-item-position'  => $item->menu_order,
+							'menu-item-status'    => 'publish',
+						)
+					);
+				}
+			}
+		}
+		if ( '' === trim( $old->post_content ) && 'publish' === $old->post_status ) {
+			wp_update_post(
+				array(
+					'ID'          => $old->ID,
+					'post_status' => 'draft',
+				)
+			);
+		}
+		$redirects[ $old_slug ] = get_post_field( 'post_name', $page_id );
+		/* translators: 1: old path, 2: new path. */
+		$report['notes'][] = sprintf( __( '/%1$s/ now redirects to /%2$s/.', 'claimfairly' ), $old_slug, $redirects[ $old_slug ] );
+	}
+	// A page that is live again must not redirect away.
+	unset( $redirects[ get_post_field( 'post_name', $page_id ) ] );
+	update_option( 'claimfairly_redirects', $redirects );
+	delete_option( 'claimfairly_guides_redirect' );
 }
 
 /**
- * Descriptions for the blog categories (shown on category pages and in search results).
+ * Descriptions for the guide categories (shown on category pages and in search results).
  */
 function claimfairly_category_descriptions() {
 	$descriptions = array(
@@ -891,7 +911,7 @@ function claimfairly_build_menus( &$report ) {
 			'name'  => 'Primary',
 			'items' => array(
 				array( 'label' => 'Calculators', 'children' => $tools, 'url' => '/#tools' ),
-				array( 'page' => 'blog', 'label' => 'Blog' ),
+				array( 'page' => 'guides', 'label' => 'Guides' ),
 				array( 'page' => 'states', 'label' => 'States' ),
 				array( 'page' => 'about', 'label' => 'About' ),
 			),
@@ -906,14 +926,14 @@ function claimfairly_build_menus( &$report ) {
 			),
 		),
 		'footer-learn' => array(
-			'name'  => 'Footer: Blog',
+			'name'  => 'Footer: Guides',
 			'items' => array(
 				array( 'post' => 'what-is-diminished-value', 'label' => 'What is diminished value?' ),
 				array( 'post' => '17c-formula-diminished-value', 'label' => 'The 17c formula explained' ),
 				array( 'post' => 'how-insurance-adjusters-calculate-settlement', 'label' => 'How adjusters calculate offers' ),
 				array( 'post' => 'what-to-do-after-a-car-accident', 'label' => 'After a crash: checklist' ),
 				array( 'page' => 'states', 'label' => 'Rules by state' ),
-				array( 'page' => 'blog', 'label' => 'All articles' ),
+				array( 'page' => 'guides', 'label' => 'All guides' ),
 			),
 		),
 		'footer-site'  => array(
@@ -929,6 +949,12 @@ function claimfairly_build_menus( &$report ) {
 			),
 		),
 	);
+
+	// Version 2.3 named the guides footer menu "Footer: Blog".
+	$old_menu = wp_get_nav_menu_object( 'Footer: Blog' );
+	if ( $old_menu && ! wp_get_nav_menu_object( $menus['footer-learn']['name'] ) ) {
+		wp_update_term( $old_menu->term_id, 'nav_menu', array( 'name' => $menus['footer-learn']['name'] ) );
+	}
 
 	foreach ( $menus as $location => $def ) {
 		if ( ! empty( $locations[ $location ] ) && wp_get_nav_menu_object( $locations[ $location ] ) ) {
@@ -1011,16 +1037,27 @@ function claimfairly_add_menu_item( $menu_id, $item, $parent, $pos, $page ) {
 }
 
 /**
- * 301 redirect the old /guides/ page to the blog after migration.
+ * 301 redirects for pages this theme has moved (for example /blog/ to /guides/).
  */
-function claimfairly_redirect_guides() {
-	if ( ! get_option( 'claimfairly_guides_redirect' ) || ! is_404() ) {
+function claimfairly_moved_page_redirects() {
+	if ( ! is_404() ) {
+		return;
+	}
+	$redirects = (array) get_option( 'claimfairly_redirects', array() );
+	if ( ! $redirects ) {
 		return;
 	}
 	$path = trim( (string) wp_parse_url( add_query_arg( array() ), PHP_URL_PATH ), '/' );
-	if ( 'guides' === $path && get_option( 'page_for_posts' ) ) {
-		wp_safe_redirect( get_permalink( (int) get_option( 'page_for_posts' ) ), 301 );
-		exit;
+	$home = trim( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ), '/' );
+	if ( '' !== $home && 0 === strpos( $path, $home . '/' ) ) {
+		$path = substr( $path, strlen( $home ) + 1 );
+	}
+	if ( isset( $redirects[ $path ] ) ) {
+		$target = get_page_by_path( $redirects[ $path ] );
+		if ( $target && 'publish' === $target->post_status ) {
+			wp_safe_redirect( get_permalink( $target ), 301 );
+			exit;
+		}
 	}
 }
-add_action( 'template_redirect', 'claimfairly_redirect_guides' );
+add_action( 'template_redirect', 'claimfairly_moved_page_redirects' );

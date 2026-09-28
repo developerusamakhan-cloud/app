@@ -109,6 +109,10 @@ function claimfairly_logo_mark( $variant = 'dark' ) {
  * @return string
  */
 function claimfairly_tool_page_url( $tool ) {
+	static $cache = array();
+	if ( isset( $cache[ $tool ] ) ) {
+		return $cache[ $tool ];
+	}
 	$pages = get_posts(
 		array(
 			'post_type'      => 'page',
@@ -119,8 +123,6 @@ function claimfairly_tool_page_url( $tool ) {
 			'fields'         => 'ids',
 		)
 	);
-	if ( $pages ) {
-		return get_permalink( $pages[0] );
-	}
-	return function_exists( 'cft_tool_url' ) ? cft_tool_url( $tool ) : home_url( '/' );
+	$cache[ $tool ] = $pages ? get_permalink( $pages[0] ) : ( function_exists( 'cft_tool_url' ) ? cft_tool_url( $tool ) : home_url( '/' ) );
+	return $cache[ $tool ];
 }

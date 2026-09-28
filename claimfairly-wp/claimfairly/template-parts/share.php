@@ -15,7 +15,7 @@ $claimfairly_links = array(
 	'email'    => array( __( 'Email', 'claimfairly' ), 'mailto:?subject=' . $claimfairly_title . '&body=' . $claimfairly_url ),
 );
 ?>
-<div class="share" aria-label="<?php esc_attr_e( 'Share this article', 'claimfairly' ); ?>">
+<section class="share" aria-label="<?php esc_attr_e( 'Share this guide', 'claimfairly' ); ?>">
 	<p class="share__title"><?php echo claimfairly_icon( 'share', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput ?> <?php esc_html_e( 'Found this useful? Share it with someone dealing with a claim.', 'claimfairly' ); ?></p>
 	<ul class="share__list">
 		<?php foreach ( $claimfairly_links as $claimfairly_key => $claimfairly_link ) : ?>
@@ -23,4 +23,4 @@ $claimfairly_links = array(
 		<?php endforeach; ?>
 		<li><button type="button" class="share__btn share__btn--copy" data-copy-url="<?php echo esc_url( get_permalink() ); ?>"><?php echo claimfairly_icon( 'link', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?> <span><?php esc_html_e( 'Copy link', 'claimfairly' ); ?></span></button></li>
 	</ul>
-</div>
+</section>

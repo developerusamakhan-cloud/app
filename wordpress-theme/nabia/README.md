@@ -65,6 +65,15 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.20
+
+- **Content rewritten around what people search for.** Based on US search data from the last 6 months (Ubersuggest), every service page, the homepage, the FAQ and the page intros now use the terms customers actually type, such as "small business website design", "hire a WordPress developer", "website maintenance services", "Shopify vs WooCommerce", "Wix vs WordPress", "logo design services", "website speed optimization" and "AI chatbot for website". The tone stays personal and honest.
+- **Answers first, for Google and AI search.** Service pages and the homepage FAQ start with direct answers (prices, timelines, what is included). Prices in these answers follow your Customizer plans automatically.
+- **Structured data:** FAQ schema on the homepage, service pages and articles, Service schema on each service page, BlogPosting schema on articles, and a richer business profile on the homepage. Search-friendly title tags and descriptions for service pages when no SEO plugin is active, and a "|" title separator instead of a dash.
+- **13 ready-made blog articles** (content/blog) with branded cover images, a FAQ section, category, tags and focus keyword (also saved for Yoast and Rank Math). Import them in Appearance, Nabia Setup, "Import blog articles only" (or the main button). The importer creates a Blog page if you have none, links every article to the right service pages, pricing, audit, contact and to other articles, and never overwrites an article you have edited.
+- **Better internal links:** more keyword links to service pages, and each service page now shows the articles written for that service first.
+- **Blog cards** use the same 1200 x 630 shape as share images, so cover images are never cut off.
+
 ## What's new in 2.19
 
 - **Brand kit** in `assets/brand` (see its README): the logo (icon + name) as SVG and PNG in dark and white versions, the name on its own, the "N" icon in dark and white, a 1080 x 1080 profile picture for Fiverr, Upwork, LinkedIn and Google Business, and a 1200 x 630 share image. Letters in the SVG logos are outlined, so they look right in any app.

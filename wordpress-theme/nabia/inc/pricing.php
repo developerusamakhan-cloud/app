@@ -53,6 +53,21 @@ function nabia_parse_plan( $key ) {
 }
 
 /**
+ * Price of one plan for use in text, e.g. "$1,199". Follows the Customizer.
+ *
+ * @param string $key Theme mod key (plan_web_1 ... plan_care_3).
+ * @return string
+ */
+function nabia_price( $key ) {
+	$plan  = nabia_parse_plan( $key );
+	$price = $plan ? trim( $plan['price'] ) : '';
+	if ( preg_match( '/^([^\d]*)(\d{4,})(\.\d+)?$/', $price, $m ) ) {
+		$price = $m[1] . number_format( (float) $m[2] ) . ( isset( $m[3] ) ? $m[3] : '' );
+	}
+	return $price;
+}
+
+/**
  * "Save 34%" from an old and a new price, when both are numbers.
  *
  * @param string $was Old price.

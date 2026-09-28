@@ -67,13 +67,22 @@ function nabia_share_image() {
 function nabia_share_description() {
 	$text = '';
 	if ( is_singular() ) {
-		$post = get_queried_object();
-		$text = has_excerpt( $post ) ? get_the_excerpt( $post ) : wp_strip_all_tags( strip_shortcodes( $post->post_content ) );
+		$post    = get_queried_object();
+		$text    = has_excerpt( $post ) ? get_the_excerpt( $post ) : wp_strip_all_tags( strip_shortcodes( $post->post_content ) );
+		$service = nabia_head_service();
+		if ( $service ) {
+			$text = $service['intro'];
+		} elseif ( '' === trim( wp_strip_all_tags( $text ) ) ) {
+			$text = nabia_page_intro_text();
+		}
 	} elseif ( is_category() || is_tag() || is_tax() ) {
 		$text = term_description();
 	}
 	if ( is_front_page() || '' === trim( wp_strip_all_tags( $text ) ) ) {
 		$text = get_bloginfo( 'description' ) ? get_bloginfo( 'description' ) . '. ' . nabia_mod( 'footer_text' ) : nabia_mod( 'footer_text' );
+		if ( is_front_page() ) {
+			$text = nabia_mod( 'hero_text' );
+		}
 	}
 	return wp_html_excerpt( trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( $text ) ) ), 158, '...' );
 }
@@ -141,6 +150,13 @@ function nabia_branding_head() {
 		if ( nabia_mod( 'contact_whatsapp' ) ) {
 			$data['telephone'] = nabia_mod( 'contact_whatsapp' );
 		}
+		$data['founder']    = array(
+			'@type'    => 'Person',
+			'name'     => nabia_mod( 'brand_name' ),
+			'jobTitle' => __( 'WordPress developer and graphic designer', 'nabia' ),
+		);
+		$data['areaServed'] = __( 'Worldwide', 'nabia' );
+		$data['knowsAbout'] = wp_list_pluck( nabia_services(), 'title' );
 		echo '<script type="application/ld+json">' . wp_json_encode( array_filter( $data ), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
 	}
 }
@@ -169,3 +185,201 @@ function nabia_rankmath_share_image( $image ) {
 }
 add_filter( 'rank_math/opengraph/facebook/image', 'nabia_rankmath_share_image' );
 add_filter( 'rank_math/opengraph/twitter/image', 'nabia_rankmath_share_image' );
+
+/**
+ * The service shown on the page being viewed (service pages only).
+ *
+ * @return array|null
+ */
+function nabia_head_service() {
+	if ( ! is_page() ) {
+		return null;
+	}
+	$id       = get_queried_object_id();
+	$template = (string) get_page_template_slug( $id );
+	$slug     = get_query_var( 'nabia_service' );
+	if ( ! $slug ) {
+		$slug = get_post_meta( $id, '_nabia_service', true );
+	}
+	if ( ! $slug && preg_match( '#page-templates/service-([a-z0-9-]+)\.php$#', $template, $m ) ) {
+		$slug = $m[1];
+	}
+	if ( ! $slug && 'template-service.php' === $template ) {
+		$slug = get_post_field( 'post_name', $id );
+	}
+	return $slug ? nabia_get_service( $slug ) : null;
+}
+
+/**
+ * Intro text of the main theme pages, used as their description.
+ *
+ * @return string
+ */
+function nabia_page_intro_text() {
+	$template = (string) get_page_template_slug( get_queried_object_id() );
+	$map      = array(
+		'template-services.php'  => __( 'Web design and development services for small businesses: WordPress, Shopify, WooCommerce, Wix, Webflow, custom code, AI chatbots, logo design, SEO and website maintenance.', 'nabia' ),
+		'template-pricing.php'   => nabia_mod( 'pricing_text' ),
+		'template-audit.php'     => nabia_mod( 'audit_text' ),
+		'template-about.php'     => nabia_mod( 'hero_text' ),
+		'template-contact.php'   => nabia_mod( 'cta_text' ),
+		'template-portfolio.php' => __( 'Websites and online stores I designed and built for small businesses around the world, on WordPress, Shopify, Wix and custom code.', 'nabia' ),
+	);
+	return isset( $map[ $template ] ) ? $map[ $template ] : '';
+}
+
+/**
+ * Search-friendly title tags for the service pages (without an SEO plugin).
+ *
+ * @return array slug => title.
+ */
+function nabia_service_title_tags() {
+	return apply_filters(
+		'nabia_service_title_tags',
+		array(
+			'web-design'              => __( 'Small Business Website Design Services', 'nabia' ),
+			'wordpress-development'   => __( 'Hire a WordPress Developer', 'nabia' ),
+			'shopify-woocommerce'     => __( 'Shopify & WooCommerce Developer', 'nabia' ),
+			'wix-webflow-squarespace' => __( 'Wix, Squarespace & Webflow Website Design', 'nabia' ),
+			'custom-websites'         => __( 'Custom Website Development', 'nabia' ),
+			'ai-website-solutions'    => __( 'AI Chatbot for Your Website & AI Solutions', 'nabia' ),
+			'branding-graphic-design' => __( 'Logo Design Services & Brand Identity', 'nabia' ),
+			'speed-seo'               => __( 'Website Speed Optimization & SEO', 'nabia' ),
+			'website-maintenance'     => __( 'Website Maintenance Services & WordPress Care', 'nabia' ),
+		)
+	);
+}
+
+/**
+ * Use the search-friendly title on service pages and the homepage.
+ *
+ * @param array $parts Title parts.
+ * @return array
+ */
+function nabia_document_title( $parts ) {
+	if ( nabia_seo_plugin_active() ) {
+		return $parts;
+	}
+	$service = nabia_head_service();
+	$tags    = nabia_service_title_tags();
+	if ( $service && isset( $tags[ $service['slug'] ] ) ) {
+		$parts['title'] = $tags[ $service['slug'] ];
+	} elseif ( is_front_page() && ! get_bloginfo( 'description' ) ) {
+		$parts['tagline'] = __( 'WordPress Developer & Website Designer', 'nabia' );
+	}
+	return $parts;
+}
+add_filter( 'document_title_parts', 'nabia_document_title' );
+
+/**
+ * Title separator: a pipe instead of the default dash (SEO plugins keep their own setting).
+ *
+ * @param string $sep Separator.
+ * @return string
+ */
+function nabia_title_separator( $sep ) {
+	return nabia_seo_plugin_active() ? $sep : '|';
+}
+add_filter( 'document_title_separator', 'nabia_title_separator' );
+
+/**
+ * FAQPage data from question / answer pairs.
+ *
+ * @param array $pairs Each: array( question, answer ).
+ * @return array
+ */
+function nabia_faq_schema( $pairs ) {
+	$items = array();
+	foreach ( $pairs as $pair ) {
+		$pair = array_values( (array) $pair );
+		if ( empty( $pair[0] ) || empty( $pair[1] ) ) {
+			continue;
+		}
+		$items[] = array(
+			'@type'          => 'Question',
+			'name'           => wp_strip_all_tags( $pair[0] ),
+			'acceptedAnswer' => array(
+				'@type' => 'Answer',
+				'text'  => wp_strip_all_tags( $pair[1] ),
+			),
+		);
+	}
+	return $items ? array(
+		'@context'   => 'https://schema.org',
+		'@type'      => 'FAQPage',
+		'mainEntity' => $items,
+	) : array();
+}
+
+/**
+ * Structured data that helps Google and AI assistants understand each page:
+ * FAQ answers (homepage, service pages, articles), the service itself and blog posts.
+ * FAQ and Service data are printed even with an SEO plugin (they do not add these).
+ */
+function nabia_structured_data() {
+	$blocks = array();
+	$brand  = array(
+		'@type' => 'ProfessionalService',
+		'name'  => nabia_mod( 'brand_name' ),
+		'url'   => home_url( '/' ),
+	);
+
+	if ( is_front_page() ) {
+		$blocks[] = nabia_faq_schema( nabia_faq() );
+	}
+
+	$service = nabia_head_service();
+	if ( $service ) {
+		$tags     = nabia_service_title_tags();
+		$blocks[] = array(
+			'@context'    => 'https://schema.org',
+			'@type'       => 'Service',
+			'name'        => isset( $tags[ $service['slug'] ] ) ? $tags[ $service['slug'] ] : $service['title'],
+			'serviceType' => $service['title'],
+			'description' => wp_strip_all_tags( $service['intro'] ),
+			'url'         => get_permalink( get_queried_object_id() ),
+			'provider'    => $brand,
+			'areaServed'  => __( 'Worldwide', 'nabia' ),
+		);
+		$blocks[] = nabia_faq_schema( array_merge( $service['faq'], array_slice( nabia_faq(), 0, 2 ) ) );
+	}
+
+	if ( is_singular( 'post' ) ) {
+		$id  = get_queried_object_id();
+		$faq = get_post_meta( $id, '_nabia_faq', true );
+		if ( is_array( $faq ) ) {
+			$blocks[] = nabia_faq_schema( $faq );
+		}
+		if ( ! nabia_seo_plugin_active() ) {
+			$image    = nabia_share_image();
+			$blocks[] = array(
+				'@context'         => 'https://schema.org',
+				'@type'            => 'BlogPosting',
+				'headline'         => wp_strip_all_tags( get_the_title( $id ) ),
+				'description'      => nabia_share_description(),
+				'image'            => $image['url'],
+				'datePublished'    => get_the_date( DATE_W3C, $id ),
+				'dateModified'     => get_the_modified_date( DATE_W3C, $id ),
+				'mainEntityOfPage' => get_permalink( $id ),
+				'author'           => array(
+					'@type' => 'Person',
+					'name'  => get_the_author_meta( 'display_name', (int) get_post_field( 'post_author', $id ) ),
+					'url'   => nabia_page_url( 'about' ) ? nabia_page_url( 'about' ) : home_url( '/' ),
+				),
+				'publisher'        => array(
+					'@type' => 'Organization',
+					'name'  => nabia_mod( 'brand_name' ),
+					'logo'  => array(
+						'@type' => 'ImageObject',
+						'url'   => NABIA_URI . '/assets/brand/logo-mark.png',
+					),
+				),
+			);
+		}
+	}
+
+	foreach ( array_filter( $blocks ) as $block ) {
+		echo '<script type="application/ld+json">' . wp_json_encode( $block, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+	}
+}
+add_action( 'wp_head', 'nabia_structured_data', 4 );

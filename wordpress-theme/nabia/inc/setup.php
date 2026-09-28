@@ -1,7 +1,7 @@
 <?php
 /**
  * Appearance → Nabia Setup: one click to create the service pages, pricing, free audit
- * page and a main menu. Existing pages are never overwritten.
+ * page, the ready-made blog articles and a main menu. Existing pages are never overwritten.
  *
  * @package Nabia
  */
@@ -194,6 +194,16 @@ function nabia_setup_create_menu() {
 	}
 	$link( __( 'Work', 'nabia' ), nabia_portfolio_url() );
 	$page_item( 'pricing', __( 'Pricing', 'nabia' ) );
+	if ( (int) get_option( 'page_for_posts' ) ) {
+		$add(
+			__( 'Blog', 'nabia' ),
+			array(
+				'menu-item-object-id' => (int) get_option( 'page_for_posts' ),
+				'menu-item-object'    => 'page',
+				'menu-item-type'      => 'post_type',
+			)
+		);
+	}
 	$link( __( 'About', 'nabia' ), home_url( '/#about' ) );
 	$page_item( 'audit', __( 'Free audit', 'nabia' ) );
 	$link( __( 'Contact', 'nabia' ), home_url( '/#contact' ) );
@@ -218,6 +228,9 @@ function nabia_setup_screen() {
 		if ( 'pages' === $action || 'all' === $action ) {
 			$log = array_merge( $log, nabia_setup_create_pages() );
 		}
+		if ( ( 'posts' === $action || 'all' === $action ) && current_user_can( 'publish_posts' ) && current_user_can( 'upload_files' ) ) {
+			$log = array_merge( $log, nabia_setup_import_posts() );
+		}
 		if ( ( 'menu' === $action || 'all' === $action ) && current_user_can( 'edit_theme_options' ) ) {
 			$log[] = nabia_setup_create_menu();
 		}
@@ -225,7 +238,7 @@ function nabia_setup_screen() {
 	?>
 	<div class="wrap">
 		<h1><?php esc_html_e( 'Nabia Setup', 'nabia' ); ?></h1>
-		<p><?php esc_html_e( 'Create your service pages, pricing page and free audit page in one click. Each page is filled automatically with the theme’s content, and you can add your own text in the page editor too. Existing pages are never changed.', 'nabia' ); ?></p>
+		<p><?php esc_html_e( 'Create your service pages, pricing page, free audit page and the ready-made blog articles in one click. Each page is filled automatically with the theme’s content, and you can add your own text in the page editor too. Existing pages are never changed.', 'nabia' ); ?></p>
 
 		<?php if ( $log ) : ?>
 			<div class="notice notice-success"><ul style="list-style:disc;padding-left:20px">
@@ -255,13 +268,39 @@ function nabia_setup_screen() {
 			</tbody>
 		</table>
 
+		<h2><?php esc_html_e( 'Blog articles', 'nabia' ); ?></h2>
+		<p><?php esc_html_e( 'Articles written around what people search for most about websites, each linked to the matching service page, with a cover image, FAQ and SEO details. Articles you have edited are never overwritten.', 'nabia' ); ?></p>
+		<table class="widefat striped" style="max-width:760px;margin:12px 0 20px">
+			<thead><tr><th><?php esc_html_e( 'Article', 'nabia' ); ?></th><th><?php esc_html_e( 'Search term', 'nabia' ); ?></th><th><?php esc_html_e( 'Status', 'nabia' ); ?></th></tr></thead>
+			<tbody>
+				<?php $nabia_status = nabia_blog_status(); ?>
+				<?php foreach ( nabia_blog_library() as $nabia_item ) : ?>
+					<?php list( $nabia_post, $nabia_state ) = $nabia_status[ $nabia_item['slug'] ]; ?>
+					<tr>
+						<td><?php echo esc_html( $nabia_item['title'] ); ?></td>
+						<td><code><?php echo esc_html( $nabia_item['keyword'] ); ?></code></td>
+						<td>
+							<?php if ( $nabia_post ) : ?>
+								<a href="<?php echo esc_url( get_permalink( $nabia_post ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'nabia' ); ?></a> |
+								<a href="<?php echo esc_url( get_edit_post_link( $nabia_post ) ); ?>"><?php esc_html_e( 'Edit', 'nabia' ); ?></a>
+								<?php echo 'edited' === $nabia_state ? '<em>(' . esc_html__( 'your version', 'nabia' ) . ')</em>' : ''; ?>
+							<?php else : ?>
+								<em><?php esc_html_e( 'Not imported yet', 'nabia' ); ?></em>
+							<?php endif; ?>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+
 		<form method="post" style="display:flex;gap:10px;flex-wrap:wrap">
 			<?php wp_nonce_field( 'nabia_setup' ); ?>
-			<button class="button button-primary button-hero" name="nabia_setup_action" value="all"><?php esc_html_e( 'Create pages + main menu', 'nabia' ); ?></button>
+			<button class="button button-primary button-hero" name="nabia_setup_action" value="all"><?php esc_html_e( 'Create pages + articles + main menu', 'nabia' ); ?></button>
 			<button class="button button-hero" name="nabia_setup_action" value="pages"><?php esc_html_e( 'Create pages only', 'nabia' ); ?></button>
+			<button class="button button-hero" name="nabia_setup_action" value="posts"><?php esc_html_e( 'Import blog articles only', 'nabia' ); ?></button>
 			<button class="button button-hero" name="nabia_setup_action" value="menu"><?php esc_html_e( 'Rebuild main menu only', 'nabia' ); ?></button>
 		</form>
-		<p class="description" style="margin-top:12px"><?php esc_html_e( 'The menu adds: Services (with every service in a dropdown), Work, Pricing, About, Free audit and Contact. You can change it any time in Appearance → Menus.', 'nabia' ); ?></p>
+		<p class="description" style="margin-top:12px"><?php esc_html_e( 'The menu adds: Services (with every service in a dropdown), Work, Pricing, Blog, About, Free audit and Contact. You can change it any time in Appearance → Menus.', 'nabia' ); ?></p>
 	</div>
 	<?php
 }

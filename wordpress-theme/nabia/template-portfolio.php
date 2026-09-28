@@ -31,7 +31,7 @@ nabia_page_header(
 		'eyebrow' => __( 'Portfolio', 'nabia' ),
 		'icon'    => 'grid',
 		'title'   => get_the_title() ? get_the_title() : nabia_mod( 'work_title' ),
-		'intro'   => __( 'Websites and online stores I designed and built for clients around the world. Click any project to visit the live website.', 'nabia' ),
+		'intro'   => __( 'Real websites and online stores I designed and built for small businesses around the world. Click any project to visit the live site and see the work for yourself.', 'nabia' ),
 		'aside'   => nabia_aside_card(
 			__( 'At a glance', 'nabia' ),
 			array(

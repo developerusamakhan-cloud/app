@@ -31,7 +31,7 @@ function nabia_defaults() {
 		'hero_line_1'        => 'I design & build',
 		'hero_line_2'        => 'websites that',
 		'hero_rotating'      => 'stand out., sell more., load fast., wow people.',
-		'hero_text'          => 'WordPress developer & graphic designer with 5+ years of experience. I build fast, conversion-focused websites on WordPress, Shopify, Wix, Webflow and custom code, with smart AI features built in.',
+		'hero_text'          => 'Freelance WordPress developer and website designer with 5+ years of experience and 300+ projects delivered. I design and build fast, easy-to-edit websites and online stores for small businesses on WordPress, Shopify, Wix, Webflow and custom code, with practical AI features when they help.',
 		'hero_cta_label'     => 'Start a project',
 		'hero_cta_url'       => '#contact',
 		'hero_cta2_label'    => 'See my work',
@@ -57,7 +57,7 @@ function nabia_defaults() {
 
 		// About.
 		'about_title'        => 'Design that looks sharp. Code that works hard.',
-		'about_text'         => "I'm Nabia, a full-time WordPress developer, front-end developer and graphic designer. I believe great design and smart development go hand in hand, so I handle both: from the first sketch to the final line of code, under one roof.\n\nWhether you need a brand-new website, a WooCommerce store, a redesign or a pixel-perfect clone of a design you love, I'll build it fast, responsive and easy for you to manage.",
+		'about_text'         => "I'm Nabia, a full-time WordPress developer, front-end developer and graphic designer. For more than five years I have helped small businesses, coaches, clinics and online shops get websites that look professional and actually bring in enquiries. I handle design and development myself, so nothing gets lost between a designer and a developer.\n\nWhether you need a new small business website, a Shopify or WooCommerce store, a redesign, a logo or someone to look after your site every month, you work directly with me from the first call to launch day and after.",
 		'about_image'        => '',
 		'author_image'       => 'https://nabiakhan.com/wp-content/uploads/2024/07/WhatsApp-Image-2024-07-17-at-6.02.24-AM-min.png',
 		'intro_video'        => 'https://nabiakhan.com/wp-content/uploads/2026/09/WhatsApp-Video-2026-04-16-at-2.38.06-PM.mp4',
@@ -70,10 +70,10 @@ function nabia_defaults() {
 
 		// Platforms.
 		'platforms_title'    => 'One developer, every platform',
-		'platforms_text'     => 'Already on a platform, or not sure which one to pick? I design and build on all the big ones, and add AI where it helps.',
+		'platforms_text'     => 'Already on a platform, or not sure which one to pick? I design and build on all the big ones and give you an honest recommendation, not the one that is easiest for me.',
 
 		// Sections.
-		'services_title'     => 'Everything your website needs',
+		'services_title'     => 'Website design, development and care in one place',
 		'work_title'         => 'Selected work',
 		'process_title'      => 'How we will work together',
 		'testimonials_title' => 'Kind words from clients',
@@ -92,7 +92,7 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 		// Pricing. Each plan: line 1 = name, line 2 = price, then one feature per line.
 		// Start a feature with "-" to show it as not included.
 		'pricing_title'      => 'Simple, honest pricing',
-		'pricing_text'       => 'Fixed prices, no surprises. Every website includes a custom design, speed optimisation and one month of free support.',
+		'pricing_text'       => 'How much does a website cost? Here are my fixed prices, with nothing hidden. Every website includes a custom design, speed optimisation, SEO basics and one month of free support.',
 		'hire_url'           => '',
 		'plan_web_1'         => "New Startup\n$499\nWas: $600\nCustom theme\nOptimised images\n3 pages\nHosting setup\nContent upload\nContact form\nSocial icons\nFree support (1 month)\n- Domain & hosting not included",
 		'plan_web_2'         => "Business Website\n$799\nWas: $999\nCustom theme\nOptimised images\n5 pages\nHosting setup\nContent + product upload (20)\nContact form + login forms\nSocial icons\nFree support (1 month)\n- Domain & hosting not included",
@@ -106,7 +106,7 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 
 		// Free audit.
 		'audit_title'        => 'Get a free website audit',
-		'audit_text'         => 'Not sure what is holding your website back? Enter your link and get an instant score for design, SEO, content and speed, plus a branded PDF report with clear, practical fixes. No cost, no obligation.',
+		'audit_text'         => 'Not sure why your website is not bringing in customers? Enter your link and get an instant score for design, SEO, content and page speed, plus a PDF report with clear, practical fixes. No cost, no obligation.',
 		'enable_popup'       => true,
 		'enable_cookies'     => true,
 		'share_image'        => '',
@@ -131,7 +131,7 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 
 		// Contact.
 		'cta_title'          => "Let's build something bold.",
-		'cta_text'           => 'Tell me about your project and I will get back to you within 24 hours with ideas, a timeline and a clear quote.',
+		'cta_text'           => 'Tell me about your project and I will get back to you within 24 hours with honest advice, a timeline and a clear quote. No pressure and no sales scripts.',
 		'contact_email'      => 'info@nabiakhan.com',
 		'contact_whatsapp'   => '+92 312 1305032',
 		'whatsapp_message'   => 'Hi Nabia, I found your website and would like to talk about a project.',
@@ -154,7 +154,7 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 		'social_linktree'    => 'https://linktr.ee/nabia_khan',
 
 		// Footer.
-		'footer_text'        => 'Creative WordPress developer & graphic designer. Building websites that refuse to be boring.',
+		'footer_text'        => 'Freelance WordPress developer, website designer and graphic designer. I build fast, good looking websites for small businesses that want more customers.',
 		'footer_marquee'     => "Let's work together",
 		'footer_cta_title'   => 'Got a project in mind?',
 		'footer_cta_text'    => "Websites, stores, branding or a quick fix: tell me what you need and you'll get a plan and a quote within 24 hours.",
@@ -196,63 +196,63 @@ function nabia_services() {
 				'icon'  => 'layout',
 				'slug'  => 'web-design',
 				'title' => __( 'Web Design', 'nabia' ),
-				'text'  => __( 'Interfaces that look sharp, feel effortless and guide visitors straight to the contact button.', 'nabia' ),
+				'text'  => __( 'Custom small business website design that looks sharp, works on every phone and guides visitors straight to the contact button.', 'nabia' ),
 				'tags'  => array( 'UI / UX', 'Wireframes', 'Figma' ),
 			),
 			array(
 				'icon'  => 'code',
 				'slug'  => 'wordpress-development',
 				'title' => __( 'WordPress Development', 'nabia' ),
-				'text'  => __( 'Custom themes, Elementor builds, plugin customisation and pixel-perfect clones. Fast, secure and easy to edit.', 'nabia' ),
+				'text'  => __( 'Custom WordPress themes, Elementor builds, plugin setup and fixes by a WordPress developer you talk to directly.', 'nabia' ),
 				'tags'  => array( 'Custom themes', 'Elementor', 'PHP' ),
 			),
 			array(
 				'icon'  => 'cart',
 				'slug'  => 'shopify-woocommerce',
 				'title' => __( 'Shopify & WooCommerce Stores', 'nabia' ),
-				'text'  => __( 'Online stores with smooth checkouts, payment integrations and product pages that actually sell.', 'nabia' ),
+				'text'  => __( 'Shopify and WooCommerce stores with smooth checkouts, secure payments and product pages that actually sell.', 'nabia' ),
 				'tags'  => array( 'Shopify', 'WooCommerce', 'Stripe' ),
 			),
 			array(
 				'icon'  => 'grid',
 				'slug'  => 'wix-webflow-squarespace',
 				'title' => __( 'Wix, Webflow & Squarespace', 'nabia' ),
-				'text'  => __( 'Beautiful sites on the no-code platform you love, set up so you can change everything yourself.', 'nabia' ),
+				'text'  => __( 'Wix, Squarespace and Webflow website design that looks custom, set up so you can change everything yourself.', 'nabia' ),
 				'tags'  => array( 'Wix', 'Webflow', 'Squarespace' ),
 			),
 			array(
 				'icon'  => 'terminal',
 				'slug'  => 'custom-websites',
 				'title' => __( 'Custom-Coded Websites', 'nabia' ),
-				'text'  => __( 'Hand-built HTML, CSS, JavaScript and PHP sites for when you need total freedom and top speed.', 'nabia' ),
+				'text'  => __( 'Custom website development in HTML, CSS, JavaScript and PHP for when you need total freedom and top speed.', 'nabia' ),
 				'tags'  => array( 'HTML & CSS', 'JavaScript', 'PHP' ),
 			),
 			array(
 				'icon'  => 'sparkles',
 				'slug'  => 'ai-website-solutions',
 				'title' => __( 'AI Website Solutions', 'nabia' ),
-				'text'  => __( 'AI chatbots, smart forms, AI-assisted content and automations that answer customers and save you hours every week.', 'nabia' ),
+				'text'  => __( 'An AI chatbot for your website, smart forms and automations that answer customers and save you hours every week.', 'nabia' ),
 				'tags'  => array( 'AI chatbots', 'AI content', 'Automation' ),
 			),
 			array(
 				'icon'  => 'pen',
 				'slug'  => 'branding-graphic-design',
 				'title' => __( 'Branding & Graphic Design', 'nabia' ),
-				'text'  => __( 'Logos, visual identities, social media kits and print, for a consistent look that people remember.', 'nabia' ),
+				'text'  => __( 'Logo design services, brand identity, social media kits and print, for a consistent look that people remember.', 'nabia' ),
 				'tags'  => array( 'Logo', 'Identity', 'Social kits' ),
 			),
 			array(
 				'icon'  => 'bolt',
 				'slug'  => 'speed-seo',
 				'title' => __( 'Speed & SEO', 'nabia' ),
-				'text'  => __( 'Core Web Vitals tuning, on-page SEO and clean markup, so Google and your visitors love your site.', 'nabia' ),
+				'text'  => __( 'Website speed optimization, Core Web Vitals and SEO for small businesses, so customers can find you on Google.', 'nabia' ),
 				'tags'  => array( 'Core Web Vitals', 'On-page SEO' ),
 			),
 			array(
 				'icon'  => 'shield',
 				'slug'  => 'website-maintenance',
 				'title' => __( 'Care & Maintenance', 'nabia' ),
-				'text'  => __( 'Updates, backups, security hardening and small edits every month, so you can focus on your business.', 'nabia' ),
+				'text'  => __( 'Website maintenance services: updates, backups, security and small edits every month, so you can focus on your business.', 'nabia' ),
 				'tags'  => array( 'Updates', 'Backups', 'Security' ),
 			),
 		)
@@ -367,36 +367,26 @@ function nabia_faq() {
 		'nabia_faq',
 		array(
 			array(
+				'q' => __( 'How much does a website cost?', 'nabia' ),
+				'a' => sprintf(
+					/* translators: 1-3: prices */
+					__( 'With me, a starter website costs %1$s, a business website %2$s and an online store %3$s. The price is fixed before work starts. In general, small business websites in the US range from about $500 with a freelancer to $5,000 or more with an agency, depending on pages, features and content.', 'nabia' ),
+					nabia_price( 'plan_web_1' ),
+					nabia_price( 'plan_web_2' ),
+					nabia_price( 'plan_web_3' )
+				),
+			),
+			array(
 				'q' => __( 'How long does a website take?', 'nabia' ),
 				'a' => __( 'A landing page usually takes 3 to 5 days, a full business website 1 to 3 weeks and an online store 2 to 4 weeks, depending on content and features.', 'nabia' ),
 			),
 			array(
+				'q' => __( 'Why hire a freelance web designer instead of an agency?', 'nabia' ),
+				'a' => __( 'You work directly with the person who designs and builds your site, so answers are quicker, nothing gets lost in hand-offs and you do not pay agency overheads. I have 5+ years of experience, 300+ projects delivered and a 100% job success score.', 'nabia' ),
+			),
+			array(
 				'q' => __( 'Do you only work with WordPress?', 'nabia' ),
-				'a' => __( 'No. WordPress is my speciality, but I also build on Shopify, Wix, Webflow and Squarespace, and I hand-code custom websites. I will recommend the platform that fits your budget and goals.', 'nabia' ),
-			),
-			array(
-				'q' => __( 'Can you add AI features to my website?', 'nabia' ),
-				'a' => __( 'Yes. I can add an AI chatbot that answers customer questions, smart contact forms, AI-assisted blog and product content, and automations that connect your site to email, CRM and booking tools.', 'nabia' ),
-			),
-			array(
-				'q' => __( 'How do you use AI in your own work?', 'nabia' ),
-				'a' => __( 'AI is my assistant, never my replacement. I use it to research your industry and competitors, brainstorm layout ideas, draft first versions of copy, write and check code faster, and test pages for speed and accessibility. Every design decision, line of code and word on your site is still reviewed and polished by me by hand.', 'nabia' ),
-			),
-			array(
-				'q' => __( 'Does using AI make my project faster or cheaper?', 'nabia' ),
-				'a' => __( 'Faster, yes. The boring, repetitive parts take minutes instead of hours, so I can spend more time on what matters: design details, conversion and testing. That usually means an earlier launch and more value for the same budget.', 'nabia' ),
-			),
-			array(
-				'q' => __( 'Will my website content sound robotic or generic?', 'nabia' ),
-				'a' => __( 'No. AI only gives me a starting point. I rewrite everything in your tone of voice, add your real stories, services and prices, and make sure it reads like a human wrote it for humans. Google rewards helpful, original content, and that is exactly what you get.', 'nabia' ),
-			),
-			array(
-				'q' => __( 'Is my data safe when you use AI tools?', 'nabia' ),
-				'a' => __( 'Yes. I never paste passwords, customer details or private business data into AI tools. For AI features on your site, like a chatbot, I use trusted providers, keep your information on your own website where possible, and explain in plain English what is stored and why.', 'nabia' ),
-			),
-			array(
-				'q' => __( 'What can an AI chatbot actually do for my business?', 'nabia' ),
-				'a' => __( 'Think of it as a helpful team member who never sleeps. It answers common questions instantly, suggests the right product or service, collects leads and booking requests at 2 am, and sends the tricky questions straight to you. Most clients see fewer repeat emails and more enquiries.', 'nabia' ),
+				'a' => __( 'No. WordPress website design is my speciality, but I also build on Shopify, WooCommerce, Wix, Webflow and Squarespace, and I hand-code custom websites. I recommend the platform that fits your budget and goals.', 'nabia' ),
 			),
 			array(
 				'q' => __( 'Will I be able to edit the website myself?', 'nabia' ),
@@ -404,11 +394,31 @@ function nabia_faq() {
 			),
 			array(
 				'q' => __( 'Can you redesign or fix my existing website?', 'nabia' ),
-				'a' => __( 'Absolutely. I can refresh the design, fix bugs, speed it up, move it to a new host or platform, or rebuild it completely. Whatever gives you the best result.', 'nabia' ),
+				'a' => __( 'Absolutely. I can refresh the design, fix bugs, speed it up, move it to a new host or platform, or rebuild it completely, while keeping the pages that already rank on Google.', 'nabia' ),
+			),
+			array(
+				'q' => __( 'Do you offer website maintenance after launch?', 'nabia' ),
+				'a' => sprintf(
+					/* translators: %s: price */
+					__( 'Yes. My website maintenance plans start at %s per month and cover updates, backups, security, speed checks and small edits. No long contract.', 'nabia' ),
+					nabia_price( 'plan_care_1' )
+				),
 			),
 			array(
 				'q' => __( 'Do you also design logos and branding?', 'nabia' ),
 				'a' => __( 'Yes. As a graphic designer I create logos, brand identities, social media templates and print materials, so your website and brand match perfectly.', 'nabia' ),
+			),
+			array(
+				'q' => __( 'Can you add an AI chatbot to my website?', 'nabia' ),
+				'a' => __( 'Yes. I can add an AI chatbot that answers customer questions from your own content, plus smart contact forms, AI-assisted content and automations that connect your site to email, CRM and booking tools.', 'nabia' ),
+			),
+			array(
+				'q' => __( 'How do you use AI in your own work?', 'nabia' ),
+				'a' => __( 'AI is my assistant, never my replacement. I use it to research your industry, brainstorm layouts, draft first versions of copy and check code faster. Every design decision, line of code and word on your site is still reviewed and polished by me by hand.', 'nabia' ),
+			),
+			array(
+				'q' => __( 'Will my website content sound robotic or generic?', 'nabia' ),
+				'a' => __( 'No. I write in your tone of voice, add your real stories, services and prices, and make sure it reads like a human wrote it for humans. Google rewards helpful, original content, and that is exactly what you get.', 'nabia' ),
 			),
 			array(
 				'q' => __( 'How do payments work?', 'nabia' ),

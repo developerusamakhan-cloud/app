@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NABIA_VERSION', '2.19.0' );
+define( 'NABIA_VERSION', '2.20.0' );
 define( 'NABIA_DIR', get_template_directory() );
 define( 'NABIA_URI', get_template_directory_uri() );
 
@@ -22,6 +22,7 @@ require NABIA_DIR . '/inc/services.php';
 require NABIA_DIR . '/inc/pricing.php';
 require NABIA_DIR . '/inc/audit.php';
 require NABIA_DIR . '/inc/setup.php';
+require NABIA_DIR . '/inc/blog-import.php';
 require NABIA_DIR . '/inc/layout.php';
 require NABIA_DIR . '/inc/interlinks.php';
 require NABIA_DIR . '/inc/forms.php';
@@ -55,7 +56,7 @@ function nabia_setup() {
 	);
 
 	add_image_size( 'nabia-project', 1200, 900, true );
-	add_image_size( 'nabia-card', 800, 600, true );
+	add_image_size( 'nabia-card', 800, 420, true ); // Same shape as a share image (1200 x 630).
 
 	register_nav_menus(
 		array(

@@ -13,7 +13,7 @@ nabia_page_header(
 		'eyebrow' => __( 'Services', 'nabia' ),
 		'icon'    => 'layout',
 		'title'   => get_the_title() ? get_the_title() : __( 'Services', 'nabia' ),
-		'intro'   => __( 'Design, development, online stores, AI and monthly care, on the platform that suits you best. Pick a service to see exactly what is included.', 'nabia' ),
+		'intro'   => __( 'Web design and development services for small businesses: websites, online stores, logos, SEO, AI chatbots and monthly maintenance, on the platform that suits you best. Pick a service to see exactly what is included and what it costs.', 'nabia' ),
 		'actions' => nabia_button( __( 'See pricing', 'nabia' ), nabia_page_url( 'pricing' ) ? nabia_page_url( 'pricing' ) : '#pricing' ) . nabia_button( __( 'Hire me', 'nabia' ), nabia_hire_url(), 'ghost' ),
 		'aside'   => '<div class="stat-tiles">'
 			. '<div><strong>' . esc_html( nabia_mod( 'stat_1_number' ) . nabia_mod( 'stat_1_suffix' ) ) . '</strong><span>' . esc_html__( 'Years experience', 'nabia' ) . '</span></div>'

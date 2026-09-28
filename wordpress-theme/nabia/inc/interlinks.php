@@ -31,9 +31,9 @@ function nabia_interlink_page_keywords() {
 		'nabia_interlink_keywords',
 		array(
 			'audit'     => array( 'free website audit', 'free audit', 'website audit', 'instant score' ),
-			'pricing'   => array( 'fixed prices', 'fixed price', 'fixed quote', 'clear quote', 'honest pricing', 'pricing', 'a quote' ),
+			'pricing'   => array( 'how much does a website cost', 'website cost', 'website packages', 'fixed prices', 'fixed price', 'fixed quote', 'clear quote', 'honest pricing', 'pricing', 'a quote' ),
 			'portfolio' => array( 'my portfolio', 'my work', 'recent projects', 'portfolio', 'projects delivered' ),
-			'about'     => array( 'about me', 'years of experience', 'full-time WordPress developer' ),
+			'about'     => array( 'about me', 'years of experience', 'full-time WordPress developer', 'freelance web designer' ),
 			'contact'   => array( 'get in touch', 'contact me', 'a quick call', 'a quick chat', 'tell me about your project', 'within 24 hours' ),
 			'services'  => array( 'all my services', 'my services' ),
 		)

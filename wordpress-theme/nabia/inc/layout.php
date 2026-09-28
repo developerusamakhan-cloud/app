@@ -157,8 +157,33 @@ function nabia_related_posts( $post_id = 0, $count = 3 ) {
 		'ignore_sticky_posts' => true,
 		'no_found_rows'       => true,
 	);
+	// Articles about the same service first (set by the blog importer), then the same category.
+	$service = $post_id ? get_post_meta( $post_id, '_nabia_service', true ) : '';
+	if ( ! $post_id && function_exists( 'nabia_head_service' ) && nabia_head_service() ) {
+		$service = nabia_head_service()['slug'];
+	}
+	$posts = $service ? get_posts(
+		$args + array(
+			'meta_key'   => '_nabia_service', // phpcs:ignore WordPress.DB.SlowDBQuery
+			'meta_value' => $service, // phpcs:ignore WordPress.DB.SlowDBQuery
+		)
+	) : array();
 	$cats = $post_id ? wp_get_post_categories( $post_id ) : array();
-	$posts = $cats ? get_posts( $args + array( 'category__in' => $cats ) ) : array();
+	if ( $cats && count( $posts ) < $count ) {
+		$posts = array_merge(
+			$posts,
+			get_posts(
+				array_merge(
+					$args,
+					array(
+						'posts_per_page' => $count - count( $posts ),
+						'post__not_in'   => array_merge( $args['post__not_in'], wp_list_pluck( $posts, 'ID' ) ),
+						'category__in'   => $cats,
+					)
+				)
+			)
+		);
+	}
 	if ( count( $posts ) < $count ) {
 		$exclude = array_merge( $post_id ? array( $post_id ) : array(), wp_list_pluck( $posts, 'ID' ) );
 		$more    = get_posts( array_merge( $args, array( 'posts_per_page' => $count - count( $posts ), 'post__not_in' => $exclude ) ) );
@@ -282,15 +307,15 @@ function nabia_autolink_keywords() {
 	return apply_filters(
 		'nabia_autolink_keywords',
 		array(
-			'website-maintenance'     => array( 'website maintenance', 'WordPress maintenance', 'maintenance plan' ),
-			'shopify-woocommerce'     => array( 'Shopify', 'WooCommerce', 'online store', 'ecommerce', 'e-commerce' ),
-			'wix-webflow-squarespace' => array( 'Webflow', 'Squarespace', 'Wix' ),
-			'ai-website-solutions'    => array( 'AI chatbot', 'chatbot', 'AI' ),
-			'speed-seo'               => array( 'page speed', 'Core Web Vitals', 'SEO' ),
-			'branding-graphic-design' => array( 'logo design', 'branding', 'graphic design' ),
-			'custom-websites'         => array( 'custom-coded', 'custom code', 'hand-coded' ),
-			'wordpress-development'   => array( 'WordPress developer', 'Elementor', 'WordPress' ),
-			'web-design'              => array( 'web design', 'website design', 'UI design' ),
+			'website-maintenance'     => array( 'website maintenance services', 'website maintenance', 'WordPress maintenance', 'maintenance plan', 'care plan' ),
+			'shopify-woocommerce'     => array( 'Shopify vs WooCommerce', 'Shopify developer', 'WooCommerce developer', 'Shopify', 'WooCommerce', 'online store', 'ecommerce', 'e-commerce' ),
+			'wix-webflow-squarespace' => array( 'Wix website design', 'Squarespace website design', 'Webflow', 'Squarespace', 'Wix' ),
+			'ai-website-solutions'    => array( 'AI chatbot for your website', 'AI chatbot', 'chatbot', 'AI' ),
+			'speed-seo'               => array( 'website speed optimization', 'SEO for small businesses', 'SEO for small business', 'page speed', 'Core Web Vitals', 'SEO' ),
+			'branding-graphic-design' => array( 'logo design services', 'brand identity', 'logo design', 'branding', 'graphic design' ),
+			'custom-websites'         => array( 'custom website development', 'custom-coded', 'custom code', 'hand-coded' ),
+			'wordpress-development'   => array( 'hire a WordPress developer', 'WordPress developer', 'WordPress website design', 'Elementor', 'WordPress' ),
+			'web-design'              => array( 'small business website design', 'custom website design', 'website redesign', 'web design', 'website design', 'UI design' ),
 		)
 	);
 }

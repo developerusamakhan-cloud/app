@@ -65,6 +65,10 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.20.1
+
+- **Article tags** under blog posts now show as one clean pill each (they had a double border) and fill with your accent colour on hover.
+
 ## What's new in 2.20
 
 - **Content rewritten around what people search for.** Based on US search data from the last 6 months (Ubersuggest), every service page, the homepage, the FAQ and the page intros now use the terms customers actually type, such as "small business website design", "hire a WordPress developer", "website maintenance services", "Shopify vs WooCommerce", "Wix vs WordPress", "logo design services", "website speed optimization" and "AI chatbot for website". The tone stays personal and honest.

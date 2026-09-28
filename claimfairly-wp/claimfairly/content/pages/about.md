@@ -37,6 +37,17 @@ A few rules I stick to:
 
 You can read more about how pages are researched and updated in our [editorial policy](/editorial-policy/).
 
+## What you will find here
+
+- **Five free calculators:** the [car accident settlement calculator](/car-accident-settlement-calculator/), the [diminished value calculator](/diminished-value-calculator/), the [pain and suffering calculator](/pain-and-suffering-calculator/), the [settlement take-home calculator](/settlement-calculator-take-home/) and the [demand letter generator](/demand-letter-generator/).
+- **Plain-English [guides](/guides/)** on how claims actually work, from the 17c formula to attorney fees.
+- **[State rules](/states/)** for fault, filing deadlines and minimum insurance.
+- **[Injury](/injuries/) and [insurer](/insurers/) guides** for the most common situations.
+
+## Who this site is for
+
+ClaimFairly is built for everyday drivers dealing with an insurance claim after a crash: people who want to understand an offer, check a number, or prepare before talking to a lawyer. It is not built for insurance companies, and it is not a lead form for law firms. Nobody will call you because you used a calculator here.
+
 ## How the site makes money
 
 ClaimFairly is free. It may show ads to cover hosting and time, but ads never appear inside a calculator and never change a result. If that ever changes, this page will say so first.
@@ -44,3 +55,11 @@ ClaimFairly is free. It may show ads to cover hosting and time, but ads never ap
 ## Say hello
 
 Found a mistake, a confusing sentence or an outdated rule? Please tell me. Email [{{email}}](mailto:{{email}}) or use the [contact page](/contact/). I read everything.
+
+[cf_faq]
+[cf_q q="Is ClaimFairly a law firm?"]No. ClaimFairly is an independent educational website. Nothing here is legal advice, and using the site does not create an attorney-client relationship.[/cf_q]
+[cf_q q="Who writes the content on ClaimFairly?"]Pages are written and checked by {{founder}}, who runs the site, using official and well-established sources listed on each page.[/cf_q]
+[cf_q q="Do you sell my information to lawyers or insurers?"]No. The calculators run in your browser, nothing you type is stored, and we do not sell or share personal information.[/cf_q]
+[cf_q q="How do you keep the information up to date?"]State pages are reviewed at least every three months and other pages at least every six months. Every page shows its last reviewed date.[/cf_q]
+[cf_q q="How can I report a mistake?"]Email {{email}} with the page and, if possible, a link to a source. We fix confirmed errors quickly.[/cf_q]
+[/cf_faq]

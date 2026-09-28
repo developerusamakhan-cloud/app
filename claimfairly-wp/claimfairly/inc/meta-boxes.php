@@ -38,6 +38,7 @@ function claimfairly_register_meta() {
 		'_cf_card_summary'  => 'string',
 		'_cf_hide_author'   => 'boolean',
 		'_cf_tool_key'      => 'string',
+		'_cf_seo_title'     => 'string',
 	);
 	foreach ( array( 'post', 'page' ) as $post_type ) {
 		foreach ( $keys as $key => $type ) {
@@ -90,6 +91,7 @@ function claimfairly_render_meta_box( $post ) {
 	$summary  = get_post_meta( $post->ID, '_cf_card_summary', true );
 	$hide     = (bool) get_post_meta( $post->ID, '_cf_hide_author', true );
 	$tool     = (string) get_post_meta( $post->ID, '_cf_tool_key', true );
+	$seo      = (string) get_post_meta( $post->ID, '_cf_seo_title', true );
 	?>
 	<style>
 		.cf-mb p{margin:0 0 14px}.cf-mb label{display:block;font-weight:600;margin-bottom:4px}
@@ -104,6 +106,10 @@ function claimfairly_render_meta_box( $post ) {
 				<?php endforeach; ?>
 			</select>
 			<span class="description"><?php esc_html_e( 'Tool pages get WebApplication schema and appear on the homepage. Tool, guide, state, injury and insurer pages show the reviewed date, sources and author box.', 'claimfairly' ); ?></span>
+		</p>
+		<p>
+			<label for="cf_seo_title"><?php esc_html_e( 'SEO title (browser tab and Google, about 60 characters). Ignored when Rank Math or Yoast is active; use their box instead.', 'claimfairly' ); ?></label>
+			<input type="text" id="cf_seo_title" name="cf_seo_title" maxlength="80" value="<?php echo esc_attr( $seo ); ?>">
 		</p>
 		<p>
 			<label for="cf_tool_key"><?php esc_html_e( 'Which tool is on this page? (sets its color and icon)', 'claimfairly' ); ?></label>
@@ -173,6 +179,9 @@ function claimfairly_save_meta( $post_id ) {
 		$value = isset( $_POST[ $field ] ) ? sanitize_textarea_field( wp_unslash( $_POST[ $field ] ) ) : '';
 		update_post_meta( $post_id, '_' . $field, $value );
 	}
+
+	$seo_title = isset( $_POST['cf_seo_title'] ) ? sanitize_text_field( wp_unslash( $_POST['cf_seo_title'] ) ) : '';
+	update_post_meta( $post_id, '_cf_seo_title', $seo_title );
 
 	$summary = isset( $_POST['cf_card_summary'] ) ? sanitize_text_field( wp_unslash( $_POST['cf_card_summary'] ) ) : '';
 	update_post_meta( $post_id, '_cf_card_summary', $summary );

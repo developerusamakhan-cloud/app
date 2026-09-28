@@ -48,6 +48,8 @@ Most insurers that agree to pay diminished value start with a method called **17
 | 80,000 to 99,999 | 0.2 |
 | 100,000 and up | 0 |
 
+Every formula and assumption behind this calculator is listed in our [methodology](/methodology/), and our [editorial policy](/editorial-policy/) explains how we check and update it.
+
 ## A worked example
 
 Say you drive a car worth **$30,000**. It has **35,000 miles**, and the crash caused **moderate structural and panel damage**.
@@ -75,6 +77,30 @@ None of this means the calculator is wrong. It means you now know the number the
 - **Your state.** Georgia requires insurers to consider diminished value in some first-party claims. Other states are less friendly. See your [state page](/states/) for details.
 - **Quality of the repair.** Poor repairs, mismatched paint or non-original parts make the loss bigger, and they are worth documenting with photos.
 
+## Three more examples
+
+| Car | Value | Damage | Miles | 17c result |
+|---|---|---|---|---|
+| Compact sedan | $18,000 | Minor structural and panel | 52,000 | $270 |
+| Family SUV | $42,000 | Major structural and panel | 18,000 | $3,150 |
+| Pickup truck | $36,000 | Severe structural | 88,000 | $720 |
+
+Look at the pickup. It had the most serious damage of the three, yet its 17c number is small because of the mileage. A buyer shopping for a $36,000 truck would almost certainly knock off far more than $720 after seeing frame damage on the history report.
+
+## Who can claim diminished value
+
+- **You, against the at-fault driver's insurer.** This is the most common and most successful route, called a third-party claim.
+- **You, against your own insurer.** Possible only if your policy covers it, which many do not. This is called a first-party claim.
+- **Owners of leased or financed cars.** Usually yes, but read [diminished value after a lease or loan](/diminished-value-leased-car/) first, because the lender or leasing company may have a say.
+
+## Mistakes that cost people money
+
+- **Waiting too long.** Claims are easier while the repair is recent.
+- **Accepting the first 17c number** without checking the inputs.
+- **Using the wrong value.** Always use the value before the crash, for your exact trim and options.
+- **Not keeping the repair invoice.** It is your best evidence of the damage level.
+- **Forgetting to ask at all.** Many adjusters will not bring it up.
+
 ## How to claim diminished value
 
 1. **Get your repair records.** Ask the body shop for the final invoice and the list of parts replaced.
@@ -92,4 +118,6 @@ Read the full walkthrough in [What Is Diminished Value and How to Claim It](/wha
 [cf_q q="Does diminished value apply to a leased car?"]Yes, the loss still exists, and your lease company may charge you for it at turn-in. Check your lease contract and our guide on diminished value after a lease or loan.[/cf_q]
 [cf_q q="Is there a deadline for a diminished value claim?"]Yes. It follows your state's deadline for property damage claims, which is often two to six years. Do not wait that long, though. Claims are easier while the repair is recent.[/cf_q]
 [cf_q q="Is the 17c formula required by law?"]No. It is a method insurers commonly use as a starting point. You are free to present your own evidence, like an appraisal or comparable sales.[/cf_q]
+[cf_q q="Does diminished value apply to older cars?"]It can, but the amount is often small for older, high mileage cars. Under 17c, cars with 100,000 miles or more get zero, although real buyers may still pay less for a car with an accident record.[/cf_q]
+[cf_q q="Can I use this calculator for a motorcycle or RV?"]The 17c formula was designed for cars and light trucks. You can run the numbers, but treat the result as a rough guide and consider a specialist appraisal.[/cf_q]
 [/cf_faq]

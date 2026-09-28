@@ -41,3 +41,14 @@ You can use every tool without giving us any personal information. You can block
 ## Changes and contact
 
 We will post any changes on this page and update the date above. Questions: [{{email}}](mailto:{{email}}).
+
+## Data security
+
+Because the calculators do not send or store what you type, there is no calculator data on our servers to protect or leak. The site is served over HTTPS. If we ever add a feature that stores information, such as a newsletter, this policy will be updated first to explain what is collected and why.
+
+[cf_faq]
+[cf_q q="Do the calculators store my information?"]No. They run entirely in your browser, and nothing you type is sent to our server.[/cf_q]
+[cf_q q="Does ClaimFairly use cookies?"]Our analytics are cookie-free. If advertising is added later, ad partners may use cookies, and this page will be updated before that happens.[/cf_q]
+[cf_q q="Is the demand letter PDF created on your server?"]No. The PDF is created on your own device.[/cf_q]
+[cf_q q="How do I contact you about privacy?"]Email {{email}}.[/cf_q]
+[/cf_faq]

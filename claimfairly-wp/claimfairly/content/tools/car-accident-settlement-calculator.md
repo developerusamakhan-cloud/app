@@ -54,6 +54,8 @@ See every state in our [state rules table](/states/).
 
 Insurers rarely pay more than the at-fault driver's policy limit. If they carry $25,000 per person and your claim is worth $60,000, the realistic ceiling from that policy is $25,000. Enter the limit if you know it and the calculator caps the result.
 
+Every formula and assumption behind this calculator is listed in our [methodology](/methodology/), and our [editorial policy](/editorial-policy/) explains how we check and update it.
+
 ## A worked example
 
 Maria was rear-ended in Texas. She had **$8,000** in medical bills, missed **$2,500** in wages, and her neck and back injuries needed three months of therapy (**moderate**). The other driver was fully at fault.
@@ -72,14 +74,51 @@ If the other driver's insurer argued she was 20% at fault for braking suddenly, 
 - **No-fault rules.** In no-fault states your own PIP pays first, and pain and suffering claims need a serious injury.
 - **Your own coverage.** Underinsured motorist coverage can pay the gap when the other driver's limit is too low.
 
+## Three quick scenarios
+
+| Scenario | Medical | Wages | Severity | Fault | Estimated range |
+|---|---|---|---|---|---|
+| Rear-ended, minor neck strain | $3,500 | $600 | Minor | 0% | $9,350 to $11,100 |
+| T-bone, broken arm, surgery | $28,000 | $7,500 | Serious | 0% | $119,500 to $147,500 |
+| Lane change, shared blame | $10,000 | $2,000 | Moderate | 30% (pure comparative) | $22,400 to $29,400 |
+
+The second scenario is a good example of why policy limits matter. If the other driver carries only $50,000 per person, that is the realistic ceiling from their policy, no matter how high the estimate goes.
+
+## What the calculator does not include
+
+- **Punitive damages**, which are rare and usually require extreme conduct such as drunk driving.
+- **Loss of consortium**, a claim a spouse may have for the effect of the injury on the relationship.
+- **Property damage and diminished value**, which are handled separately. Use the [diminished value calculator](/diminished-value-calculator/) for your car's lost resale value.
+- **Interest or court costs** if a case goes to trial.
+
+## How to gather your numbers
+
+1. **Medical bills:** ask every provider (ER, ambulance, imaging, doctors, therapy, pharmacy) for an itemized bill. Add them up.
+2. **Future medical:** only include care a doctor has recommended in writing.
+3. **Lost wages:** ask your employer for a letter with your pay rate and the days you missed. Self employed? Use invoices, tax returns or bank records.
+4. **Your share of fault:** be realistic. If the police report or the adjuster suggests some fault, run the calculator at that number too.
+5. **Policy limit:** the other driver's insurer may tell you, or your lawyer can request it.
+
+## The same claim in three states
+
+Take $12,000 in medical bills, $3,000 in wages, a moderate injury and 25% fault on your side:
+
+| State | Rule | Estimated range |
+|---|---|---|
+| California | Pure comparative | $29,250 to $38,250 |
+| Texas | 51% bar | $29,250 to $38,250 |
+| Virginia | Contributory | $0 |
+
+At 25% fault, California and Texas give the same result. Push the fault to 55% and Texas drops to zero while California still pays 45%. See every state's rule on our [state rules pages](/states/).
+
 ## Estimates by injury type
 
 Each of these pages has the calculator preset to a typical severity, plus notes on what insurers look for:
 
-- [Whiplash settlement calculator](/whiplash-car-accident-settlement/)
-- [Back injury settlement calculator](/back-injury-car-accident-settlement/)
-- [Broken bone settlement calculator](/broken-bone-car-accident-settlement/)
-- [Concussion settlement calculator](/concussion-car-accident-settlement/)
+- [Whiplash settlement calculator](/injuries/whiplash-car-accident-settlement/)
+- [Back injury settlement calculator](/injuries/back-injury-car-accident-settlement/)
+- [Broken bone settlement calculator](/injuries/broken-bone-car-accident-settlement/)
+- [Concussion settlement calculator](/injuries/concussion-car-accident-settlement/)
 
 ## What to do with your estimate
 
@@ -92,4 +131,6 @@ Use the range as a reality check. If an adjuster's first offer is far below your
 [cf_q q="Can I get a settlement if I was partly at fault?"]In most states, yes, but your amount is reduced by your share of fault. In contributory negligence states, even a small share can bar the claim.[/cf_q]
 [cf_q q="Should I include property damage?"]Property damage is usually settled separately and faster. The calculator shows it on its own line so it does not inflate your injury estimate.[/cf_q]
 [cf_q q="Does this replace a lawyer?"]No. It helps you understand the numbers. For serious injuries, disputed fault or a low policy limit, a consultation with a local attorney is usually worth it, and most offer them free.[/cf_q]
+[cf_q q="Why is my estimate so different from what the insurer offered?"]Insurers may discount bills, assign you some fault, use a lower multiplier or open low as a negotiating step. Ask them to explain each part of their number.[/cf_q]
+[cf_q q="Does the calculator work for truck or motorcycle accidents?"]The same basic formula applies, but commercial and motorcycle claims often involve different insurance and evidence. Treat the result as a starting point.[/cf_q]
 [/cf_faq]

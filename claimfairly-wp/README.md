@@ -6,6 +6,7 @@ There are two parts, and you install both:
 |---|---|---|---|
 | **Theme** | `claimfairly/` | `dist/claimfairly-theme.zip` | Design, page templates, trust blocks, structured data, and the one-click importer that creates every page |
 | **Plugin** | `claimfairly-tools/` | `dist/claimfairly-tools-plugin.zip` | The 5 calculators plus the state rules data. New tools get added here over time |
+| **Brand files** | `claimfairly/assets/brand/` | `dist/claimfairly-brand-assets.zip` | Logo, favicon and share image files for social profiles, directories and anywhere else you need them |
 
 The tools live in a plugin so they keep working even if you change the theme later.
 
@@ -20,6 +21,9 @@ The tools live in a plugin so they keep working even if you change the theme lat
    - 5 "How much of a $X settlement will I get?" pages
    - 4 injury pages and 3 insurer pages
    - The States hub and **40 state pages as drafts**
+   - The "By injury" and "By insurer" hub pages
+   - A **share image** (1200x630) for every page, set as its featured image
+   - The **site icon** (favicon)
    - All 4 menus, the homepage, the Guides page, "Post name" permalinks and the site name
 
 It is safe to run setup again. Pages you have edited are never overwritten.
@@ -32,6 +36,28 @@ It is safe to run setup again. Pages you have edited are never overwritten.
 4. **State pages (Pages > States):** each one is a draft. Check the facts box against the state's official statute and insurance department. Add the source links in `wp-content/plugins/claimfairly-tools/data/states.json` and set `"verified": true`, then publish the page. Start with the first 10: CA, TX, FL, NY, GA, PA, IL, OH, NC, MI.
 5. **SEO plugin:** install **Rank Math** or **Yoast** (one only). The importer already filled in each page's SEO title, meta description and focus keyword for both plugins.
 6. In Google Search Console, submit the sitemap your SEO plugin creates.
+
+## Logo, favicon and share images
+
+| File | Use it for |
+|---|---|
+| `logo.svg`, `logo.png` | Main logo on light backgrounds (the PNG is 1276x220, transparent) |
+| `logo-white.svg`, `logo-white.png` | Logo on dark backgrounds |
+| `logo-mark.svg`, `logo-mark-512.png` | Square icon alone: social profile pictures, app icons |
+| `favicon.ico`, `favicon.svg`, `favicon-16x16.png`, `favicon-32x32.png` | Browser tab icon |
+| `apple-touch-icon.png` (180), `android-chrome-192x192.png`, `android-chrome-512x512.png`, `site.webmanifest` | Phone home screen icons |
+| `og-default.jpg` | Default share image (1200x630) |
+
+Every page also has its own share image in `assets/og/`, showing its title and its own color. The importer uploads each one to the Media Library and sets it as the page's featured image, so Facebook, X, LinkedIn, WhatsApp and SEO plugins all pick it up automatically. To regenerate the images after changing titles, run `node build/og-images.mjs` (requires Node and Playwright).
+
+## SEO built in
+
+- **Schema on every page**, as one connected graph: Organization (with logo), WebSite, Person (you, as founder), WebPage (AboutPage, ContactPage and CollectionPage where they fit), BreadcrumbList, Article on guides and state, injury and insurer pages, WebApplication on tools, FAQPage on every page with an FAQ, and ItemList on the homepage and guides page. State pages also say which state they are about.
+- **Open Graph and Twitter tags**, a meta description and the SEO title on every page.
+- **When Rank Math or Yoast is active,** the theme leaves titles, descriptions, social tags and the base graph to them. It keeps adding WebApplication and FAQPage, which those plugins do not generate.
+- **Internal links:** every content page has 4 to 12 links inside its text and at least 3 links from other pages. Hubs link down to every child page, settlement pages link to the next and previous amounts, and each state page lists other published states with the same fault rule. Links to draft state pages never appear, so there are no broken links while you verify states.
+- **Content depth:** content pages run 1,150 to 1,700 words as rendered, each with 6 to 8 FAQs. Privacy, Disclaimer and Contact are intentionally shorter.
+- **Audit:** run `python3 build/audit.py` to see word counts, FAQs and links in and out for every page.
 
 ## Design
 

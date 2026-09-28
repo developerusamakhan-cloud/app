@@ -67,8 +67,33 @@ Each state's fault system, negligence rule, general injury filing deadline and m
 
 The demand letter generator fills a fixed template with the details you enter. It does not look up laws or add legal claims. The letter is created in your browser and the PDF is generated on your device.
 
+## Why we show ranges instead of one number
+
+Real claims settle across a range because they depend on evidence, credibility, the adjuster, the venue and negotiation. A single number would suggest a precision no calculator can offer. Ranges are more honest and more useful: they give you a realistic floor and ceiling to compare an offer against.
+
+## Rounding and inputs
+
+All money values are rounded to whole dollars for display. The calculators accept values like "12,500" or "12.5k." Percentages are applied exactly as entered. The take-home calculator's lien reduction is applied to the lien before it is subtracted. The settlement estimator applies the policy limit after the fault adjustment.
+
+## Known limits of every calculator
+
+- They cannot see your medical records, the police report or the other driver's statement.
+- They do not include punitive damages, loss of consortium, interest or court costs.
+- They use general state rules and cannot account for every exception.
+- They assume the numbers you enter are accurate.
+
+For decisions about your specific claim, talk to a licensed attorney in your state.
+
 ## What we never do
 
 - Promise a specific payout.
 - Hide an assumption that lowers your number.
 - Store or send the numbers you type.
+
+[cf_faq]
+[cf_q q="Are the calculator formulas the same ones insurers use?"]They are common starting methods used in the industry, like the 17c formula and the multiplier method. Many insurers also use private claims software, so their results can differ.[/cf_q]
+[cf_q q="Why does the diminished value calculator give such low numbers?"]Because it uses the 17c formula, which caps the loss at 10% and drops to zero at 100,000 miles. We show it as the insurer's likely opening number, not a fair value.[/cf_q]
+[cf_q q="Where do the pain and suffering multipliers come from?"]The 1.5 to 5 range is a widely used rule of thumb in injury claims, scaled by injury severity. Real results vary.[/cf_q]
+[cf_q q="Is my information sent to a server?"]No. All calculations run in your browser and nothing is stored.[/cf_q]
+[cf_q q="How are state fault rules applied?"]Each state is assigned its negligence rule from our state data file, and the calculator applies that rule to your fault percentage. See the rules above.[/cf_q]
+[/cf_faq]

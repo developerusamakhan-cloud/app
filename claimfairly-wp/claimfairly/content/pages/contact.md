@@ -20,3 +20,14 @@ The best way to reach me is by email: **[{{email}}](mailto:{{email}})**. I read 
 I am not a lawyer and cannot give advice about your specific claim, review your documents or tell you whether to accept an offer. For that, please contact a licensed attorney in your state. Your state bar association runs a lawyer referral service that can point you to one.
 
 Please do not send medical records, claim documents or other sensitive personal information by email.
+
+## Before you write
+
+Many common questions are answered in our [methodology](/methodology/), [editorial policy](/editorial-policy/) and the FAQ on each calculator page. If your question is about a specific state, check its page under [state rules](/states/) first.
+
+[cf_faq]
+[cf_q q="How quickly will I get a reply?"]Usually within a few days. Corrections to state information are prioritized.[/cf_q]
+[cf_q q="Can you review my settlement offer?"]No. We cannot give advice about individual claims. A licensed attorney in your state can, and many offer free consultations.[/cf_q]
+[cf_q q="Can I suggest a new calculator?"]Yes, please do. Tell us what question you were trying to answer.[/cf_q]
+[cf_q q="Do you accept guest posts or paid links?"]No. We do not sell links or publish sponsored content.[/cf_q]
+[/cf_faq]

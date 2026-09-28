@@ -373,7 +373,7 @@ strong, b { color: var(--cf-ink); font-weight: 700; }
 @media (min-width: 1100px) {
 	.layout--side { grid-template-columns: minmax(0, 1fr) 280px; gap: 64px; }
 }
-.layout__main { min-width: 0; max-width: 820px; }
+.layout__main { width: 100%; min-width: 0; max-width: 820px; }
 .layout:not(.layout--side) .layout__main { margin: 0 auto; max-width: var(--cf-read); }
 .layout__side { display: none; }
 @media (min-width: 1100px) { .layout__side { display: block; } }

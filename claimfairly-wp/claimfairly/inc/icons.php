@@ -89,7 +89,7 @@ function claimfairly_icon( $name, $size = 24 ) {
  * @return string
  */
 function claimfairly_logo_mark() {
-	return '<svg class="brand__mark" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true" focusable="false"><rect width="34" height="34" rx="10" fill="#12805c"/><path d="M17 8.5v17M11 25.5h12M9.5 12.5h15" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><path d="M9.5 12.5 6.8 19a3 3 0 0 0 5.4 0L9.5 12.5ZM24.5 12.5 21.8 19a3 3 0 0 0 5.4 0l-2.7-6.5Z" fill="#b9f5d8"/></svg>';
+	return '<svg class="brand__mark" width="34" height="34" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="29" fill="#12805c"/><path d="M50 25v50M32 75h36M28 37h44" fill="none" stroke="#fff" stroke-width="6.5" stroke-linecap="round"/><path d="M28 37 20 56a8.8 8.8 0 0 0 16 0L28 37ZM72 37l-8 19a8.8 8.8 0 0 0 16 0L72 37Z" fill="#b9f5d8"/></svg>';
 }
 
 /**

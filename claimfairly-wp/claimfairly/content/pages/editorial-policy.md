@@ -31,6 +31,18 @@ Our calculators use methods that are already used in real claims as a starting p
 - **Calculators and guides** are reviewed at least every six months.
 - Every page shows a **"Last reviewed"** date. We only change that date when someone has actually checked the page against its sources.
 
+## How we write
+
+- **Plain English first.** If a legal term is needed, we explain it the first time it appears.
+- **Numbers with every claim.** Where we describe a rule, we show what it does to a real example.
+- **Both sides.** If a formula or practice tends to favor the insurer, we say so. If a common belief among claimants is wrong, we say that too.
+- **No promises.** We never tell readers what they "will get," and we never tell anyone to accept or reject an offer.
+- **Clear limits.** Every page that touches legal questions reminds readers to confirm details with official sources or a licensed attorney.
+
+## How we handle state law
+
+State rules are stored in one data file with the rule, the general filing deadline, minimum insurance limits, a note on recent changes, the sources used and the date they were checked. A state page is not published until its facts have been checked against the state's official statute or insurance department. When a law changes, we update the data first, so every page and calculator that uses it updates together.
+
 ## Corrections
 
 If we get something wrong, we fix it quickly and update the reviewed date. For significant errors, like a wrong filing deadline, we add a short note to the page explaining what changed.
@@ -40,3 +52,11 @@ Spotted a problem? Email [{{email}}](mailto:{{email}}). Please include the page 
 ## Independence
 
 No insurer, law firm or advertiser can pay to change a formula, a result or an article. Ads, if shown, are kept outside the calculators.
+
+[cf_faq]
+[cf_q q="Where does ClaimFairly get its information?"]From official sources such as state statutes, court decisions and insurance departments, plus established legal references like the Legal Information Institute at Cornell Law School.[/cf_q]
+[cf_q q="Do you use AI to write articles?"]Every page is written, checked and approved by a person, and we never use AI summaries as sources.[/cf_q]
+[cf_q q="What does 'Last reviewed' mean?"]It is the date someone last checked the page against its sources. We only change it when that check actually happens.[/cf_q]
+[cf_q q="Can companies pay to be featured?"]No. No insurer, law firm or advertiser can pay to change a formula, a result or an article.[/cf_q]
+[cf_q q="How do I suggest a correction?"]Email {{email}} with the page and a source. Confirmed errors are fixed and the reviewed date is updated.[/cf_q]
+[/cf_faq]

@@ -33,3 +33,14 @@ You are responsible for decisions you make about your claim. Before accepting an
 ## Questions
 
 Email [{{email}}](mailto:{{email}}).
+
+## Calculators and third-party links
+
+Calculator results depend entirely on the information you enter and on general formulas. Links to other websites, including official sources and insurers' claim pages, are provided for convenience. We do not control those sites and are not responsible for their content.
+
+[cf_faq]
+[cf_q q="Can I rely on ClaimFairly's numbers for my claim?"]Use them as educational estimates to understand your situation. For decisions about your claim, consult a licensed attorney in your state.[/cf_q]
+[cf_q q="Does using the site make ClaimFairly my lawyer?"]No. Using the site does not create an attorney-client relationship, and ClaimFairly is not a law firm.[/cf_q]
+[cf_q q="Are you affiliated with the insurers you mention?"]No. Insurer names are used for information only. We are not affiliated with or paid by any insurer.[/cf_q]
+[cf_q q="What if a state law has changed?"]Laws change. Check the page's last reviewed date and confirm deadlines with official sources or an attorney.[/cf_q]
+[/cf_faq]

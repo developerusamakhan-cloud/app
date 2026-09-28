@@ -305,7 +305,9 @@ function claimfairly_guide_card( $post ) {
 
 	$html  = '<li class="guide-card"><a href="' . esc_url( get_permalink( $post ) ) . '">';
 	$html .= '<span class="guide-card__cover c-' . esc_attr( $look[0] ) . '">';
-	if ( has_post_thumbnail( $post ) ) {
+	$thumb_id  = (int) get_post_thumbnail_id( $post );
+	$own_share = $thumb_id && 0 === strpos( (string) get_post_meta( $thumb_id, '_cf_source_file', true ), 'claimfairly-' );
+	if ( $thumb_id && ! $own_share ) {
 		$html .= get_the_post_thumbnail( $post, 'medium_large', array( 'loading' => 'lazy', 'alt' => '' ) );
 	} else {
 		$html .= '<span class="guide-card__icon">' . claimfairly_icon( $look[1], 30 ) . '</span><span class="guide-card__cover-title">' . esc_html( $cat ) . '</span>';

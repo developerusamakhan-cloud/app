@@ -160,7 +160,9 @@
 .cf-breakdown { width: 100%; margin: 0 0 18px; border-collapse: collapse; font-size: 0.93rem; font-variant-numeric: tabular-nums; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 1px var(--t-line); }
 .cf-breakdown th, .cf-breakdown td { padding: 10px 14px; border-bottom: 1px solid var(--t-line); text-align: left; vertical-align: top; }
 .cf-breakdown thead th { background: var(--t-soft); color: var(--t-muted); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
-.cf-breakdown td + td, .cf-breakdown th + th { text-align: right; white-space: nowrap; }
+.cf-breakdown td + td, .cf-breakdown th + th { text-align: right; }
+.cf-breakdown td + td { white-space: nowrap; }
+@media (max-width: 480px) { .cf-breakdown { font-size: 0.86rem; } .cf-breakdown th, .cf-breakdown td { padding: 8px 9px; } }
 .cf-breakdown tr:last-child td { border-bottom: 0; }
 .cf-breakdown tr.is-total td { font-weight: 800; color: var(--t-ink); background: var(--t-soft); }
 

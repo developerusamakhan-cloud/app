@@ -9,6 +9,7 @@
  *   [cf_tool name="demand-letter" type="injury|property|dv"]
  *   [cf_state_facts state="CA"]      Facts box for a state page.
  *   [cf_state_table]                 All states: fault system, negligence rule, deadline.
+ *   [cf_state_siblings state="CA"]   Links to other published state pages with the same fault rule.
  *
  * @package ClaimFairlyTools
  */
@@ -180,3 +181,46 @@ function cft_state_table_shortcode() {
 	return $html;
 }
 add_shortcode( 'cf_state_table', 'cft_state_table_shortcode' );
+
+/**
+ * [cf_state_siblings state="CA"] Other published state pages that share the
+ * same negligence rule. Only published pages are linked, so drafts never
+ * produce broken links.
+ *
+ * @param array $atts Attributes.
+ * @return string
+ */
+function cft_state_siblings_shortcode( $atts ) {
+	$atts  = shortcode_atts(
+		array(
+			'state' => '',
+			'limit' => 6,
+		),
+		$atts,
+		'cf_state_siblings'
+	);
+	$state = cft_state( $atts['state'] );
+	if ( ! $state ) {
+		return '';
+	}
+	$links = array();
+	foreach ( cft_states() as $code => $other ) {
+		if ( $code === $state['code'] || $other['rule'] !== $state['rule'] ) {
+			continue;
+		}
+		$page = get_page_by_path( 'states/' . $other['slug'] );
+		if ( $page && 'publish' === $page->post_status ) {
+			$links[] = '<li><a href="' . esc_url( get_permalink( $page ) ) . '">' . esc_html( sprintf( /* translators: %s: state name. */ __( '%s car accident claims', 'claimfairly-tools' ), $other['name'] ) ) . '</a></li>';
+		}
+		if ( count( $links ) >= (int) $atts['limit'] ) {
+			break;
+		}
+	}
+	$hub = get_page_by_path( 'states' );
+	$all = $hub ? '<p><a href="' . esc_url( get_permalink( $hub ) ) . '">' . esc_html__( 'See every state\'s rules', 'claimfairly-tools' ) . '</a></p>' : '';
+	if ( ! $links ) {
+		return $all;
+	}
+	return '<ul class="cf-siblings">' . implode( '', $links ) . '</ul>' . $all;
+}
+add_shortcode( 'cf_state_siblings', 'cft_state_siblings_shortcode' );

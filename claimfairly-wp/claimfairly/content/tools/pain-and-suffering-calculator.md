@@ -40,6 +40,8 @@ For example, if you earn $52,000 a year, that is about $200 per working day. Nin
 
 Per diem works well when recovery took a long time but the bills stayed small, like a soft tissue injury treated mostly with rest and home exercises.
 
+Every formula and assumption behind this calculator is listed in our [methodology](/methodology/), and our [editorial policy](/editorial-policy/) explains how we check and update it.
+
 ## Which method should you use?
 
 | Your situation | Method that usually fits |
@@ -59,6 +61,43 @@ James broke his wrist in a crash. His medical bills were **$10,000**, the injury
 - Per diem: $231 a day x 120 days = **$27,720**
 - Range across both: **$27,720 to $40,000**
 
+## Examples by injury type
+
+| Injury | Medical | Recovery | Multiplier range | Per diem at $200/day |
+|---|---|---|---|---|
+| Whiplash, minor | $3,000 | 60 days | $4,500 to $6,000 | $12,000 |
+| Back strain, moderate | $8,000 | 120 days | $16,000 to $24,000 | $24,000 |
+| Wrist fracture, serious | $14,000 | 150 days | $42,000 to $56,000 | $30,000 |
+| Concussion, moderate | $5,000 | 90 days | $10,000 to $15,000 | $18,000 |
+
+Notice how the two methods trade places. For short, cheap injuries, per diem often runs higher. For expensive injuries with surgery, the multiplier usually wins. Read more in our injury pages on [whiplash](/injuries/whiplash-car-accident-settlement/), [back injuries](/injuries/back-injury-car-accident-settlement/), [broken bones](/injuries/broken-bone-car-accident-settlement/) and [concussions](/injuries/concussion-car-accident-settlement/).
+
+## Keeping a pain journal
+
+A pain journal is one of the easiest ways to support a pain and suffering claim. Keep it short and regular:
+
+- Date and pain level from 0 to 10
+- Where it hurts and what makes it worse
+- Sleep that night
+- Things you could not do, or needed help with
+- Appointments and how you felt after
+
+Two or three lines a day is enough. Months later, those notes are far more convincing than memory.
+
+## Common adjuster arguments, and how to respond
+
+| What the adjuster says | How you can respond |
+|---|---|
+| "Your treatment was excessive." | Point to your doctor's referrals and notes showing why each step was needed. |
+| "There was a gap in treatment." | Explain the reason (work, childcare, insurance approval) and show that symptoms continued. |
+| "Soft tissue injuries heal in weeks." | Share therapy notes and your pain journal showing a longer recovery. |
+| "You had a prior injury." | Show records from before the crash and explain how the crash made things worse. |
+| "The damage to the car was minor." | Low visible damage does not mean low force on the body. Focus on medical evidence. |
+
+## How pain and suffering is decided if a case goes to court
+
+In court, there is no formula. The jury hears evidence about your injury, treatment and daily life, and decides a number it considers fair. Lawyers may suggest a per diem approach or a total, depending on the rules in that state. That uncertainty is part of why insurers sometimes pay more to settle a strong, well documented claim rather than risk a jury.
+
 ## What can change your number
 
 - **Documentation.** A pain journal, missed events, help you needed at home: small, specific details make pain believable.
@@ -75,4 +114,6 @@ Learn more in [Multiplier vs Per Diem: Two Ways to Value Pain and Suffering](/mu
 [cf_q q="What is a reasonable per diem rate?"]Many people use their daily pay. Others use a round figure like $100 to $300 a day. Whatever you pick, be ready to explain why.[/cf_q]
 [cf_q q="Is pain and suffering taxable?"]Compensation for pain and suffering tied to a physical injury is generally not taxable under federal law. Emotional distress without a physical injury can be. Ask a tax professional about your case.[/cf_q]
 [cf_q q="Can I claim pain and suffering without a lawyer?"]Yes. You can include it in your own demand letter. The key is showing how the injury affected your daily life, not just listing the diagnosis.[/cf_q]
+[cf_q q="Does pain and suffering include emotional distress?"]Yes. Anxiety, fear of driving, trouble sleeping and loss of enjoyment of life are usually part of pain and suffering in a car accident claim.[/cf_q]
+[cf_q q="Can I claim pain and suffering in a no-fault state?"]Usually only if your injury meets your state's serious injury or dollar threshold.[/cf_q]
 [/cf_faq]

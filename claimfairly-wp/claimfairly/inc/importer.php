@@ -369,6 +369,10 @@ function claimfairly_upsert( $meta, $blocks, $update, &$report ) {
 		$hash = get_post_meta( $post->ID, '_cf_import_hash', true );
 		if ( ! $update || ! $hash || md5( $post->post_content ) !== $hash ) {
 			++$report['skipped'];
+			claimfairly_attach_share_image( (int) $post->ID, 'home' === $slug ? 'og-default' : $slug );
+			if ( ! empty( $meta['seo_title'] ) && ! get_post_meta( $post->ID, '_cf_seo_title', true ) ) {
+				update_post_meta( $post->ID, '_cf_seo_title', $meta['seo_title'] );
+			}
 			return $post->ID;
 		}
 		$data['ID']          = $post->ID;
@@ -418,6 +422,7 @@ function claimfairly_upsert( $meta, $blocks, $update, &$report ) {
 	}
 	// SEO plugin fields, if one is active: title and description from front matter.
 	if ( ! empty( $meta['seo_title'] ) ) {
+		update_post_meta( $id, '_cf_seo_title', $meta['seo_title'] );
 		update_post_meta( $id, 'rank_math_title', $meta['seo_title'] );
 		update_post_meta( $id, '_yoast_wpseo_title', $meta['seo_title'] );
 	}
@@ -429,7 +434,111 @@ function claimfairly_upsert( $meta, $blocks, $update, &$report ) {
 		update_post_meta( $id, 'rank_math_focus_keyword', $meta['focus_keyword'] );
 		update_post_meta( $id, '_yoast_wpseo_focuskw', $meta['focus_keyword'] );
 	}
+	claimfairly_attach_share_image( (int) $id, 'home' === $slug ? 'og-default' : $slug );
 	return (int) $id;
+}
+
+/**
+ * Upload the page's share image (assets/og/{slug}.jpg) to the Media Library
+ * and set it as the featured image, unless the page already has one.
+ *
+ * @param int    $post_id Post ID.
+ * @param string $slug    Image name.
+ */
+function claimfairly_attach_share_image( $post_id, $slug ) {
+	if ( has_post_thumbnail( $post_id ) ) {
+		return;
+	}
+	$file = 'og-default' === $slug ? CLAIMFAIRLY_DIR . '/assets/brand/og-default.jpg' : CLAIMFAIRLY_DIR . '/assets/og/' . $slug . '.jpg';
+	if ( ! file_exists( $file ) ) {
+		return;
+	}
+	$attachment_id = claimfairly_media_from_file( $file, 'claimfairly-' . $slug . '.jpg', get_the_title( $post_id ), $post_id );
+	if ( $attachment_id ) {
+		set_post_thumbnail( $post_id, $attachment_id );
+	}
+}
+
+/**
+ * Copy a theme file into the Media Library (reusing it if already imported).
+ *
+ * @param string $file      Absolute path.
+ * @param string $filename  Target file name.
+ * @param string $title     Attachment title / alt text.
+ * @param int    $parent_id Parent post.
+ * @return int Attachment ID or 0.
+ */
+function claimfairly_media_from_file( $file, $filename, $title, $parent_id = 0 ) {
+	$existing = get_posts(
+		array(
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'posts_per_page' => 1,
+			'meta_key'       => '_cf_source_file', // phpcs:ignore WordPress.DB.SlowDBQuery
+			'meta_value'     => $filename, // phpcs:ignore WordPress.DB.SlowDBQuery
+			'fields'         => 'ids',
+		)
+	);
+	if ( $existing ) {
+		return (int) $existing[0];
+	}
+	$upload = wp_upload_bits( $filename, null, (string) file_get_contents( $file ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+	if ( ! empty( $upload['error'] ) ) {
+		return 0;
+	}
+	$type = wp_check_filetype( $upload['file'] );
+	$id   = wp_insert_attachment(
+		array(
+			'post_mime_type' => $type['type'],
+			'post_title'     => $title,
+			'post_status'    => 'inherit',
+		),
+		$upload['file'],
+		$parent_id
+	);
+	if ( is_wp_error( $id ) || ! $id ) {
+		return 0;
+	}
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $upload['file'] ) );
+	update_post_meta( $id, '_wp_attachment_image_alt', $title );
+	update_post_meta( $id, '_cf_source_file', $filename );
+	return (int) $id;
+}
+
+/**
+ * Recovery on a sample claim under a negligence rule.
+ *
+ * @param string $rule  Rule key.
+ * @param int    $fault Fault percent.
+ * @param float  $econ  Economic damages.
+ * @param float  $non   Non-economic damages.
+ * @return float
+ */
+function claimfairly_rule_recovery( $rule, $fault, $econ, $non ) {
+	$keep = 1 - $fault / 100;
+	switch ( $rule ) {
+		case 'mod50':
+			return $fault >= 50 ? 0 : ( $econ + $non ) * $keep;
+		case 'mod51':
+			return $fault > 50 ? 0 : ( $econ + $non ) * $keep;
+		case 'mod51_noneco':
+			return $econ * $keep + ( $fault > 50 ? 0 : $non * $keep );
+		case 'contributory':
+			return $fault > 0 ? 0 : $econ + $non;
+		default:
+			return ( $econ + $non ) * $keep;
+	}
+}
+
+/**
+ * Money format for generated content.
+ *
+ * @param float $n Amount.
+ * @return string
+ */
+function claimfairly_usd( $n ) {
+	return '$' . number_format( round( $n ) );
 }
 
 /**
@@ -445,20 +554,44 @@ function claimfairly_state_page( $s ) {
 	$yrs    = $years . ' ' . ( 1 === $years ? 'year' : 'years' );
 	$rule   = $s['rule'];
 	$system = $s['fault_system'];
+	$limits = array_map( 'intval', explode( '/', $s['min_liability'] ) );
+	$per    = isset( $limits[0] ) ? $limits[0] * 1000 : 25000;
+	$per_ac = isset( $limits[1] ) ? $limits[1] * 1000 : 50000;
+	$pd     = isset( $limits[2] ) ? $limits[2] * 1000 : 25000;
 
+	$rule_names = array(
+		'pure'         => 'pure comparative negligence',
+		'mod50'        => 'modified comparative negligence with a 50% bar',
+		'mod51'        => 'modified comparative negligence with a 51% bar',
+		'mod51_noneco' => 'a modified 51% bar that applies to pain and suffering',
+		'contributory' => 'contributory negligence',
+		'slight_gross' => 'a slight versus gross negligence comparison',
+	);
 	$fault_para = array(
-		'pure'         => "{$name} uses **pure comparative negligence**. You can recover damages even if you were mostly to blame, but your award shrinks by your share of fault. If your claim is worth \$40,000 and you were 25% at fault, you would recover about \$30,000.",
-		'mod50'        => "{$name} uses **modified comparative negligence with a 50% bar**. Your damages are reduced by your share of fault, and if you are found 50% or more at fault you recover nothing. That makes the fault split one of the most argued points in any {$name} claim.",
-		'mod51'        => "{$name} uses **modified comparative negligence with a 51% bar**. Your damages are reduced by your share of fault, and you recover nothing if you are found more than 50% at fault. At exactly 50/50, you can still recover half.",
+		'pure'         => "{$name} uses **pure comparative negligence**. You can recover damages even if you were mostly to blame, but your award shrinks by your share of fault. It is the most forgiving rule for injured drivers, and it also means the other driver can claim against you for their share.",
+		'mod50'        => "{$name} uses **modified comparative negligence with a 50% bar**. Your damages are reduced by your share of fault, and if you are found 50% or more at fault you recover nothing. A crash judged 50/50 leaves both drivers without a claim against each other, which makes the fault split one of the most argued points in any {$name} claim.",
+		'mod51'        => "{$name} uses **modified comparative negligence with a 51% bar**. Your damages are reduced by your share of fault, and you recover nothing if you are found more than 50% at fault. At exactly 50/50, you can still recover half. This is the most common rule in the country.",
 		'mod51_noneco' => "{$name} splits it in two. Economic losses like medical bills and lost pay are reduced by your share of fault, but **pain and suffering is barred completely if you are more than 50% at fault**.",
 		'contributory' => "{$name} is one of the few places that still uses **contributory negligence**. If you are found even slightly at fault, you can be barred from recovering anything from the other driver. There are narrow exceptions, like the \"last clear chance\" doctrine, which is why a local attorney is worth a call before you give up on a claim here.",
 		'slight_gross' => "{$name} compares negligence as **\"slight\" versus \"gross\"** instead of using a percentage cutoff. You can recover only if your negligence was slight compared with the other driver's, and your award is reduced by your share. There is no fixed line, so outcomes vary more than in most states.",
 	);
 	$system_para = array(
-		'at-fault' => "{$name} is an **at-fault state**. The driver who caused the crash, through their liability insurer, pays for the other people's injuries and property damage. You can file with your own insurer, the other driver's insurer, or both.",
-		'no-fault' => "{$name} is a **no-fault state**. After a crash, your own personal injury protection (PIP) coverage pays your medical bills and some lost wages first, no matter who caused it. You can step outside no-fault and claim pain and suffering from the at-fault driver only when your injury meets the state's legal threshold.",
-		'choice'   => "{$name} is a **choice no-fault state**. When you buy a policy you choose between a no-fault option, which limits your right to sue for pain and suffering, and a traditional tort option, which keeps it. Check your declarations page to see which one you have.",
+		'at-fault' => "{$name} is an **at-fault state**. The driver who caused the crash, through their liability insurer, pays for the other people's injuries and property damage. After a crash you can file with the other driver's insurer (a third-party claim), with your own insurer under coverages like collision or MedPay, or both. Filing with your own insurer is often faster, and your insurer can recover the money from the other company later.",
+		'no-fault' => "{$name} is a **no-fault state**. After a crash, your own personal injury protection (PIP) coverage pays your medical bills and some lost wages first, no matter who caused it. That gets bills paid faster, but it limits lawsuits: you can step outside no-fault and claim pain and suffering from the at-fault driver only when your injury meets the state's legal threshold. Damage to your car is still handled based on fault.",
+		'choice'   => "{$name} is a **choice no-fault state**. When you buy a policy you choose between a no-fault option, which limits your right to sue for pain and suffering for less serious injuries, and a traditional tort option, which keeps it. Check your declarations page to see which one you have, because it can decide whether a pain and suffering claim is possible at all. Damage to your car is still handled based on fault.",
 	);
+
+	// Worked fault table on a $40,000 claim ($15,000 economic, $25,000 pain and suffering).
+	$rows = '';
+	foreach ( array( 0, 10, 30, 50, 51, 60, 80 ) as $f ) {
+		$r     = claimfairly_rule_recovery( $rule, $f, 15000, 25000 );
+		$rows .= "| {$f}% | " . claimfairly_usd( $r ) . ( 'slight_gross' === $rule && $f > 0 ? ' (if a court finds your negligence slight)' : '' ) . " |\n";
+	}
+
+	// Minimum coverage example.
+	$claim = 20000 + 5000 + 20000 * 2.5;
+	$gap   = max( 0, $claim - $per );
+	$year  = (int) wp_date( 'Y' );
 
 	$meta = array(
 		'title'         => "{$name} Car Accident Claims: Fault Rules, Deadlines and Minimum Coverage",
@@ -468,8 +601,9 @@ function claimfairly_state_page( $s ) {
 		'status'        => 'draft',
 		'order'         => 0,
 		'reviewed'      => $s['reviewed'],
+		'seo_title'     => "{$name} Car Accident Laws: Fault, Deadlines and Coverage",
 		'summary'       => "Fault rule, filing deadline and minimum insurance in {$name}, with a claim estimator preset for {$name} law.",
-		'excerpt'       => "How car accident claims work in {$name}: the fault rule, the {$yrs} injury deadline, minimum insurance and what they mean for your settlement.",
+		'excerpt'       => "How car accident claims work in {$name}: the fault rule, the {$yrs} injury deadline, minimum insurance and what they mean for your settlement, with a calculator set to {$name} law.",
 		'focus_keyword' => strtolower( $name ) . ' car accident claim',
 		'related'       => array(
 			'Car Accident Settlement Calculator | /car-accident-settlement-calculator/',
@@ -478,30 +612,68 @@ function claimfairly_state_page( $s ) {
 		),
 	);
 
-	$body  = "If you were in a car accident in {$name}, three state rules shape your claim more than anything else: who pays first, how shared fault is handled, and how long you have to file. Here is each one in plain English, plus a calculator already set to {$name} law.\n\n";
-	$body .= "[cf_state_facts state=\"{$code}\"]\n\n";
-	$body .= "## Who pays after a crash in {$name}?\n\n" . $system_para[ $system ] . "\n\n";
-	$body .= "## How does shared fault work in {$name}?\n\n" . $fault_para[ $rule ] . "\n\n";
-	$body .= "Insurers know this rule well. Expect the adjuster to look for any reason to assign you a share of the blame, like speed, a late brake or a phone in the car. Photos, a police report and witness names are your best defense.\n\n";
-	$body .= "## How long do you have to file in {$name}?\n\n";
-	$body .= "The general deadline to file a personal injury lawsuit after a car accident in {$name} is **{$yrs}**, usually counted from the date of the crash. Miss it and the court can throw out your case, no matter how strong it is. Property damage claims, claims against a government vehicle, and claims involving a minor can have different deadlines, so confirm yours early.\n\n";
-	$body .= "The insurance claim itself should be reported much sooner. Most policies require you to report an accident promptly, often within days.\n\n";
-	$body .= "## Minimum car insurance in {$name}\n\n";
-	$body .= "{$name}'s minimum liability limits are **{$s['min_liability']}**. " . ( function_exists( 'cft_limits_words' ) ? 'That means ' . cft_limits_words( $s['min_liability'] ) . '.' : '' ) . " If the other driver carries only the minimum and your injuries are serious, the policy limit may be the most their insurer will pay. Your own uninsured or underinsured motorist coverage can help fill the gap.\n\n";
-	$body .= "## Estimate your claim under {$name} law\n\n";
-	$body .= "The calculator below is already set to {$name}'s fault rule. Enter your medical bills, lost wages and your share of fault to see a realistic range.\n\n";
-	$body .= "[cf_tool name=\"settlement-estimator\" state=\"{$code}\"]\n\n";
-	$body .= "## Can you claim diminished value in {$name}?\n\n";
-	$body .= "In most states, including {$name}, you can ask the at-fault driver's insurer to pay for the value your car lost because it now has an accident on its record. Claims against your own insurer are harder and depend on your policy wording. Start with the [diminished value calculator](/diminished-value-calculator/) to see the insurer's likely opening number.\n\n";
-	$body .= "[cf_faq]\n";
-	$body .= "[cf_q q=\"Is {$name} a no-fault state?\"]" . ( 'at-fault' === $system ? "No. {$name} is an at-fault state, so the driver who caused the crash is responsible for the damage through their liability insurance." : ( 'choice' === $system ? "Partly. {$name} is a choice no-fault state, so it depends on the option you picked on your policy." : "Yes. {$name} is a no-fault state, so your own PIP coverage pays first for medical bills and some lost wages." ) ) . "[/cf_q]\n";
-	$body .= "[cf_q q=\"How long do I have to sue after a car accident in {$name}?\"]Generally {$yrs} from the date of the accident for an injury lawsuit. Some situations have shorter or longer deadlines, so check with a local attorney if you are getting close.[/cf_q]\n";
-	$body .= "[cf_q q=\"Can I still get paid if I was partly at fault in {$name}?\"]" . wp_strip_all_tags( function_exists( 'cft_rule_explainer' ) ? cft_rule_explainer( $rule ) : '' ) . "[/cf_q]\n";
-	$body .= "[/cf_faq]";
+	$b  = "If you were in a car accident in {$name}, three state rules shape your claim more than anything else: who pays first, how shared fault is handled, and how long you have to file. A fourth, the minimum insurance other drivers must carry, often decides how much can actually be paid. This page explains each one in plain English, shows what they do to real numbers, and includes a settlement calculator already set to {$name} law.\n\n";
+	$b .= "[cf_state_facts state=\"{$code}\"]\n\n";
+
+	$b .= "## Who pays after a crash in {$name}?\n\n" . $system_para[ $system ] . "\n\n";
+	if ( 'at-fault' !== $system ) {
+		$b .= "Not sure how this differs from other states? Read [at-fault vs no-fault states](/at-fault-vs-no-fault-states/) for a full comparison.\n\n";
+	}
+
+	$b .= "## How does shared fault work in {$name}?\n\n" . $fault_para[ $rule ] . "\n\n";
+	$b .= "### What the rule does to a real claim\n\n";
+	$b .= "Take a claim worth **\$40,000** in total: \$15,000 in medical bills and lost wages, plus \$25,000 for pain and suffering. Here is what {$name}'s rule leaves you with at different levels of fault:\n\n";
+	$b .= "| Your share of fault | What you could recover |\n|---|---|\n" . $rows . "\n";
+	$b .= "Insurers know this rule well. Expect the adjuster to look for any reason to assign you a share of the blame, like speed, a late brake or a phone in the car. Photos, a police report and witness names are your best defense. Our guide to [comparative vs contributory negligence](/comparative-vs-contributory-negligence/) compares {$name}'s approach, " . $rule_names[ $rule ] . ", with every other rule in the country.\n\n";
+
+	$b .= "## How long do you have to file in {$name}?\n\n";
+	$b .= "The general deadline to file a personal injury lawsuit after a car accident in {$name} is **{$yrs}**, usually counted from the date of the crash. For a crash on March 3, {$year}, that general deadline would fall around March 3, " . ( $year + $years ) . ". Miss it and the court can dismiss your case, no matter how strong it is.\n\n";
+	$b .= "Some claims follow different deadlines:\n\n";
+	$b .= "- **Property damage** claims, including [diminished value](/what-is-diminished-value/), can have their own deadline.\n";
+	$b .= "- **Claims against a government vehicle or agency** often require a written notice within a much shorter time.\n";
+	$b .= "- **Claims involving a minor** may pause or extend the deadline.\n";
+	$b .= "- **Wrongful death** claims usually have a separate deadline.\n\n";
+	$b .= "The insurance claim itself should be reported much sooner. Most policies require you to report an accident promptly, often within days. A settlement negotiation does not pause the lawsuit deadline, so if you are getting close, talk to a {$name} attorney. See [how long a car accident settlement takes](/how-long-does-a-car-accident-settlement-take/) for a realistic timeline.\n\n";
+
+	$b .= "## Minimum car insurance in {$name}\n\n";
+	$b .= "{$name}'s minimum liability limits are **{$s['min_liability']}**. " . ( function_exists( 'cft_limits_words' ) ? 'That means ' . cft_limits_words( $s['min_liability'] ) . '.' : '' ) . "\n\n";
+	$b .= "Here is why that matters. Imagine you have \$20,000 in medical bills, \$5,000 in lost wages and a serious injury valued at 2.5 times your medical bills for pain and suffering. Your claim is worth about **" . claimfairly_usd( $claim ) . "**. If the driver who hit you carries only {$name}'s minimum of " . claimfairly_usd( $per ) . " per person, their insurer will usually pay no more than " . claimfairly_usd( $per ) . ( $gap > 0 ? ", leaving a gap of about **" . claimfairly_usd( $gap ) . "**." : '.' ) . "\n\n";
+	$b .= "| Coverage | {$name} minimum |\n|---|---|\n| Bodily injury, per person | " . claimfairly_usd( $per ) . " |\n| Bodily injury, per accident | " . claimfairly_usd( $per_ac ) . " |\n| Property damage | " . claimfairly_usd( $pd ) . " |\n\n";
+	$b .= "Your own **uninsured and underinsured motorist coverage** is the main way to close a gap like that. Check your declarations page, and consider raising those limits at your next renewal.\n\n";
+
+	$b .= "## Estimate your claim under {$name} law\n\n";
+	$b .= "The calculator below is already set to {$name}'s fault rule. Enter your medical bills, lost wages, injury severity and your share of fault to see a realistic range. Add the other driver's policy limit if you know it.\n\n";
+	$b .= "[cf_tool name=\"settlement-estimator\" state=\"{$code}\"]\n\n";
+	$b .= "Once you have a range, see what a settlement would actually leave you after fees and liens with the [take-home calculator](/settlement-calculator-take-home/), and compare pain and suffering methods with the [pain and suffering calculator](/pain-and-suffering-calculator/).\n\n";
+
+	$b .= "## Can you claim diminished value in {$name}?\n\n";
+	$b .= "In most states, including {$name}, you can ask the at-fault driver's insurer to pay for the value your car lost because it now has an accident on its record, even after a good repair. Claims against your own insurer are harder and depend on your policy wording. Insurers usually open with the [17c formula](/17c-formula-diminished-value/). For a \$30,000 car with moderate structural damage and 35,000 miles, 17c gives about \$1,200. Run your own numbers with the [diminished value calculator](/diminished-value-calculator/).\n\n";
+
+	$b .= "## What to do after a crash in {$name}\n\n";
+	$b .= "1. Call 911 if anyone is hurt, and get to safety.\n";
+	$b .= "2. Call the police and get the report number.\n";
+	$b .= "3. Exchange insurance information and take photos of everything.\n";
+	$b .= "4. See a doctor within a day or two, even if you feel fine.\n";
+	$b .= ( 'at-fault' === $system ? "5. Report the claim to the other driver's insurer and to your own.\n" : "5. Report the crash to your own insurer promptly so your PIP benefits start, and to the other driver's insurer.\n" );
+	$b .= "6. Keep every bill, receipt and record, and note the {$yrs} filing deadline on your calendar.\n";
+	$b .= ( 'contributory' === $rule ? "7. Be especially careful about what you say regarding fault. In {$name}, even a small share of blame can end the claim.\n\n" : "7. Do not admit fault or guess about what happened. Stick to facts.\n\n" );
+	$b .= "The full [after-a-crash checklist](/what-to-do-after-a-car-accident/) covers each step in more detail.\n\n";
+
+	$b .= "## Other states with the same fault rule\n\n";
+	$b .= "[cf_state_siblings state=\"{$code}\"]\n\n";
+
+	$b .= "[cf_faq]\n";
+	$b .= "[cf_q q=\"Is {$name} a no-fault state?\"]" . ( 'at-fault' === $system ? "No. {$name} is an at-fault state, so the driver who caused the crash is responsible for the damage through their liability insurance." : ( 'choice' === $system ? "Partly. {$name} is a choice no-fault state, so it depends on the option you picked on your policy." : "Yes. {$name} is a no-fault state, so your own PIP coverage pays first for medical bills and some lost wages." ) ) . "[/cf_q]\n";
+	$b .= "[cf_q q=\"How long do I have to sue after a car accident in {$name}?\"]Generally {$yrs} from the date of the accident for an injury lawsuit. Some situations have shorter or longer deadlines, so check with a local attorney if you are getting close.[/cf_q]\n";
+	$b .= "[cf_q q=\"Can I still get paid if I was partly at fault in {$name}?\"]" . wp_strip_all_tags( function_exists( 'cft_rule_explainer' ) ? cft_rule_explainer( $rule ) : '' ) . "[/cf_q]\n";
+	$b .= "[cf_q q=\"What is the minimum car insurance in {$name}?\"]{$name}'s minimum liability limits are {$s['min_liability']}: " . claimfairly_usd( $per ) . " per person and " . claimfairly_usd( $per_ac ) . " per accident for injuries, plus " . claimfairly_usd( $pd ) . " for property damage.[/cf_q]\n";
+	$b .= "[cf_q q=\"What if the other driver has no insurance in {$name}?\"]Your own uninsured motorist coverage, if you have it, can pay for your injuries and sometimes your car. Check your declarations page.[/cf_q]\n";
+	$b .= "[cf_q q=\"Can I claim diminished value in {$name}?\"]Usually yes against the at-fault driver's insurer. Claims against your own insurer depend on your policy.[/cf_q]\n";
+	$b .= "[/cf_faq]";
 
 	return array(
 		'meta' => $meta,
-		'body' => $body,
+		'body' => $b,
 	);
 }
 
@@ -610,6 +782,14 @@ function claimfairly_run_import( $update = false ) {
 	$sample = get_page_by_path( 'sample-page' );
 	if ( $sample && false !== strpos( $sample->post_content, 'This is an example page' ) ) {
 		wp_trash_post( $sample->ID );
+	}
+
+	if ( ! get_option( 'site_icon' ) ) {
+		$icon = claimfairly_media_from_file( CLAIMFAIRLY_DIR . '/assets/brand/android-chrome-512x512.png', 'claimfairly-site-icon.png', 'ClaimFairly icon' );
+		if ( $icon ) {
+			update_option( 'site_icon', $icon );
+			$report['notes'][] = __( 'Site icon (favicon) set.', 'claimfairly' );
+		}
 	}
 
 	claimfairly_build_menus( $report );

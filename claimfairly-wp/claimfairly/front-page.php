@@ -237,21 +237,8 @@ if ( $claimfairly_state_pages ) :
 		</div>
 		<div class="faq faq--2col">
 			<?php
-			$claimfairly_faqs = array(
-				array( __( 'Is ClaimFairly really free?', 'claimfairly' ), __( 'Yes. There is no sign-up, no trial and no paid version. The site may show ads to cover costs, but never inside a calculator.', 'claimfairly' ) ),
-				array( __( 'Do you store what I type?', 'claimfairly' ), __( 'No. The math runs in your browser. Nothing you enter is sent to our server or saved anywhere.', 'claimfairly' ) ),
-				array( __( 'Is this legal advice?', 'claimfairly' ), __( 'No. These are educational estimates. Claims depend on facts, evidence and state law. For advice on your situation, talk to a licensed attorney in your state.', 'claimfairly' ) ),
-				array( __( 'How accurate are the estimates?', 'claimfairly' ), __( 'They use the same kinds of formulas insurers and attorneys use as a starting point, and they show every assumption. Real settlements can land above or below the range.', 'claimfairly' ) ),
-				array( __( 'Are you connected to an insurance company or law firm?', 'claimfairly' ), __( 'No. ClaimFairly is independent. We are not paid by insurers, and we do not sell your details to law firms.', 'claimfairly' ) ),
-				array( __( 'Which calculator should I start with?', 'claimfairly' ), __( 'If you were hurt, start with the car accident settlement calculator. If your car was repaired and is now worth less, start with diminished value.', 'claimfairly' ) ),
-			);
+			$claimfairly_faqs = claimfairly_home_faqs();
 			foreach ( $claimfairly_faqs as $claimfairly_faq ) {
-				claimfairly_faq_store(
-					array(
-						'q' => $claimfairly_faq[0],
-						'a' => $claimfairly_faq[1],
-					)
-				);
 				echo '<details class="faq__item"><summary><h3 class="faq__q">' . esc_html( $claimfairly_faq[0] ) . '</h3><span class="faq__icon" aria-hidden="true"></span></summary><div class="faq__a"><p>' . esc_html( $claimfairly_faq[1] ) . '</p></div></details>';
 			}
 			?>

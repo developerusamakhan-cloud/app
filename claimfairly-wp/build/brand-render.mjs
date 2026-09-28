@@ -17,7 +17,7 @@ await shot(fs.readFileSync(B+'logo-mark.svg','utf8'), 512, 512, B+'logo-mark-512
 for (const s of [16,32,48]) await shot('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">'+mark+'</svg>', s, s, 'fav-'+s+'.png');
 fs.copyFileSync('fav-16.png', B+'favicon-16x16.png'); fs.copyFileSync('fav-32.png', B+'favicon-32x32.png');
 // full-bleed icons for iOS / Android (the OS rounds the corners itself)
-const full = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#12805c"/><g transform="translate(14 14) scale(.72)">'+mark.replace('rx="29" fill="#12805c"','rx="29" fill="none"')+'</g></svg>';
+const full = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#14213d"/><g transform="translate(14 14) scale(.72)">'+mark.replace('rx="29" fill="#14213d"','rx="29" fill="none"')+'</g></svg>';
 await shot(full, 180, 180, B+'apple-touch-icon.png');
 await shot(full, 192, 192, B+'android-chrome-192x192.png');
 await shot(full, 512, 512, B+'android-chrome-512x512.png');

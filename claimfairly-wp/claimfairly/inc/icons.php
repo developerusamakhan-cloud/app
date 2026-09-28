@@ -88,8 +88,12 @@ function claimfairly_icon( $name, $size = 24 ) {
  *
  * @return string
  */
-function claimfairly_logo_mark() {
-	return '<svg class="brand__mark" width="34" height="34" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="29" fill="#12805c"/><path d="M50 25v50M32 75h36M28 37h44" fill="none" stroke="#fff" stroke-width="6.5" stroke-linecap="round"/><path d="M28 37 20 56a8.8 8.8 0 0 0 16 0L28 37ZM72 37l-8 19a8.8 8.8 0 0 0 16 0L72 37Z" fill="#b9f5d8"/></svg>';
+function claimfairly_logo_mark( $variant = 'dark' ) {
+	// Dark variant: navy square (light backgrounds). Light variant: amber square (dark backgrounds).
+	$bg    = 'light' === $variant ? '#ffc53d' : '#14213d';
+	$lines = 'light' === $variant ? '#14213d' : '#ffffff';
+	$pans  = 'light' === $variant ? '#ffffff' : '#ffc53d';
+	return '<svg class="brand__mark" width="34" height="34" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="29" fill="' . $bg . '"/><path d="M50 25v50M32 75h36M28 37h44" fill="none" stroke="' . $lines . '" stroke-width="6.5" stroke-linecap="round"/><path d="M28 37 20 56a8.8 8.8 0 0 0 16 0L28 37ZM72 37l-8 19a8.8 8.8 0 0 0 16 0L72 37Z" fill="' . $pans . '"/></svg>';
 }
 
 /**

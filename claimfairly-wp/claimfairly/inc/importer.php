@@ -446,14 +446,20 @@ function claimfairly_upsert( $meta, $blocks, $update, &$report ) {
  * @param string $slug    Image name.
  */
 function claimfairly_attach_share_image( $post_id, $slug ) {
-	if ( has_post_thumbnail( $post_id ) ) {
-		return;
+	$filename = 'claimfairly-' . $slug . '-' . CLAIMFAIRLY_BRAND_VERSION . '.jpg';
+	$current  = (int) get_post_thumbnail_id( $post_id );
+	if ( $current ) {
+		$source = (string) get_post_meta( $current, '_cf_source_file', true );
+		// Keep any image the site owner chose. Only replace our own older share image.
+		if ( 0 !== strpos( $source, 'claimfairly-' ) || $source === $filename ) {
+			return;
+		}
 	}
 	$file = 'og-default' === $slug ? CLAIMFAIRLY_DIR . '/assets/brand/og-default.jpg' : CLAIMFAIRLY_DIR . '/assets/og/' . $slug . '.jpg';
 	if ( ! file_exists( $file ) ) {
 		return;
 	}
-	$attachment_id = claimfairly_media_from_file( $file, 'claimfairly-' . $slug . '.jpg', get_the_title( $post_id ), $post_id );
+	$attachment_id = claimfairly_media_from_file( $file, $filename, get_the_title( $post_id ), $post_id );
 	if ( $attachment_id ) {
 		set_post_thumbnail( $post_id, $attachment_id );
 	}
@@ -784,8 +790,12 @@ function claimfairly_run_import( $update = false ) {
 		wp_trash_post( $sample->ID );
 	}
 
-	if ( ! get_option( 'site_icon' ) ) {
-		$icon = claimfairly_media_from_file( CLAIMFAIRLY_DIR . '/assets/brand/android-chrome-512x512.png', 'claimfairly-site-icon.png', 'ClaimFairly icon' );
+	$icon_name    = 'claimfairly-site-icon-' . CLAIMFAIRLY_BRAND_VERSION . '.png';
+	$current_icon = (int) get_option( 'site_icon' );
+	$icon_source  = $current_icon ? (string) get_post_meta( $current_icon, '_cf_source_file', true ) : '';
+	// Set the icon if none exists, or replace our own older icon (never a custom one).
+	if ( ! $current_icon || ( 0 === strpos( $icon_source, 'claimfairly-site-icon' ) && $icon_source !== $icon_name ) ) {
+		$icon = claimfairly_media_from_file( CLAIMFAIRLY_DIR . '/assets/brand/android-chrome-512x512.png', $icon_name, 'ClaimFairly icon' );
 		if ( $icon ) {
 			update_option( 'site_icon', $icon );
 			$report['notes'][] = __( 'Site icon (favicon) set.', 'claimfairly' );

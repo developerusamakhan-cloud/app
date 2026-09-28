@@ -12,7 +12,7 @@ body {
 	color: #3b4658;
 }
 h1, h2, h3, h4 { color: #101828; font-weight: 800; line-height: 1.18; letter-spacing: -0.025em; }
-a { color: #12805c; }
+a { color: #14213d; text-decoration-color: #f5a524; }
 .wp-block { max-width: 780px; }
 .wp-block[data-align="wide"] { max-width: 1200px; }
 .wp-block[data-align="full"] { max-width: none; }

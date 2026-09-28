@@ -39,8 +39,9 @@ function claimfairly_setup() {
 		'editor-color-palette',
 		array(
 			array( 'name' => __( 'Ink', 'claimfairly' ), 'slug' => 'ink', 'color' => '#101828' ),
-			array( 'name' => __( 'Brand green', 'claimfairly' ), 'slug' => 'brand', 'color' => '#12805c' ),
-			array( 'name' => __( 'Mint', 'claimfairly' ), 'slug' => 'mint', 'color' => '#e9f7f0' ),
+			array( 'name' => __( 'Navy', 'claimfairly' ), 'slug' => 'brand', 'color' => '#14213d' ),
+			array( 'name' => __( 'Amber', 'claimfairly' ), 'slug' => 'amber', 'color' => '#ffc53d' ),
+			array( 'name' => __( 'Cream', 'claimfairly' ), 'slug' => 'cream', 'color' => '#fff6e0' ),
 			array( 'name' => __( 'Lavender', 'claimfairly' ), 'slug' => 'lavender', 'color' => '#f3f0ff' ),
 			array( 'name' => __( 'Sky', 'claimfairly' ), 'slug' => 'sky', 'color' => '#edf3ff' ),
 			array( 'name' => __( 'Peach', 'claimfairly' ), 'slug' => 'peach', 'color' => '#fff1e8' ),

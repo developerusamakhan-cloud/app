@@ -42,8 +42,8 @@ It is safe to run setup again. Pages you have edited are never overwritten.
 | File | Use it for |
 |---|---|
 | `logo.svg`, `logo.png` | Main logo on light backgrounds (the PNG is 1276x220, transparent) |
-| `logo-white.svg`, `logo-white.png` | Logo on dark backgrounds |
-| `logo-mark.svg`, `logo-mark-512.png` | Square icon alone: social profile pictures, app icons |
+| `logo-white.svg`, `logo-white.png` | Logo on dark backgrounds (amber icon, white text) |
+| `logo-mark.svg`, `logo-mark-512.png`, `logo-mark-white.svg` | Square icon alone: social profile pictures, app icons |
 | `favicon.ico`, `favicon.svg`, `favicon-16x16.png`, `favicon-32x32.png` | Browser tab icon |
 | `apple-touch-icon.png` (180), `android-chrome-192x192.png`, `android-chrome-512x512.png`, `site.webmanifest` | Phone home screen icons |
 | `og-default.jpg` | Default share image (1200x630) |
@@ -61,7 +61,8 @@ Every page also has its own share image in `assets/og/`, showing its title and i
 
 ## Design
 
-- A white, clean base with soft tinted sections (mint, lavender, sky), one heavy geometric font (Plus Jakarta Sans, self-hosted, 27 KB), and a highlighted word in the hero.
+- **Navy and amber brand:** navy (#14213D) for buttons, links and the logo, a warm amber (#FFC53D) highlight on the hero headline and on link underlines, and soft cream sections. One heavy geometric font (Plus Jakarta Sans, self-hosted, 27 KB).
+- To change the brand color later, edit the `--cf-brand` and `--cf-accent` variables at the top of `assets/css/main.css`, then regenerate the logo and share images with the scripts in `build/` and change `CLAIMFAIRLY_BRAND_VERSION` in `functions.php` so setup swaps in the new images.
 - Each calculator has its own color: blue for the estimator, violet for diminished value, rose for pain and suffering, orange for take-home and navy for the demand letter.
 - The hero "image" is a live-looking calculator preview built in HTML, so it is sharp and fast.
 - There are no fake stats and no fake testimonials. Every number on the homepage is true.

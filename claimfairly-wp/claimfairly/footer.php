@@ -20,7 +20,7 @@ $claimfairly_menus   = array(
 		<div class="site-footer__grid">
 			<div class="site-footer__about">
 				<a class="brand__link brand__link--light" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-					<?php echo claimfairly_logo_mark(); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?>
+					<?php echo claimfairly_logo_mark( 'light' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?>
 					<span class="brand__name"><?php bloginfo( 'name' ); ?></span>
 				</a>
 				<p><?php echo esc_html( claimfairly_opt( 'cf_footer_about' ) ); ?></p>

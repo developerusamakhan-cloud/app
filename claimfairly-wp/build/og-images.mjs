@@ -4,7 +4,7 @@ const items = JSON.parse(fs.readFileSync(new URL('og-pages.json', import.meta.ur
 const icons = JSON.parse(fs.readFileSync(new URL('og-icons.json', import.meta.url),'utf8'));
 const logo = fs.readFileSync(new URL('../claimfairly/', import.meta.url).pathname + 'assets/brand/logo.svg','utf8').replace(/width="638" height="110"/,'width="290" height="50"');
 const font = 'data:font/woff2;base64,' + fs.readFileSync(new URL('../claimfairly/', import.meta.url).pathname + 'assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2').toString('base64');
-const C = {green:['#12805c','#e9f7f0'],blue:['#2e6be6','#edf3ff'],violet:['#6e56cf','#f3f0ff'],orange:['#f76b15','#fff1e8'],rose:['#e5484d','#fff0f1'],navy:['#1f2a44','#eef0f5']};
+const C = {green:['#14213d','#fff6e0'],blue:['#2e6be6','#edf3ff'],violet:['#6e56cf','#f3f0ff'],orange:['#f76b15','#fff1e8'],rose:['#e5484d','#fff0f1'],navy:['#1f2a44','#eef0f5']};
 function iconFor(it){ if(it.label==='State rules')return 'pin'; if(it.label==='Insurer guide')return 'shield'; if(it.label==='Injury claims')return 'bandage';
   return {blue:'calculator',violet:'car-down',rose:'pulse',orange:'pie',navy:'letter',green:'book'}[it.color]; }
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
@@ -15,7 +15,7 @@ for (const it of items) {
   await p.setContent(`<html><head><style>
   @font-face{font-family:J;src:url(${font});font-weight:200 800}
   *{box-sizing:border-box}body{margin:0;width:1200px;height:630px;font-family:J,sans-serif;background:#fff;position:relative;overflow:hidden}
-  .bg{position:absolute;inset:0;background:radial-gradient(700px 420px at 100% 0%,${t},transparent 70%),radial-gradient(500px 400px at 0% 100%,${t},transparent 70%)}
+  .bg{position:absolute;inset:0;background:radial-gradient(700px 420px at 100% 0%,${t},transparent 70%),radial-gradient(500px 400px at 0% 100%,#fff6e0,transparent 70%)}
   .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(16,24,40,.10) 1.5px,transparent 1.5px);background-size:26px 26px;-webkit-mask-image:linear-gradient(to bottom,#000,transparent 80%)}
   .wrap{position:absolute;inset:64px 72px 56px;display:flex;flex-direction:column}
   .pill{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;margin-top:54px;padding:9px 18px;border-radius:99px;background:${c};color:#fff;font-weight:800;font-size:22px;letter-spacing:.02em}

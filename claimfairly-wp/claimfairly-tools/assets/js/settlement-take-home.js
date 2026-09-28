@@ -30,18 +30,18 @@ ClaimFairly.tool('settlement-take-home', function (root, preset) {
 			: 'Costs and liens use up the whole settlement. Ask your lawyer about reducing the liens or the fee before you sign anything.';
 
 		out('chart').innerHTML = CF.donut([
-			{ label: 'You', value: r.net, color: '#2F9E6E' },
-			{ label: 'Attorney fee', value: r.fee, color: '#17171C' },
-			{ label: 'Case costs', value: costs, color: '#F2A541' },
+			{ label: 'You', value: r.net, color: '#F5A524' },
+			{ label: 'Attorney fee', value: r.fee, color: '#14213D' },
+			{ label: 'Case costs', value: costs, color: '#94A3B8' },
 			{ label: 'Medical liens', value: liens, color: '#8E7CF0' }
 		], 'Where the settlement goes');
 
 		var rows = [
 			['Settlement', CF.money(d.amount)],
-			['Attorney fee (' + CF.pct(d.fee, true) + (d.timing === 'after' ? ' of settlement minus costs' : ' of full settlement') + ')', '&minus; ' + CF.money(r.fee)]
+			['Attorney fee (' + CF.pct(d.fee, true) + (d.timing === 'after' ? ' of settlement minus costs' : ' of full settlement') + ')', '-' + CF.money(r.fee)]
 		];
-		if (costs) { rows.push(['Case costs', '&minus; ' + CF.money(costs)]); }
-		if (liensRaw) { rows.push(['Medical bills and liens' + (red ? ' (after ' + CF.pct(red) + ' reduction)' : ''), '&minus; ' + CF.money(liens)]); }
+		if (costs) { rows.push(['Case costs', '-' + CF.money(costs)]); }
+		if (liensRaw) { rows.push(['Medical bills and liens' + (red ? ' (after ' + CF.pct(red) + ' reduction)' : ''), '-' + CF.money(liens)]); }
 		rows.push(['You keep', CF.money(r.net), 'is-total']);
 		out('rows').innerHTML = CF.rowsHTML(rows);
 

@@ -7,9 +7,9 @@
 	--t-muted: var(--cf-muted, #667085);
 	--t-line: var(--cf-line, #e6e8ef);
 	--t-soft: var(--cf-soft, #f6f7fb);
-	--t-brand: var(--cf-brand, #12805c);
-	--t-brand-dark: var(--cf-brand-dark, #0b6a4b);
-	--t-brand-soft: var(--cf-brand-soft, #e9f7f0);
+	--t-brand: var(--cf-brand, #14213d);
+	--t-brand-dark: var(--cf-brand-dark, #0b1428);
+	--t-brand-soft: var(--cf-brand-soft, #fff6e0);
 	--t-color: var(--t-brand);
 	--t-radius: 16px;
 	--t-field: 10px;

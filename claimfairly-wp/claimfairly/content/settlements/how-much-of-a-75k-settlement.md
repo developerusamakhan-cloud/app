@@ -1,5 +1,6 @@
 ---
 title: How Much of a $75,000 Settlement Will I Get?
+crumb: $75k settlement
 slug: how-much-of-a-75k-settlement-will-i-get
 page_type: guide
 tool: settlement-take-home

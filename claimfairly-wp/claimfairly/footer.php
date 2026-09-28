@@ -9,7 +9,7 @@ $claimfairly_email   = claimfairly_opt( 'cf_contact_email' );
 $claimfairly_same_as = array_filter( preg_split( '/\r\n|\r|\n/', claimfairly_opt( 'cf_same_as' ) ) );
 $claimfairly_menus   = array(
 	'footer-tools' => __( 'Calculators', 'claimfairly' ),
-	'footer-learn' => __( 'Guides', 'claimfairly' ),
+	'footer-learn' => __( 'From the blog', 'claimfairly' ),
 	'footer-site'  => __( 'ClaimFairly', 'claimfairly' ),
 );
 ?>
@@ -56,7 +56,20 @@ $claimfairly_menus   = array(
 
 		<div class="site-footer__legal">
 			<p><?php echo esc_html( claimfairly_opt( 'cf_disclaimer' ) ); ?> <?php esc_html_e( 'ClaimFairly is not a law firm and is not affiliated with any insurance company.', 'claimfairly' ); ?></p>
-			<p>&copy; <?php echo esc_html( wp_date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'Made for drivers, by a person, with real sources.', 'claimfairly' ); ?></p>
+			<div class="site-footer__bottom">
+				<p>&copy; <?php echo esc_html( wp_date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'Made for drivers, by a person, with real sources.', 'claimfairly' ); ?></p>
+				<ul class="site-footer__links">
+					<?php
+					$claimfairly_sitemap = get_page_by_path( 'sitemap' );
+					if ( $claimfairly_sitemap && 'publish' === $claimfairly_sitemap->post_status ) :
+						?>
+						<li><a href="<?php echo esc_url( get_permalink( $claimfairly_sitemap ) ); ?>"><?php esc_html_e( 'Sitemap', 'claimfairly' ); ?></a></li>
+					<?php endif; ?>
+					<li><a href="<?php echo esc_url( claimfairly_xml_sitemap_url() ); ?>"><?php esc_html_e( 'XML sitemap', 'claimfairly' ); ?></a></li>
+					<li><a href="<?php echo esc_url( home_url( '/privacy-policy/' ) ); ?>"><?php esc_html_e( 'Privacy', 'claimfairly' ); ?></a></li>
+					<li><a href="<?php echo esc_url( home_url( '/disclaimer/' ) ); ?>"><?php esc_html_e( 'Disclaimer', 'claimfairly' ); ?></a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 	<p class="site-footer__word" aria-hidden="true"><?php bloginfo( 'name' ); ?></p>

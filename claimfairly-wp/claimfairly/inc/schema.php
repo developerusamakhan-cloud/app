@@ -339,13 +339,6 @@ function claimfairly_schema_graph() {
 
 		// Founder.
 		if ( $person ) {
-			$admins  = get_users(
-				array(
-					'role'    => 'administrator',
-					'number'  => 1,
-					'orderby' => 'ID',
-				)
-			);
 			$p       = array(
 				'@type'    => 'Person',
 				'@id'      => $home . '#founder',
@@ -354,7 +347,7 @@ function claimfairly_schema_graph() {
 				'jobTitle' => 'Founder',
 				'worksFor' => array( '@id' => $org_id ),
 			);
-			$bio     = $admins ? get_the_author_meta( 'description', $admins[0]->ID ) : '';
+			$bio     = claimfairly_founder_bio();
 			if ( $bio ) {
 				$p['description'] = $bio;
 			}
@@ -497,14 +490,8 @@ function claimfairly_schema_graph() {
 				'inLanguage'       => 'en-US',
 				'wordCount'        => str_word_count( wp_strip_all_tags( strip_shortcodes( $content ) ) ),
 			);
-			$author_name = get_the_author_meta( 'display_name', (int) get_post_field( 'post_author', $post_id ) );
-			if ( $person && $author_name === $founder ) {
+			if ( $person ) {
 				$article['author'] = $person;
-			} elseif ( $author_name ) {
-				$article['author'] = array(
-					'@type' => 'Person',
-					'name'  => $author_name,
-				);
 			}
 			$cats = get_the_category( $post_id );
 			if ( $cats ) {

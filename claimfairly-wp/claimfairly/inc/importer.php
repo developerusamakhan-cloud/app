@@ -293,11 +293,10 @@ function claimfairly_md_to_blocks( $md ) {
  * @return string
  */
 function claimfairly_fill_placeholders( $text ) {
-	$name = claimfairly_founder_name();
 	return strtr(
 		$text,
 		array(
-			'{{founder}}' => $name ? $name : 'the founder',
+			'{{founder}}' => '[cf_founder]',
 			'{{email}}'   => claimfairly_opt( 'cf_contact_email' ),
 			'{{site}}'    => get_bloginfo( 'name' ),
 			'{{year}}'    => wp_date( 'Y' ),
@@ -397,6 +396,7 @@ function claimfairly_upsert( $meta, $blocks, $update, &$report ) {
 		'tool'      => '_cf_tool_key',
 		'summary'   => '_cf_card_summary',
 		'reviewed'  => '_cf_last_reviewed',
+		'crumb'     => '_cf_crumb',
 	);
 	foreach ( $map as $field => $meta_key ) {
 		if ( isset( $meta[ $field ] ) && ! is_array( $meta[ $field ] ) ) {
@@ -603,6 +603,7 @@ function claimfairly_state_page( $s ) {
 		'title'         => "{$name} Car Accident Claims: Fault Rules, Deadlines and Minimum Coverage",
 		'slug'          => $s['slug'],
 		'parent'        => 'states',
+		'crumb'         => $name,
 		'page_type'     => 'state',
 		'status'        => 'draft',
 		'order'         => 0,
@@ -770,9 +771,11 @@ function claimfairly_run_import( $update = false ) {
 		update_option( 'show_on_front', 'page' );
 		update_option( 'page_on_front', $ids['home'] );
 	}
-	if ( isset( $ids['guides'] ) ) {
-		update_option( 'page_for_posts', $ids['guides'] );
+	if ( isset( $ids['blog'] ) ) {
+		update_option( 'page_for_posts', $ids['blog'] );
+		claimfairly_migrate_guides_to_blog( (int) $ids['blog'], $report );
 	}
+	claimfairly_category_descriptions();
 	if ( '/%postname%/' !== get_option( 'permalink_structure' ) ) {
 		global $wp_rewrite;
 		$wp_rewrite->set_permalink_structure( '/%postname%/' );
@@ -808,6 +811,69 @@ function claimfairly_run_import( $update = false ) {
 }
 
 /**
+ * Sites set up before the blog module had a "Guides" posts page. Point any
+ * menu items at the new Blog page and unpublish the old empty page (a 301
+ * redirect from /guides/ to /blog/ is handled in claimfairly_redirect_guides()).
+ *
+ * @param int   $blog_id New blog page ID.
+ * @param array $report  Report (by reference).
+ */
+function claimfairly_migrate_guides_to_blog( $blog_id, &$report ) {
+	$old = get_page_by_path( 'guides' );
+	if ( ! $old || (int) $old->ID === $blog_id ) {
+		return;
+	}
+	foreach ( wp_get_nav_menus() as $menu ) {
+		foreach ( (array) wp_get_nav_menu_items( $menu->term_id ) as $item ) {
+			if ( 'post_type' === $item->type && (int) $item->object_id === (int) $old->ID ) {
+				wp_update_nav_menu_item(
+					$menu->term_id,
+					$item->ID,
+					array(
+						'menu-item-object-id' => $blog_id,
+						'menu-item-object'    => 'page',
+						'menu-item-type'      => 'post_type',
+						'menu-item-title'     => 'All guides' === $item->title ? 'All articles' : 'Blog',
+						'menu-item-parent-id' => $item->menu_item_parent,
+						'menu-item-position'  => $item->menu_order,
+						'menu-item-status'    => 'publish',
+					)
+				);
+			}
+		}
+	}
+	if ( '' === trim( $old->post_content ) ) {
+		wp_update_post(
+			array(
+				'ID'          => $old->ID,
+				'post_status' => 'draft',
+			)
+		);
+	}
+	update_option( 'claimfairly_guides_redirect', 1 );
+	$report['notes'][] = __( 'Guides moved to the new Blog page. /guides/ now redirects to /blog/.', 'claimfairly' );
+}
+
+/**
+ * Descriptions for the blog categories (shown on category pages and in search results).
+ */
+function claimfairly_category_descriptions() {
+	$descriptions = array(
+		'diminished-value' => __( 'How much value your car loses after an accident, how insurers calculate it with the 17c formula, and how to claim it.', 'claimfairly' ),
+		'settlements'      => __( 'What a settlement is worth, how long it takes, and how much you actually keep after fees, costs and medical liens.', 'claimfairly' ),
+		'fault-and-states' => __( 'How fault rules, no-fault insurance and state deadlines change a car accident claim.', 'claimfairly' ),
+		'insurance-claims' => __( 'How adjusters value claims, how to write a demand letter, and how to deal with the insurance company.', 'claimfairly' ),
+		'after-a-crash'    => __( 'What to do at the scene, in the first days and during the claim to protect your health and your money.', 'claimfairly' ),
+	);
+	foreach ( $descriptions as $slug => $text ) {
+		$term = get_term_by( 'slug', $slug, 'category' );
+		if ( $term && '' === trim( $term->description ) ) {
+			wp_update_term( $term->term_id, 'category', array( 'description' => $text ) );
+		}
+	}
+}
+
+/**
  * Create the four menus if they do not exist yet.
  *
  * @param array $report Report (by reference).
@@ -825,7 +891,7 @@ function claimfairly_build_menus( &$report ) {
 			'name'  => 'Primary',
 			'items' => array(
 				array( 'label' => 'Calculators', 'children' => $tools, 'url' => '/#tools' ),
-				array( 'page' => 'guides', 'label' => 'Guides' ),
+				array( 'page' => 'blog', 'label' => 'Blog' ),
 				array( 'page' => 'states', 'label' => 'States' ),
 				array( 'page' => 'about', 'label' => 'About' ),
 			),
@@ -840,14 +906,14 @@ function claimfairly_build_menus( &$report ) {
 			),
 		),
 		'footer-learn' => array(
-			'name'  => 'Footer: Guides',
+			'name'  => 'Footer: Blog',
 			'items' => array(
 				array( 'post' => 'what-is-diminished-value', 'label' => 'What is diminished value?' ),
 				array( 'post' => '17c-formula-diminished-value', 'label' => 'The 17c formula explained' ),
 				array( 'post' => 'how-insurance-adjusters-calculate-settlement', 'label' => 'How adjusters calculate offers' ),
 				array( 'post' => 'what-to-do-after-a-car-accident', 'label' => 'After a crash: checklist' ),
 				array( 'page' => 'states', 'label' => 'Rules by state' ),
-				array( 'page' => 'guides', 'label' => 'All guides' ),
+				array( 'page' => 'blog', 'label' => 'All articles' ),
 			),
 		),
 		'footer-site'  => array(
@@ -859,6 +925,7 @@ function claimfairly_build_menus( &$report ) {
 				array( 'page' => 'disclaimer', 'label' => 'Disclaimer' ),
 				array( 'page' => 'privacy-policy', 'label' => 'Privacy policy' ),
 				array( 'page' => 'contact', 'label' => 'Contact' ),
+				array( 'page' => 'sitemap', 'label' => 'Sitemap' ),
 			),
 		),
 	);
@@ -873,11 +940,13 @@ function claimfairly_build_menus( &$report ) {
 			continue;
 		}
 		if ( ! $existing ) {
-			foreach ( $def['items'] as $pos => $item ) {
-				$parent_item = claimfairly_add_menu_item( $menu_id, $item, 0, $pos, $page );
+			// One running position across parents and children keeps the order stable.
+			$position = 0;
+			foreach ( $def['items'] as $item ) {
+				$parent_item = claimfairly_add_menu_item( $menu_id, $item, 0, $position++, $page );
 				if ( $parent_item && ! empty( $item['children'] ) ) {
-					foreach ( $item['children'] as $cpos => $child ) {
-						claimfairly_add_menu_item( $menu_id, array( 'page' => $child ), $parent_item, $cpos, $page );
+					foreach ( $item['children'] as $child ) {
+						claimfairly_add_menu_item( $menu_id, array( 'page' => $child ), $parent_item, $position++, $page );
 					}
 				}
 			}
@@ -940,3 +1009,18 @@ function claimfairly_add_menu_item( $menu_id, $item, $parent, $pos, $page ) {
 	$id = wp_update_nav_menu_item( $menu_id, 0, $args );
 	return is_wp_error( $id ) ? 0 : (int) $id;
 }
+
+/**
+ * 301 redirect the old /guides/ page to the blog after migration.
+ */
+function claimfairly_redirect_guides() {
+	if ( ! get_option( 'claimfairly_guides_redirect' ) || ! is_404() ) {
+		return;
+	}
+	$path = trim( (string) wp_parse_url( add_query_arg( array() ), PHP_URL_PATH ), '/' );
+	if ( 'guides' === $path && get_option( 'page_for_posts' ) ) {
+		wp_safe_redirect( get_permalink( (int) get_option( 'page_for_posts' ) ), 301 );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'claimfairly_redirect_guides' );

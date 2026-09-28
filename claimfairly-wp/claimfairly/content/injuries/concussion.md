@@ -1,5 +1,6 @@
 ---
 title: "Concussion Settlement Calculator for Car Accidents"
+crumb: Concussions
 slug: concussion-car-accident-settlement
 parent: injuries
 page_type: injury

@@ -1,5 +1,6 @@
 ---
 title: "Broken Bone Settlement Calculator for Car Accidents"
+crumb: Broken bones
 slug: broken-bone-car-accident-settlement
 parent: injuries
 page_type: injury

@@ -150,3 +150,90 @@ function claimfairly_editor_note_shortcode( $atts, $content = '' ) {
 	return '<div class="cf-note cf-note--warning"><p><strong>' . esc_html__( 'Note for editors:', 'claimfairly' ) . '</strong> ' . esc_html( trim( (string) $content ) ) . '</p></div>';
 }
 add_shortcode( 'cf_editor_note', 'claimfairly_editor_note_shortcode' );
+
+/**
+ * [cf_founder] The site owner's name (Customizer setting, default "James").
+ *
+ * @return string
+ */
+function claimfairly_founder_shortcode() {
+	return esc_html( claimfairly_founder_name() );
+}
+add_shortcode( 'cf_founder', 'claimfairly_founder_shortcode' );
+
+/**
+ * URL of the XML sitemap: the SEO plugin's index when one is active,
+ * otherwise the sitemap built into WordPress.
+ *
+ * @return string
+ */
+function claimfairly_xml_sitemap_url() {
+	if ( defined( 'WPSEO_VERSION' ) || class_exists( 'RankMath' ) || defined( 'RANK_MATH_VERSION' ) ) {
+		return home_url( '/sitemap_index.xml' );
+	}
+	return home_url( '/wp-sitemap.xml' );
+}
+
+/**
+ * [cf_html_sitemap] Every published page, grouped for people (not robots).
+ *
+ * @return string
+ */
+function claimfairly_html_sitemap_shortcode() {
+	$pages = get_pages(
+		array(
+			'post_status' => 'publish',
+			'sort_column' => 'menu_order,post_title',
+		)
+	);
+	$groups = array(
+		'tool'     => array( __( 'Free calculators', 'claimfairly' ), 'calculator', array() ),
+		'guide'    => array( __( 'Settlement guides', 'claimfairly' ), 'pie', array() ),
+		'state'    => array( __( 'State rules', 'claimfairly' ), 'pin', array() ),
+		'injury'   => array( __( 'Injury guides', 'claimfairly' ), 'bandage', array() ),
+		'insurer'  => array( __( 'Insurer guides', 'claimfairly' ), 'shield', array() ),
+		'standard' => array( __( 'About ClaimFairly', 'claimfairly' ), 'book', array() ),
+	);
+	$front = (int) get_option( 'page_on_front' );
+	foreach ( $pages as $page ) {
+		if ( (int) $page->ID === $front || 'sitemap' === $page->post_name ) {
+			continue;
+		}
+		$type = claimfairly_get_page_type( $page->ID );
+		$type = isset( $groups[ $type ] ) ? $type : 'standard';
+		$groups[ $type ][2][] = '<li><a href="' . esc_url( get_permalink( $page ) ) . '">' . esc_html( get_the_title( $page ) ) . '</a></li>';
+	}
+
+	$html = '<div class="html-sitemap">';
+
+	// Blog articles, grouped by category.
+	$cats = get_categories( array( 'hide_empty' => true ) );
+	if ( $cats ) {
+		$html .= '<section class="html-sitemap__group html-sitemap__group--wide"><h2>' . claimfairly_icon( 'book', 20 ) . esc_html__( 'Blog', 'claimfairly' ) . '</h2><div class="html-sitemap__cols">';
+		foreach ( $cats as $cat ) {
+			$posts = get_posts(
+				array(
+					'category'       => $cat->term_id,
+					'posts_per_page' => -1,
+				)
+			);
+			$html .= '<div><h3><a href="' . esc_url( get_category_link( $cat ) ) . '">' . esc_html( $cat->name ) . '</a></h3><ul>';
+			foreach ( $posts as $post ) {
+				$html .= '<li><a href="' . esc_url( get_permalink( $post ) ) . '">' . esc_html( get_the_title( $post ) ) . '</a></li>';
+			}
+			$html .= '</ul></div>';
+		}
+		$html .= '</div></section>';
+	}
+
+	foreach ( $groups as $group ) {
+		if ( ! $group[2] ) {
+			continue;
+		}
+		$html .= '<section class="html-sitemap__group"><h2>' . claimfairly_icon( $group[1], 20 ) . esc_html( $group[0] ) . '</h2><ul>' . implode( '', $group[2] ) . '</ul></section>';
+	}
+	$html .= '</div>';
+	$html .= '<p class="html-sitemap__xml">' . esc_html__( 'Looking for the file search engines use?', 'claimfairly' ) . ' <a href="' . esc_url( claimfairly_xml_sitemap_url() ) . '">' . esc_html__( 'Open the XML sitemap', 'claimfairly' ) . '</a>.</p>';
+	return $html;
+}
+add_shortcode( 'cf_html_sitemap', 'claimfairly_html_sitemap_shortcode' );

@@ -68,4 +68,38 @@
 			}
 		}
 	}
+
+	/* Reading progress bar on blog articles. */
+	var bar = document.querySelector('.read-progress span');
+	var article = document.querySelector('.entry--post .prose');
+	if (bar && article) {
+		var update = function () {
+			var rect = article.getBoundingClientRect();
+			var total = rect.height - window.innerHeight * 0.6;
+			var done = Math.min(Math.max(-rect.top + window.innerHeight * 0.2, 0), Math.max(total, 1));
+			bar.style.transform = 'scaleX(' + (done / Math.max(total, 1)).toFixed(4) + ')';
+		};
+		window.addEventListener('scroll', update, { passive: true });
+		window.addEventListener('resize', update);
+		update();
+	}
+
+	/* Copy link button in the share box. */
+	Array.prototype.forEach.call(document.querySelectorAll('[data-copy-url]'), function (btn) {
+		btn.addEventListener('click', function () {
+			var url = btn.getAttribute('data-copy-url');
+			var label = btn.querySelector('span');
+			var done = function () {
+				if (!label) { return; }
+				var old = label.textContent;
+				label.textContent = 'Copied';
+				setTimeout(function () { label.textContent = old; }, 1800);
+			};
+			if (navigator.clipboard && window.isSecureContext) {
+				navigator.clipboard.writeText(url).then(done);
+			} else {
+				window.prompt('Copy this link:', url);
+			}
+		});
+	});
 })();

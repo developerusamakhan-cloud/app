@@ -1,5 +1,6 @@
 ---
 title: How GEICO Handles Car Accident Claims
+crumb: GEICO
 slug: how-geico-handles-car-accident-claims
 parent: insurers
 page_type: insurer

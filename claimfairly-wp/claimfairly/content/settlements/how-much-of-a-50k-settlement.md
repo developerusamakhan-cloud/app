@@ -1,5 +1,6 @@
 ---
 title: How Much of a $50,000 Settlement Will I Get?
+crumb: $50k settlement
 slug: how-much-of-a-50k-settlement-will-i-get
 page_type: guide
 tool: settlement-take-home

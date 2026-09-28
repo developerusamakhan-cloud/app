@@ -1,5 +1,6 @@
 ---
 title: How Much of a $250,000 Settlement Will I Get?
+crumb: $250k settlement
 slug: how-much-of-a-250k-settlement-will-i-get
 page_type: guide
 tool: settlement-take-home

@@ -58,7 +58,7 @@ function claimfairly_setup() {
 		array(
 			'primary'      => __( 'Primary (header)', 'claimfairly' ),
 			'footer-tools' => __( 'Footer: Calculators', 'claimfairly' ),
-			'footer-learn' => __( 'Footer: Guides', 'claimfairly' ),
+			'footer-learn' => __( 'Footer: Blog', 'claimfairly' ),
 			'footer-site'  => __( 'Footer: Company and policies', 'claimfairly' ),
 		)
 	);

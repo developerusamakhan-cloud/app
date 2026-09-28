@@ -1,5 +1,6 @@
 ---
 title: How Much of a $100,000 Settlement Will I Get?
+crumb: $100k settlement
 slug: how-much-of-a-100k-settlement-will-i-get
 page_type: guide
 tool: settlement-take-home

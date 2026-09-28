@@ -1,5 +1,6 @@
 ---
 title: Methodology: How Our Calculators Work
+crumb: Methodology
 slug: methodology
 page_type: standard
 order: 12

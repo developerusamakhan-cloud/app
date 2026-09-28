@@ -1,5 +1,6 @@
 ---
 title: "Whiplash Settlement Calculator: What a Whiplash Claim Is Worth"
+crumb: Whiplash
 slug: whiplash-car-accident-settlement
 parent: injuries
 page_type: injury

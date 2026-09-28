@@ -11,6 +11,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Short breadcrumb label: the "_cf_crumb" field when set, else the title.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function claimfairly_crumb_label( $post_id ) {
+	$crumb = (string) get_post_meta( $post_id, '_cf_crumb', true );
+	return '' !== $crumb ? $crumb : get_the_title( $post_id );
+}
+
+/**
  * Breadcrumb trail as [name, url] pairs. Shared by the visible breadcrumbs
  * and the BreadcrumbList schema so they never disagree.
  *
@@ -27,24 +38,24 @@ function claimfairly_breadcrumb_items() {
 	if ( is_singular( 'page' ) ) {
 		foreach ( array_reverse( get_post_ancestors( get_the_ID() ) ) as $ancestor_id ) {
 			$items[] = array(
-				'name' => get_the_title( $ancestor_id ),
+				'name' => claimfairly_crumb_label( $ancestor_id ),
 				'url'  => get_permalink( $ancestor_id ),
 			);
 		}
 		$items[] = array(
-			'name' => get_the_title(),
+			'name' => claimfairly_crumb_label( get_the_ID() ),
 			'url'  => get_permalink(),
 		);
 	} elseif ( is_singular( 'post' ) ) {
 		$posts_page = (int) get_option( 'page_for_posts' );
 		if ( $posts_page ) {
 			$items[] = array(
-				'name' => get_the_title( $posts_page ),
+				'name' => claimfairly_crumb_label( $posts_page ),
 				'url'  => get_permalink( $posts_page ),
 			);
 		}
 		$items[] = array(
-			'name' => get_the_title(),
+			'name' => claimfairly_crumb_label( get_the_ID() ),
 			'url'  => get_permalink(),
 		);
 	} elseif ( is_home() && ! is_front_page() ) {
@@ -118,29 +129,92 @@ function claimfairly_about_url() {
 }
 
 /**
- * "By Name, reviewed date" line under the H1.
+ * Kicker label for a page: type label or the post's category, with an icon.
+ *
+ * @param int $post_id Post ID.
+ * @return array{label:string,icon:string}|null
+ */
+function claimfairly_kicker( $post_id ) {
+	$type  = claimfairly_get_page_type( $post_id );
+	$style = claimfairly_page_style( $post_id );
+	if ( 'post' === get_post_type( $post_id ) ) {
+		$cats = get_the_category( $post_id );
+		return array(
+			'label' => $cats ? $cats[0]->name : __( 'Blog', 'claimfairly' ),
+			'icon'  => 'book',
+		);
+	}
+	$labels = array(
+		'tool'    => array( __( 'Free calculator', 'claimfairly' ), $style['icon'] ),
+		'guide'   => array( __( 'Settlement guide', 'claimfairly' ), 'pie' ),
+		'state'   => array( __( 'State rules', 'claimfairly' ), 'pin' ),
+		'injury'  => array( __( 'Injury guide', 'claimfairly' ), 'bandage' ),
+		'insurer' => array( __( 'Insurer guide', 'claimfairly' ), 'shield' ),
+	);
+	if ( ! isset( $labels[ $type ] ) ) {
+		return null;
+	}
+	return array(
+		'label' => $labels[ $type ][0],
+		'icon'  => $labels[ $type ][1],
+	);
+}
+
+/**
+ * Reading time in minutes.
+ *
+ * @param int $post_id Post ID.
+ * @return int
+ */
+function claimfairly_read_minutes( $post_id ) {
+	$words = str_word_count( wp_strip_all_tags( strip_shortcodes( get_post_field( 'post_content', $post_id ) ) ) );
+	return max( 1, (int) ceil( $words / 200 ) );
+}
+
+/**
+ * Meta card in the page header: author, reviewed date, reading time, sources.
+ *
+ * @param int $post_id Post ID.
+ */
+function claimfairly_meta_card( $post_id ) {
+	$name     = claimfairly_founder_name();
+	$reviewed = claimfairly_last_reviewed_raw( $post_id );
+	$sources  = count( claimfairly_parse_link_lines( get_post_meta( $post_id, '_cf_sources', true ) ) );
+	$type     = claimfairly_get_page_type( $post_id );
+	$photo    = (int) claimfairly_opt( 'cf_founder_photo' );
+
+	echo '<div class="meta-card">';
+	echo '<a class="meta-card__author" href="' . esc_url( claimfairly_about_url() ) . '">';
+	if ( $photo ) {
+		echo wp_get_attachment_image( $photo, 'thumbnail', false, array( 'class' => 'meta-card__photo', 'alt' => '' ) );
+	} else {
+		echo '<span class="meta-card__avatar" aria-hidden="true">' . esc_html( claimfairly_initials( $name ) ) . '</span>';
+	}
+	echo '<span><span class="meta-card__label">' . esc_html( 'post' === get_post_type( $post_id ) ? __( 'Written by', 'claimfairly' ) : __( 'Written and checked by', 'claimfairly' ) ) . '</span><span class="meta-card__name">' . esc_html( $name ) . '</span></span></a>';
+	echo '<ul class="meta-card__list">';
+	if ( $reviewed ) {
+		echo '<li>' . claimfairly_icon( 'calendar', 16 ) . '<span>' . esc_html__( 'Reviewed', 'claimfairly' ) . ' <time datetime="' . esc_attr( $reviewed ) . '">' . esc_html( claimfairly_date( $reviewed ) ) . '</time></span></li>'; // phpcs:ignore WordPress.Security.EscapeOutput
+	}
+	if ( 'tool' === $type ) {
+		echo '<li>' . claimfairly_icon( 'lock', 16 ) . '<span>' . esc_html__( 'Free, nothing you type is stored', 'claimfairly' ) . '</span></li>'; // phpcs:ignore WordPress.Security.EscapeOutput
+	} else {
+		/* translators: %d: minutes. */
+		echo '<li>' . claimfairly_icon( 'clock', 16 ) . '<span>' . esc_html( sprintf( __( '%d min read', 'claimfairly' ), claimfairly_read_minutes( $post_id ) ) ) . '</span></li>'; // phpcs:ignore WordPress.Security.EscapeOutput
+	}
+	if ( $sources ) {
+		/* translators: %d: number of sources. */
+		echo '<li>' . claimfairly_icon( 'badge', 16 ) . '<span><a href="#sources-title">' . esc_html( sprintf( _n( '%d cited source', '%d cited sources', $sources, 'claimfairly' ), $sources ) ) . '</a></span></li>'; // phpcs:ignore WordPress.Security.EscapeOutput
+	}
+	echo '</ul></div>';
+}
+
+/**
+ * Kept for templates and child themes that still call it: prints the meta card.
  */
 function claimfairly_byline() {
-	if ( ! claimfairly_is_trust_page() ) {
-		return;
+	if ( claimfairly_is_trust_page() ) {
+		claimfairly_meta_card( get_the_ID() );
 	}
-	$post_id  = get_the_ID();
-	$reviewed = claimfairly_last_reviewed_raw( $post_id );
-	$author   = get_the_author_meta( 'display_name', (int) get_post_field( 'post_author', $post_id ) );
-	$minutes  = max( 1, (int) ceil( str_word_count( wp_strip_all_tags( strip_shortcodes( get_post_field( 'post_content', $post_id ) ) ) ) / 200 ) );
-	echo '<div class="byline">';
-	if ( $author ) {
-		echo '<span class="byline__avatar" aria-hidden="true">' . esc_html( claimfairly_initials( $author ) ) . '</span>';
-		echo '<span>' . esc_html__( 'By', 'claimfairly' ) . ' <a href="' . esc_url( claimfairly_about_url() ) . '">' . esc_html( $author ) . '</a></span>';
-	}
-	if ( $reviewed ) {
-		echo '<span class="byline__sep" aria-hidden="true"></span><span>' . esc_html__( 'Reviewed', 'claimfairly' ) . ' <time datetime="' . esc_attr( $reviewed ) . '">' . esc_html( claimfairly_date( $reviewed ) ) . '</time></span>';
-	}
-	if ( 'tool' !== claimfairly_get_page_type( $post_id ) ) {
-		/* translators: %d: minutes. */
-		echo '<span class="byline__sep" aria-hidden="true"></span><span>' . esc_html( sprintf( _n( '%d min read', '%d min read', $minutes, 'claimfairly' ), $minutes ) ) . '</span>';
-	}
-	echo '</div>';
 }
 
 /**
@@ -212,15 +286,11 @@ function claimfairly_get_author_box( $post_id = null ) {
 	if ( get_post_meta( $post_id, '_cf_hide_author', true ) ) {
 		return '';
 	}
-	$author_id = (int) get_post_field( 'post_author', $post_id );
-	$name      = get_the_author_meta( 'display_name', $author_id );
-	$bio       = get_the_author_meta( 'description', $author_id );
-	if ( ! $name ) {
-		return '';
-	}
+	$name = claimfairly_founder_name();
+	$bio  = claimfairly_founder_bio();
 	$photo = (int) claimfairly_opt( 'cf_founder_photo' );
 	$html  = '<section class="author" aria-label="' . esc_attr__( 'About the author', 'claimfairly' ) . '">';
-	if ( $photo && user_can( $author_id, 'manage_options' ) ) {
+	if ( $photo ) {
 		$html .= wp_get_attachment_image( $photo, 'thumbnail', false, array( 'class' => 'author__photo', 'alt' => '' ) );
 	} else {
 		$html .= '<div class="author__avatar" aria-hidden="true">' . esc_html( claimfairly_initials( $name ) ) . '</div>';
@@ -283,34 +353,51 @@ function claimfairly_tool_row( $post ) {
 }
 
 /**
+ * Color, icon and category name for a post's cover.
+ *
+ * @param WP_Post $post Post.
+ * @return array{color:string,icon:string,category:string,own_share:bool}
+ */
+function claimfairly_post_look( $post ) {
+	$cats = get_the_category( $post->ID );
+	$slug = $cats ? $cats[0]->slug : '';
+	$map  = array(
+		'diminished-value' => array( 'violet', 'car-down' ),
+		'settlements'      => array( 'orange', 'pie' ),
+		'fault-and-states' => array( 'blue', 'pin' ),
+		'after-a-crash'    => array( 'rose', 'doc' ),
+		'insurance-claims' => array( 'navy', 'shield' ),
+	);
+	$look     = isset( $map[ $slug ] ) ? $map[ $slug ] : array( 'green', 'book' );
+	$thumb_id = (int) get_post_thumbnail_id( $post );
+	return array(
+		'color'     => $look[0],
+		'icon'      => $look[1],
+		'category'  => $cats ? $cats[0]->name : ( 'page' === $post->post_type ? __( 'Guide', 'claimfairly' ) : __( 'Blog', 'claimfairly' ) ),
+		'own_share' => $thumb_id && 0 === strpos( (string) get_post_meta( $thumb_id, '_cf_source_file', true ), 'claimfairly-' ),
+	);
+}
+
+/**
  * Guide card with a colored cover.
  *
  * @param WP_Post $post Post.
  * @return string
  */
 function claimfairly_guide_card( $post ) {
-	$cats  = get_the_category( $post->ID );
-	$cat   = $cats ? $cats[0]->name : __( 'Guide', 'claimfairly' );
-	$slug  = $cats ? $cats[0]->slug : '';
-	$map   = array(
-		'diminished-value'  => array( 'violet', 'car-down' ),
-		'settlements'       => array( 'orange', 'pie' ),
-		'fault-and-states'  => array( 'blue', 'pin' ),
-		'after-a-crash'     => array( 'rose', 'doc' ),
-		'insurance-claims'  => array( 'navy', 'shield' ),
-	);
-	$look  = isset( $map[ $slug ] ) ? $map[ $slug ] : array( 'green', 'book' );
+	$look = claimfairly_post_look( $post );
+	$cat  = $look['category'];
 	$words = str_word_count( wp_strip_all_tags( strip_shortcodes( $post->post_content ) ) );
 	$mins  = max( 1, (int) ceil( $words / 200 ) );
 
 	$html  = '<li class="guide-card"><a href="' . esc_url( get_permalink( $post ) ) . '">';
-	$html .= '<span class="guide-card__cover c-' . esc_attr( $look[0] ) . '">';
+	$html .= '<span class="guide-card__cover c-' . esc_attr( $look['color'] ) . '">';
 	$thumb_id  = (int) get_post_thumbnail_id( $post );
 	$own_share = $thumb_id && 0 === strpos( (string) get_post_meta( $thumb_id, '_cf_source_file', true ), 'claimfairly-' );
 	if ( $thumb_id && ! $own_share ) {
 		$html .= get_the_post_thumbnail( $post, 'medium_large', array( 'loading' => 'lazy', 'alt' => '' ) );
 	} else {
-		$html .= '<span class="guide-card__icon">' . claimfairly_icon( $look[1], 30 ) . '</span><span class="guide-card__cover-title">' . esc_html( $cat ) . '</span>';
+		$html .= '<span class="guide-card__icon">' . claimfairly_icon( $look['icon'], 30 ) . '</span><span class="guide-card__cover-title">' . esc_html( $cat ) . '</span>';
 	}
 	$html .= '</span><span class="guide-card__body">';
 	$html .= '<span class="guide-card__title">' . esc_html( get_the_title( $post ) ) . '</span>';
@@ -366,4 +453,39 @@ function claimfairly_trust_footer() {
 	echo claimfairly_get_sources_box(); // phpcs:ignore WordPress.Security.EscapeOutput
 	echo claimfairly_get_author_box(); // phpcs:ignore WordPress.Security.EscapeOutput
 	echo claimfairly_get_related_box(); // phpcs:ignore WordPress.Security.EscapeOutput
+}
+
+/**
+ * Related articles: same category first, then the newest others.
+ *
+ * @param int $post_id Post ID.
+ * @param int $count   How many.
+ * @return WP_Post[]
+ */
+function claimfairly_related_posts( $post_id, $count = 3 ) {
+	$cats    = wp_get_post_categories( $post_id );
+	$related = $cats ? get_posts(
+		array(
+			'post_type'           => 'post',
+			'posts_per_page'      => $count,
+			'post__not_in'        => array( $post_id ),
+			'category__in'        => $cats,
+			'ignore_sticky_posts' => true,
+		)
+	) : array();
+	if ( count( $related ) < $count ) {
+		$exclude = array_merge( array( $post_id ), wp_list_pluck( $related, 'ID' ) );
+		$related = array_merge(
+			$related,
+			get_posts(
+				array(
+					'post_type'           => 'post',
+					'posts_per_page'      => $count - count( $related ),
+					'post__not_in'        => $exclude,
+					'ignore_sticky_posts' => true,
+				)
+			)
+		);
+	}
+	return $related;
 }

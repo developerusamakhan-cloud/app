@@ -24,7 +24,8 @@ function claimfairly_option_defaults() {
 		'cf_hero_before'   => __( 'What is your car accident claim', 'claimfairly' ),
 		'cf_hero_mark'     => __( 'really worth?', 'claimfairly' ),
 		'cf_hero_text'     => __( 'Plug in your own numbers and see a fair range, the exact formula behind it, and how your state\'s fault rules change it. Built for drivers dealing with an insurer, not for lawyers.', 'claimfairly' ),
-		'cf_founder_name'  => '',
+		'cf_founder_name'  => 'James',
+		'cf_founder_bio'   => __( 'James runs ClaimFairly and writes and checks every calculator and guide on the site. Not a lawyer, just someone who thinks drivers deserve to see the math behind their claim.', 'claimfairly' ),
 		'cf_founder_note'  => __( 'Search for help after a car accident and almost every result is a law firm asking for your phone number. I wanted something simpler: calculators that show the actual math insurers use, cite real sources, and never ask who you are. I\'m not a lawyer, and these tools don\'t replace one. They help you walk into that conversation knowing the numbers.', 'claimfairly' ),
 		'cf_founder_photo' => '',
 		'cf_same_as'       => '',
@@ -49,18 +50,17 @@ function claimfairly_opt( $key ) {
  * @return string
  */
 function claimfairly_founder_name() {
-	$name = claimfairly_opt( 'cf_founder_name' );
-	if ( '' === $name ) {
-		$admins = get_users(
-			array(
-				'role'    => 'administrator',
-				'number'  => 1,
-				'orderby' => 'ID',
-			)
-		);
-		$name   = $admins ? $admins[0]->display_name : '';
-	}
-	return $name;
+	$name = trim( claimfairly_opt( 'cf_founder_name' ) );
+	return '' !== $name ? $name : 'James';
+}
+
+/**
+ * Short author bio shown in author boxes and schema.
+ *
+ * @return string
+ */
+function claimfairly_founder_bio() {
+	return claimfairly_opt( 'cf_founder_bio' );
 }
 
 /**
@@ -84,7 +84,8 @@ function claimfairly_customize_register( $wp_customize ) {
 		'cf_hero_before'   => array( __( 'Homepage headline: first part', 'claimfairly' ), 'text', 'sanitize_text_field' ),
 		'cf_hero_mark'     => array( __( 'Homepage headline: highlighted part', 'claimfairly' ), 'text', 'sanitize_text_field' ),
 		'cf_hero_text'     => array( __( 'Homepage intro text', 'claimfairly' ), 'textarea', 'sanitize_textarea_field' ),
-		'cf_founder_name'  => array( __( 'Founder name on the homepage (defaults to the admin display name)', 'claimfairly' ), 'text', 'sanitize_text_field' ),
+		'cf_founder_name'  => array( __( 'Author and founder name (used in bylines, author boxes, the About page and schema)', 'claimfairly' ), 'text', 'sanitize_text_field' ),
+		'cf_founder_bio'   => array( __( 'Author bio (author boxes and schema)', 'claimfairly' ), 'textarea', 'sanitize_textarea_field' ),
 		'cf_founder_note'  => array( __( 'Founder note on the homepage', 'claimfairly' ), 'textarea', 'sanitize_textarea_field' ),
 		'cf_disclaimer'    => array( __( 'Disclaimer (every tool and the footer)', 'claimfairly' ), 'textarea', 'sanitize_textarea_field' ),
 		'cf_footer_about'  => array( __( 'Footer description', 'claimfairly' ), 'textarea', 'sanitize_textarea_field' ),

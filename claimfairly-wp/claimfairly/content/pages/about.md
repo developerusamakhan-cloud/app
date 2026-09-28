@@ -1,5 +1,6 @@
 ---
 title: About ClaimFairly
+crumb: About
 slug: about
 page_type: standard
 order: 10
@@ -40,7 +41,7 @@ You can read more about how pages are researched and updated in our [editorial p
 ## What you will find here
 
 - **Five free calculators:** the [car accident settlement calculator](/car-accident-settlement-calculator/), the [diminished value calculator](/diminished-value-calculator/), the [pain and suffering calculator](/pain-and-suffering-calculator/), the [settlement take-home calculator](/settlement-calculator-take-home/) and the [demand letter generator](/demand-letter-generator/).
-- **Plain-English [guides](/guides/)** on how claims actually work, from the 17c formula to attorney fees.
+- **Plain-English [guides](/blog/)** on how claims actually work, from the 17c formula to attorney fees.
 - **[State rules](/states/)** for fault, filing deadlines and minimum insurance.
 - **[Injury](/injuries/) and [insurer](/insurers/) guides** for the most common situations.
 

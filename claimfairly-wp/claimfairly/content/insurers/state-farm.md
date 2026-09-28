@@ -1,5 +1,6 @@
 ---
 title: How State Farm Handles Car Accident Claims
+crumb: State Farm
 slug: how-state-farm-handles-car-accident-claims
 parent: insurers
 page_type: insurer

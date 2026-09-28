@@ -39,6 +39,7 @@ function claimfairly_register_meta() {
 		'_cf_hide_author'   => 'boolean',
 		'_cf_tool_key'      => 'string',
 		'_cf_seo_title'     => 'string',
+		'_cf_crumb'         => 'string',
 	);
 	foreach ( array( 'post', 'page' ) as $post_type ) {
 		foreach ( $keys as $key => $type ) {

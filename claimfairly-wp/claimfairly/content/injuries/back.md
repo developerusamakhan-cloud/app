@@ -1,5 +1,6 @@
 ---
 title: "Back Injury Settlement Calculator for Car Accidents"
+crumb: Back injuries
 slug: back-injury-car-accident-settlement
 parent: injuries
 page_type: injury

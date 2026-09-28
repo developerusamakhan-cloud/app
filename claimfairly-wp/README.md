@@ -50,6 +50,25 @@ It is safe to run setup again. Pages you have edited are never overwritten.
 
 Every page also has its own share image in `assets/og/`, showing its title and its own color. The importer uploads each one to the Media Library and sets it as the page's featured image, so Facebook, X, LinkedIn, WhatsApp and SEO plugins all pick it up automatically. To regenerate the images after changing titles, run `node build/og-images.mjs` (requires Node and Playwright).
 
+## Blog
+
+The articles live in a proper blog at `/blog/` (sites set up earlier are moved over automatically, and `/guides/` redirects there):
+
+- **Blog page:** the newest article as a large featured card, category chips with post counts, a search box that only searches articles, and a grid of cards.
+- **Articles:** a reading progress bar, a meta card (author, reviewed date, reading time, number of sources), share buttons (X, Facebook, LinkedIn, WhatsApp, email and copy link; plain links, no tracking scripts), related articles from the same category, and previous / next links.
+- **Categories:** each has its own page and description.
+- **New articles:** write a normal WordPress post, pick a category, add a featured image if you like, and fill in the Trust & SEO box. Everything else is automatic.
+
+## Author
+
+The site owner is shown as **James** everywhere: bylines, author boxes, the homepage note, the About and Editorial pages, and the schema. Change the name, bio and photo in *Appearance > Customize > ClaimFairly settings*. It does not depend on your WordPress account's display name.
+
+## Sitemap
+
+- **HTML sitemap** at `/sitemap/`: every published page, grouped for people.
+- **XML sitemap** for search engines: WordPress's built-in `/wp-sitemap.xml`, or `/sitemap_index.xml` when Rank Math or Yoast is active.
+- Both are linked in the footer.
+
 ## SEO built in
 
 - **Schema on every page**, as one connected graph: Organization (with logo), WebSite, Person (you, as founder), WebPage (AboutPage, ContactPage and CollectionPage where they fit), BreadcrumbList, Article on guides and state, injury and insurer pages, WebApplication on tools, FAQPage on every page with an FAQ, and ItemList on the homepage and guides page. State pages also say which state they are about.

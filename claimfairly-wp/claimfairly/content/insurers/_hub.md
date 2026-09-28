@@ -1,5 +1,6 @@
 ---
 title: How Major Insurers Handle Car Accident Claims
+crumb: Insurers
 slug: insurers
 page_type: standard
 order: 5

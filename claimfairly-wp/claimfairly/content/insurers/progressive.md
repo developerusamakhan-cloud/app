@@ -1,5 +1,6 @@
 ---
 title: How Progressive Handles Car Accident Claims
+crumb: Progressive
 slug: how-progressive-handles-car-accident-claims
 parent: insurers
 page_type: insurer

@@ -1,5 +1,6 @@
 ---
 title: Car Accident Injury Settlements by Injury Type
+crumb: Injuries
 slug: injuries
 page_type: standard
 order: 4

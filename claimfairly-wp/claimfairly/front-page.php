@@ -26,12 +26,12 @@ $claimfairly_photo     = (int) claimfairly_opt( 'cf_founder_photo' );
 			</h1>
 			<p class="hero__text"><?php echo esc_html( claimfairly_opt( 'cf_hero_text' ) ); ?></p>
 			<div class="hero__actions">
-				<a class="btn btn--brand btn--lg" href="<?php echo esc_url( $claimfairly_estimator ); ?>"><?php esc_html_e( 'Estimate my claim', 'claimfairly' ); ?> <?php echo claimfairly_icon( 'arrow', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
-				<a class="btn btn--ghost btn--lg" href="#tools"><?php esc_html_e( 'See all 5 tools', 'claimfairly' ); ?></a>
+				<a class="btn btn--brand btn--lg" href="<?php echo esc_url( $claimfairly_estimator ); ?>"><?php esc_html_e( 'Estimate my claim', 'claimfairly' ); ?></a>
+				<a class="btn btn--ghost btn--lg" href="#tools" data-icon="down"><?php esc_html_e( 'See all 5 tools', 'claimfairly' ); ?></a>
 			</div>
 			<ul class="hero__proof">
-				<li><?php echo claimfairly_icon( 'check', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?> <?php esc_html_e( 'Formula shown on every result', 'claimfairly' ); ?></li>
-				<li><?php echo claimfairly_icon( 'check', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?> <?php esc_html_e( 'Rules for all 50 states + DC', 'claimfairly' ); ?></li>
+				<li><span class="check" aria-hidden="true"><?php echo claimfairly_icon( 'check', 12 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span> <?php esc_html_e( 'Formula shown on every result', 'claimfairly' ); ?></li>
+				<li><span class="check" aria-hidden="true"><?php echo claimfairly_icon( 'check', 12 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span> <?php esc_html_e( 'Rules for all 50 states + DC', 'claimfairly' ); ?></li>
 			</ul>
 		</div>
 
@@ -160,11 +160,11 @@ if ( $claimfairly_guides ) :
 	<div class="wrap">
 		<div class="section__head">
 			<div>
-				<p class="eyebrow"><?php esc_html_e( 'Guides', 'claimfairly' ); ?></p>
+				<p class="eyebrow"><?php esc_html_e( 'From the blog', 'claimfairly' ); ?></p>
 				<h2 id="guides-title" class="section__title"><?php esc_html_e( 'Plain-English answers to the questions adjusters dodge', 'claimfairly' ); ?></h2>
 			</div>
 			<?php if ( $claimfairly_guides_id ) : ?>
-				<a class="text-link" href="<?php echo esc_url( get_permalink( $claimfairly_guides_id ) ); ?>"><?php esc_html_e( 'All guides', 'claimfairly' ); ?> <?php echo claimfairly_icon( 'arrow', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+				<a class="text-link" href="<?php echo esc_url( get_permalink( $claimfairly_guides_id ) ); ?>"><?php esc_html_e( 'All articles', 'claimfairly' ); ?> <?php echo claimfairly_icon( 'arrow', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 			<?php endif; ?>
 		</div>
 		<ul class="guide-grid">

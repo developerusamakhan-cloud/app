@@ -1,5 +1,6 @@
 ---
 title: Car Accident Claim Rules by State
+crumb: States
 slug: states
 page_type: standard
 order: 3

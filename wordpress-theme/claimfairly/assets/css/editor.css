@@ -1,0 +1,12 @@
+/* Block editor: approximate the front-end reading experience. */
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-size: 17px;
+	line-height: 1.65;
+	color: #1f2937;
+}
+h1, h2, h3, h4 { color: #0f2a47; line-height: 1.25; }
+a { color: #0f766e; }
+.wp-block { max-width: 760px; }
+.wp-block[data-align="wide"] { max-width: 1120px; }
+.wp-block[data-align="full"] { max-width: none; }

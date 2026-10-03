@@ -5,13 +5,8 @@
  * @package Nabia
  */
 
-$nabia_tax   = nabia_portfolio_taxonomy();
-$nabia_types = $nabia_tax ? get_the_terms( get_the_ID(), $nabia_tax ) : array();
-$nabia_type  = ( $nabia_types && ! is_wp_error( $nabia_types ) ) ? $nabia_types[0]->name : get_post_meta( get_the_ID(), '_nabia_role', true );
-$nabia_year  = get_post_meta( get_the_ID(), '_nabia_year', true );
-$nabia_year  = $nabia_year ? $nabia_year : get_the_date( 'Y' );
-$nabia_live  = nabia_project_live_url( get_the_ID() );
-$nabia_url   = $nabia_live ? $nabia_live : nabia_portfolio_url();
+$nabia_live = nabia_project_live_url( get_the_ID() );
+$nabia_url  = $nabia_live ? $nabia_live : nabia_portfolio_url();
 ?>
 <article <?php post_class( 'project-card' ); ?> data-reveal data-cursor="<?php esc_attr_e( 'Visit', 'nabia' ); ?>">
 	<a class="project-link" href="<?php echo esc_url( $nabia_url ); ?>"<?php echo $nabia_live ? ' target="_blank" rel="noopener"' : ''; ?>>
@@ -47,12 +42,6 @@ $nabia_url   = $nabia_live ? $nabia_live : nabia_portfolio_url();
 		<?php endif; ?>
 		<div class="project-meta">
 			<h3 class="project-title"><?php the_title(); ?></h3>
-			<p class="project-type">
-				<?php echo esc_html( $nabia_type ); ?>
-				<?php if ( $nabia_year ) : ?>
-					· <?php echo esc_html( $nabia_year ); ?>
-				<?php endif; ?>
-			</p>
 		</div>
 	</a>
 </article>

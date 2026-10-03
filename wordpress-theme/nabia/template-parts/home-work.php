@@ -47,7 +47,6 @@ $nabia_projects = new WP_Query(
 						</div>
 						<div class="project-meta">
 							<h3 class="project-title"><?php echo esc_html( $nabia_demo['title'] ); ?></h3>
-							<p class="project-type"><?php echo esc_html( $nabia_demo['type'] ); ?> · <?php echo esc_html( $nabia_demo['year'] ); ?></p>
 						</div>
 					</article>
 				<?php endforeach; ?>

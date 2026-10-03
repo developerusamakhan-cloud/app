@@ -17,7 +17,7 @@ $nabia_url  = $nabia_live ? $nabia_live : nabia_portfolio_url();
 					<span class="sc-bar" aria-hidden="true"><i></i><i></i><i></i><?php if ( $nabia_show['domain'] ) : ?><span class="sc-url"><?php echo esc_html( $nabia_show['domain'] ); ?></span><?php endif; ?></span>
 					<div class="sc-screen<?php echo $nabia_show['tall'] ? ' is-tall' : ''; ?>">
 						<?php if ( $nabia_show['desktop'] ) : ?>
-							<img src="<?php echo esc_url( $nabia_show['desktop'] ); ?>" alt="<?php echo esc_attr( sprintf( /* translators: %s: project name */ __( '%s website on desktop', 'nabia' ), get_the_title() ) ); ?>" loading="lazy" decoding="async">
+							<img src="<?php echo esc_url( $nabia_show['desktop'] ); ?>"<?php if ( $nabia_show['srcset'] ) : ?> srcset="<?php echo esc_attr( $nabia_show['srcset'] ); ?>" sizes="(max-width: 700px) 72vw, (max-width: 1024px) 38vw, 440px"<?php endif; ?> alt="<?php echo esc_attr( sprintf( /* translators: %s: project name */ __( '%s website on desktop', 'nabia' ), get_the_title() ) ); ?>" loading="lazy" decoding="async">
 						<?php else : ?>
 							<span class="sc-empty" aria-hidden="true"><span class="mock-title"><?php the_title(); ?></span><span class="mock-line"></span><span class="mock-line short"></span></span>
 						<?php endif; ?>

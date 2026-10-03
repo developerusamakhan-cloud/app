@@ -29,21 +29,30 @@ function nabia_shot_sizes() {
 	return apply_filters(
 		'nabia_shot_sizes',
 		array(
+			// Captured at double resolution (scale 2), like a retina screen, so text stays sharp
+			// when a whole desktop page is shrunk into a card.
 			'desktop' => array(
-				'vpw' => 1280,
-				'vph' => 2400,
-				'w'   => 800,
-				'h'   => 1500,
+				'vpw'   => 1280,
+				'vph'   => 2400,
+				'scale' => 2,
+				'w'     => 1600,
+				'h'     => 3000,
 			),
 			'mobile'  => array(
-				'vpw' => 390,
-				'vph' => 844,
-				'w'   => 390,
-				'h'   => 844,
+				'vpw'   => 390,
+				'vph'   => 844,
+				'scale' => 2,
+				'w'     => 520,
+				'h'     => 1125,
 			),
 		)
 	);
 }
+
+/**
+ * Bump when the capture settings change, so older screenshots are replaced.
+ */
+const NABIA_SHOT_VERSION = 2;
 
 /**
  * Are automatic screenshots switched on?
@@ -73,7 +82,7 @@ function nabia_screenshot_service_url( $url, $device ) {
  *
  * @param int    $post_id Project ID.
  * @param string $device  desktop or mobile.
- * @return string Image URL.
+ * @return array|string { url (sharp), url_1x (lighter, may be missing) } or ''.
  */
 function nabia_project_shot( $post_id, $device = 'desktop' ) {
 	$live = nabia_project_live_url( $post_id );
@@ -82,10 +91,10 @@ function nabia_project_shot( $post_id, $device = 'desktop' ) {
 	}
 	$shot  = get_post_meta( $post_id, '_nabia_shot_' . $device, true );
 	$valid = is_array( $shot ) && ! empty( $shot['url'] ) && isset( $shot['src'] ) && $shot['src'] === $live && ! empty( $shot['file'] ) && file_exists( $shot['file'] );
-	if ( ! $valid || ( time() - (int) $shot['time'] ) > 30 * DAY_IN_SECONDS ) {
+	if ( ! $valid || nabia_shot_needed( $post_id, $device, $live ) ) {
 		nabia_shots_queue( $post_id );
 	}
-	return $valid ? $shot['url'] : '';
+	return $valid ? $shot : '';
 }
 
 /**
@@ -118,7 +127,8 @@ function nabia_shots_queue( $post_id, $delay = 5 ) {
  */
 function nabia_shot_needed( $post_id, $device, $live ) {
 	$shot = get_post_meta( $post_id, '_nabia_shot_' . $device, true );
-	return ! is_array( $shot ) || empty( $shot['file'] ) || ! file_exists( $shot['file'] ) || ! isset( $shot['src'] ) || $shot['src'] !== $live || ( time() - (int) $shot['time'] ) > 30 * DAY_IN_SECONDS;
+	return ! is_array( $shot ) || empty( $shot['file'] ) || ! file_exists( $shot['file'] ) || ! isset( $shot['src'] ) || $shot['src'] !== $live
+		|| ( time() - (int) $shot['time'] ) > 30 * DAY_IN_SECONDS || (int) ( isset( $shot['v'] ) ? $shot['v'] : 1 ) < NABIA_SHOT_VERSION;
 }
 
 /**
@@ -194,21 +204,50 @@ function nabia_save_shot( $post_id, $device, $live ) {
 		return false;
 	}
 
-	$old = get_post_meta( $post_id, '_nabia_shot_' . $device, true );
-	if ( is_array( $old ) && ! empty( $old['file'] ) && $old['file'] !== $upload['file'] && file_exists( $old['file'] ) ) {
-		wp_delete_file( $old['file'] );
-	}
-	update_post_meta(
-		$post_id,
-		'_nabia_shot_' . $device,
-		array(
-			'url'  => $upload['url'],
-			'file' => $upload['file'],
-			'src'  => $live,
-			'time' => time(),
-		)
+	$data = array(
+		'url'  => $upload['url'],
+		'file' => $upload['file'],
+		'src'  => $live,
+		'time' => time(),
+		'v'    => NABIA_SHOT_VERSION,
 	);
+
+	// Keep the sharp image at a sensible file size, and add a half-size copy for normal screens.
+	$editor = wp_get_image_editor( $upload['file'] );
+	if ( ! is_wp_error( $editor ) ) {
+		$editor->set_quality( 84 );
+		$editor->save( $upload['file'] );
+		if ( 'desktop' === $device ) {
+			$size = $editor->get_size();
+			if ( $size['width'] > 900 && ! is_wp_error( $editor->resize( (int) round( $size['width'] / 2 ), null ) ) ) {
+				$half = $editor->save( preg_replace( '/(\.[a-z]+)$/i', '-1x$1', $upload['file'] ) );
+				if ( ! is_wp_error( $half ) && ! empty( $half['path'] ) ) {
+					$data['file_1x'] = $half['path'];
+					$data['url_1x']  = str_replace( wp_basename( $upload['file'] ), wp_basename( $half['path'] ), $upload['url'] );
+				}
+			}
+		}
+	}
+
+	nabia_delete_shot_files( get_post_meta( $post_id, '_nabia_shot_' . $device, true ) );
+	update_post_meta( $post_id, '_nabia_shot_' . $device, $data );
 	return true;
+}
+
+/**
+ * Remove the files of a saved screenshot.
+ *
+ * @param mixed $shot Saved screenshot data.
+ */
+function nabia_delete_shot_files( $shot ) {
+	if ( ! is_array( $shot ) ) {
+		return;
+	}
+	foreach ( array( 'file', 'file_1x' ) as $key ) {
+		if ( ! empty( $shot[ $key ] ) && file_exists( $shot[ $key ] ) ) {
+			wp_delete_file( $shot[ $key ] );
+		}
+	}
 }
 
 /**
@@ -233,10 +272,7 @@ add_action( 'save_post', 'nabia_shots_on_save', 20 );
  */
 function nabia_shots_on_delete( $post_id ) {
 	foreach ( array_keys( nabia_shot_sizes() ) as $device ) {
-		$shot = get_post_meta( $post_id, '_nabia_shot_' . $device, true );
-		if ( is_array( $shot ) && ! empty( $shot['file'] ) && file_exists( $shot['file'] ) ) {
-			wp_delete_file( $shot['file'] );
-		}
+		nabia_delete_shot_files( get_post_meta( $post_id, '_nabia_shot_' . $device, true ) );
 	}
 }
 add_action( 'before_delete_post', 'nabia_shots_on_delete' );
@@ -248,23 +284,37 @@ add_action( 'before_delete_post', 'nabia_shots_on_delete' );
  * @return array { desktop, tall, mobile, domain, hue }
  */
 function nabia_project_showcase( $post_id ) {
-	$desktop = nabia_project_shot( $post_id, 'desktop' );
-	$tall    = (bool) $desktop;
-	if ( ! $desktop && has_post_thumbnail( $post_id ) ) {
-		$img = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'large' );
+	$shot    = nabia_project_shot( $post_id, 'desktop' );
+	$desktop = '';
+	$srcset  = '';
+	$tall    = false;
+	if ( $shot ) {
+		$tall = true;
+		if ( ! empty( $shot['url_1x'] ) ) {
+			$desktop = $shot['url_1x'];
+			$srcset  = $shot['url_1x'] . ' 800w, ' . $shot['url'] . ' 1600w';
+		} else {
+			$desktop = $shot['url'];
+		}
+	} elseif ( has_post_thumbnail( $post_id ) ) {
+		$thumb = get_post_thumbnail_id( $post_id );
+		$img   = wp_get_attachment_image_src( $thumb, 'large' );
 		if ( $img ) {
 			$desktop = $img[0];
+			$srcset  = (string) wp_get_attachment_image_srcset( $thumb, 'large' );
 			// A long full-page image can scroll on hover too.
 			$tall = $img[1] && ( $img[2] / $img[1] ) > 1.2;
 		}
 	}
+	$mobile = nabia_project_shot( $post_id, 'mobile' );
 	$live   = nabia_project_live_url( $post_id );
 	$domain = $live ? preg_replace( '#^www\.#i', '', (string) wp_parse_url( $live, PHP_URL_HOST ) ) : '';
 	$hues   = array( '#7c3aed', '#ec4899', '#f59e0b', '#2563eb', '#10b981', '#e34c26' );
 	return array(
 		'desktop' => $desktop,
+		'srcset'  => $srcset,
 		'tall'    => $tall,
-		'mobile'  => nabia_project_shot( $post_id, 'mobile' ),
+		'mobile'  => $mobile ? $mobile['url'] : '',
 		'domain'  => $domain,
 		'hue'     => $hues[ absint( $post_id ) % count( $hues ) ],
 	);

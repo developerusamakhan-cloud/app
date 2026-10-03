@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NABIA_VERSION', '2.21.1' );
+define( 'NABIA_VERSION', '2.21.2' );
 define( 'NABIA_DIR', get_template_directory() );
 define( 'NABIA_URI', get_template_directory_uri() );
 

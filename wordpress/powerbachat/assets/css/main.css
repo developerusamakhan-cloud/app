@@ -690,7 +690,7 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 	overflow: hidden;
 	background: var(--ink);
 	color: var(--paper);
-	padding: clamp(48px, 7vw, 96px) 0 clamp(110px, 12vw, 160px);
+	padding: clamp(36px, 4.5vw, 64px) 0 clamp(90px, 9vw, 120px);
 	isolation: isolate;
 }
 
@@ -727,15 +727,16 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 }
 
 .hero__copy {
-	padding-top: clamp(0px, 4vw, 56px);
+	padding-top: clamp(0px, 3vw, 40px);
 }
 
 .hero__title {
-	margin: 0 0 1.4rem;
-	font-size: clamp(2.6rem, 5.6vw, 5.1rem);
-	font-weight: 350;
-	line-height: 1.02;
-	letter-spacing: -0.035em;
+	max-width: 13em;
+	margin: 0 0 1.2rem;
+	font-size: clamp(2.2rem, 3.9vw, 3.6rem);
+	font-weight: 380;
+	line-height: 1.06;
+	letter-spacing: -0.03em;
 	font-variation-settings: "SOFT" 50, "opsz" 144;
 	text-wrap: balance;
 }
@@ -767,14 +768,14 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 }
 
 .hero__lede {
-	max-width: 34em;
-	margin-bottom: 2rem;
-	font-size: clamp(1.02rem, 1.3vw, 1.15rem);
+	max-width: 32em;
+	margin-bottom: 1.6rem;
+	font-size: clamp(1rem, 1.15vw, 1.08rem);
 	color: #c9d2cc;
 }
 
 .hero__quick {
-	margin-bottom: 2rem;
+	margin-bottom: 1.6rem;
 }
 
 .hero__quick-label {
@@ -862,7 +863,7 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 .calc__panel {
 	position: relative;
 	z-index: 1;
-	padding: 24px 24px 22px;
+	padding: 20px 22px 18px;
 	background: linear-gradient(180deg, var(--ink-3), var(--ink-2));
 	border: 1px solid rgba(244, 239, 228, 0.1);
 	border-radius: var(--r-lg) var(--r-lg) var(--r) var(--r);
@@ -873,7 +874,7 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: 18px;
+	margin-bottom: 14px;
 }
 
 .calc__eyebrow {
@@ -900,7 +901,7 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 }
 
 .field {
-	margin-bottom: 16px;
+	margin-bottom: 12px;
 }
 
 .field__row {
@@ -949,7 +950,7 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 
 .select select {
 	width: 100%;
-	height: 48px;
+	height: 44px;
 	padding: 0 40px 0 14px;
 	border: 1px solid rgba(244, 239, 228, 0.16);
 	border-radius: var(--r-sm);
@@ -987,7 +988,7 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 	background: transparent;
 	color: var(--paper);
 	font-family: var(--f-mono);
-	font-size: 1.9rem;
+	font-size: 1.6rem;
 	font-weight: 500;
 	text-align: right;
 	-moz-appearance: textfield;
@@ -1097,7 +1098,7 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 	display: flex;
 	align-items: flex-start;
 	gap: 12px;
-	padding-top: 14px;
+	padding-top: 12px;
 	border-top: 1px dashed rgba(244, 239, 228, 0.14);
 	font-size: 0.8rem;
 	color: var(--muted-light);
@@ -1161,7 +1162,7 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 	--edge: 9px;
 	position: relative;
 	margin: -10px 14px 0;
-	padding: 30px 22px calc(18px + var(--edge));
+	padding: 24px 20px calc(14px + var(--edge));
 	background: var(--card);
 	color: var(--text);
 	border-radius: 0 0 4px 4px;
@@ -1221,7 +1222,7 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 	grid-template-columns: minmax(0, 1fr) auto auto;
 	align-items: baseline;
 	gap: 4px 14px;
-	padding: 6px 0;
+	padding: 4px 0;
 	border-bottom: 1px dotted var(--line);
 	animation: line-in 0.4s var(--ease) both;
 }
@@ -1259,8 +1260,8 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 	align-items: baseline;
 	justify-content: space-between;
 	gap: 12px;
-	margin-top: 12px;
-	padding-top: 10px;
+	margin-top: 8px;
+	padding-top: 8px;
 	border-top: 1.5px solid var(--text);
 	font-family: var(--f-mono);
 	font-size: 0.72rem;
@@ -1270,7 +1271,7 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 
 .slip__total strong {
 	font-family: var(--f-display);
-	font-size: clamp(1.9rem, 3.4vw, 2.5rem);
+	font-size: clamp(1.7rem, 2.6vw, 2.1rem);
 	font-weight: 600;
 	letter-spacing: -0.03em;
 	text-transform: none;
@@ -1306,7 +1307,7 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 }
 
 .slip__foot {
-	margin: 12px 0 10px;
+	margin: 8px 0 8px;
 	font-size: 0.72rem;
 	line-height: 1.5;
 	color: var(--muted);

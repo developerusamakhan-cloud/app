@@ -41,8 +41,8 @@ $powerbachat_quick = array(
 	<div class="wrap hero__inner">
 		<div class="hero__copy">
 			<p class="kicker kicker--light">
-				<span class="urdu" lang="ur">بجلی بچت</span>
-				<span class="kicker__rule" aria-hidden="true"></span>
+				<span class="urdu" lang="ur" data-only="pk">بجلی بچت</span>
+				<span class="kicker__rule" aria-hidden="true" data-only="pk"></span>
 				<?php foreach ( powerbachat_data()['countries'] as $powerbachat_code => $powerbachat_c ) : ?>
 					<span data-only="<?php echo esc_attr( $powerbachat_code ); ?>"><?php echo esc_html( $powerbachat_c['name'] ); ?></span>
 				<?php endforeach; ?>

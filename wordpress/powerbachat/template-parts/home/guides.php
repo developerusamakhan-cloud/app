@@ -43,17 +43,17 @@ $powerbachat_planned = array(
 	),
 	'in' => array(
 		array( 'India', 'How your electricity bill is calculated, line by line', 'Energy charge, fixed charge, duty and FPPCA, with a real bill taken apart.', '/in/how-electricity-bill-is-calculated/', 7 ),
-		array( 'Solar', 'PM Surya Ghar, explained: who qualifies and what you actually get', 'The subsidy per kW, the paperwork and the real out-of-pocket cost.', '/in/pm-surya-ghar-yojana/', 8 ),
-		array( 'India', 'TNEB bi-monthly billing and the 500-unit trap', 'Why one extra unit in a two-month cycle can cost you hundreds.', '/in/tneb-bi-monthly-billing/', 5 ),
-		array( 'Solar', 'On-grid, off-grid or hybrid: which rooftop system fits your home?', 'Power cuts, net metering and battery cost, compared honestly.', '/in/on-grid-vs-off-grid-vs-hybrid/', 6 ),
-		array( 'Basics', 'What exactly is “one unit” of electricity?', 'Watts, kilowatt-hours and how long your AC takes to burn through one.', '/in/what-is-one-unit-of-electricity/', 4 ),
+		array( 'Solar', 'PM Surya Ghar, explained: who qualifies and what you actually get', 'The subsidy per kW, the paperwork and the real out-of-pocket cost.', '/pm-surya-ghar-yojana-explained/', 8 ),
+		array( 'India', 'TNEB bi-monthly billing and the 500 unit trap', 'Why one extra unit in a two-month cycle can cost you hundreds.', '/tneb-bi-monthly-billing-explained/', 5 ),
+		array( 'Solar', 'DCR or non-DCR panels: which should you buy?', 'Subsidy rules, price gap and output, compared honestly.', '/dcr-vs-non-dcr-solar-panels/', 6 ),
+		array( 'India', 'Delhi\'s 200 free units: how the subsidy works', 'Who qualifies, what happens past 200 units and how to keep it.', '/delhi-200-units-free-electricity/', 5 ),
 	),
 	'bd' => array(
-		array( 'Bangladesh', 'How your DESCO or DPDC bill is calculated', 'Slabs, demand charge and VAT, with a real bill taken apart.', '/bd/how-electricity-bill-is-calculated/', 6 ),
-		array( 'Bangladesh', 'Prepaid meter guide: recharge, rebates and hidden charges', 'What actually comes off your balance each month.', '/bd/prepaid-meter-guide/', 5 ),
-		array( 'Backup', 'IPS or solar: what keeps your fans running through load-shedding?', 'Backup hours, battery life and cost over five years.', '/bd/ips-vs-solar/', 6 ),
-		array( 'Solar', 'Lithium or tubular: which battery is worth it?', 'Cost per cycle, real backup hours and when each one wins.', '/bd/lithium-vs-tubular-battery/', 6 ),
-		array( 'Basics', 'What exactly is “one unit” of electricity?', 'Watts, kilowatt-hours and how long your AC takes to burn through one.', '/bd/what-is-one-unit-of-electricity/', 4 ),
+		array( 'Bangladesh', 'How to read your electricity bill', 'Slabs, demand charge and VAT, line by line.', '/how-to-read-electricity-bill-bangladesh/', 6 ),
+		array( 'Bangladesh', 'Prepaid meter guide: recharge, deductions and hidden charges', 'What actually comes off your balance each month.', '/prepaid-meter-guide-bangladesh/', 5 ),
+		array( 'Backup', 'IPS or solar: what keeps your fans running through load-shedding?', 'Backup hours, battery life and cost over five years.', '/ips-vs-solar-bangladesh/', 6 ),
+		array( 'Bangladesh', 'How to reduce your electricity bill this summer', 'Fans, AC settings, fridges and the slab line that matters.', '/reduce-electricity-bill-bangladesh/', 6 ),
+		array( 'Solar', 'Solar battery prices in Bangladesh', 'Lead acid, tubular and lithium, with what each one lasts.', '/bd/solar-battery-price/', 4 ),
 	),
 );
 ?>

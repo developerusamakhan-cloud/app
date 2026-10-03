@@ -298,32 +298,92 @@ function powerbachat_solar_table_shortcode( $atts ) {
 add_shortcode( 'powerbachat_solar_table', 'powerbachat_solar_table_shortcode' );
 
 /**
- * [powerbachat_price_table] is the Customizer price board as an article table.
+ * [powerbachat_price_table board="pk-panels"] renders a Customizer price board as a table.
+ * Boards: pk-panels, in-panels, bd-panels, bd-ips, bd-battery.
  *
+ * @param array $atts Attributes.
  * @return string
  */
-function powerbachat_price_table_shortcode() {
-	$rows = powerbachat_price_rows();
+function powerbachat_price_table_shortcode( $atts ) {
+	$atts   = shortcode_atts(
+		array(
+			'board'   => 'pk-panels',
+			'caption' => '',
+		),
+		$atts
+	);
+	$boards = powerbachat_price_boards();
+	if ( empty( $boards[ $atts['board'] ] ) ) {
+		return '';
+	}
+	$board = $boards[ $atts['board'] ];
+	$rows  = powerbachat_price_rows( $atts['board'] );
 	if ( ! $rows ) {
 		return '';
 	}
-	$cur  = powerbachat_mod( 'pb_price_currency' );
-	$body = '';
+	$cur   = $board['currency'];
+	$watts = 'W' === $board['unit'];
+	$body  = '';
 	foreach ( $rows as $row ) {
-		preg_match( '/(\d{3,4})\s?W/i', $row['model'], $watt );
-		$panel = ! empty( $watt[1] ) ? $cur . ' ' . number_format_i18n( round( $row['price'] * (int) $watt[1], -2 ) ) : '';
-		$move  = 0.0 === $row['change'] ? __( 'No change', 'powerbachat' ) : ( $row['change'] < 0 ? __( 'Down', 'powerbachat' ) : __( 'Up', 'powerbachat' ) ) . ' ' . number_format( abs( $row['change'] ), 1 );
-		$body .= '<tr><td><strong>' . esc_html( $row['brand'] ) . '</strong><br><small>' . esc_html( $row['model'] ) . '</small></td>'
-			. '<td>' . esc_html( $cur . ' ' . number_format( $row['price'], 1 ) ) . '</td>'
-			. '<td>' . esc_html( $panel ) . '</td>'
-			. '<td>' . esc_html( $move ) . '</td></tr>';
+		$move = 0.0 === $row['change'] ? __( 'No change', 'powerbachat' ) : ( $row['change'] < 0 ? __( 'Down', 'powerbachat' ) : __( 'Up', 'powerbachat' ) ) . ' ' . number_format_i18n( abs( $row['change'] ), $watts ? 1 : 0 );
+		$body .= '<tr><td><strong>' . esc_html( $row['brand'] ) . '</strong><br><small>' . esc_html( $row['model'] ) . '</small></td>';
+		if ( $watts ) {
+			preg_match( '/(\d{2,4})\s?W/i', $row['model'], $watt );
+			$panel = ! empty( $watt[1] ) ? $cur . ' ' . number_format_i18n( round( $row['price'] * (int) $watt[1], -1 ) ) : '';
+			$body .= '<td>' . esc_html( $cur . ' ' . number_format( $row['price'], 1 ) ) . '</td><td>' . esc_html( $panel ) . '</td>';
+		} else {
+			$body .= '<td>' . esc_html( $cur . ' ' . number_format_i18n( $row['price'] ) ) . '</td>';
+		}
+		$body .= '<td>' . esc_html( $move ) . '</td></tr>';
 	}
-	$head = '<th scope="col">' . esc_html__( 'Panel', 'powerbachat' ) . '</th><th scope="col">' . esc_html__( 'Per watt', 'powerbachat' ) . '</th><th scope="col">' . esc_html__( 'Per panel', 'powerbachat' ) . '</th><th scope="col">' . esc_html__( 'Since last update', 'powerbachat' ) . '</th>';
+	$head = '<th scope="col">' . esc_html__( 'Product', 'powerbachat' ) . '</th>';
+	$head .= $watts
+		? '<th scope="col">' . esc_html__( 'Per watt', 'powerbachat' ) . '</th><th scope="col">' . esc_html__( 'Per panel', 'powerbachat' ) . '</th>'
+		: '<th scope="col">' . esc_html__( 'Price', 'powerbachat' ) . '</th>';
+	$head .= '<th scope="col">' . esc_html__( 'Since last update', 'powerbachat' ) . '</th>';
 	/* translators: %s: date */
-	$note = sprintf( __( 'Market rates updated %s, ex-warehouse, before delivery and fitting.', 'powerbachat' ), powerbachat_mod( 'pb_price_updated' ) );
-	return powerbachat_table_html( __( 'A-grade solar panel prices', 'powerbachat' ), $head, $body, $note );
+	$note = sprintf( __( 'Market prices updated %s. Dealer prices vary by city, warranty and stock.', 'powerbachat' ), powerbachat_mod( 'pb_price_updated' ) );
+	$html = powerbachat_table_html( $atts['caption'] ? $atts['caption'] : $board['label'], $head, $body, $note );
+	if ( powerbachat_prices_are_default( $atts['board'] ) && current_user_can( 'edit_theme_options' ) ) {
+		$html .= '<p class="note">' . esc_html__( 'Only admins see this: the table above shows the theme\'s sample prices. Replace them in Appearance > Customize > PowerBachat > Rates & prices.', 'powerbachat' ) . '</p>';
+	}
+	return $html;
 }
 add_shortcode( 'powerbachat_price_table', 'powerbachat_price_table_shortcode' );
+
+/**
+ * [powerbachat_subsidy_table sizes="1,2,3,4,5,10"] shows the central rooftop solar
+ * subsidy (PM Surya Ghar: Rs 30,000 per kW for the first 2 kW, Rs 18,000 for the
+ * third kW, capped at Rs 78,000) and the net cost range for each size.
+ *
+ * @param array $atts Attributes.
+ * @return string
+ */
+function powerbachat_subsidy_table_shortcode( $atts ) {
+	$atts = shortcode_atts(
+		array(
+			'sizes'   => '1,2,3,4,5,10',
+			'caption' => '',
+		),
+		$atts
+	);
+	$cfg  = powerbachat_data()['solar']['in'];
+	$body = '';
+	foreach ( array_filter( array_map( 'floatval', explode( ',', $atts['sizes'] ) ) ) as $kw ) {
+		$subsidy = min( 78000, min( $kw, 2 ) * 30000 + ( $kw > 2 ? min( $kw - 2, 1 ) * 18000 : 0 ) );
+		$lo      = round( $kw * $cfg['per_kw'][0], -3 );
+		$hi      = round( $kw * $cfg['per_kw'][1], -3 );
+		$body   .= '<tr><td>' . esc_html( rtrim( rtrim( number_format( $kw, 1 ), '0' ), '.' ) . ' kW' ) . '</td>'
+			. '<td>' . esc_html( '₹ ' . number_format_i18n( $lo ) . ' to ' . number_format_i18n( $hi ) ) . '</td>'
+			. '<td>' . esc_html( '₹ ' . number_format_i18n( $subsidy ) ) . '</td>'
+			. '<td><strong>' . esc_html( '₹ ' . number_format_i18n( max( 0, $lo - $subsidy ) ) . ' to ' . number_format_i18n( max( 0, $hi - $subsidy ) ) ) . '</strong></td></tr>';
+	}
+	$head = '<th scope="col">' . esc_html__( 'System', 'powerbachat' ) . '</th><th scope="col">' . esc_html__( 'Installed cost', 'powerbachat' ) . '</th><th scope="col">' . esc_html__( 'Central subsidy', 'powerbachat' ) . '</th><th scope="col">' . esc_html__( 'Your share', 'powerbachat' ) . '</th>';
+	/* translators: %s: month */
+	$note = sprintf( __( 'Central subsidy for residential rooftop solar under PM Surya Ghar as we last checked it (%s). Some states add their own top-up. Costs are for DCR-panel on-grid systems.', 'powerbachat' ), powerbachat_mod( 'pb_tariff_checked' ) );
+	return powerbachat_table_html( $atts['caption'] ? $atts['caption'] : __( 'Rooftop solar cost after subsidy', 'powerbachat' ), $head, $body, $note );
+}
+add_shortcode( 'powerbachat_subsidy_table', 'powerbachat_subsidy_table_shortcode' );
 
 /**
  * [powerbachat_battery] is the battery backup calculator.

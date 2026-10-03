@@ -126,7 +126,7 @@ function powerbachat_content_existing( $item ) {
  * @param bool  $overwrite Replace content of an existing post.
  * @return string created|updated|skipped|error
  */
-function powerbachat_import_item( $item, $overwrite ) {
+function powerbachat_import_item( $item, $overwrite, $publish_at = '' ) {
 	$existing = powerbachat_content_existing( $item );
 	if ( $existing && ! $overwrite ) {
 		return 'skipped';
@@ -162,6 +162,16 @@ function powerbachat_import_item( $item, $overwrite ) {
 		if ( $tid ) {
 			$postarr['post_category'] = array( $tid );
 		}
+	}
+
+	if ( $existing ) {
+		// Keep the status and date an existing item already has (published or scheduled).
+		$postarr['post_status'] = $existing->post_status;
+		unset( $postarr['post_date'] );
+	} elseif ( $publish_at ) {
+		$postarr['post_status']   = 'future';
+		$postarr['post_date']     = $publish_at;
+		$postarr['post_date_gmt'] = get_gmt_from_date( $publish_at );
 	}
 
 	if ( $existing ) {
@@ -208,6 +218,45 @@ function powerbachat_import_item( $item, $overwrite ) {
 }
 
 /**
+ * Publishing plan for posts: the first N (by their "order" field) go live now, the
+ * rest are scheduled one every X days at 9:00 site time, starting tomorrow-plus-X.
+ * Pages are never scheduled, because the home page, menus and footer link to them.
+ *
+ * @param array $items Content items.
+ * @return array Map of item key => 'Y-m-d H:i:s' local date, or '' for publish now.
+ */
+function powerbachat_schedule_plan( $items ) {
+	$now_count = (int) get_option( 'powerbachat_publish_now', 15 );
+	$every     = max( 1, (int) get_option( 'powerbachat_publish_every', 2 ) );
+	$posts     = array_filter(
+		$items,
+		function ( $item ) {
+			return 'post' === $item['type'];
+		}
+	);
+	uasort(
+		$posts,
+		function ( $a, $b ) {
+			return (int) $a['order'] - (int) $b['order'] ?: strcmp( $a['file'], $b['file'] );
+		}
+	);
+	$plan  = array();
+	$i     = 0;
+	$start = new DateTime( 'today 09:00', wp_timezone() );
+	foreach ( array_keys( $posts ) as $key ) {
+		if ( $i < $now_count ) {
+			$plan[ $key ] = '';
+		} else {
+			$when = clone $start;
+			$when->modify( '+' . ( ( $i - $now_count + 1 ) * $every ) . ' days' );
+			$plan[ $key ] = $when->format( 'Y-m-d H:i:s' );
+		}
+		++$i;
+	}
+	return $plan;
+}
+
+/**
  * Admin screen.
  */
 function powerbachat_content_menu() {
@@ -230,6 +279,12 @@ function powerbachat_content_handle() {
 	}
 	check_admin_referer( 'powerbachat_import' );
 	$mode  = sanitize_key( wp_unslash( $_POST['powerbachat_import'] ) );
+	if ( isset( $_POST['publish_now'] ) ) {
+		update_option( 'powerbachat_publish_now', max( 0, absint( $_POST['publish_now'] ) ) );
+	}
+	if ( isset( $_POST['publish_every'] ) ) {
+		update_option( 'powerbachat_publish_every', max( 1, absint( $_POST['publish_every'] ) ) );
+	}
 	$only  = isset( $_POST['item'] ) ? sanitize_text_field( wp_unslash( $_POST['item'] ) ) : '';
 	$items = powerbachat_content_items();
 	$tally = array(
@@ -238,11 +293,12 @@ function powerbachat_content_handle() {
 		'skipped' => 0,
 		'error'   => 0,
 	);
+	$plan  = powerbachat_schedule_plan( $items );
 	foreach ( $items as $key => $item ) {
 		if ( $only && $only !== $key ) {
 			continue;
 		}
-		$result = powerbachat_import_item( $item, 'overwrite' === $mode );
+		$result = powerbachat_import_item( $item, 'overwrite' === $mode, isset( $plan[ $key ] ) ? $plan[ $key ] : '' );
 		++$tally[ $result ];
 	}
 	flush_rewrite_rules( false );
@@ -271,8 +327,14 @@ function powerbachat_content_screen() {
 				?>
 			</p></div>
 		<?php endif; ?>
-		<form method="post" style="margin:16px 0">
+		<form method="post" style="margin:16px 0;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
 			<?php wp_nonce_field( 'powerbachat_import' ); ?>
+			<label><?php esc_html_e( 'Publish the first', 'powerbachat' ); ?>
+				<input type="number" name="publish_now" min="0" max="500" value="<?php echo esc_attr( get_option( 'powerbachat_publish_now', 15 ) ); ?>" style="width:70px">
+				<?php esc_html_e( 'posts now, then schedule one every', 'powerbachat' ); ?>
+				<input type="number" name="publish_every" min="1" max="30" value="<?php echo esc_attr( get_option( 'powerbachat_publish_every', 2 ) ); ?>" style="width:60px">
+				<?php esc_html_e( 'days at 9:00. Pages always go live now.', 'powerbachat' ); ?>
+			</label>
 			<button class="button button-primary" name="powerbachat_import" value="missing"><?php esc_html_e( 'Create missing pages and posts', 'powerbachat' ); ?></button>
 		</form>
 		<table class="widefat striped">
@@ -292,6 +354,10 @@ function powerbachat_content_screen() {
 				$status = __( 'Not created', 'powerbachat' );
 				if ( $post ) {
 					$status = md5( $post->post_content ) === get_post_meta( $post->ID, '_pb_content_hash', true ) ? __( 'Created', 'powerbachat' ) : __( 'Edited on site', 'powerbachat' );
+					if ( 'future' === $post->post_status ) {
+						/* translators: %s: date */
+						$status .= ', ' . sprintf( __( 'scheduled for %s', 'powerbachat' ), get_the_date( 'j M Y', $post ) );
+					}
 				}
 				$url = 'page' === $item['type'] ? '/' . $item['path'] . '/' : '/' . $item['slug'] . '/';
 				?>

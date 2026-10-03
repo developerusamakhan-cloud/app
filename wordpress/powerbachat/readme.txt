@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -21,12 +21,15 @@ for Pakistan, India and Bangladesh.
 
 Every tariff slab, tax rate and solar price assumption lives in `inc/data.php`.
 They are reference values and must be checked against the latest official notification
-(NEPRA for Pakistan, TNERC / KSERC for India, BERC for Bangladesh) before going live.
+(NEPRA for Pakistan; TNERC, KSERC, UPERC, MERC, KERC and DERC for India; BERC for
+Bangladesh) before going live.
 After checking, update "Tariffs last checked" in the Customizer so the date shown on
 the site is honest.
 
-The solar panel price board is edited in Appearance → Customize → PowerBachat →
-Rates & prices. Until you save your own rows, admins see a reminder under the board.
+Price boards are edited in Appearance → Customize → PowerBachat → Rates & prices:
+solar panels (Pakistan, India, Bangladesh), IPS sets and solar batteries (Bangladesh).
+They ship with sample rows. Until you save your own rows, admins see a reminder under
+each board, and visitors never see that reminder.
 
 == Home page ==
 
@@ -63,12 +66,20 @@ it to that country only. Posts without one of those categories show to everyone.
 
 == Ready-written content (Appearance > PowerBachat content) ==
 
-The theme ships with finished pages and guide posts in /content/{country}/. Go to
-Appearance > PowerBachat content and click "Create missing pages and posts". It
-creates the country hub (/pk/), every company calculator page, the unit price and
+The theme ships with finished pages and guide posts for all three countries in
+/content/pk/, /content/in/, /content/bd/ and /content/blog/ (50 pages, 21 posts).
+Go to Appearance > PowerBachat content and click "Create missing pages and posts". It
+creates the country hubs (/pk/, /in/, /bd/), every company calculator page, the unit price and
 tariff pages, the solar and battery pages, and the guide posts, with parents,
 templates, excerpts and SEO fields already set. Nothing you edit is overwritten
 unless you press "Re-import" on that row.
+
+Publishing schedule: all pages go live at once. Guide posts are taken in their set
+order: the first ones publish immediately ("Publish now", default 15) and the rest
+are scheduled one every few days ("Then one post every", default 2 days) at 09:00
+site time, so new posts keep appearing on their own. Change both numbers on the same
+screen before you import. Published content never links to a post that is still
+scheduled, so there are no broken links while the queue runs.
 
 Every item has:
 * An SEO title (under 60 characters) and a meta description (120 to 160 characters).
@@ -98,9 +109,10 @@ The template detects the company from the URL, shows the calculator pre-set to i
 your page content underneath, then the slab chart. For a URL that is not in the list,
 add custom fields `pb_country` (pk|in|bd) and `pb_utility` (e.g. lesco).
 
-India companies without tariff data yet (UPPCL, MSEDCL, BESCOM, Delhi) appear in the
-directory but not in the calculator dropdown. Add a tariff table for them in
-inc/data.php and set their `tariff` key to switch them on.
+All listed companies have tariff data: LESCO to K-Electric for Pakistan; TNEB, KSEB,
+UPPCL, MSEDCL, BESCOM and Delhi for India; DESCO, DPDC and the BERC tariff for
+Bangladesh. To add another, add a tariff table in inc/data.php and set the
+company's `tariff` key.
 
 == Shortcodes ==
 
@@ -108,7 +120,16 @@ inc/data.php and set their `tariff` key to switch them on.
 [powerbachat_slab_chart country="bd"]
 [powerbachat_solar country="in" units="400"]
 
-Leave `country` empty to follow the visitor's country switch.
+Leave `country` empty to follow the visitor's country.
+
+Tables used inside the articles:
+[powerbachat_rate_table tariff="pk-nepra" plan="protected"]
+[powerbachat_bill_table tariff="in-tneb" units="200,400,600"]
+[powerbachat_solar_table country="in" sizes="3,5,10"]
+[powerbachat_price_table board="bd-ips"] (boards: pk-panels, in-panels, bd-panels,
+bd-ips, bd-battery)
+[powerbachat_subsidy_table sizes="1,2,3,5"] (PM Surya Ghar central subsidy)
+[powerbachat_battery] (battery and IPS backup calculator)
 
 == Customizer (Appearance → Customize → PowerBachat) ==
 
@@ -124,6 +145,13 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.3.0 =
+* India and Bangladesh content: country hubs, calculators for TNEB, KSEB, UPPCL, MSEDCL, BESCOM, Delhi, DESCO and DPDC, solar, subsidy, IPS and battery pages, plus guide posts; 9 new cross-country guides.
+* Post scheduling in the importer: 15 posts publish now, the rest go out one every 2 days.
+* New India tariffs (UPPCL, MSEDCL, BESCOM, Delhi), India and Bangladesh price boards, PM Surya Ghar subsidy table.
+* FAQ schema now finds the right section when a page has more than one "questions" heading.
+* Urdu mark shown on Pakistan only; neutral search placeholder; home guides fallback links fixed.
 
 = 1.2.0 =
 * Pakistan content: 22 pages and 5 guide posts (1,100 to 1,500 words each) with SEO titles, meta descriptions, focus keywords, schema and internal links; content importer; battery backup calculator; data table shortcodes; page and post schema; long dashes removed everywhere.

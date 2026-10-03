@@ -69,12 +69,12 @@ function powerbachat_data() {
 				'default'    => 'tneb',
 				'chart_note' => 'In Tamil Nadu, the first 100 units are free, but go past 500 in a two-month cycle and the cheaper 101 to 200 slab disappears.',
 				'utilities'  => array(
-					array( 'id' => 'tneb', 'abbr' => 'TNEB', 'name' => 'Tamil Nadu (TANGEDCO)', 'area' => 'Bi-monthly billing', 'tariff' => 'in-tneb', 'url' => '/in/tneb-bill-calculator/' ),
+					array( 'id' => 'tneb', 'abbr' => 'TNEB', 'name' => 'Tamil Nadu (TNPDCL, formerly TANGEDCO)', 'area' => 'Bi-monthly billing', 'tariff' => 'in-tneb', 'url' => '/in/tneb-bill-calculator/' ),
 					array( 'id' => 'kseb', 'abbr' => 'KSEB', 'name' => 'Kerala State Electricity Board', 'area' => 'Monthly slab rates', 'tariff' => 'in-kseb', 'url' => '/in/kseb-bill-calculator/' ),
-					array( 'id' => 'uppcl', 'abbr' => 'UPPCL', 'name' => 'Uttar Pradesh Power Corp.', 'area' => 'Lucknow, Kanpur, Noida…', 'tariff' => '', 'url' => '/in/uppcl-bill-calculator/' ),
-					array( 'id' => 'msedcl', 'abbr' => 'MSEDCL', 'name' => 'Maharashtra (Mahadiscom)', 'area' => 'Mumbai suburbs, Pune, Nagpur', 'tariff' => '', 'url' => '/in/mahadiscom-bill-calculator/' ),
-					array( 'id' => 'bescom', 'abbr' => 'BESCOM', 'name' => 'Bangalore Electricity Supply Co.', 'area' => 'Bengaluru and 8 districts', 'tariff' => '', 'url' => '/in/bescom-bill-calculator/' ),
-					array( 'id' => 'delhi', 'abbr' => 'Delhi', 'name' => 'BSES / Tata Power-DDL', 'area' => 'National Capital Territory', 'tariff' => '', 'url' => '/in/delhi-electricity-bill-calculator/' ),
+					array( 'id' => 'uppcl', 'abbr' => 'UPPCL', 'name' => 'Uttar Pradesh Power Corp.', 'area' => 'Lucknow, Kanpur, Noida and more', 'tariff' => 'in-uppcl', 'url' => '/in/uppcl-bill-calculator/' ),
+					array( 'id' => 'msedcl', 'abbr' => 'MSEDCL', 'name' => 'Maharashtra (Mahadiscom)', 'area' => 'Pune, Nagpur, Nashik and most of Maharashtra', 'tariff' => 'in-msedcl', 'url' => '/in/mahadiscom-bill-calculator/' ),
+					array( 'id' => 'bescom', 'abbr' => 'BESCOM', 'name' => 'Bangalore Electricity Supply Co.', 'area' => 'Bengaluru and 8 districts', 'tariff' => 'in-bescom', 'url' => '/in/bescom-bill-calculator/' ),
+					array( 'id' => 'delhi', 'abbr' => 'Delhi', 'name' => 'BSES / Tata Power-DDL', 'area' => 'National Capital Territory', 'tariff' => 'in-delhi', 'url' => '/in/delhi-electricity-bill-calculator/' ),
 				),
 			),
 			'bd' => array(
@@ -177,6 +177,94 @@ function powerbachat_data() {
 								'max_units' => null,
 								'mode'      => 'flat',
 								'slabs'     => array( array( 300, 6.75 ), array( 350, 7.60 ), array( 400, 7.95 ), array( 500, 8.25 ), array( null, 9.20 ) ),
+							),
+						),
+					),
+				),
+			),
+			'in-uppcl' => array(
+				'label'    => 'UPERC domestic urban tariff (LMV-1), monthly',
+				'verified' => '2026-10',
+				'fixed'    => array(
+					array( 'label' => 'Fixed charge (2 kW)', 'amount' => 220 ),
+				),
+				'taxes'    => array(
+					array( 'label' => 'Electricity duty', 'pct' => 5 ),
+				),
+				'plans'    => array(
+					'standard' => array(
+						'label'     => 'Domestic urban',
+						'schedules' => array(
+							array(
+								'max_units' => null,
+								'mode'      => 'telescopic',
+								'slabs'     => array( array( 100, 5.50 ), array( 150, 5.50 ), array( 300, 6.00 ), array( null, 6.50 ) ),
+							),
+						),
+					),
+				),
+			),
+			'in-msedcl' => array(
+				'label'    => 'MERC residential tariff (LT-I), energy plus wheeling, monthly',
+				'verified' => '2026-10',
+				'fixed'    => array(
+					array( 'label' => 'Fixed charge (single phase)', 'amount' => 128 ),
+				),
+				'taxes'    => array(
+					array( 'label' => 'Electricity duty', 'pct' => 16 ),
+				),
+				'plans'    => array(
+					'standard' => array(
+						'label'     => 'Residential',
+						'schedules' => array(
+							array(
+								'max_units' => null,
+								'mode'      => 'telescopic',
+								'slabs'     => array( array( 100, 5.88 ), array( 300, 11.46 ), array( 500, 15.72 ), array( 1000, 17.81 ), array( null, 17.81 ) ),
+							),
+						),
+					),
+				),
+			),
+			'in-bescom' => array(
+				'label'    => 'KERC domestic tariff (LT-2a), monthly, before Gruha Jyothi',
+				'verified' => '2026-10',
+				'fixed'    => array(
+					array( 'label' => 'Fixed charge (2 kW)', 'amount' => 240 ),
+				),
+				'taxes'    => array(
+					array( 'label' => 'Electricity tax', 'pct' => 9 ),
+				),
+				'plans'    => array(
+					'standard' => array(
+						'label'     => 'Domestic',
+						'schedules' => array(
+							array(
+								'max_units' => null,
+								'mode'      => 'telescopic',
+								'slabs'     => array( array( 100, 4.75 ), array( null, 7.00 ) ),
+							),
+						),
+					),
+				),
+			),
+			'in-delhi' => array(
+				'label'    => 'DERC domestic tariff, monthly, before the Delhi government subsidy',
+				'verified' => '2026-10',
+				'fixed'    => array(
+					array( 'label' => 'Fixed charge (2 kW)', 'amount' => 40 ),
+				),
+				'taxes'    => array(
+					array( 'label' => 'Electricity tax', 'pct' => 5 ),
+				),
+				'plans'    => array(
+					'standard' => array(
+						'label'     => 'Domestic',
+						'schedules' => array(
+							array(
+								'max_units' => null,
+								'mode'      => 'telescopic',
+								'slabs'     => array( array( 200, 3.00 ), array( 400, 4.50 ), array( 800, 6.50 ), array( 1200, 7.00 ), array( null, 8.00 ) ),
 							),
 						),
 					),

@@ -54,14 +54,65 @@ function powerbachat_mod( $key ) {
 }
 
 /**
- * Parse the price board textarea into rows.
+ * Every price board: where its rows live, its currency and how it is priced.
+ * "W" boards are priced per watt (solar panels); "unit" boards per item.
  *
+ * @return array[]
+ */
+function powerbachat_price_boards() {
+	return array(
+		'pk-panels'  => array(
+			'mod'      => 'pb_price_rows',
+			'currency' => powerbachat_mod( 'pb_price_currency' ),
+			'unit'     => 'W',
+			'label'    => __( 'A-grade solar panel prices in Pakistan', 'powerbachat' ),
+			'default'  => "Jinko Solar | Tiger Neo N-type 585W | 27.0 | -0.5\nLongi | Hi-MO 6 580W | 26.5 | 0\nCanadian Solar | TOPBiHiKu 575W | 25.5 | -1.0\nJA Solar | DeepBlue 4.0 590W | 26.0 | 0.5\nTrina Solar | Vertex N 580W | 25.0 | 0\nAstronergy | ASTRO N5 580W | 24.5 | -0.5",
+		),
+		'in-panels'  => array(
+			'mod'      => 'pb_price_rows_in',
+			'currency' => '₹',
+			'unit'     => 'W',
+			'label'    => __( 'Solar panel prices in India', 'powerbachat' ),
+			'default'  => "Waaree Energies | Bifacial 550W (non-DCR) | 22.0 | 0\nAdani Solar | Shine Mono PERC 545W (non-DCR) | 21.5 | -0.5\nTata Power Solar | Mono PERC 545W (DCR) | 31.0 | 0\nVikram Solar | Hypersol 550W (DCR) | 30.0 | 0.5\nPremier Energies | TOPCon 550W (DCR) | 30.5 | 0",
+		),
+		'bd-panels'  => array(
+			'mod'      => 'pb_price_rows_bd',
+			'currency' => '৳',
+			'unit'     => 'W',
+			'label'    => __( 'Solar panel prices in Bangladesh', 'powerbachat' ),
+			'default'  => "Rahimafrooz | Mono 100W | 48.0 | 0\nWalton | Mono 150W | 46.0 | 0\nJinko Solar | Tiger Neo 580W | 36.0 | -1.0\nLongi | Hi-MO 6 575W | 35.5 | 0\nJA Solar | Mono 550W | 35.0 | -0.5",
+		),
+		'bd-ips'     => array(
+			'mod'      => 'pb_ips_rows_bd',
+			'currency' => '৳',
+			'unit'     => 'unit',
+			'label'    => __( 'IPS prices in Bangladesh (unit only, battery extra)', 'powerbachat' ),
+			'default'  => "Rahimafrooz | Instapower 650VA | 9500 | 0\nRahimafrooz | Instapower 1000VA | 14500 | 0\nLuminous | Zelio+ 1100VA | 13500 | -500\nLuminous | Eco Volt 700VA | 8500 | 0\nMicrotek | Super Power 1050VA | 11000 | 0\nVision | IPS 1000VA | 10500 | 0",
+		),
+		'bd-battery' => array(
+			'mod'      => 'pb_battery_rows_bd',
+			'currency' => '৳',
+			'unit'     => 'unit',
+			'label'    => __( 'IPS and solar battery prices in Bangladesh', 'powerbachat' ),
+			'default'  => "Rahimafrooz | Tubular IPS battery 12V 130Ah | 18500 | 0\nHamko | Tubular battery 12V 165Ah | 21000 | 500\nRahimafrooz | Solar battery 12V 100Ah | 15500 | 0\nVolvo | Solar battery 12V 100Ah | 13500 | 0\nLiFePO4 (various brands) | Lithium 12.8V 100Ah | 32000 | -1000",
+		),
+	);
+}
+
+/**
+ * Parse a price board's Customizer textarea into rows.
+ *
+ * @param string $board Board key.
  * @return array[] Each row: brand, model, price, change.
  */
-function powerbachat_price_rows() {
+function powerbachat_price_rows( $board = 'pk-panels' ) {
+	$boards = powerbachat_price_boards();
+	if ( empty( $boards[ $board ] ) ) {
+		return array();
+	}
+	$raw   = get_theme_mod( $boards[ $board ]['mod'], $boards[ $board ]['default'] );
 	$rows  = array();
-	$lines = preg_split( '/\r\n|\r|\n/', (string) powerbachat_mod( 'pb_price_rows' ) );
-	foreach ( $lines as $line ) {
+	foreach ( preg_split( '/\r\n|\r|\n/', (string) $raw ) as $line ) {
 		$parts = array_map( 'trim', explode( '|', $line ) );
 		if ( count( $parts ) < 3 || '' === $parts[0] ) {
 			continue;
@@ -77,12 +128,14 @@ function powerbachat_price_rows() {
 }
 
 /**
- * True while the price board still shows the shipped sample rows.
+ * True while a price board still shows the shipped sample rows.
  *
+ * @param string $board Board key.
  * @return bool
  */
-function powerbachat_prices_are_default() {
-	return false === get_theme_mod( 'pb_price_rows', false );
+function powerbachat_prices_are_default( $board = 'pk-panels' ) {
+	$boards = powerbachat_price_boards();
+	return isset( $boards[ $board ] ) && false === get_theme_mod( $boards[ $board ]['mod'], false );
 }
 
 function powerbachat_customize_register( $wp_customize ) {
@@ -160,16 +213,20 @@ function powerbachat_customize_register( $wp_customize ) {
 	$wp_customize->add_setting( 'pb_price_currency', array( 'default' => $d['pb_price_currency'], 'sanitize_callback' => 'sanitize_text_field' ) );
 	$wp_customize->add_control( 'pb_price_currency', array( 'label' => __( 'Price board currency', 'powerbachat' ), 'section' => 'powerbachat_data', 'type' => 'text' ) );
 
-	$wp_customize->add_setting( 'pb_price_rows', array( 'default' => $d['pb_price_rows'], 'sanitize_callback' => 'sanitize_textarea_field' ) );
-	$wp_customize->add_control(
-		'pb_price_rows',
-		array(
-			'label'       => __( 'Solar panel price board', 'powerbachat' ),
-			'description' => __( 'One panel per line: Brand | Model | Price per watt | Change since last update. Example: Jinko Solar | Tiger Neo 585W | 27 | -0.5', 'powerbachat' ),
-			'section'     => 'powerbachat_data',
-			'type'        => 'textarea',
-		)
-	);
+	foreach ( powerbachat_price_boards() as $key => $board ) {
+		$wp_customize->add_setting( $board['mod'], array( 'default' => $board['default'], 'sanitize_callback' => 'sanitize_textarea_field' ) );
+		$wp_customize->add_control(
+			$board['mod'],
+			array(
+				'label'       => $board['label'],
+				'description' => 'W' === $board['unit']
+					? __( 'One panel per line: Brand | Model | Price per watt | Change since last update. Example: Jinko Solar | Tiger Neo 585W | 27 | -0.5', 'powerbachat' )
+					: __( 'One product per line: Brand | Model | Price | Change since last update. Example: Luminous | Zelio+ 1100VA | 13500 | -500', 'powerbachat' ),
+				'section'     => 'powerbachat_data',
+				'type'        => 'textarea',
+			)
+		);
+	}
 
 	// Alerts and footer.
 	$wp_customize->add_section(

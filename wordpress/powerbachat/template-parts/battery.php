@@ -19,6 +19,7 @@ $powerbachat_load = array(
 $powerbachat_batteries = array(
 	array( 'tubular200', __( 'Tubular lead-acid, 12 V 200 Ah', 'powerbachat' ), 12, 200, 0.5 ),
 	array( 'tubular150', __( 'Tubular lead-acid, 12 V 150 Ah', 'powerbachat' ), 12, 150, 0.5 ),
+	array( 'tubular130', __( 'Tubular lead-acid, 12 V 130 Ah', 'powerbachat' ), 12, 130, 0.5 ),
 	array( 'lfp12', __( 'Lithium (LiFePO4), 12.8 V 100 Ah', 'powerbachat' ), 12.8, 100, 0.9 ),
 	array( 'lfp24', __( 'Lithium (LiFePO4), 25.6 V 100 Ah', 'powerbachat' ), 25.6, 100, 0.9 ),
 	array( 'lfp48', __( 'Lithium (LiFePO4), 51.2 V 100 Ah', 'powerbachat' ), 51.2, 100, 0.9 ),

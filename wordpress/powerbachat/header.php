@@ -65,7 +65,7 @@
 			?>
 			<form class="nav__search" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 				<label class="screen-reader-text" for="nav-search"><?php esc_html_e( 'Search', 'powerbachat' ); ?></label>
-				<input id="nav-search" type="search" name="s" placeholder="<?php esc_attr_e( 'Search “LESCO unit price”', 'powerbachat' ); ?>" value="<?php echo esc_attr( get_search_query() ); ?>">
+				<input id="nav-search" type="search" name="s" placeholder="<?php esc_attr_e( 'Search “bill calculator”', 'powerbachat' ); ?>" value="<?php echo esc_attr( get_search_query() ); ?>">
 				<button type="submit" aria-label="<?php esc_attr_e( 'Search', 'powerbachat' ); ?>"><?php echo powerbachat_icon( 'search' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></button>
 			</form>
 		</nav>

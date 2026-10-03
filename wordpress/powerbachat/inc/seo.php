@@ -79,10 +79,15 @@ add_action( 'wp_head', 'powerbachat_seo_meta', 2 );
  * @return array[] Each: q, a.
  */
 function powerbachat_content_faqs( $content ) {
-	if ( ! preg_match( '/<h2[^>]*>[^<]*(questions|faq)[^<]*<\/h2>(.*?)(?=<h2|$)/is', $content, $m ) ) {
-		return array();
+	// A page can have more than one heading with "questions" in it (for example
+	// "Questions to ask your installer"), so use the first one followed by Q&A pairs.
+	preg_match_all( '/<h2[^>]*>[^<]*(questions|faq)[^<]*<\/h2>(.*?)(?=<h2|$)/is', $content, $sections, PREG_SET_ORDER );
+	$pairs = array();
+	foreach ( $sections as $section ) {
+		if ( preg_match_all( '/<h3[^>]*>(.*?)<\/h3>\s*(?:<!--[^>]*-->\s*)*(<p[^>]*>.*?<\/p>)/is', $section[2], $pairs, PREG_SET_ORDER ) ) {
+			break;
+		}
 	}
-	preg_match_all( '/<h3[^>]*>(.*?)<\/h3>\s*(?:<!--[^>]*-->\s*)*(<p[^>]*>.*?<\/p>)/is', $m[2], $pairs, PREG_SET_ORDER );
 	$faqs = array();
 	foreach ( $pairs as $pair ) {
 		$faqs[] = array(

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Brand mark — a meter dial whose needle sits just inside the "saving" arc.
+ * Brand mark: a meter dial whose needle sits just inside the "saving" arc.
  *
  * @param string $class Extra class.
  */
@@ -73,7 +73,7 @@ function powerbachat_icon( $name ) {
 }
 
 /**
- * Primary menu fallback — mirrors the site's information architecture until a menu is assigned.
+ * Primary menu fallback. Mirrors the site's information architecture until a menu is assigned.
  */
 function powerbachat_primary_fallback() {
 	$items = array(

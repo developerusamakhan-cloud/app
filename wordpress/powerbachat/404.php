@@ -1,6 +1,6 @@
 <?php
 /**
- * Not found — the page is in load-shedding.
+ * Not found: the page is in load-shedding.
  *
  * @package PowerBachat
  */

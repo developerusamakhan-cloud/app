@@ -28,7 +28,7 @@ $powerbachat_tag     = $powerbachat_args['embed'] ? 'div' : 'section';
 					<p class="kicker"><span class="kicker__num" aria-hidden="true"></span><?php esc_html_e( 'Solar sizing', 'powerbachat' ); ?></p>
 					<h2 class="section__title"><?php esc_html_e( 'How much solar does your house actually need?', 'powerbachat' ); ?></h2>
 				</div>
-				<p class="section__lede"><?php esc_html_e( 'Installers size systems to sell panels. Start from your own units instead — then compare quotes with a number you trust.', 'powerbachat' ); ?></p>
+				<p class="section__lede"><?php esc_html_e( 'Installers size systems to sell panels. Start from your own units instead, then compare quotes with a number you trust.', 'powerbachat' ); ?></p>
 			</header>
 		<?php endif; ?>
 
@@ -45,23 +45,23 @@ $powerbachat_tag     = $powerbachat_args['embed'] ? 'div' : 'section';
 				<dl class="solar__stats">
 					<div class="stat stat--big">
 						<dt><?php esc_html_e( 'System size', 'powerbachat' ); ?></dt>
-						<dd><span data-solar-kw>—</span><small>kW</small></dd>
+						<dd><span data-solar-kw>...</span><small>kW</small></dd>
 					</div>
 					<div class="stat">
 						<dt><?php esc_html_e( 'Panels', 'powerbachat' ); ?></dt>
-						<dd data-solar-panels>—</dd>
+						<dd data-solar-panels>...</dd>
 					</div>
 					<div class="stat">
 						<dt><?php esc_html_e( 'Installed cost', 'powerbachat' ); ?></dt>
-						<dd data-solar-cost>—</dd>
+						<dd data-solar-cost>...</dd>
 					</div>
 					<div class="stat">
 						<dt><?php esc_html_e( 'Saves about', 'powerbachat' ); ?></dt>
-						<dd data-solar-save>—</dd>
+						<dd data-solar-save>...</dd>
 					</div>
 					<div class="stat">
 						<dt><?php esc_html_e( 'Pays for itself in', 'powerbachat' ); ?></dt>
-						<dd data-solar-payback>—</dd>
+						<dd data-solar-payback>...</dd>
 					</div>
 				</dl>
 				<p class="solar__subsidy" data-solar-subsidy hidden></p>

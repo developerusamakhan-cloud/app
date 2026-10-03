@@ -1,6 +1,6 @@
 <?php
 /**
- * "The slab cliff" — interactive bar chart of the total bill at each consumption level.
+ * "The slab cliff": interactive bar chart of the total bill at each consumption level.
  *
  * Args: country (lock), embed.
  *
@@ -28,7 +28,7 @@ $powerbachat_tag     = $powerbachat_args['embed'] ? 'div' : 'section';
 
 			<div class="cliff reveal">
 				<p class="cliff__label" data-chart-cliff-label><?php esc_html_e( 'One extra unit costs', 'powerbachat' ); ?></p>
-				<p class="cliff__value" data-chart-cliff>—</p>
+				<p class="cliff__value" data-chart-cliff>...</p>
 				<p class="cliff__detail" data-chart-cliff-detail></p>
 			</div>
 

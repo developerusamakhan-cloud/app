@@ -75,7 +75,7 @@ $powerbachat_quick = array(
 					<?php
 					printf(
 						/* translators: %s: month and year */
-						esc_html__( 'Slab rates read off the regulator’s own notification — last checked %s.', 'powerbachat' ),
+						esc_html__( 'Slab rates read off the regulator’s own notification, last checked %s.', 'powerbachat' ),
 						esc_html( powerbachat_mod( 'pb_tariff_checked' ) )
 					);
 					?>

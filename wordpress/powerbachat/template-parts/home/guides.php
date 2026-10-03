@@ -35,21 +35,21 @@ $powerbachat_cat_ids = function ( $slugs ) {
 
 $powerbachat_planned = array(
 	'pk' => array(
-		array( 'Pakistan', 'Net metering vs net billing: what actually changes for your rooftop', 'The buy-back rate, the meter swap and the maths on a 10 kW system — before and after the new policy.', '/pk/net-metering-vs-net-billing/', 9 ),
-		array( 'Pakistan', 'What is the FPA on my bill, and why does it change every month?', 'Fuel price adjustment explained without the jargon.', '/pk/fuel-price-adjustment/', 5 ),
-		array( 'Pakistan', 'Protected or not: how the 200-unit rule really works', 'Six months, one bad month, and what it costs you.', '/pk/protected-consumer/', 5 ),
-		array( 'Solar', 'Lithium or tubular: which battery is worth it for load-shedding?', 'Cost per cycle, real backup hours and when each one wins.', '/pk/lithium-vs-tubular-battery/', 6 ),
-		array( 'Basics', 'What exactly is “one unit” of electricity?', 'Watts, kilowatt-hours and how long your AC takes to burn through one.', '/pk/what-is-one-unit-of-electricity/', 4 ),
+		array( 'Pakistan', 'Net metering vs net billing: what actually changes for your rooftop', 'The buy-back rate, the meter swap and the maths on a 10 kW system, before and after the new policy.', '/pk/net-metering-vs-net-billing/', 9 ),
+		array( 'Pakistan', 'What is the FPA on my bill, and why does it change every month?', 'Fuel price adjustment explained without the jargon.', '/fuel-price-adjustment/', 5 ),
+		array( 'Pakistan', 'Protected or not: how the 200-unit rule really works', 'Six months, one bad month, and what it costs you.', '/protected-consumer/', 5 ),
+		array( 'Solar', 'Lithium or tubular: which battery is worth it for load-shedding?', 'Cost per cycle, real backup hours and when each one wins.', '/lithium-vs-tubular-battery/', 6 ),
+		array( 'Basics', 'What exactly is “one unit” of electricity?', 'Watts, kilowatt-hours and how long your AC takes to burn through one.', '/what-is-one-unit-of-electricity/', 4 ),
 	),
 	'in' => array(
-		array( 'India', 'How your electricity bill is calculated, line by line', 'Energy charge, fixed charge, duty and FPPCA — with a real bill taken apart.', '/in/how-electricity-bill-is-calculated/', 7 ),
+		array( 'India', 'How your electricity bill is calculated, line by line', 'Energy charge, fixed charge, duty and FPPCA, with a real bill taken apart.', '/in/how-electricity-bill-is-calculated/', 7 ),
 		array( 'Solar', 'PM Surya Ghar, explained: who qualifies and what you actually get', 'The subsidy per kW, the paperwork and the real out-of-pocket cost.', '/in/pm-surya-ghar-yojana/', 8 ),
 		array( 'India', 'TNEB bi-monthly billing and the 500-unit trap', 'Why one extra unit in a two-month cycle can cost you hundreds.', '/in/tneb-bi-monthly-billing/', 5 ),
 		array( 'Solar', 'On-grid, off-grid or hybrid: which rooftop system fits your home?', 'Power cuts, net metering and battery cost, compared honestly.', '/in/on-grid-vs-off-grid-vs-hybrid/', 6 ),
 		array( 'Basics', 'What exactly is “one unit” of electricity?', 'Watts, kilowatt-hours and how long your AC takes to burn through one.', '/in/what-is-one-unit-of-electricity/', 4 ),
 	),
 	'bd' => array(
-		array( 'Bangladesh', 'How your DESCO or DPDC bill is calculated', 'Slabs, demand charge and VAT — with a real bill taken apart.', '/bd/how-electricity-bill-is-calculated/', 6 ),
+		array( 'Bangladesh', 'How your DESCO or DPDC bill is calculated', 'Slabs, demand charge and VAT, with a real bill taken apart.', '/bd/how-electricity-bill-is-calculated/', 6 ),
 		array( 'Bangladesh', 'Prepaid meter guide: recharge, rebates and hidden charges', 'What actually comes off your balance each month.', '/bd/prepaid-meter-guide/', 5 ),
 		array( 'Backup', 'IPS or solar: what keeps your fans running through load-shedding?', 'Backup hours, battery life and cost over five years.', '/bd/ips-vs-solar/', 6 ),
 		array( 'Solar', 'Lithium or tubular: which battery is worth it?', 'Cost per cycle, real backup hours and when each one wins.', '/bd/lithium-vs-tubular-battery/', 6 ),

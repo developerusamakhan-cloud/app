@@ -76,10 +76,10 @@ add_filter( 'wp_resource_hints', 'powerbachat_resource_hints', 10, 2 );
  *
  * URL country (/pk/, /in/, /bd/) always wins. Otherwise ?pb_country= (testing),
  * then the pb_cc cookie, then what the server detected. With no cookie yet,
- * main.js confirms the country over REST — this keeps cached pages correct.
+ * main.js confirms the country over REST, which keeps cached pages correct.
  */
 function powerbachat_country_bootstrap() {
-	$forced  = powerbachat_path_country();
+	$forced  = powerbachat_forced_country();
 	$current = powerbachat_current_country();
 	?>
 	<script>(function(){var d=document.documentElement,f=<?php echo wp_json_encode( $forced ); ?>,c='',q=/[?&]pb_country=(pk|in|bd)\b/.exec(location.search),m=/(?:^|;\s*)pb_cc=(pk|in|bd)/.exec(document.cookie);d.classList.add('js');if(q){document.cookie='pb_cc='+q[1]+';path=/;max-age=2592000;SameSite=Lax';m=q;}c=f||(m&&m[1])||d.getAttribute('data-country')||<?php echo wp_json_encode( $current ); ?>;d.setAttribute('data-country',c);window.pbGeoPending=!f&&!m;})();</script>

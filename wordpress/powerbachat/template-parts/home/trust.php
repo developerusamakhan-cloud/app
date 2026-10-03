@@ -8,7 +8,7 @@
 $powerbachat_steps = array(
 	array(
 		'title' => __( 'We read the notification itself', 'powerbachat' ),
-		'text'  => __( 'Every slab comes from the regulator’s own published order — not from another website that copied it last year.', 'powerbachat' ),
+		'text'  => __( 'Every slab comes from the regulator’s own published order, not from another website that copied it last year.', 'powerbachat' ),
 	),
 	array(
 		'title' => __( 'We test against real bills', 'powerbachat' ),
@@ -16,7 +16,7 @@ $powerbachat_steps = array(
 	),
 	array(
 		'title' => __( 'We date-stamp everything', 'powerbachat' ),
-		'text'  => __( 'Each tool shows when its rates were last checked. If a tariff changes, the page changes the same week — and the old rates stay on record.', 'powerbachat' ),
+		'text'  => __( 'Each tool shows when its rates were last checked. If a tariff changes, the page changes the same week, and the old rates stay on record.', 'powerbachat' ),
 	),
 );
 ?>

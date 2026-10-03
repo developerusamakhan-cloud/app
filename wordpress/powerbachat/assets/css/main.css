@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PowerBachat — main stylesheet
+   PowerBachat main stylesheet
    Palette: night-grid ink, warm bill-paper, sodium-lamp amber.
    Type: Fraunces (display) · Hanken Grotesk (text) · JetBrains Mono (figures)
    ========================================================================== */
@@ -3859,4 +3859,321 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 .article__aside .widget,
 .article__aside .wp-block-group {
 	margin-bottom: 32px;
+}
+
+
+/* ---------- Article data tables ---------- */
+
+.data-table {
+	margin: 2em 0;
+}
+
+.data-table__scroll {
+	overflow-x: auto;
+	border: 1px solid var(--line);
+	border-radius: var(--r);
+	background: var(--card);
+}
+
+.data-table table {
+	width: 100%;
+	min-width: 440px;
+	border-collapse: collapse;
+	font-size: 0.92rem;
+}
+
+.data-table caption {
+	padding: 14px 16px 10px;
+	font-family: var(--f-display);
+	font-size: 1.1rem;
+	font-weight: 500;
+	text-align: left;
+	caption-side: top;
+}
+
+.prose .data-table th,
+.prose .data-table td {
+	padding: 10px 16px;
+	border-bottom: 1px solid var(--line-soft);
+	text-align: left;
+	vertical-align: top;
+}
+
+.prose .data-table td {
+	font-family: var(--f-mono);
+	font-size: 0.84rem;
+}
+
+.prose .data-table td small {
+	font-family: var(--f-text);
+	color: var(--muted);
+}
+
+.prose .data-table tbody tr:last-child td {
+	border-bottom: 0;
+}
+
+.prose .data-table tbody tr:hover td {
+	background: rgba(245, 184, 46, 0.08);
+}
+
+.data-table__group th {
+	background: var(--paper-2);
+	font-family: var(--f-text) !important;
+	font-size: 0.8rem !important;
+	text-transform: none !important;
+	letter-spacing: 0 !important;
+	color: var(--text) !important;
+}
+
+.data-table figcaption {
+	margin-top: 8px;
+	font-size: 0.8rem;
+	color: var(--muted);
+}
+
+/* Callouts written in content as <p class="note"> or <div class="note"> */
+.prose .note {
+	padding: 16px 18px;
+	border-left: 3px solid var(--volt);
+	border-radius: 0 var(--r-sm) var(--r-sm) 0;
+	background: rgba(245, 184, 46, 0.1);
+	font-size: 0.98rem;
+}
+
+.prose .related {
+	padding: 20px 22px;
+	border: 1px solid var(--line);
+	border-radius: var(--r);
+	background: var(--card);
+}
+
+.prose .related h2,
+.prose .related h3 {
+	margin-top: 0;
+	font-size: 1.15rem;
+}
+
+.prose .related ul {
+	margin: 0;
+	padding-left: 1.1em;
+}
+
+.prose ul li + li,
+.prose ol li + li {
+	margin-top: 0.35em;
+}
+
+/* ---------- Battery calculator ---------- */
+
+.battery {
+	display: grid;
+	grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+	gap: 0;
+	margin: 2em 0;
+	border: 1px solid var(--line);
+	border-radius: var(--r-lg);
+	background: var(--card);
+	overflow: hidden;
+	font-size: 0.95rem;
+	line-height: 1.4;
+}
+
+.battery__inputs {
+	padding: 22px;
+}
+
+.battery__title {
+	margin: 0 0 12px !important;
+	font-family: var(--f-display);
+	font-size: 1.2rem;
+}
+
+.battery__loads {
+	margin: 0 !important;
+	padding: 0 !important;
+	list-style: none;
+}
+
+.battery__load {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin: 0 !important;
+	padding: 8px 0;
+	border-bottom: 1px solid var(--line-soft);
+}
+
+.battery__load label small {
+	margin-left: 6px;
+	font-family: var(--f-mono);
+	font-size: 0.72rem;
+	color: var(--muted);
+}
+
+.stepper {
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	background: var(--paper);
+	flex: none;
+}
+
+.stepper button {
+	width: 32px;
+	height: 32px;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	font-size: 1.05rem;
+	line-height: 1;
+}
+
+.stepper button:hover {
+	background: var(--volt-soft);
+}
+
+.stepper input,
+.battery__extra {
+	width: 3.2ch;
+	border: 0;
+	background: transparent;
+	font-family: var(--f-mono);
+	text-align: center;
+	-moz-appearance: textfield;
+	appearance: textfield;
+}
+
+.battery__extra {
+	width: 90px;
+	padding: 6px 10px;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	background: var(--paper);
+}
+
+.stepper input::-webkit-inner-spin-button,
+.battery__extra::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
+.stepper--wide input {
+	width: 5ch;
+}
+
+.battery__pack {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+	gap: 10px 16px;
+	margin-top: 18px;
+}
+
+.battery__pack .field__label {
+	margin: 0;
+	color: var(--muted);
+}
+
+.battery__pack .select {
+	grid-column: 1 / -1;
+}
+
+.battery__pack .field__label + .stepper {
+	justify-self: end;
+}
+
+.select--light select {
+	height: 44px;
+	background: var(--paper);
+	color: var(--text);
+	border-color: var(--line);
+}
+
+.select--light::after {
+	border-color: var(--volt-deep);
+}
+
+.battery__result {
+	padding: 24px 22px;
+	background: var(--ink);
+	color: var(--paper);
+}
+
+.battery__label {
+	margin: 0 !important;
+	font-family: var(--f-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--muted-light);
+}
+
+.battery__hours {
+	margin: 4px 0 12px !important;
+	font-family: var(--f-display);
+	font-size: clamp(2.4rem, 5vw, 3.2rem);
+	font-weight: 500;
+	letter-spacing: -0.03em;
+	line-height: 1;
+	color: var(--volt-hi);
+}
+
+.battery__gauge {
+	height: 8px;
+	border-radius: 999px;
+	background: rgba(244, 239, 228, 0.12);
+	overflow: hidden;
+}
+
+.battery__gauge span {
+	display: block;
+	height: 100%;
+	width: 0;
+	border-radius: inherit;
+	background: linear-gradient(90deg, var(--rust-light), var(--volt) 40%, var(--leaf-light));
+	transition: width 0.5s var(--ease);
+}
+
+.battery__stats {
+	display: grid;
+	gap: 8px;
+	margin: 18px 0 0 !important;
+}
+
+.battery__stats div {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid var(--line-dark);
+}
+
+.battery__stats dt {
+	color: var(--muted-light);
+	font-size: 0.85rem;
+}
+
+.battery__stats dd {
+	margin: 0;
+	font-family: var(--f-mono);
+	font-size: 0.85rem;
+}
+
+.battery__verdict {
+	margin: 16px 0 8px !important;
+	font-size: 0.92rem;
+}
+
+.battery__fine {
+	margin: 0 !important;
+	font-size: 0.74rem;
+	color: var(--muted-light);
+}
+
+@media (max-width: 720px) {
+	.battery {
+		grid-template-columns: minmax(0, 1fr);
+	}
 }

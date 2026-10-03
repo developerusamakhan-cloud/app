@@ -1,6 +1,6 @@
 <?php
 /**
- * Utility directory — one card per electricity company, filtered by the country switch.
+ * Utility directory: one card per electricity company, filtered by the country switch.
  *
  * @package PowerBachat
  */
@@ -12,7 +12,7 @@ $powerbachat_data = powerbachat_data();
 		<header class="section__head">
 			<p class="kicker"><span class="kicker__num" aria-hidden="true"></span><?php esc_html_e( 'Bill calculators', 'powerbachat' ); ?></p>
 			<h2 class="section__title"><?php esc_html_e( 'Find your company. Get the real number.', 'powerbachat' ); ?></h2>
-			<p class="section__lede"><?php esc_html_e( 'Each calculator uses that company’s own slab table and taxes — not a national average dressed up as one.', 'powerbachat' ); ?></p>
+			<p class="section__lede"><?php esc_html_e( 'Each calculator uses that company’s own slab table and taxes, not a national average dressed up as one.', 'powerbachat' ); ?></p>
 		</header>
 
 		<?php foreach ( $powerbachat_data['countries'] as $powerbachat_code => $powerbachat_country ) : ?>

@@ -2,7 +2,7 @@
 /**
  * Reference data: countries, utilities, tariff tables and solar assumptions.
  *
- * IMPORTANT — before launch, check every rate below against the latest official
+ * IMPORTANT: before launch, check every rate below against the latest official
  * notification (NEPRA for Pakistan, the state regulator / DISCOM tariff order for
  * India, BERC for Bangladesh) and update `verified`. Everything here can also be
  * overridden from a plugin or child theme with the `powerbachat_data` filter.
@@ -44,7 +44,7 @@ function powerbachat_data() {
 				'period'     => 'month',
 				'hub'        => '/pk/',
 				'default'    => 'lesco',
-				'chart_note' => 'Cross 200 units and you lose protected status — the rate on every unit jumps, not just the extra ones.',
+				'chart_note' => 'Cross 200 units and you lose protected status, and the rate on every unit jumps, not just the extra ones.',
 				'utilities'  => array(
 					array( 'id' => 'lesco', 'abbr' => 'LESCO', 'name' => 'Lahore Electric Supply Co.', 'area' => 'Lahore, Kasur, Okara, Sheikhupura', 'tariff' => 'pk-nepra', 'url' => '/pk/lesco-bill-calculator/', 'rates_url' => '/pk/lesco-unit-price/' ),
 					array( 'id' => 'iesco', 'abbr' => 'IESCO', 'name' => 'Islamabad Electric Supply Co.', 'area' => 'Islamabad, Rawalpindi, Attock, Jhelum', 'tariff' => 'pk-nepra', 'url' => '/pk/iesco-bill-calculator/' ),
@@ -67,7 +67,7 @@ function powerbachat_data() {
 				'period'     => 'billing cycle',
 				'hub'        => '/in/',
 				'default'    => 'tneb',
-				'chart_note' => 'In Tamil Nadu, the first 100 units are free — but go past 500 in a two-month cycle and the cheaper 101–200 slab disappears.',
+				'chart_note' => 'In Tamil Nadu, the first 100 units are free, but go past 500 in a two-month cycle and the cheaper 101 to 200 slab disappears.',
 				'utilities'  => array(
 					array( 'id' => 'tneb', 'abbr' => 'TNEB', 'name' => 'Tamil Nadu (TANGEDCO)', 'area' => 'Bi-monthly billing', 'tariff' => 'in-tneb', 'url' => '/in/tneb-bill-calculator/' ),
 					array( 'id' => 'kseb', 'abbr' => 'KSEB', 'name' => 'Kerala State Electricity Board', 'area' => 'Monthly slab rates', 'tariff' => 'in-kseb', 'url' => '/in/kseb-bill-calculator/' ),
@@ -85,7 +85,7 @@ function powerbachat_data() {
 				'period'     => 'month',
 				'hub'        => '/bd/',
 				'default'    => 'desco',
-				'chart_note' => 'Watch the step at 400 units — the rate per unit jumps by more than half in a single slab.',
+				'chart_note' => 'Watch the step at 400 units: the rate per unit jumps by more than half in a single slab.',
 				'utilities'  => array(
 					array( 'id' => 'desco', 'abbr' => 'DESCO', 'name' => 'Dhaka Electric Supply Co.', 'area' => 'Dhaka North, Gazipur (part)', 'tariff' => 'bd-berc', 'url' => '/bd/desco-bill-calculator/' ),
 					array( 'id' => 'dpdc', 'abbr' => 'DPDC', 'name' => 'Dhaka Power Distribution Co.', 'area' => 'Dhaka South, Narayanganj', 'tariff' => 'bd-berc', 'url' => '/bd/dpdc-bill-calculator/' ),
@@ -97,7 +97,7 @@ function powerbachat_data() {
 		),
 
 		/*
-		 * Tariff tables. VERIFY BEFORE LAUNCH — these are residential reference rates and
+		 * Tariff tables. VERIFY BEFORE LAUNCH. These are residential reference rates and
 		 * exclude fuel-cost adjustments (FPA/FCA), quarterly adjustments and arrears.
 		 */
 		'tariffs'   => array(

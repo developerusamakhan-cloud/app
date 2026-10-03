@@ -2,12 +2,12 @@
 /**
  * Visitor country detection.
  *
- * The site shows one country at a time — Pakistan, India or Bangladesh — chosen
+ * The site shows one country at a time (Pakistan, India or Bangladesh), chosen
  * automatically. Order of precedence:
  *
  *   1. The URL: anything under /pk/, /in/ or /bd/ is always that country, so
  *      search engines and shared links see the right content whatever their IP.
- *   2. ?pb_country=pk|in|bd — hidden override for testing (also remembered in a cookie).
+ *   2. ?pb_country=pk|in|bd is a hidden override for testing (also remembered in a cookie).
  *   3. The pb_cc cookie set after the first detection.
  *   4. A country header from the host or CDN (Cloudflare, CloudFront, server GeoIP).
  *   5. An IP lookup (api.country.is by default), cached per IP for a week.
@@ -59,6 +59,33 @@ function powerbachat_path_country() {
 	}
 	$first = strtolower( strtok( trim( $path, '/' ), '/' ) );
 	return in_array( $first, POWERBACHAT_COUNTRIES, true ) ? $first : '';
+}
+
+/**
+ * Country the current page belongs to: its URL (/pk/…), or for a single post its
+ * country category (pakistan, india, bangladesh or pk, in, bd). '' when neither.
+ *
+ * @return string
+ */
+function powerbachat_forced_country() {
+	$country = powerbachat_path_country();
+	if ( $country || ! did_action( 'wp' ) || ! is_singular( 'post' ) ) {
+		return $country;
+	}
+	$map = array(
+		'pakistan'   => 'pk',
+		'pk'         => 'pk',
+		'india'      => 'in',
+		'in'         => 'in',
+		'bangladesh' => 'bd',
+		'bd'         => 'bd',
+	);
+	foreach ( get_the_category( get_queried_object_id() ) as $term ) {
+		if ( isset( $map[ $term->slug ] ) ) {
+			return $map[ $term->slug ];
+		}
+	}
+	return '';
 }
 
 /**
@@ -180,7 +207,7 @@ function powerbachat_current_country() {
 	if ( null !== $country ) {
 		return $country;
 	}
-	$country = powerbachat_path_country();
+	$country = powerbachat_forced_country();
 	if ( ! $country ) {
 		$country = powerbachat_query_country();
 	}
@@ -209,7 +236,7 @@ function powerbachat_html_country_attr( $output ) {
 add_filter( 'language_attributes', 'powerbachat_html_country_attr' );
 
 /**
- * REST: GET /wp-json/powerbachat/v1/country — used by the browser when the page came from a cache.
+ * REST: GET /wp-json/powerbachat/v1/country is used by the browser when the page came from a cache.
  */
 function powerbachat_register_geo_route() {
 	register_rest_route(

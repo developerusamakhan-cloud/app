@@ -73,10 +73,10 @@ $powerbachat_uid     = wp_unique_id( 'calc-' );
 		</div>
 		<div class="slip__total">
 			<span><?php esc_html_e( 'Payable (approx.)', 'powerbachat' ); ?></span>
-			<strong data-calc-total>—</strong>
+			<strong data-calc-total>...</strong>
 		</div>
 		<div class="slip__meta">
-			<span><?php esc_html_e( 'Average per unit', 'powerbachat' ); ?> <b data-calc-avg>—</b></span>
+			<span><?php esc_html_e( 'Average per unit', 'powerbachat' ); ?> <b data-calc-avg>...</b></span>
 			<span data-calc-warn class="slip__warn" hidden></span>
 		</div>
 		<details class="slip__details"<?php echo $powerbachat_args['embed'] ? ' open' : ''; ?>>

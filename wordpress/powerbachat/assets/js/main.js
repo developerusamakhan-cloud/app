@@ -129,7 +129,7 @@
 			if (plans.protected.max_units === null || units <= plans.protected.max_units) {
 				plan = plans.protected;
 			} else {
-				warn = 'Above ' + plans.protected.max_units + ' units — protected rates no longer apply';
+				warn = 'Above ' + plans.protected.max_units + ' units, so protected rates no longer apply';
 			}
 		}
 
@@ -171,7 +171,7 @@
 				var amt = take * r;
 				energy += amt;
 				lines.push({
-					label: upto === null ? 'Above ' + prev : prev + 1 + '–' + upto,
+					label: upto === null ? 'Above ' + prev : prev + 1 + ' to ' + upto,
 					units: take,
 					rate: r,
 					amount: amt
@@ -312,7 +312,7 @@
 				}
 				var o = document.createElement('option');
 				o.value = u.id;
-				o.textContent = u.abbr === u.name ? u.name : u.abbr + ' — ' + u.name;
+				o.textContent = u.abbr === u.name ? u.name : u.abbr + ': ' + u.name;
 				if (u.id === pick) {
 					o.selected = true;
 				}
@@ -724,7 +724,7 @@
 				subsidy = Math.min(78000, Math.min(kw, 2) * 30000 + (kw > 2 ? Math.min(kw - 2, 1) * 18000 : 0));
 				subEl.hidden = false;
 				subEl.textContent = 'PM Surya Ghar subsidy of about ' + money(subsidy, code) + ' brings your share down to ' +
-					money(lo - subsidy, code) + '–' + money(hi - subsidy, code) + '.';
+					money(lo - subsidy, code) + ' to ' + money(hi - subsidy, code) + '.';
 			} else {
 				subEl.hidden = true;
 			}
@@ -738,9 +738,9 @@
 				return (Math.round(v * 2) / 2).toFixed(1);
 			}, 400);
 			$('[data-solar-panels]', el).textContent = count + ' × ' + cfg.panel_watt + ' W';
-			$('[data-solar-cost]', el).textContent = shortMoney(lo, code) + ' – ' + shortMoney(hi, code).replace(/^\S+\s/, '');
+			$('[data-solar-cost]', el).textContent = shortMoney(lo, code) + ' to ' + shortMoney(hi, code).replace(/^\S+\s/, '');
 			$('[data-solar-save]', el).textContent = money(saving, code) + ' / mo';
-			$('[data-solar-payback]', el).textContent = years ? years.toFixed(1) + ' years' : '—';
+			$('[data-solar-payback]', el).textContent = years ? years.toFixed(1) + ' years' : '...';
 
 			panels.forEach(function (pn, i) {
 				pn.classList.toggle('is-on', i < count);
@@ -750,7 +750,7 @@
 				count + ' panels · about ' + Math.round(count * 2.6) + ' m² of roof';
 			$('[data-solar-fine]', el).textContent =
 				'Assumes ' + cfg.sun_hours + ' peak sun hours, 22% system losses and on-grid installation at ' +
-				money(cfg.per_kw[0], code) + '–' + money(cfg.per_kw[1], code) + ' per kW. Savings assume about 85% of your bill is offset. ' +
+				money(cfg.per_kw[0], code) + ' to ' + money(cfg.per_kw[1], code) + ' per kW. Savings assume about 85% of your bill is offset. ' +
 				'Batteries, structure upgrades and net-metering fees are extra.';
 		}
 
@@ -791,6 +791,72 @@
 				render();
 			});
 		}
+	}
+
+	/* ------------------------------------------------------------------
+	 * Battery backup calculator
+	 * ---------------------------------------------------------------- */
+
+	function initBattery(el) {
+		var loads = $$('input[data-watts]', el);
+		var extra = $('[data-extra]', el);
+		var type = $('[data-battery-type]', el);
+		var count = $('[data-battery-count]', el);
+		var hoursEl = $('[data-battery-hours]', el);
+		var gauge = $('[data-battery-gauge]', el);
+
+		function fmtHours(h) {
+			if (!isFinite(h)) {
+				return 'No load';
+			}
+			var mins = Math.round(h * 60);
+			var hh = Math.floor(mins / 60);
+			var mm = mins % 60;
+			return hh + 'h ' + (mm < 10 ? '0' : '') + mm + 'm';
+		}
+
+		function render() {
+			var watts = loads.reduce(function (sum, input) {
+				return sum + clamp(parseInt(input.value, 10) || 0, 0, 20) * parseFloat(input.getAttribute('data-watts'));
+			}, 0) + clamp(parseInt(extra.value, 10) || 0, 0, 5000);
+			var opt = type.options[type.selectedIndex];
+			var n = clamp(parseInt(count.value, 10) || 1, 1, 16);
+			var usable = parseFloat(opt.getAttribute('data-volts')) * parseFloat(opt.getAttribute('data-ah')) * n * parseFloat(opt.getAttribute('data-dod'));
+			var hours = watts > 0 ? (usable * 0.85) / watts : Infinity;
+			var inverter = Math.max(1, Math.ceil((watts * 1.3) / 500) * 0.5);
+
+			hoursEl.textContent = fmtHours(hours);
+			gauge.style.width = (isFinite(hours) ? clamp((hours / 8) * 100, 3, 100) : 100) + '%';
+			$('[data-battery-load]', el).textContent = Math.round(watts) + ' W';
+			$('[data-battery-usable]', el).textContent = (usable / 1000).toFixed(2) + ' kWh';
+			$('[data-battery-inverter]', el).textContent = inverter.toFixed(1) + ' kVA or more';
+			var verdict;
+			if (!isFinite(hours)) {
+				verdict = 'Add the things you want to keep running.';
+			} else if (hours >= 4) {
+				verdict = 'Comfortable for long load-shedding spells, even with a few back-to-back cuts.';
+			} else if (hours >= 2) {
+				verdict = 'Covers a typical 2-hour cut. Back-to-back cuts may drain it before it recharges.';
+			} else {
+				verdict = 'Short of a 2-hour cut. Drop a load, add a battery, or move to lithium.';
+			}
+			$('[data-battery-verdict]', el).textContent = verdict;
+		}
+
+		el.addEventListener('click', function (e) {
+			var btn = e.target.closest('[data-step]');
+			if (!btn) {
+				return;
+			}
+			var input = $('input', btn.parentNode);
+			var min = parseInt(input.min, 10) || 0;
+			var max = parseInt(input.max, 10) || 99;
+			input.value = clamp((parseInt(input.value, 10) || 0) + parseInt(btn.getAttribute('data-step'), 10), min, max);
+			render();
+		});
+		el.addEventListener('input', render);
+		el.addEventListener('change', render);
+		render();
 	}
 
 	/* ------------------------------------------------------------------
@@ -922,6 +988,7 @@
 	$$('[data-calc]').forEach(initCalc);
 	$$('[data-chart]').forEach(initChart);
 	$$('[data-solar]').forEach(initSolar);
+	$$('[data-battery]').forEach(initBattery);
 	initReveal();
 	initHeader();
 	initDemoForms();

@@ -22,7 +22,7 @@ $powerbachat_whatsapp = powerbachat_mod( 'pb_whatsapp_url' );
 					<input id="alerts-email" type="email" name="EMAIL" autocomplete="email" required placeholder="<?php esc_attr_e( 'you@example.com', 'powerbachat' ); ?>">
 					<button class="btn btn--ink" type="submit"><?php esc_html_e( 'Notify me', 'powerbachat' ); ?></button>
 				</form>
-				<p class="alerts__thanks" data-form-thanks hidden><?php esc_html_e( 'Noted — you will hear from us when the next tariff lands.', 'powerbachat' ); ?></p>
+				<p class="alerts__thanks" data-form-thanks hidden><?php esc_html_e( 'Noted. You will hear from us when the next tariff lands.', 'powerbachat' ); ?></p>
 				<?php if ( $powerbachat_whatsapp ) : ?>
 					<a class="alerts__wa" href="<?php echo esc_url( $powerbachat_whatsapp ); ?>" target="_blank" rel="noopener">
 						<?php echo powerbachat_icon( 'chat' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>

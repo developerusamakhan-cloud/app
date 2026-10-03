@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -36,7 +36,7 @@ Reorder or remove them with the `powerbachat_home_sections` filter.
 
 == Country by location ==
 
-Each visitor sees only their own country — Pakistan, India or Bangladesh — picked
+Each visitor sees only their own country (Pakistan, India or Bangladesh), picked
 automatically from their location. There is no switch on the site.
 
 How the country is chosen (first match wins):
@@ -44,7 +44,7 @@ How the country is chosen (first match wins):
    shared links see the right content whatever their location.
 2. A remembered choice (the pb_cc cookie, kept for 30 days).
 3. The country header your host or CDN sends (Cloudflare CF-IPCountry, CloudFront,
-   server GeoIP). On Cloudflare, turn on "IP Geolocation" (Network settings) —
+   server GeoIP). On Cloudflare, turn on "IP Geolocation" (Network settings);
    this is the fastest and most accurate option.
 4. An online IP lookup (api.country.is), cached for a week per visitor IP. It can be
    switched off in Customize → PowerBachat → Home page.
@@ -60,6 +60,30 @@ remembered for 30 days; use ?pb_country=pk to go back.
 
 Guides: put a post in a category with the slug pakistan, india or bangladesh to show
 it to that country only. Posts without one of those categories show to everyone.
+
+== Ready-written content (Appearance > PowerBachat content) ==
+
+The theme ships with finished pages and guide posts in /content/{country}/. Go to
+Appearance > PowerBachat content and click "Create missing pages and posts". It
+creates the country hub (/pk/), every company calculator page, the unit price and
+tariff pages, the solar and battery pages, and the guide posts, with parents,
+templates, excerpts and SEO fields already set. Nothing you edit is overwritten
+unless you press "Re-import" on that row.
+
+Every item has:
+* An SEO title (under 60 characters) and a meta description (120 to 160 characters).
+* A focus keyword used naturally a few times, never stuffed.
+* Structured data: breadcrumbs, WebPage or BlogPosting, FAQPage for the FAQ
+  section, and WebApplication on calculator pages.
+* Internal links to related pages, all pointing at pages in the same set.
+
+With Yoast SEO, Rank Math, All in One SEO or SEOPress active, the importer also fills
+that plugin's title, description and focus keyword fields, and the theme stops
+printing its own title, description and page schema so nothing is doubled.
+
+Numbers inside the articles (rate tables, bill examples, solar costs, panel prices)
+come from shortcodes that read inc/data.php and the Customizer, so they always match
+the calculators. Update a rate once and every page follows.
 
 == Building the calculator pages ==
 
@@ -100,6 +124,9 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.2.0 =
+* Pakistan content: 22 pages and 5 guide posts (1,100 to 1,500 words each) with SEO titles, meta descriptions, focus keywords, schema and internal links; content importer; battery backup calculator; data table shortcodes; page and post schema; long dashes removed everywhere.
 
 = 1.1.1 =
 * Shorter hero calculator: total shown first, slab breakdown folded behind a toggle (open by default on calculator pages), heading row removed, one-line protected toggle.

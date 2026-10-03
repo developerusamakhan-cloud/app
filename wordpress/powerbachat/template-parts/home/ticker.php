@@ -26,7 +26,7 @@ foreach ( $powerbachat_feed as $powerbachat_code => $powerbachat_ref ) {
 		$powerbachat_items[] = array(
 			'only'  => $powerbachat_code,
 			'tag'   => strtoupper( $powerbachat_code ),
-			'label' => null === $powerbachat_slab[0] ? sprintf( '%d+ units', $powerbachat_prev + 1 ) : sprintf( '%d–%d units', $powerbachat_prev + 1, $powerbachat_slab[0] ),
+			'label' => null === $powerbachat_slab[0] ? sprintf( '%d+ units', $powerbachat_prev + 1 ) : sprintf( '%d to %d units', $powerbachat_prev + 1, $powerbachat_slab[0] ),
 			'value' => $powerbachat_currency . ' ' . number_format( $powerbachat_slab[1], 2 ),
 			'move'  => '',
 		);

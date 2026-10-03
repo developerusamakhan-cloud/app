@@ -1,0 +1,17 @@
+/*
+Theme Name: PowerBachat
+Theme URI: https://powerbachat.com
+Author: PowerBachat
+Author URI: https://powerbachat.com
+Description: A fast, hand-tuned theme for PowerBachat.com — electricity bill calculators, unit rates and solar prices for Pakistan, India and Bangladesh. Ships with a live bill calculator, an interactive tariff chart, a solar sizing tool, an editable price board and Customizer controls for every rate on the page.
+Version: 1.0.0
+Requires at least: 6.2
+Tested up to: 6.8
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: powerbachat
+Tags: one-column, custom-menu, custom-logo, featured-images, translation-ready, blog, news
+*/
+
+/* All front-end styles live in assets/css/main.css. */

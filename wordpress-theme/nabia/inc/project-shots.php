@@ -298,10 +298,12 @@ function nabia_project_showcase( $post_id ) {
 		}
 	} elseif ( has_post_thumbnail( $post_id ) ) {
 		$thumb = get_post_thumbnail_id( $post_id );
-		$img   = wp_get_attachment_image_src( $thumb, 'large' );
+		// The full image, not "large": WordPress fits "large" inside 1024 x 1024, which turns a
+		// long full-page screenshot into a narrow strip that looks blurry when stretched.
+		$img = wp_get_attachment_image_src( $thumb, 'full' );
 		if ( $img ) {
 			$desktop = $img[0];
-			$srcset  = (string) wp_get_attachment_image_srcset( $thumb, 'large' );
+			$srcset  = (string) wp_get_attachment_image_srcset( $thumb, 'full' );
 			// A long full-page image can scroll on hover too.
 			$tall = $img[1] && ( $img[2] / $img[1] ) > 1.2;
 		}
@@ -321,9 +323,32 @@ function nabia_project_showcase( $post_id ) {
 }
 
 /**
+ * Admin: state of one screenshot.
+ *
+ * @param int    $post_id Project ID.
+ * @param string $device  Device.
+ * @param string $live    Live URL.
+ * @return string ready | updating | waiting | failed | none
+ */
+function nabia_shot_state( $post_id, $device, $live ) {
+	if ( ! $live ) {
+		return 'none';
+	}
+	if ( ! nabia_shot_needed( $post_id, $device, $live ) ) {
+		return 'ready';
+	}
+	$shot   = get_post_meta( $post_id, '_nabia_shot_' . $device, true );
+	$failed = (int) get_post_meta( $post_id, '_nabia_shot_tries', true ) >= 12;
+	if ( is_array( $shot ) && ! empty( $shot['file'] ) && file_exists( $shot['file'] ) && isset( $shot['src'] ) && $shot['src'] === $live ) {
+		return $failed ? 'failed' : 'updating';
+	}
+	return $failed ? 'failed' : 'waiting';
+}
+
+/**
  * Admin: status of the screenshots, shown on the Nabia Setup screen.
  *
- * @return array[] Each: post, live, desktop, mobile.
+ * @return array[] Each: post, live, desktop, mobile (see nabia_shot_state()).
  */
 function nabia_shots_status() {
 	$rows = array();
@@ -338,8 +363,8 @@ function nabia_shots_status() {
 		$rows[] = array(
 			'post'    => $post,
 			'live'    => $live,
-			'desktop' => $live && ! nabia_shot_needed( $post->ID, 'desktop', $live ),
-			'mobile'  => $live && ! nabia_shot_needed( $post->ID, 'mobile', $live ),
+			'desktop' => nabia_shot_state( $post->ID, 'desktop', $live ),
+			'mobile'  => nabia_shot_state( $post->ID, 'mobile', $live ),
 		);
 	}
 	return $rows;

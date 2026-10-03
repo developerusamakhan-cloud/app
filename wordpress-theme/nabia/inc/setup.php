@@ -310,12 +310,22 @@ function nabia_setup_screen() {
 		<table class="widefat striped" style="max-width:760px;margin:12px 0 20px">
 			<thead><tr><th><?php esc_html_e( 'Project', 'nabia' ); ?></th><th><?php esc_html_e( 'Live link', 'nabia' ); ?></th><th><?php esc_html_e( 'Desktop', 'nabia' ); ?></th><th><?php esc_html_e( 'Phone', 'nabia' ); ?></th></tr></thead>
 			<tbody>
+				<?php
+				$nabia_states = array(
+					'ready'    => '✓ ' . __( 'Sharp', 'nabia' ),
+					'updating' => __( 'Updating (older, softer version shown)', 'nabia' ),
+					'waiting'  => __( 'Waiting (featured image shown)', 'nabia' ),
+					'failed'   => __( 'Website blocks screenshots (featured image shown)', 'nabia' ),
+					'none'     => __( 'Not needed', 'nabia' ),
+				);
+				?>
 				<?php foreach ( nabia_shots_status() as $nabia_row ) : ?>
 					<tr>
 						<td><a href="<?php echo esc_url( get_edit_post_link( $nabia_row['post'] ) ); ?>"><?php echo esc_html( get_the_title( $nabia_row['post'] ) ); ?></a></td>
 						<td><?php echo $nabia_row['live'] ? esc_html( preg_replace( '#^https?://#', '', untrailingslashit( $nabia_row['live'] ) ) ) : '<em>' . esc_html__( 'No live link: add one to get a screenshot', 'nabia' ) . '</em>'; ?></td>
-						<td><?php echo $nabia_row['live'] ? ( $nabia_row['desktop'] ? '&#10003;' : esc_html__( 'Waiting', 'nabia' ) ) : esc_html__( 'Not needed', 'nabia' ); ?></td>
-						<td><?php echo $nabia_row['live'] ? ( $nabia_row['mobile'] ? '&#10003;' : esc_html__( 'Waiting', 'nabia' ) ) : esc_html__( 'Not needed', 'nabia' ); ?></td>
+						<?php foreach ( array( 'desktop', 'mobile' ) as $nabia_device ) : ?>
+							<td><?php echo esc_html( $nabia_states[ $nabia_row[ $nabia_device ] ] ); ?></td>
+						<?php endforeach; ?>
 					</tr>
 				<?php endforeach; ?>
 			</tbody>

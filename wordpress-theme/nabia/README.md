@@ -65,6 +65,11 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.21.3
+
+- **Sharp featured images on project cards.** When a project has no screenshot yet (or its website blocks screenshot tools), the card now uses the full featured image instead of WordPress's "large" size, which squeezed long full-page images into a narrow, blurry strip.
+- Nabia Setup now shows each project's thumbnail state: Sharp, Updating, Waiting, or Website blocks screenshots.
+
 ## What's new in 2.21.2
 
 - **Sharp portfolio screenshots.** Screenshots are now captured at double resolution (like a retina screen) so text stays crisp when a full desktop page is shrunk into a card. High-resolution screens get the sharp 1600 px version, normal screens a lighter 800 px copy. Existing screenshots are replaced automatically in the background after you update.

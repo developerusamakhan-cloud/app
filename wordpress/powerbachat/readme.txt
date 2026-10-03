@@ -2,6 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
+Stable tag: 1.0.1
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -73,3 +74,13 @@ Leave `country` empty to follow the visitor's country switch.
 
 Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Font
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
+
+== Changelog ==
+
+= 1.0.1 =
+* Smaller hero heading (two lines instead of three) and tighter hero spacing.
+* More compact bill estimator and bill slip, so more of the result fits on screen.
+
+= 1.0.0 =
+* First release: home page, bill calculator, slab chart, solar sizing tool, price board,
+  calculator page template, shortcodes and Customizer settings.

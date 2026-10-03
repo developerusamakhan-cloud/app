@@ -224,7 +224,7 @@
 	}
 
 	/* ------------------------------------------------------------------
-	 * Country switch
+	 * Country (chosen automatically from the visitor's location)
 	 * ---------------------------------------------------------------- */
 
 	function currentCountry() {
@@ -232,25 +232,11 @@
 		return DATA.countries[c] ? c : CFG.defaultCountry || 'pk';
 	}
 
-	function syncCountryButtons(code) {
-		$$('[data-set-country]').forEach(function (btn) {
-			var on = btn.getAttribute('data-set-country') === code;
-			if (btn.getAttribute('role') === 'tab') {
-				btn.setAttribute('aria-selected', on ? 'true' : 'false');
-				btn.setAttribute('tabindex', on ? '0' : '-1');
-			} else {
-				btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-			}
-		});
-	}
-
 	function setCountry(code) {
-		if (!DATA.countries[code]) {
+		if (!DATA.countries[code] || code === currentCountry()) {
 			return;
 		}
 		root.setAttribute('data-country', code);
-		store('pb-country', code);
-		syncCountryButtons(code);
 		emit('pb:country', { country: code });
 		// Newly shown cards may still be waiting to reveal.
 		$$('.reveal:not(.is-in)').forEach(function (el) {
@@ -260,29 +246,29 @@
 		});
 	}
 
-	document.addEventListener('click', function (e) {
-		var btn = e.target.closest('[data-set-country]');
-		if (btn) {
-			setCountry(btn.getAttribute('data-set-country'));
+	/**
+	 * First visit with no cookie: ask the server where the visitor is (this also
+	 * fixes pages served from a full-page cache), then remember it for 30 days.
+	 */
+	function confirmCountry() {
+		if (!window.pbGeoPending || !CFG.geoUrl || !window.fetch) {
+			return;
 		}
-	});
-
-	// Arrow-key support for tab lists.
-	$$('[role="tablist"]').forEach(function (list) {
-		list.addEventListener('keydown', function (e) {
-			if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') {
-				return;
-			}
-			var tabs = $$('[role="tab"]', list);
-			var i = tabs.indexOf(document.activeElement);
-			if (i < 0) {
-				return;
-			}
-			var next = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
-			next.focus();
-			next.click();
-		});
-	});
+		fetch(CFG.geoUrl, { credentials: 'same-origin', cache: 'no-store' })
+			.then(function (r) {
+				return r.ok ? r.json() : null;
+			})
+			.then(function (j) {
+				if (!j || !DATA.countries[j.country]) {
+					return;
+				}
+				document.cookie = 'pb_cc=' + j.country + ';path=/;max-age=2592000;SameSite=Lax';
+				setCountry(j.country);
+			})
+			.catch(function () {
+				/* Keep what the server rendered. */
+			});
+	}
 
 	/* ------------------------------------------------------------------
 	 * Bill calculator
@@ -933,11 +919,11 @@
 	 * Boot
 	 * ---------------------------------------------------------------- */
 
-	syncCountryButtons(currentCountry());
 	$$('[data-calc]').forEach(initCalc);
 	$$('[data-chart]').forEach(initChart);
 	$$('[data-solar]').forEach(initSolar);
 	initReveal();
 	initHeader();
 	initDemoForms();
+	confirmCountry();
 })();

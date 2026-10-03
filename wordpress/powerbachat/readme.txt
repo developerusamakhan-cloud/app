@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -34,8 +34,32 @@ Sections (in order): hero + live bill calculator, rate ticker, utility directory
 slab chart, solar sizing tool, price board, guides, method, FAQ, alerts sign-up.
 Reorder or remove them with the `powerbachat_home_sections` filter.
 
-The country switch (PK / IN / BD) in the top bar changes the calculator, chart,
-solar tool and utility list together, and is remembered on the visitor's device.
+== Country by location ==
+
+Each visitor sees only their own country — Pakistan, India or Bangladesh — picked
+automatically from their location. There is no switch on the site.
+
+How the country is chosen (first match wins):
+1. The URL: pages under /pk/, /in/ and /bd/ always show that country, so Google and
+   shared links see the right content whatever their location.
+2. A remembered choice (the pb_cc cookie, kept for 30 days).
+3. The country header your host or CDN sends (Cloudflare CF-IPCountry, CloudFront,
+   server GeoIP). On Cloudflare, turn on "IP Geolocation" (Network settings) —
+   this is the fastest and most accurate option.
+4. An online IP lookup (api.country.is), cached for a week per visitor IP. It can be
+   switched off in Customize → PowerBachat → Home page.
+5. Everyone outside the three countries gets the fallback country set in the
+   Customizer (Pakistan by default).
+
+Works with page caching: the page carries all three versions and the browser shows
+the right one, confirming the country with /wp-json/powerbachat/v1/country on the
+first visit.
+
+Testing: add ?pb_country=in (or pk, bd) to any URL to preview another country. It is
+remembered for 30 days; use ?pb_country=pk to go back.
+
+Guides: put a post in a category with the slug pakistan, india or bangladesh to show
+it to that country only. Posts without one of those categories show to everyone.
 
 == Building the calculator pages ==
 
@@ -76,6 +100,9 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.1.0 =
+* Country picked automatically from visitor location (Cloudflare header or IP lookup); only that country's companies, rates, prices, guides and FAQs are shown; country switch removed; /pk/, /in/ and /bd/ pages always show their own country.
 
 = 1.0.1 =
 * Smaller hero heading (two lines instead of three) and tighter hero spacing.

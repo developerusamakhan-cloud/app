@@ -80,12 +80,17 @@ function powerbachat_primary_fallback() {
 		array( __( 'Bill calculators', 'powerbachat' ), '/#utilities' ),
 		array( __( 'Unit rates', 'powerbachat' ), '/#slabs' ),
 		array( __( 'Solar', 'powerbachat' ), '/#solar' ),
-		array( __( 'Prices', 'powerbachat' ), '/#prices' ),
+		array( __( 'Prices', 'powerbachat' ), '/#prices', 'pk' ),
 		array( __( 'Guides', 'powerbachat' ), '/#guides' ),
 	);
 	echo '<ul class="nav__list">';
 	foreach ( $items as $item ) {
-		printf( '<li class="menu-item"><a href="%s">%s</a></li>', esc_url( home_url( $item[1] ) ), esc_html( $item[0] ) );
+		printf(
+			'<li class="menu-item"%s><a href="%s">%s</a></li>',
+			isset( $item[2] ) ? ' data-only="' . esc_attr( $item[2] ) . '"' : '',
+			esc_url( home_url( $item[1] ) ),
+			esc_html( $item[0] )
+		);
 	}
 	echo '</ul>';
 }

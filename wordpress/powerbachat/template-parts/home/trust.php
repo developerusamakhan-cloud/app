@@ -8,7 +8,7 @@
 $powerbachat_steps = array(
 	array(
 		'title' => __( 'We read the notification itself', 'powerbachat' ),
-		'text'  => __( 'Every slab comes from the regulator’s published order — NEPRA, the state commission, or BERC — not from another website that copied it last year.', 'powerbachat' ),
+		'text'  => __( 'Every slab comes from the regulator’s own published order — not from another website that copied it last year.', 'powerbachat' ),
 	),
 	array(
 		'title' => __( 'We test against real bills', 'powerbachat' ),
@@ -33,7 +33,7 @@ $powerbachat_steps = array(
 		</div>
 
 		<div class="trust__copy">
-			<p class="kicker"><span class="kicker__num">06</span><?php esc_html_e( 'Our method', 'powerbachat' ); ?></p>
+			<p class="kicker"><span class="kicker__num" aria-hidden="true"></span><?php esc_html_e( 'Our method', 'powerbachat' ); ?></p>
 			<h2 class="section__title"><?php esc_html_e( 'A calculator is only as good as its rate table.', 'powerbachat' ); ?></h2>
 			<ol class="steps">
 				<?php foreach ( $powerbachat_steps as $powerbachat_i => $powerbachat_step ) : ?>

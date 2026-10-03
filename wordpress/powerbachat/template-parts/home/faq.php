@@ -9,11 +9,12 @@
 <section class="section faq" id="faq">
 	<div class="wrap faq__inner">
 		<header class="faq__head">
-			<p class="kicker"><span class="kicker__num">07</span><?php esc_html_e( 'Questions', 'powerbachat' ); ?></p>
+			<p class="kicker"><span class="kicker__num" aria-hidden="true"></span><?php esc_html_e( 'Questions', 'powerbachat' ); ?></p>
 			<h2 class="section__title"><?php esc_html_e( 'Things people ask us every billing week.', 'powerbachat' ); ?></h2>
 		</header>
-		<div class="faq__list">
-			<?php foreach ( powerbachat_faqs() as $powerbachat_i => $powerbachat_faq ) : ?>
+		<?php foreach ( array( 'pk', 'in', 'bd' ) as $powerbachat_code ) : ?>
+		<div class="faq__list" data-only="<?php echo esc_attr( $powerbachat_code ); ?>">
+			<?php foreach ( powerbachat_faqs( $powerbachat_code ) as $powerbachat_i => $powerbachat_faq ) : ?>
 				<details class="faq__item"<?php echo 0 === $powerbachat_i ? ' open' : ''; ?>>
 					<summary>
 						<span><?php echo esc_html( $powerbachat_faq['q'] ); ?></span>
@@ -23,5 +24,6 @@
 				</details>
 			<?php endforeach; ?>
 		</div>
+		<?php endforeach; ?>
 	</div>
 </section>

@@ -18,7 +18,10 @@ function powerbachat_mod_defaults() {
 	return array(
 		'pb_default_country' => 'pk',
 		'pb_hero_title'      => 'Your electricity bill, worked out to the last rupee.',
-		'pb_hero_text'       => 'Free bill calculators for LESCO, IESCO, MEPCO, TNEB, KSEB, DESCO and more — plus honest unit rates and solar prices, checked every month. No sign-up. No app to install.',
+		'pb_hero_text_pk'    => 'Free bill calculators for LESCO, IESCO, MEPCO, FESCO, K-Electric and every other DISCO — plus honest unit rates and solar prices, checked every month. No sign-up. No app to install.',
+		'pb_hero_text_in'    => 'Free bill calculators for TNEB, KSEB, UPPCL, MSEDCL and more — plus rooftop solar prices with the PM Surya Ghar subsidy worked in. No sign-up. No app to install.',
+		'pb_hero_text_bd'    => 'Free bill calculators for DESCO, DPDC, BREB and every other distributor — plus solar panel and IPS prices, checked every month. No sign-up. No app to install.',
+		'pb_geo_lookup'      => true,
 		'pb_tariff_checked'  => 'October 2026',
 		'pb_price_updated'   => '3 October 2026',
 		'pb_price_rows'      => implode(
@@ -35,7 +38,7 @@ function powerbachat_mod_defaults() {
 		'pb_price_currency'  => 'Rs',
 		'pb_whatsapp_url'    => '',
 		'pb_newsletter_url'  => '',
-		'pb_footer_note'     => 'PowerBachat is an independent site. We are not affiliated with NEPRA, WAPDA, any DISCO, state electricity board or BERC. Figures are estimates — your official bill is the final word.',
+		'pb_footer_note'     => 'PowerBachat is an independent site. We are not affiliated with any electricity regulator, distribution company or government body. Figures are estimates — your official bill is the final word.',
 	);
 }
 
@@ -106,8 +109,8 @@ function powerbachat_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'pb_default_country',
 		array(
-			'label'       => __( 'Default country', 'powerbachat' ),
-			'description' => __( 'Visitors can switch; their choice is remembered on their device.', 'powerbachat' ),
+			'label'       => __( 'Country for visitors outside Pakistan, India and Bangladesh', 'powerbachat' ),
+			'description' => __( 'Everyone else sees their own country automatically, based on their location. Pages under /pk/, /in/ and /bd/ always show that country.', 'powerbachat' ),
 			'section'     => 'powerbachat_home',
 			'type'        => 'select',
 			'choices'     => array(
@@ -121,8 +124,22 @@ function powerbachat_customize_register( $wp_customize ) {
 	$wp_customize->add_setting( 'pb_hero_title', array( 'default' => $d['pb_hero_title'], 'sanitize_callback' => 'sanitize_text_field' ) );
 	$wp_customize->add_control( 'pb_hero_title', array( 'label' => __( 'Hero headline', 'powerbachat' ), 'section' => 'powerbachat_home', 'type' => 'text' ) );
 
-	$wp_customize->add_setting( 'pb_hero_text', array( 'default' => $d['pb_hero_text'], 'sanitize_callback' => 'sanitize_textarea_field' ) );
-	$wp_customize->add_control( 'pb_hero_text', array( 'label' => __( 'Hero intro', 'powerbachat' ), 'section' => 'powerbachat_home', 'type' => 'textarea' ) );
+	foreach ( array( 'pk' => 'Pakistan', 'in' => 'India', 'bd' => 'Bangladesh' ) as $code => $name ) {
+		$wp_customize->add_setting( 'pb_hero_text_' . $code, array( 'default' => $d[ 'pb_hero_text_' . $code ], 'sanitize_callback' => 'sanitize_textarea_field' ) );
+		/* translators: %s: country name */
+		$wp_customize->add_control( 'pb_hero_text_' . $code, array( 'label' => sprintf( __( 'Hero intro — %s', 'powerbachat' ), $name ), 'section' => 'powerbachat_home', 'type' => 'textarea' ) );
+	}
+
+	$wp_customize->add_setting( 'pb_geo_lookup', array( 'default' => true, 'sanitize_callback' => 'wp_validate_boolean' ) );
+	$wp_customize->add_control(
+		'pb_geo_lookup',
+		array(
+			'label'       => __( 'Look up visitor location online', 'powerbachat' ),
+			'description' => __( 'Used only when your host or Cloudflare does not already send the visitor\'s country. Sends the visitor IP to api.country.is; results are cached for a week.', 'powerbachat' ),
+			'section'     => 'powerbachat_home',
+			'type'        => 'checkbox',
+		)
+	);
 
 	// Rates and prices.
 	$wp_customize->add_section(

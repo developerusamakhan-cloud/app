@@ -33,14 +33,17 @@
 			<span class="topbar__src" data-only="in">TNERC · KSERC orders</span>
 			<span class="topbar__src" data-only="bd">BERC residential tariff</span>
 		</p>
-		<div class="country-switch" role="group" aria-label="<?php esc_attr_e( 'Choose your country', 'powerbachat' ); ?>">
-			<?php foreach ( powerbachat_data()['countries'] as $code => $country ) : ?>
-				<button type="button" class="country-switch__btn" data-set-country="<?php echo esc_attr( $code ); ?>">
-					<span class="country-switch__code"><?php echo esc_html( strtoupper( $code ) ); ?></span>
-					<span class="country-switch__name"><?php echo esc_html( $country['name'] ); ?></span>
-				</button>
+		<p class="topbar__where">
+			<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg>
+			<?php foreach ( powerbachat_data()['countries'] as $powerbachat_code => $powerbachat_country ) : ?>
+				<span data-only="<?php echo esc_attr( $powerbachat_code ); ?>">
+					<?php
+					/* translators: %s: country name */
+					printf( esc_html__( 'Rates for %s', 'powerbachat' ), '<strong>' . esc_html( $powerbachat_country['name'] ) . '</strong>' );
+					?>
+				</span>
 			<?php endforeach; ?>
-		</div>
+		</p>
 	</div>
 </div>
 

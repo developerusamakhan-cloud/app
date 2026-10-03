@@ -21,7 +21,7 @@ $powerbachat_tag     = $powerbachat_args['embed'] ? 'div' : 'section';
 	<div class="wrap slabs__inner">
 		<div class="slabs__copy">
 			<?php if ( ! $powerbachat_args['embed'] ) : ?>
-				<p class="kicker"><span class="kicker__num">02</span><?php esc_html_e( 'Unit rates', 'powerbachat' ); ?></p>
+				<p class="kicker"><span class="kicker__num" aria-hidden="true"></span><?php esc_html_e( 'Unit rates', 'powerbachat' ); ?></p>
 				<h2 class="section__title"><?php esc_html_e( 'The slab cliff nobody explains on the bill.', 'powerbachat' ); ?></h2>
 				<p class="section__lede"><?php esc_html_e( 'A bill does not climb in a straight line. Rates step up at fixed points, and at some of them the whole bill jumps. Hover any bar to see what that month would cost.', 'powerbachat' ); ?></p>
 			<?php endif; ?>

@@ -11,19 +11,18 @@ if ( ! $powerbachat_rows ) {
 }
 $powerbachat_cur = powerbachat_mod( 'pb_price_currency' );
 ?>
-<section class="section prices" id="prices">
+<section class="section prices" id="prices" data-only="pk">
 	<div class="wrap prices__inner">
 		<div class="prices__copy">
-			<p class="kicker kicker--light"><span class="kicker__num">04</span><?php esc_html_e( 'Price board', 'powerbachat' ); ?></p>
+			<p class="kicker kicker--light"><span class="kicker__num" aria-hidden="true"></span><?php esc_html_e( 'Price board', 'powerbachat' ); ?></p>
 			<h2 class="section__title"><?php esc_html_e( 'Solar panel rates, without the WhatsApp haggling.', 'powerbachat' ); ?></h2>
 			<p class="section__lede">
 				<?php esc_html_e( 'Market rates per watt for A-grade panels in Pakistan. Use them as a yardstick when an installer’s quote lands on your phone.', 'powerbachat' ); ?>
 			</p>
 			<ul class="prices__links">
 				<li><a href="<?php echo esc_url( home_url( '/pk/solar-panel-price-today/' ) ); ?>"><?php esc_html_e( 'Solar panel price today', 'powerbachat' ); ?> <?php echo powerbachat_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/pk/5kw-solar-system-price/' ) ); ?>"><?php esc_html_e( '5 kW system price', 'powerbachat' ); ?> <?php echo powerbachat_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a></li>
 				<li><a href="<?php echo esc_url( home_url( '/pk/cost-of-solar-panels/' ) ); ?>"><?php esc_html_e( 'Full cost of a solar setup', 'powerbachat' ); ?> <?php echo powerbachat_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a></li>
-				<li><a href="<?php echo esc_url( home_url( '/bd/solar-panel-price/' ) ); ?>"><?php esc_html_e( 'Bangladesh panel prices', 'powerbachat' ); ?> <?php echo powerbachat_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a></li>
-				<li><a href="<?php echo esc_url( home_url( '/in/solar-panel-price/' ) ); ?>"><?php esc_html_e( 'India panel prices', 'powerbachat' ); ?> <?php echo powerbachat_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a></li>
 			</ul>
 		</div>
 

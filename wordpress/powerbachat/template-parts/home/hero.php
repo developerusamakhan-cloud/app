@@ -43,7 +43,9 @@ $powerbachat_quick = array(
 			<p class="kicker kicker--light">
 				<span class="urdu" lang="ur">بجلی بچت</span>
 				<span class="kicker__rule" aria-hidden="true"></span>
-				<?php esc_html_e( 'Pakistan · India · Bangladesh', 'powerbachat' ); ?>
+				<?php foreach ( powerbachat_data()['countries'] as $powerbachat_code => $powerbachat_c ) : ?>
+					<span data-only="<?php echo esc_attr( $powerbachat_code ); ?>"><?php echo esc_html( $powerbachat_c['name'] ); ?></span>
+				<?php endforeach; ?>
 			</p>
 			<h1 class="hero__title"><?php echo wp_kses(
 				$powerbachat_title,
@@ -52,7 +54,9 @@ $powerbachat_quick = array(
 					'span' => array( 'data-only' => true ),
 				)
 			); ?></h1>
-			<p class="hero__lede"><?php echo esc_html( powerbachat_mod( 'pb_hero_text' ) ); ?></p>
+			<?php foreach ( array( 'pk', 'in', 'bd' ) as $powerbachat_code ) : ?>
+				<p class="hero__lede" data-only="<?php echo esc_attr( $powerbachat_code ); ?>"><?php echo esc_html( powerbachat_mod( 'pb_hero_text_' . $powerbachat_code ) ); ?></p>
+			<?php endforeach; ?>
 
 			<div class="hero__quick">
 				<p class="hero__quick-label"><?php esc_html_e( 'People are checking', 'powerbachat' ); ?></p>

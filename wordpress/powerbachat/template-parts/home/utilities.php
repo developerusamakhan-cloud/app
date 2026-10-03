@@ -10,19 +10,10 @@ $powerbachat_data = powerbachat_data();
 <section class="section utilities" id="utilities">
 	<div class="wrap">
 		<header class="section__head">
-			<p class="kicker"><span class="kicker__num">01</span><?php esc_html_e( 'Bill calculators', 'powerbachat' ); ?></p>
+			<p class="kicker"><span class="kicker__num" aria-hidden="true"></span><?php esc_html_e( 'Bill calculators', 'powerbachat' ); ?></p>
 			<h2 class="section__title"><?php esc_html_e( 'Find your company. Get the real number.', 'powerbachat' ); ?></h2>
 			<p class="section__lede"><?php esc_html_e( 'Each calculator uses that company’s own slab table and taxes — not a national average dressed up as one.', 'powerbachat' ); ?></p>
 		</header>
-
-		<div class="tabs" role="tablist" aria-label="<?php esc_attr_e( 'Country', 'powerbachat' ); ?>">
-			<?php foreach ( $powerbachat_data['countries'] as $powerbachat_code => $powerbachat_country ) : ?>
-				<button type="button" class="tabs__btn" role="tab" data-set-country="<?php echo esc_attr( $powerbachat_code ); ?>">
-					<?php echo esc_html( $powerbachat_country['name'] ); ?>
-					<span class="tabs__count"><?php echo esc_html( count( $powerbachat_country['utilities'] ) ); ?></span>
-				</button>
-			<?php endforeach; ?>
-		</div>
 
 		<?php foreach ( $powerbachat_data['countries'] as $powerbachat_code => $powerbachat_country ) : ?>
 			<ul class="util-grid" data-only="<?php echo esc_attr( $powerbachat_code ); ?>">

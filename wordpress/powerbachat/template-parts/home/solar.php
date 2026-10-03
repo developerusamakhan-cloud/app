@@ -25,7 +25,7 @@ $powerbachat_tag     = $powerbachat_args['embed'] ? 'div' : 'section';
 		<?php if ( ! $powerbachat_args['embed'] ) : ?>
 			<header class="section__head section__head--split">
 				<div>
-					<p class="kicker"><span class="kicker__num">03</span><?php esc_html_e( 'Solar sizing', 'powerbachat' ); ?></p>
+					<p class="kicker"><span class="kicker__num" aria-hidden="true"></span><?php esc_html_e( 'Solar sizing', 'powerbachat' ); ?></p>
 					<h2 class="section__title"><?php esc_html_e( 'How much solar does your house actually need?', 'powerbachat' ); ?></h2>
 				</div>
 				<p class="section__lede"><?php esc_html_e( 'Installers size systems to sell panels. Start from your own units instead — then compare quotes with a number you trust.', 'powerbachat' ); ?></p>

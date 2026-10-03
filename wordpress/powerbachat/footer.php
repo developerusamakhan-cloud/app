@@ -14,7 +14,7 @@ $powerbachat_data = powerbachat_data();
 		<div class="site-footer__top">
 			<div class="site-footer__brand">
 				<?php powerbachat_logo(); ?>
-				<p><?php esc_html_e( 'Bill calculators, unit rates and solar prices for households in Pakistan, India and Bangladesh. Built by people who also open their bill and wince.', 'powerbachat' ); ?></p>
+				<p><?php esc_html_e( 'Bill calculators, unit rates and solar prices for your home. Built by people who also open their bill and wince.', 'powerbachat' ); ?></p>
 				<p class="site-footer__checked">
 					<?php echo powerbachat_icon( 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					<?php
@@ -27,15 +27,15 @@ $powerbachat_data = powerbachat_data();
 				</p>
 			</div>
 
-			<?php foreach ( $powerbachat_data['countries'] as $code => $country ) : ?>
-				<nav class="site-footer__col" aria-label="<?php echo esc_attr( $country['name'] ); ?>">
-					<h2 class="site-footer__heading"><a href="<?php echo esc_url( home_url( $country['hub'] ) ); ?>"><?php echo esc_html( $country['name'] ); ?></a></h2>
+			<?php foreach ( $powerbachat_data['countries'] as $powerbachat_code => $powerbachat_country ) : ?>
+				<nav class="site-footer__col" data-only="<?php echo esc_attr( $powerbachat_code ); ?>" aria-label="<?php echo esc_attr( $powerbachat_country['name'] ); ?>">
+					<h2 class="site-footer__heading"><a href="<?php echo esc_url( home_url( $powerbachat_country['hub'] ) ); ?>"><?php echo esc_html( $powerbachat_country['name'] ); ?></a></h2>
 					<ul>
-						<?php foreach ( array_slice( $country['utilities'], 0, 6 ) as $utility ) : ?>
-							<li><a href="<?php echo esc_url( home_url( $utility['url'] ) ); ?>">
+						<?php foreach ( $powerbachat_country['utilities'] as $powerbachat_utility ) : ?>
+							<li><a href="<?php echo esc_url( home_url( $powerbachat_utility['url'] ) ); ?>">
 								<?php
 								/* translators: %s: utility abbreviation */
-								printf( esc_html__( '%s bill calculator', 'powerbachat' ), esc_html( $utility['abbr'] ) );
+								printf( esc_html__( '%s bill calculator', 'powerbachat' ), esc_html( $powerbachat_utility['abbr'] ) );
 								?>
 							</a></li>
 						<?php endforeach; ?>

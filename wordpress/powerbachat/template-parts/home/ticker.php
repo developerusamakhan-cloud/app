@@ -22,8 +22,9 @@ foreach ( $powerbachat_feed as $powerbachat_code => $powerbachat_ref ) {
 	$powerbachat_currency = $powerbachat_data['countries'][ $powerbachat_code ]['currency'];
 	$powerbachat_sched    = $powerbachat_tariff['plans'][ $powerbachat_ref[1] ]['schedules'][0];
 	$powerbachat_prev     = 0;
-	foreach ( array_slice( $powerbachat_sched['slabs'], 0, 4 ) as $powerbachat_slab ) {
+	foreach ( $powerbachat_sched['slabs'] as $powerbachat_slab ) {
 		$powerbachat_items[] = array(
+			'only'  => $powerbachat_code,
 			'tag'   => strtoupper( $powerbachat_code ),
 			'label' => null === $powerbachat_slab[0] ? sprintf( '%d+ units', $powerbachat_prev + 1 ) : sprintf( '%d–%d units', $powerbachat_prev + 1, $powerbachat_slab[0] ),
 			'value' => $powerbachat_currency . ' ' . number_format( $powerbachat_slab[1], 2 ),
@@ -35,6 +36,7 @@ foreach ( $powerbachat_feed as $powerbachat_code => $powerbachat_ref ) {
 
 foreach ( array_slice( powerbachat_price_rows(), 0, 4 ) as $powerbachat_row ) {
 	$powerbachat_items[] = array(
+		'only'  => 'pk',
 		'tag'   => 'SOLAR',
 		'label' => $powerbachat_row['brand'] . ' ' . preg_replace( '/^.*?(\d{3,4}\s?W)$/i', '$1', $powerbachat_row['model'] ),
 		'value' => powerbachat_mod( 'pb_price_currency' ) . ' ' . number_format( $powerbachat_row['price'], 1 ) . '/W',
@@ -52,8 +54,8 @@ if ( ! $powerbachat_items ) {
 		<?php for ( $powerbachat_pass = 0; $powerbachat_pass < 2; $powerbachat_pass++ ) : ?>
 			<ul class="ticker__track"<?php echo $powerbachat_pass ? ' aria-hidden="true"' : ''; ?>>
 				<?php foreach ( $powerbachat_items as $powerbachat_item ) : ?>
-					<li class="ticker__item">
-						<span class="ticker__tag"><?php echo esc_html( $powerbachat_item['tag'] ); ?></span>
+					<li class="ticker__item" data-only="<?php echo esc_attr( $powerbachat_item['only'] ); ?>">
+						<?php if ( 'SOLAR' === $powerbachat_item['tag'] ) : ?><span class="ticker__tag"><?php esc_html_e( 'Solar', 'powerbachat' ); ?></span><?php endif; ?>
 						<span class="ticker__name"><?php echo esc_html( $powerbachat_item['label'] ); ?></span>
 						<span class="ticker__value"><?php echo esc_html( $powerbachat_item['value'] ); ?></span>
 						<?php if ( $powerbachat_item['move'] ) : ?>

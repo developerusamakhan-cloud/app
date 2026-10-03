@@ -228,6 +228,9 @@ function nabia_setup_screen() {
 		if ( 'pages' === $action || 'all' === $action ) {
 			$log = array_merge( $log, nabia_setup_create_pages() );
 		}
+		if ( ( 'shots' === $action || 'shots_force' === $action ) && current_user_can( 'upload_files' ) ) {
+			$log[] = nabia_shots_enabled() ? nabia_shots_run_all( 'shots_force' === $action ) : __( 'Automatic screenshots are off. Turn them on in Customize → Nabia Theme → Portfolio → Project thumbnails.', 'nabia' );
+		}
 		if ( ( 'posts' === $action || 'all' === $action ) && current_user_can( 'publish_posts' ) && current_user_can( 'upload_files' ) ) {
 			$log = array_merge( $log, nabia_setup_import_posts() );
 		}
@@ -301,6 +304,27 @@ function nabia_setup_screen() {
 			<button class="button button-hero" name="nabia_setup_action" value="menu"><?php esc_html_e( 'Rebuild main menu only', 'nabia' ); ?></button>
 		</form>
 		<p class="description" style="margin-top:12px"><?php esc_html_e( 'The menu adds: Services (with every service in a dropdown), Work, Pricing, Blog, About, Free audit and Contact. You can change it any time in Appearance → Menus.', 'nabia' ); ?></p>
+
+		<h2 style="margin-top:36px"><?php esc_html_e( 'Portfolio thumbnails', 'nabia' ); ?></h2>
+		<p><?php esc_html_e( 'Every project card shows a desktop and phone mockup with real screenshots of the project’s live link. Screenshots are taken in the background and saved on your site; new ones can take a few minutes to appear.', 'nabia' ); ?></p>
+		<table class="widefat striped" style="max-width:760px;margin:12px 0 20px">
+			<thead><tr><th><?php esc_html_e( 'Project', 'nabia' ); ?></th><th><?php esc_html_e( 'Live link', 'nabia' ); ?></th><th><?php esc_html_e( 'Desktop', 'nabia' ); ?></th><th><?php esc_html_e( 'Phone', 'nabia' ); ?></th></tr></thead>
+			<tbody>
+				<?php foreach ( nabia_shots_status() as $nabia_row ) : ?>
+					<tr>
+						<td><a href="<?php echo esc_url( get_edit_post_link( $nabia_row['post'] ) ); ?>"><?php echo esc_html( get_the_title( $nabia_row['post'] ) ); ?></a></td>
+						<td><?php echo $nabia_row['live'] ? esc_html( preg_replace( '#^https?://#', '', untrailingslashit( $nabia_row['live'] ) ) ) : '<em>' . esc_html__( 'No live link: add one to get a screenshot', 'nabia' ) . '</em>'; ?></td>
+						<td><?php echo $nabia_row['live'] ? ( $nabia_row['desktop'] ? '&#10003;' : esc_html__( 'Waiting', 'nabia' ) ) : esc_html__( 'Not needed', 'nabia' ); ?></td>
+						<td><?php echo $nabia_row['live'] ? ( $nabia_row['mobile'] ? '&#10003;' : esc_html__( 'Waiting', 'nabia' ) ) : esc_html__( 'Not needed', 'nabia' ); ?></td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+		<form method="post" style="display:flex;gap:10px;flex-wrap:wrap">
+			<?php wp_nonce_field( 'nabia_setup' ); ?>
+			<button class="button button-primary" name="nabia_setup_action" value="shots"><?php esc_html_e( 'Take missing screenshots now', 'nabia' ); ?></button>
+			<button class="button" name="nabia_setup_action" value="shots_force"><?php esc_html_e( 'Retake all screenshots', 'nabia' ); ?></button>
+		</form>
 	</div>
 	<?php
 }

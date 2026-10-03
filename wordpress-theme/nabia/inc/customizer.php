@@ -118,6 +118,7 @@ function nabia_customize_register( $wp_customize ) {
 
 		'portfolio_post_type' => array( 'nabia_portfolio', 'select', __( 'Which posts are your portfolio?', 'nabia' ) ),
 		'portfolio_count'    => array( 'nabia_portfolio', 'text', __( 'How many projects on the homepage', 'nabia' ) ),
+		'portfolio_thumbs'   => array( 'nabia_portfolio', 'select', __( 'Project thumbnails', 'nabia' ) ),
 
 		'videos_title'       => array( 'nabia_videos', 'text', __( 'Section title', 'nabia' ) ),
 		'videos_text'        => array( 'nabia_videos', 'textarea', __( 'Section intro', 'nabia' ) ),
@@ -218,6 +219,11 @@ function nabia_customize_register( $wp_customize ) {
 			'5' => __( '5 stars only', 'nabia' ),
 		),
 		'portfolio_post_type' => $post_types,
+		'portfolio_thumbs'    => array(
+			'showcase' => __( 'Mockup: automatic screenshots of the live website (desktop + phone)', 'nabia' ),
+			'featured' => __( 'Mockup: my featured images', 'nabia' ),
+			'image'    => __( 'Plain: my featured images only', 'nabia' ),
+		),
 		'color_scheme' => $schemes,
 		'video_layout' => array(
 			'auto'     => __( 'Automatic (Shorts links = vertical)', 'nabia' ),
@@ -228,6 +234,7 @@ function nabia_customize_register( $wp_customize ) {
 
 	$descriptions = array(
 		'video_reviews'   => __( 'Paste MP4 links from your Media Library (or YouTube links), one per line. The client name is read from the file name, or add it after a | sign: https://…/review.mp4 | Sarah Malik | New store in 2 weeks. You can also use Dashboard → Video Reviews.', 'nabia' ),
+		'portfolio_thumbs' => __( 'Screenshots are taken from each project’s live link and saved on your site. They refresh every 30 days. See Appearance → Nabia Setup to refresh them now.', 'nabia' ),
 		'google_place_id' => __( 'Find it at developers.google.com/maps/documentation/places/web-service/place-id, search your business name and copy the ID (starts with “ChIJ…”).', 'nabia' ),
 		'plan_web_1'      => __( 'Line 1: plan name. Line 2: price (leave the line empty for “Custom quote”). Then one feature per line. Start a line with - to show it as not included.', 'nabia' ),
 		'plan_care_1'     => __( 'Same format. Optional extra lines: “Was: $69.99” shows a crossed-out old price, “Subtitle: 1 day in a month” and “Note: 3 days support”.', 'nabia' ),
@@ -274,8 +281,9 @@ function nabia_customize_register( $wp_customize ) {
 				array(
 					'label'   => $label,
 					'section' => $section,
-					'type'    => 'select',
-					'choices' => $choices[ $key ],
+					'type'        => 'select',
+					'choices'     => $choices[ $key ],
+					'description' => isset( $descriptions[ $key ] ) ? $descriptions[ $key ] : '',
 				)
 			);
 		} else {

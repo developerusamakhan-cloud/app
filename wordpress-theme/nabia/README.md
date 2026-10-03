@@ -65,6 +65,13 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.21
+
+- **Portfolio thumbnails with real screenshots.** Every project card now shows a browser and a phone mockup on a brand gradient, filled with real screenshots of the project's live link (desktop and mobile). Hover a card on desktop and the full page scrolls from top to bottom.
+- Screenshots are taken automatically by your server (WordPress.com's free screenshot service), saved in your Media uploads, and refreshed every 30 days or when the live link changes. Visitors only load images from your own site.
+- Appearance, Nabia Setup shows which projects have their screenshots, with buttons to take missing ones now or retake all of them.
+- Customize, Nabia Theme, Portfolio, "Project thumbnails": mockup with screenshots (default), mockup with your featured images, or the previous plain images.
+
 ## What's new in 2.20.1
 
 - **Article tags** under blog posts now show as one clean pill each (they had a double border) and fill with your accent colour on hover.

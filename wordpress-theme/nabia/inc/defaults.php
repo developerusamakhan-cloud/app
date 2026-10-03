@@ -67,6 +67,7 @@ function nabia_defaults() {
 		// Portfolio.
 		'portfolio_post_type' => 'websites',
 		'portfolio_count'    => '6',
+		'portfolio_thumbs'   => 'showcase',
 
 		// Platforms.
 		'platforms_title'    => 'One developer, every platform',

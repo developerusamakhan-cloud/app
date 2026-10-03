@@ -27,13 +27,11 @@ $powerbachat_uid     = wp_unique_id( 'calc-' );
 	data-units="<?php echo esc_attr( $powerbachat_units ); ?>">
 
 	<div class="calc__panel">
-		<div class="calc__head">
-			<p class="calc__eyebrow"><?php esc_html_e( 'Bill estimator', 'powerbachat' ); ?></p>
-			<p class="calc__live"><span class="pulse" aria-hidden="true"></span><?php esc_html_e( 'Live', 'powerbachat' ); ?></p>
-		</div>
-
 		<div class="field">
-			<label class="field__label" for="<?php echo esc_attr( $powerbachat_uid ); ?>-utility"><?php esc_html_e( 'Your electricity company', 'powerbachat' ); ?></label>
+			<div class="field__row field__row--top">
+				<label class="field__label" for="<?php echo esc_attr( $powerbachat_uid ); ?>-utility"><?php esc_html_e( 'Your electricity company', 'powerbachat' ); ?></label>
+				<p class="calc__live"><span class="pulse" aria-hidden="true"></span><?php esc_html_e( 'Live', 'powerbachat' ); ?></p>
+			</div>
 			<div class="select">
 				<select id="<?php echo esc_attr( $powerbachat_uid ); ?>-utility" data-calc-utility></select>
 			</div>
@@ -63,7 +61,7 @@ $powerbachat_uid     = wp_unique_id( 'calc-' );
 			<span class="toggle__track" aria-hidden="true"></span>
 			<span class="toggle__text">
 				<strong><?php esc_html_e( 'Protected consumer', 'powerbachat' ); ?></strong>
-				<?php esc_html_e( 'Under 200 units every month for the last 6 months', 'powerbachat' ); ?>
+				<span><?php esc_html_e( '≤200 units for 6 months', 'powerbachat' ); ?></span>
 			</span>
 		</label>
 	</div>
@@ -73,7 +71,6 @@ $powerbachat_uid     = wp_unique_id( 'calc-' );
 			<span class="slip__title" data-calc-title><?php esc_html_e( 'Estimated bill', 'powerbachat' ); ?></span>
 			<span class="slip__plan" data-calc-plan></span>
 		</div>
-		<ol class="slip__lines" data-calc-lines></ol>
 		<div class="slip__total">
 			<span><?php esc_html_e( 'Payable (approx.)', 'powerbachat' ); ?></span>
 			<strong data-calc-total>—</strong>
@@ -82,11 +79,18 @@ $powerbachat_uid     = wp_unique_id( 'calc-' );
 			<span><?php esc_html_e( 'Average per unit', 'powerbachat' ); ?> <b data-calc-avg>—</b></span>
 			<span data-calc-warn class="slip__warn" hidden></span>
 		</div>
-		<p class="slip__foot">
-			<span data-calc-source></span>
-			<?php esc_html_e( 'Excludes monthly fuel adjustment and arrears.', 'powerbachat' ); ?>
-		</p>
-		<a class="slip__link" href="#" data-calc-link><span data-calc-link-text><?php esc_html_e( 'Open full calculator', 'powerbachat' ); ?></span> <?php echo powerbachat_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+		<details class="slip__details"<?php echo $powerbachat_args['embed'] ? ' open' : ''; ?>>
+			<summary>
+				<span class="slip__show"><?php esc_html_e( 'Show slab-by-slab breakdown', 'powerbachat' ); ?></span>
+				<span class="slip__hide"><?php esc_html_e( 'Hide breakdown', 'powerbachat' ); ?></span>
+			</summary>
+			<ol class="slip__lines" data-calc-lines></ol>
+			<p class="slip__source"><span data-calc-source></span> <?php esc_html_e( 'Excludes monthly fuel adjustment and arrears.', 'powerbachat' ); ?></p>
+		</details>
+		<div class="slip__foot">
+			<a class="slip__link" href="#" data-calc-link><span data-calc-link-text><?php esc_html_e( 'Open full calculator', 'powerbachat' ); ?></span> <?php echo powerbachat_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+			<span class="slip__note"><?php esc_html_e( 'Excl. fuel adjustment', 'powerbachat' ); ?></span>
+		</div>
 	</div>
 	<noscript><p class="calc__noscript"><?php esc_html_e( 'The calculator needs JavaScript. The slab tables on each company page work without it.', 'powerbachat' ); ?></p></noscript>
 </div>

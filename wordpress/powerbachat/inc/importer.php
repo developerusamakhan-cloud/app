@@ -154,6 +154,10 @@ function powerbachat_import_item_run( $item, $overwrite, $publish_at ) {
 		$overwrite = true;
 	}
 	if ( $existing && ! $overwrite ) {
+		// Content stays as it is, but give older posts the cover image they lack.
+		if ( 'post' === $item['type'] ) {
+			powerbachat_import_cover( $existing->ID, $item );
+		}
 		return 'skipped';
 	}
 
@@ -265,7 +269,11 @@ function powerbachat_import_item_run( $item, $overwrite, $publish_at ) {
 
 /**
  * Publishing plan for posts: the first N (by their "order" field) go live now, the
- * rest are scheduled one every X days at 9:00 site time, starting tomorrow-plus-X.
+ * rest are scheduled one every X days at 9:00 site time.
+ *
+ * Posts already on the site keep their status and date. New posts beyond the first
+ * N are queued after the latest post already scheduled (or after today), so adding
+ * more content later continues the same every-other-day rhythm without clashes.
  * Pages are never scheduled, because the home page, menus and footer link to them.
  *
  * @param array $items Content items.
@@ -286,16 +294,37 @@ function powerbachat_schedule_plan( $items ) {
 			return (int) $a['order'] - (int) $b['order'] ?: strcmp( $a['file'], $b['file'] );
 		}
 	);
-	$plan  = array();
-	$i     = 0;
-	$start = new DateTime( 'today 09:00', wp_timezone() );
-	foreach ( array_keys( $posts ) as $key ) {
-		if ( $i < $now_count ) {
+
+	// Start after the last scheduled post, or today at 9:00.
+	$cursor = new DateTime( 'today 09:00', wp_timezone() );
+	$latest = get_posts(
+		array(
+			'post_type'      => 'post',
+			'post_status'    => 'future',
+			'posts_per_page' => 1,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+			'no_found_rows'  => true,
+		)
+	);
+	if ( $latest ) {
+		$last = new DateTime( $latest[0]->post_date, wp_timezone() );
+		if ( $last > $cursor ) {
+			$cursor = $last;
+		}
+	}
+
+	$plan = array();
+	$i    = 0;
+	foreach ( $posts as $key => $item ) {
+		if ( powerbachat_content_existing( $item ) ) {
+			$plan[ $key ] = '';
+		} elseif ( $i < $now_count ) {
 			$plan[ $key ] = '';
 		} else {
-			$when = clone $start;
-			$when->modify( '+' . ( ( $i - $now_count + 1 ) * $every ) . ' days' );
-			$plan[ $key ] = $when->format( 'Y-m-d H:i:s' );
+			$cursor->modify( '+' . $every . ' days' );
+			$cursor->setTime( 9, 0 );
+			$plan[ $key ] = $cursor->format( 'Y-m-d H:i:s' );
 		}
 		++$i;
 	}
@@ -430,16 +459,29 @@ function powerbachat_content_screen() {
 }
 
 /**
- * Attach the shipped cover image (content/images/{slug}.jpg) as the featured image,
- * unless the post already has one.
+ * Attach the shipped cover image (content/images/{slug}.jpg) as the featured image.
+ *
+ * A post with no featured image gets the cover. A post whose featured image is an
+ * older theme cover gets the new version. A featured image you chose yourself is
+ * never touched.
  *
  * @param int   $id   Post ID.
  * @param array $item Content item.
  */
 function powerbachat_import_cover( $id, $item ) {
 	$file = POWERBACHAT_DIR . '/content/images/' . sanitize_file_name( $item['slug'] ) . '.jpg';
-	if ( ! file_exists( $file ) || has_post_thumbnail( $id ) ) {
+	if ( ! file_exists( $file ) ) {
 		return;
+	}
+	$hash    = md5_file( $file );
+	$current = (int) get_post_thumbnail_id( $id );
+	if ( $current ) {
+		// Theme covers carry _pb_cover; covers added by version 1.5.0 are recognised by file name.
+		$is_theme_cover = get_post_meta( $current, '_pb_cover', true ) || preg_match( '#(^|/)' . preg_quote( sanitize_file_name( $item['slug'] ), '#' ) . '(-\d+)?\.jpg$#', (string) get_attached_file( $current ) );
+		if ( ! $is_theme_cover || get_post_meta( $current, '_pb_cover_hash', true ) === $hash ) {
+			return;
+		}
+		wp_delete_attachment( $current, true );
 	}
 	$upload = wp_upload_bits( basename( $file ), null, file_get_contents( $file ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 	if ( ! empty( $upload['error'] ) ) {
@@ -460,5 +502,7 @@ function powerbachat_import_cover( $id, $item ) {
 	require_once ABSPATH . 'wp-admin/includes/image.php';
 	wp_update_attachment_metadata( $attachment_id, wp_generate_attachment_metadata( $attachment_id, $upload['file'] ) );
 	update_post_meta( $attachment_id, '_wp_attachment_image_alt', $item['title'] );
+	update_post_meta( $attachment_id, '_pb_cover', $item['slug'] );
+	update_post_meta( $attachment_id, '_pb_cover_hash', $hash );
 	set_post_thumbnail( $id, $attachment_id );
 }

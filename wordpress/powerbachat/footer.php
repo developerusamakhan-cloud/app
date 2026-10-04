@@ -20,7 +20,7 @@ $powerbachat_legal   = array_values(
 <?php
 // Tariff alerts sign-up at the bottom of every page (the home page has its own).
 if ( ! is_front_page() && apply_filters( 'powerbachat_show_alerts', true ) ) {
-	get_template_part( 'template-parts/home/alerts' );
+	get_template_part( 'template-parts/home/alerts', null, array( 'site' => true ) );
 }
 ?>
 </main>

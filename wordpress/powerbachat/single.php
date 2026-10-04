@@ -59,6 +59,9 @@ while ( have_posts() ) :
 		</footer>
 	</article>
 	<?php
+	get_template_part( 'template-parts/content/related' );
+	?>
+	<?php
 endwhile;
 
 get_footer();

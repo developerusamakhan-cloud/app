@@ -2822,6 +2822,14 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 	background: var(--card);
 }
 
+/* The sign-up box at the bottom of inner pages: its own breathing room. */
+.alerts--site {
+	padding-top: clamp(56px, 7vw, 96px);
+	padding-bottom: clamp(56px, 7vw, 96px);
+	background: transparent;
+	border-top: 1px solid var(--line);
+}
+
 .alerts__card {
 	display: grid;
 	grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
@@ -3583,6 +3591,23 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 
 .slabs--embed {
 	padding: clamp(48px, 6vw, 80px) 0;
+}
+
+/* Related guides under a post */
+.related {
+	padding: clamp(48px, 6vw, 80px) 0 clamp(40px, 5vw, 64px);
+	border-top: 1px solid var(--line);
+}
+
+.related__title {
+	margin: 0 0 28px;
+	font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+	font-weight: 400;
+	letter-spacing: -0.03em;
+}
+
+.related__more {
+	margin: 28px 0 0;
 }
 
 /* Widgets */

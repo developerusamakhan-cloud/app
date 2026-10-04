@@ -8,7 +8,7 @@
 $powerbachat_action   = powerbachat_mod( 'pb_newsletter_url' );
 $powerbachat_whatsapp = powerbachat_mod( 'pb_whatsapp_url' );
 ?>
-<section class="section alerts">
+<section class="section alerts<?php echo ! empty( $args['site'] ) ? ' alerts--site' : ''; ?>">
 	<div class="wrap">
 		<div class="alerts__card reveal">
 			<div class="alerts__copy">

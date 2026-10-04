@@ -64,17 +64,29 @@ function powerbachat_seo_meta() {
 	printf( '<meta property="og:type" content="%s">' . "\n", is_singular( 'post' ) ? 'article' : 'website' );
 	if ( is_singular() ) {
 		printf( '<meta property="og:url" content="%s">' . "\n", esc_url( get_permalink() ) );
-		if ( has_post_thumbnail() ) {
-			$image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-			if ( $image ) {
-				printf( '<meta property="og:image" content="%s">' . "\n", esc_url( $image[0] ) );
-				printf( '<meta property="og:image:width" content="%d">' . "\n", (int) $image[1] );
-				printf( '<meta property="og:image:height" content="%d">' . "\n", (int) $image[2] );
-				printf( '<meta property="og:image:alt" content="%s">' . "\n", esc_attr( get_the_title() ) );
-				echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
-			}
+	} elseif ( is_front_page() ) {
+		printf( '<meta property="og:url" content="%s">' . "\n", esc_url( home_url( '/' ) ) );
+	}
+
+	// A post's featured image, otherwise the site's share image.
+	$image = null;
+	if ( is_singular() && has_post_thumbnail() ) {
+		$src = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+		if ( $src ) {
+			$image = array( $src[0], $src[1], $src[2], get_the_title() );
 		}
 	}
+	if ( ! $image ) {
+		$image = powerbachat_share_image();
+	}
+	printf( '<meta property="og:image" content="%s">' . "\n", esc_url( $image[0] ) );
+	if ( $image[1] && $image[2] ) {
+		printf( '<meta property="og:image:width" content="%d">' . "\n", (int) $image[1] );
+		printf( '<meta property="og:image:height" content="%d">' . "\n", (int) $image[2] );
+	}
+	printf( '<meta property="og:image:alt" content="%s">' . "\n", esc_attr( $image[3] ) );
+	echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+	printf( '<meta name="twitter:image" content="%s">' . "\n", esc_url( $image[0] ) );
 }
 add_action( 'wp_head', 'powerbachat_seo_meta', 2 );
 
@@ -410,3 +422,57 @@ function powerbachat_archive_head() {
 	) . '</script>' . "\n";
 }
 add_action( 'wp_head', 'powerbachat_archive_head', 4 );
+
+/**
+ * The site-wide share image: used for the home page and for any page without a
+ * featured image. Replace it in Customize > PowerBachat > Home page.
+ *
+ * @return array URL, width, height, alt text.
+ */
+function powerbachat_share_image() {
+	$custom = powerbachat_mod( 'pb_share_image' );
+	if ( $custom ) {
+		$id = attachment_url_to_postid( $custom );
+		$src = $id ? wp_get_attachment_image_src( $id, 'full' ) : null;
+		return array( $custom, $src ? $src[1] : 0, $src ? $src[2] : 0, get_bloginfo( 'name' ) );
+	}
+	return array(
+		POWERBACHAT_URI . '/assets/img/share-home.jpg?v=' . rawurlencode( POWERBACHAT_VERSION ),
+		1200,
+		630,
+		/* translators: %s: site name */
+		sprintf( __( '%s: electricity bill calculators, unit rates and solar prices', 'powerbachat' ), get_bloginfo( 'name' ) ),
+	);
+}
+
+/**
+ * Give Yoast SEO and Rank Math the same share image on the home page, and as the
+ * fallback for pages that have no image of their own.
+ */
+function powerbachat_seo_plugin_share_image() {
+	if ( defined( 'WPSEO_VERSION' ) ) {
+		add_action(
+			'wpseo_add_opengraph_additional_images',
+			function ( $images ) {
+				if ( is_front_page() || ! ( is_singular() && has_post_thumbnail() ) ) {
+					$images->add_image( powerbachat_share_image()[0] );
+				}
+			}
+		);
+	}
+	if ( class_exists( 'RankMath' ) ) {
+		add_filter(
+			'rank_math/opengraph/facebook/image',
+			function ( $url ) {
+				return $url ? $url : powerbachat_share_image()[0];
+			}
+		);
+		add_filter(
+			'rank_math/opengraph/twitter/image',
+			function ( $url ) {
+				return $url ? $url : powerbachat_share_image()[0];
+			}
+		);
+	}
+}
+add_action( 'wp', 'powerbachat_seo_plugin_share_image' );

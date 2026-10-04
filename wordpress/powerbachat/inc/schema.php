@@ -105,6 +105,7 @@ function powerbachat_site_schema() {
 				'name'            => get_bloginfo( 'name' ),
 				'publisher'       => array( '@id' => home_url( '/#organization' ) ),
 				'inLanguage'      => 'en',
+				'image'           => powerbachat_share_image()[0],
 				'potentialAction' => array(
 					'@type'       => 'SearchAction',
 					'target'      => home_url( '/?s={search_term_string}' ),

@@ -189,6 +189,19 @@ function powerbachat_customize_register( $wp_customize ) {
 		$wp_customize->add_control( 'pb_hero_text_' . $code, array( 'label' => sprintf( __( 'Hero intro: %s', 'powerbachat' ), $name ), 'section' => 'powerbachat_home', 'type' => 'textarea' ) );
 	}
 
+	$wp_customize->add_setting( 'pb_share_image', array( 'default' => '', 'sanitize_callback' => 'esc_url_raw' ) );
+	$wp_customize->add_control(
+		new WP_Customize_Image_Control(
+			$wp_customize,
+			'pb_share_image',
+			array(
+				'label'       => __( 'Social share image', 'powerbachat' ),
+				'description' => __( 'Shown when the home page (or a page without its own image) is shared on WhatsApp, Facebook or X. Best size 1200 x 630. Leave empty to use the built-in image.', 'powerbachat' ),
+				'section'     => 'powerbachat_home',
+			)
+		)
+	);
+
 	$wp_customize->add_setting( 'pb_geo_lookup', array( 'default' => true, 'sanitize_callback' => 'wp_validate_boolean' ) );
 	$wp_customize->add_control(
 		'pb_geo_lookup',

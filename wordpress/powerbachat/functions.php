@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'POWERBACHAT_VERSION', '1.6.0' );
+define( 'POWERBACHAT_VERSION', '1.6.1' );
 define( 'POWERBACHAT_DIR', get_template_directory() );
 define( 'POWERBACHAT_URI', get_template_directory_uri() );
 

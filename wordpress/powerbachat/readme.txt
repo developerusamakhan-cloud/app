@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -181,6 +181,14 @@ in the article schema. Replace any of them by setting a different featured image
 To make covers for new posts, run wordpress/tools/covers.js (see the notes at the
 top of that file).
 
+== Social share image ==
+
+The home page shares with a branded 1200 x 630 image (assets/img/share-home.jpg)
+on WhatsApp, Facebook and X. The same image is the fallback for any page without
+a featured image; guide posts share their own cover. Replace it in Customize >
+PowerBachat > Home page > Social share image. With Yoast SEO or Rank Math active,
+the image is passed to the plugin as well.
+
 == Comments ==
 
 Comments are switched off everywhere: no comment forms or lists, no pingbacks or
@@ -241,6 +249,9 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.6.1 =
+* Social share image for the home page (1200 x 630), also used as the fallback for pages without an image; Twitter large image card; editable in the Customizer.
 
 = 1.6.0 =
 * 15 new guide posts (5 per country), scheduled one every other day after the existing queue, rotating Pakistan, India and Bangladesh, each with internal links and links to official sources.

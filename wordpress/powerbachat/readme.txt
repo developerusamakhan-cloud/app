@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -158,7 +158,11 @@ form action URL in the Customizer; the built-in list is then not used for sign-u
 
 == Contact form ==
 
-[powerbachat_contact] (used on /contact-us/) saves each message under Messages in
+[powerbachat_contact] (used on /contact-us/) sends without reloading the page
+(AJAX through admin-ajax.php, which keeps working even when a security plugin blocks
+the REST API for visitors). It shows a "Sending" state, a message under each field
+that needs fixing, and a thank-you card. With JavaScript off it still works and comes
+back to the page with a message. It saves each message under Messages in
 the admin and emails it to the contact address (Customize > PowerBachat > Alerts &
 footer > Contact email, default hello@powerbachat.com: make sure that mailbox
 exists). Messages older than 12 months are deleted automatically. Spam protection:
@@ -277,6 +281,10 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.7.2 =
+* Contact form, tariff alerts and lead popup now send through admin-ajax.php, so they work even when a security plugin blocks the REST API.
+* Contact form: sending state, a message under each field that needs fixing, a thank-you card with "Send another message", and a fallback that works without JavaScript.
 
 = 1.7.1 =
 * Favicon in 48, 96 and 192 pixel sizes so Google Search and Search Console can use it (Google needs a multiple of 48px).

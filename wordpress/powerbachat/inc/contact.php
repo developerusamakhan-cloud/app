@@ -109,11 +109,27 @@ function powerbachat_rest_contact( $request ) {
 	$country = sanitize_key( (string) $request['country'] );
 	$topics  = powerbachat_contact_topics();
 
-	if ( ! $name || ! is_email( $email ) || mb_strlen( $message ) < 10 ) {
-		return $fail( __( 'Please add your name, a valid email address and a short message.', 'powerbachat' ) );
+	$fields = array();
+	if ( ! $name ) {
+		$fields['name'] = __( 'Please tell us your name.', 'powerbachat' );
 	}
-	if ( mb_strlen( $message ) > 5000 ) {
-		return $fail( __( 'Please keep your message under 5,000 characters.', 'powerbachat' ) );
+	if ( ! is_email( $email ) ) {
+		$fields['email'] = __( 'Please enter a valid email address so we can reply.', 'powerbachat' );
+	}
+	if ( mb_strlen( $message ) < 10 ) {
+		$fields['message'] = __( 'Please write a little more (at least 10 characters).', 'powerbachat' );
+	} elseif ( mb_strlen( $message ) > 5000 ) {
+		$fields['message'] = __( 'Please keep your message under 5,000 characters.', 'powerbachat' );
+	}
+	if ( $fields ) {
+		return new WP_REST_Response(
+			array(
+				'ok'      => false,
+				'message' => __( 'Please check the highlighted fields.', 'powerbachat' ),
+				'fields'  => $fields,
+			),
+			400
+		);
 	}
 	if ( ! powerbachat_rate_ok( 'contact', 5 ) ) {
 		return $fail( __( 'Too many messages. Please try again in an hour.', 'powerbachat' ), 429 );
@@ -201,15 +217,28 @@ add_action( 'powerbachat_daily', 'powerbachat_messages_cleanup' );
 function powerbachat_contact_shortcode() {
 	ob_start();
 	?>
-	<form class="contact-form" id="contact-form" data-pb-form="contact" novalidate>
+	<?php
+	$sent  = isset( $_GET['pb_sent'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$error = isset( $_GET['pb_error'] ) ? sanitize_text_field( wp_unslash( $_GET['pb_error'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	?>
+	<div class="contact-done" data-contact-done <?php echo $sent ? '' : 'hidden'; ?>>
+		<span class="contact-done__icon" aria-hidden="true"><?php echo powerbachat_icon( 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+		<p class="contact-done__title"><?php esc_html_e( 'Message sent. Thank you!', 'powerbachat' ); ?></p>
+		<p><?php esc_html_e( 'It has reached us and we usually reply within two working days. Keep an eye on your inbox, and your spam folder just in case.', 'powerbachat' ); ?></p>
+		<button type="button" class="btn btn--ghost btn--sm" data-contact-again><?php esc_html_e( 'Send another message', 'powerbachat' ); ?></button>
+	</div>
+	<form class="contact-form" id="contact-form" data-pb-form="contact" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" novalidate <?php echo $sent ? 'hidden' : ''; ?>>
+		<input type="hidden" name="action" value="pb_contact">
 		<div class="contact-form__row">
 			<p>
 				<label for="pb-name"><?php esc_html_e( 'Your name', 'powerbachat' ); ?></label>
-				<input id="pb-name" name="name" type="text" autocomplete="name" required maxlength="80">
+				<input id="pb-name" name="name" type="text" autocomplete="name" required maxlength="80" aria-describedby="pb-name-error">
+				<span class="field-error" id="pb-name-error" data-error-for="name" hidden></span>
 			</p>
 			<p>
 				<label for="pb-email"><?php esc_html_e( 'Email address', 'powerbachat' ); ?></label>
-				<input id="pb-email" name="email" type="email" autocomplete="email" required>
+				<input id="pb-email" name="email" type="email" autocomplete="email" required aria-describedby="pb-email-error">
+				<span class="field-error" id="pb-email-error" data-error-for="email" hidden></span>
 			</p>
 		</div>
 		<p>
@@ -222,14 +251,15 @@ function powerbachat_contact_shortcode() {
 		</p>
 		<p>
 			<label for="pb-message"><?php esc_html_e( 'Message', 'powerbachat' ); ?></label>
-			<textarea id="pb-message" name="message" rows="6" required minlength="10" maxlength="5000"></textarea>
+			<textarea id="pb-message" name="message" rows="6" required minlength="10" maxlength="5000" aria-describedby="pb-message-error"></textarea>
+			<span class="field-error" id="pb-message-error" data-error-for="message" hidden></span>
 		</p>
 		<p class="contact-form__trap" aria-hidden="true">
 			<label for="pb-website"><?php esc_html_e( 'Leave this empty', 'powerbachat' ); ?></label>
 			<input id="pb-website" name="website" type="text" tabindex="-1" autocomplete="off">
 		</p>
 		<p class="contact-form__foot">
-			<button class="btn btn--ink" type="submit"><?php esc_html_e( 'Send message', 'powerbachat' ); ?></button>
+			<button class="btn btn--ink contact-form__submit" type="submit"><span class="contact-form__label"><?php esc_html_e( 'Send message', 'powerbachat' ); ?></span><span class="contact-form__sending"><?php esc_html_e( 'Sending', 'powerbachat' ); ?></span></button>
 			<span class="contact-form__note">
 				<?php
 				printf(
@@ -240,7 +270,7 @@ function powerbachat_contact_shortcode() {
 				?>
 			</span>
 		</p>
-		<p class="form-status" data-form-status role="status" aria-live="polite" hidden></p>
+		<p class="form-status<?php echo $error ? ' is-error' : ''; ?>" data-form-status role="status" aria-live="polite" <?php echo $error ? '' : 'hidden'; ?>><?php echo esc_html( $error ); ?></p>
 	</form>
 	<?php
 	return ob_get_clean();

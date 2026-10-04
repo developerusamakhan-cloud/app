@@ -5080,3 +5080,101 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 		display: none !important;
 	}
 }
+
+/* ---------- Contact form: errors, sending state, success card ---------- */
+
+.field-error {
+	display: block;
+	margin-top: 6px;
+	font-size: 0.84rem;
+	font-weight: 600;
+	color: #9b2c1f;
+}
+
+.contact-form [aria-invalid="true"] {
+	border-color: #c2412d;
+	box-shadow: 0 0 0 3px rgba(194, 65, 45, 0.15);
+}
+
+.contact-form__submit {
+	position: relative;
+	min-width: 170px;
+}
+
+.contact-form__sending {
+	display: none;
+	align-items: center;
+	gap: 0.6em;
+}
+
+.contact-form__sending::before {
+	content: "";
+	width: 1em;
+	height: 1em;
+	border: 2px solid currentColor;
+	border-right-color: transparent;
+	border-radius: 50%;
+	animation: pb-spin 0.7s linear infinite;
+}
+
+.contact-form.is-sending .contact-form__label {
+	display: none;
+}
+
+.contact-form.is-sending .contact-form__sending {
+	display: inline-flex;
+}
+
+.contact-form.is-sending .contact-form__submit {
+	cursor: progress;
+	opacity: 0.85;
+}
+
+@keyframes pb-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.contact-done {
+	margin: 1.5em 0 2em;
+	padding: clamp(24px, 4vw, 40px);
+	border: 1px solid var(--line);
+	border-radius: var(--r-lg);
+	background: var(--card);
+	text-align: center;
+	outline: none;
+	animation: pb-pop 0.45s var(--ease);
+}
+
+.contact-done__icon {
+	display: inline-grid;
+	place-items: center;
+	width: 56px;
+	height: 56px;
+	margin-bottom: 14px;
+	border-radius: 50%;
+	background: var(--leaf, #2b7652);
+	color: #fff;
+	font-size: 1.6rem;
+}
+
+.contact-done__title {
+	margin: 0 0 8px;
+	font-family: var(--f-display);
+	font-size: 1.6rem;
+	letter-spacing: -0.02em;
+}
+
+.contact-done p {
+	max-width: 32em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@keyframes pb-pop {
+	from {
+		opacity: 0;
+		transform: translateY(10px) scale(0.98);
+	}
+}

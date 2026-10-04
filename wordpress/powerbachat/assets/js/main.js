@@ -985,59 +985,70 @@
 	 * Tariff alerts and contact form (built-in, posted to the REST API)
 	 * ---------------------------------------------------------------- */
 
-	function postForm(form, url, onDone) {
+	// Send a form through admin-ajax.php and show the result next to it.
+	function postForm(form, action, onDone) {
 		var button = form.querySelector('[type="submit"]');
 		var status = form.querySelector('[data-form-status]') || form.parentNode.querySelector('[data-form-status]');
-		var data = {};
-		Array.prototype.forEach.call(form.elements, function (el) {
-			if (el.name) {
-				data[el.name] = el.value;
-			}
-		});
-		data.country = document.documentElement.getAttribute('data-country') || '';
+		var data = new FormData(form);
+		data.set('action', action);
+		data.set('country', document.documentElement.getAttribute('data-country') || '');
 
 		function show(message, ok) {
 			if (!status) {
 				return;
 			}
 			status.textContent = message;
-			status.hidden = false;
+			status.hidden = !message;
 			status.classList.toggle('is-error', !ok);
 		}
+		function fieldErrors(fields) {
+			$$('[data-error-for]', form).forEach(function (el) {
+				var name = el.getAttribute('data-error-for');
+				var input = form.elements[name];
+				var msg = fields && fields[name];
+				el.textContent = msg || '';
+				el.hidden = !msg;
+				if (input) {
+					input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+				}
+			});
+			var first = fields && form.querySelector('[aria-invalid="true"]');
+			if (first) {
+				first.focus();
+			}
+		}
+		function busy(on) {
+			form.classList.toggle('is-sending', on);
+			if (button) {
+				button.disabled = on;
+			}
+		}
 
-		if (!window.fetch || !url) {
-			show(CFG.formError || 'Error', false);
+		if (!window.fetch || !CFG.ajaxUrl) {
+			form.submit();
 			return;
 		}
-		if (button) {
-			button.disabled = true;
-		}
-		fetch(url, {
-			method: 'POST',
-			credentials: 'same-origin',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(data)
-		})
+		fieldErrors(null);
+		show('', true);
+		busy(true);
+		fetch(CFG.ajaxUrl, { method: 'POST', credentials: 'same-origin', body: data })
 			.then(function (r) {
 				return r.json().catch(function () {
 					return {};
 				});
 			})
 			.then(function (res) {
-				if (button) {
-					button.disabled = false;
-				}
+				busy(false);
 				if (res && res.ok) {
 					show(res.message || '', true);
 					onDone(res);
 				} else {
+					fieldErrors(res && res.fields);
 					show((res && res.message) || CFG.formError, false);
 				}
 			})
 			.catch(function () {
-				if (button) {
-					button.disabled = false;
-				}
+				busy(false);
 				show(CFG.formError, false);
 			});
 	}
@@ -1051,23 +1062,49 @@
 			}
 			form.addEventListener('submit', function (e) {
 				e.preventDefault();
-				postForm(form, CFG.subscribeUrl, function () {
+				postForm(form, 'pb_subscribe', function () {
 					document.cookie = 'pb_alert=1;path=/;max-age=2592000;SameSite=Lax';
 					form.hidden = true;
 				});
 			});
 		});
 		$$('[data-pb-form="contact"]').forEach(function (form) {
+			var done = form.parentNode.querySelector('[data-contact-done]');
+			var again = done && done.querySelector('[data-contact-again]');
+			// Clear a field's error as soon as it is edited.
+			form.addEventListener('input', function (e) {
+				var err = e.target.name && form.querySelector('[data-error-for="' + e.target.name + '"]');
+				if (err && !err.hidden) {
+					err.hidden = true;
+					e.target.setAttribute('aria-invalid', 'false');
+				}
+			});
 			form.addEventListener('submit', function (e) {
 				e.preventDefault();
-				if (!form.checkValidity()) {
-					form.reportValidity();
-					return;
-				}
-				postForm(form, CFG.contactUrl, function () {
+				postForm(form, 'pb_contact', function () {
 					form.reset();
+					if (done) {
+						form.hidden = true;
+						done.hidden = false;
+						done.setAttribute('tabindex', '-1');
+						done.focus();
+					}
 				});
 			});
+			if (again) {
+				again.addEventListener('click', function () {
+					done.hidden = true;
+					form.hidden = false;
+					var status = form.querySelector('[data-form-status]');
+					if (status) {
+						status.hidden = true;
+					}
+					if (history.replaceState && /[?&]pb_sent=/.test(location.search)) {
+						history.replaceState(null, '', location.pathname + location.hash);
+					}
+					form.elements.name.focus();
+				});
+			}
 		});
 	}
 
@@ -1272,18 +1309,14 @@
 			// Open the studio site straight away (inside the click, so it is not blocked).
 			var target = studio + (studio.indexOf('?') > -1 ? '&' : '?') + 'ref=' + encodeURIComponent(location.hostname);
 			window.open(target, '_blank', 'noopener');
-			if (window.fetch && CFG.leadUrl) {
-				fetch(CFG.leadUrl, {
-					method: 'POST',
-					keepalive: true,
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({
-						contact: contact,
-						website: form.elements.website.value,
-						page: location.pathname,
-						country: document.documentElement.getAttribute('data-country') || ''
-					})
-				}).catch(function () {});
+			if (window.fetch && CFG.ajaxUrl) {
+				var body = new FormData();
+				body.set('action', 'pb_lead');
+				body.set('contact', contact);
+				body.set('website', form.elements.website.value);
+				body.set('page', location.pathname);
+				body.set('country', document.documentElement.getAttribute('data-country') || '');
+				fetch(CFG.ajaxUrl, { method: 'POST', credentials: 'same-origin', keepalive: true, body: body }).catch(function () {});
 			}
 			form.reset();
 			status.textContent = box.getAttribute('data-thanks') || 'Thank you. We will be in touch within 24 hours.';

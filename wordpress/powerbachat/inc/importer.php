@@ -11,7 +11,7 @@
  *   "seo_title": "…", "meta_description": "…", "focus_keyword": "…" }
  * -->
  *
- * Nothing is overwritten unless you ask: "Create missing" only adds new items, and
+ * "Create missing" adds new items and refreshes items nobody edited on the site, and
  * an item you edited in WordPress is flagged so a re-import does not surprise you.
  *
  * @package PowerBachat
@@ -153,11 +153,19 @@ function powerbachat_import_item_run( $item, $overwrite, $publish_at ) {
 	if ( $wp_draft ) {
 		$overwrite = true;
 	}
+	// An item nobody has edited on the site is updated when the theme's copy changes.
+	if ( $existing && ! $overwrite ) {
+		$stored = get_post_meta( $existing->ID, '_pb_content_hash', true );
+		if ( $stored && md5( $existing->post_content ) === $stored && md5( powerbachat_to_blocks( $item['body'] ) ) !== $stored ) {
+			$overwrite = true;
+		}
+	}
 	if ( $existing && ! $overwrite ) {
 		// Content stays as it is, but give older posts the cover image they lack.
 		if ( 'post' === $item['type'] ) {
 			powerbachat_import_cover( $existing->ID, $item );
 		}
+		powerbachat_write_seo( $existing->ID, $item );
 		return 'skipped';
 	}
 
@@ -218,45 +226,7 @@ function powerbachat_import_item_run( $item, $overwrite, $publish_at ) {
 	if ( 'page' === $item['type'] ) {
 		update_post_meta( $id, '_wp_page_template', $item['template'] ? $item['template'] : 'default' );
 	}
-	$secondary = array_values( array_filter( array_map( 'sanitize_text_field', (array) $item['secondary_keywords'] ) ) );
-	$all_kw    = array_merge( array( $item['focus_keyword'] ), $secondary );
-	$seo       = array(
-		'pb_secondary_keywords'    => implode( ', ', $secondary ),
-		'pb_schema_type'           => $item['schema_type'],
-		'_yoast_wpseo_focuskeywords' => $secondary ? wp_json_encode(
-			array_map(
-				function ( $kw ) {
-					return array(
-						'keyword' => $kw,
-						'score'   => 0,
-					);
-				},
-				$secondary
-			)
-		) : '',
-		'pb_seo_title'             => $item['seo_title'],
-		'pb_meta_description'      => $item['meta_description'],
-		'pb_focus_keyword'         => $item['focus_keyword'],
-		// Yoast SEO.
-		'_yoast_wpseo_title'       => $item['seo_title'],
-		'_yoast_wpseo_metadesc'    => $item['meta_description'],
-		'_yoast_wpseo_focuskw'     => $item['focus_keyword'],
-		// Rank Math.
-		'rank_math_title'          => $item['seo_title'],
-		'rank_math_description'    => $item['meta_description'],
-		'rank_math_focus_keyword'  => implode( ',', array_filter( $all_kw ) ),
-		// All in One SEO (legacy meta) and SEOPress.
-		'_aioseo_title'            => $item['seo_title'],
-		'_aioseo_description'      => $item['meta_description'],
-		'_seopress_titles_title'   => $item['seo_title'],
-		'_seopress_titles_desc'    => $item['meta_description'],
-		'_seopress_analysis_target_kw' => implode( ',', array_filter( $all_kw ) ),
-	);
-	foreach ( $seo as $key => $value ) {
-		if ( '' !== $value ) {
-			update_post_meta( $id, $key, $value );
-		}
-	}
+	powerbachat_write_seo( $id, $item );
 	update_post_meta( $id, '_pb_content_file', $item['file'] );
 	powerbachat_import_cover( $id, $item );
 	if ( 'page' === $item['type'] && 'privacy-policy' === $item['path'] ) {
@@ -376,6 +346,7 @@ function powerbachat_content_handle() {
 		$result = powerbachat_import_item( $item, 'overwrite' === $mode, isset( $plan[ $key ] ) ? $plan[ $key ] : '' );
 		++$tally[ $result ];
 	}
+	powerbachat_rank_math_home();
 	flush_rewrite_rules( false );
 	set_transient( 'powerbachat_import_result', $tally, 60 );
 	wp_safe_redirect( admin_url( 'themes.php?page=powerbachat-content' ) );
@@ -393,7 +364,7 @@ function powerbachat_content_screen() {
 	?>
 	<div class="wrap">
 		<h1><?php esc_html_e( 'PowerBachat content', 'powerbachat' ); ?></h1>
-		<p><?php esc_html_e( 'Ready-written pages and guides that ship with the theme. "Create missing" only adds what is not on your site yet. Your own edits are never touched unless you re-import that item.', 'powerbachat' ); ?></p>
+		<p><?php esc_html_e( 'Ready-written pages and guides that ship with the theme. "Create missing" adds what is not on your site yet, updates items you have not edited when the theme has a newer version, adds cover images and fills the SEO fields (Rank Math: five keywords per item). Anything you edited on the site, including SEO fields you changed, is never touched unless you re-import that item.', 'powerbachat' ); ?></p>
 		<?php if ( $result ) : ?>
 			<div class="notice notice-success"><p>
 				<?php
@@ -505,4 +476,108 @@ function powerbachat_import_cover( $id, $item ) {
 	update_post_meta( $attachment_id, '_pb_cover', $item['slug'] );
 	update_post_meta( $attachment_id, '_pb_cover_hash', $hash );
 	set_post_thumbnail( $id, $attachment_id );
+}
+
+/**
+ * Write the SEO fields for one item: the theme's own fields plus Rank Math, Yoast,
+ * All in One SEO and SEOPress. Rank Math gets five keywords: the focus keyword
+ * followed by four secondary keywords.
+ *
+ * A field is only written when it is empty or still holds the value the theme wrote
+ * last time, so titles, descriptions and keywords you change in your SEO plugin are
+ * never overwritten by a later import.
+ *
+ * @param int   $id   Post ID.
+ * @param array $item Content item.
+ */
+function powerbachat_write_seo( $id, $item ) {
+	$secondary = array_slice( array_values( array_filter( array_map( 'sanitize_text_field', (array) $item['secondary_keywords'] ) ) ), 0, 4 );
+	$all_kw    = array_values( array_filter( array_merge( array( $item['focus_keyword'] ), $secondary ) ) );
+	$seo       = array(
+		// Theme.
+		'pb_seo_title'                 => $item['seo_title'],
+		'pb_meta_description'          => $item['meta_description'],
+		'pb_focus_keyword'             => $item['focus_keyword'],
+		'pb_secondary_keywords'        => implode( ', ', $secondary ),
+		'pb_schema_type'               => $item['schema_type'],
+		// Rank Math: up to five comma-separated keywords, the first is the focus keyword.
+		'rank_math_title'              => $item['seo_title'],
+		'rank_math_description'        => $item['meta_description'],
+		'rank_math_focus_keyword'      => implode( ',', $all_kw ),
+		'rank_math_facebook_title'     => $item['seo_title'],
+		'rank_math_facebook_description' => $item['meta_description'],
+		'rank_math_twitter_use_facebook' => 'on',
+		// Yoast SEO.
+		'_yoast_wpseo_title'           => $item['seo_title'],
+		'_yoast_wpseo_metadesc'        => $item['meta_description'],
+		'_yoast_wpseo_focuskw'         => $item['focus_keyword'],
+		'_yoast_wpseo_focuskeywords'   => $secondary ? wp_json_encode(
+			array_map(
+				function ( $kw ) {
+					return array(
+						'keyword' => $kw,
+						'score'   => 0,
+					);
+				},
+				$secondary
+			)
+		) : '',
+		// All in One SEO (legacy meta) and SEOPress.
+		'_aioseo_title'                => $item['seo_title'],
+		'_aioseo_description'          => $item['meta_description'],
+		'_seopress_titles_title'       => $item['seo_title'],
+		'_seopress_titles_desc'        => $item['meta_description'],
+		'_seopress_analysis_target_kw' => implode( ',', $all_kw ),
+	);
+	$last   = (array) get_post_meta( $id, '_pb_seo_written', true );
+	$legacy = ! metadata_exists( 'post', $id, '_pb_seo_written' );
+	// Values the theme itself stored before it kept a record (versions up to 1.6.1).
+	$old_title = get_post_meta( $id, 'pb_seo_title', true );
+	$old_desc  = get_post_meta( $id, 'pb_meta_description', true );
+	$old_focus = get_post_meta( $id, 'pb_focus_keyword', true );
+	foreach ( $seo as $key => $value ) {
+		if ( '' === $value ) {
+			continue;
+		}
+		$current = get_post_meta( $id, $key, true );
+		$ours    = isset( $last[ $key ] ) && $last[ $key ] === $current;
+		if ( $legacy && ! $ours && '' !== $current ) {
+			$ours = 0 === strpos( $key, 'pb_' )
+				|| ( $old_title && $current === $old_title )
+				|| ( $old_desc && $current === $old_desc )
+				|| ( $old_focus && 0 === stripos( (string) $current, $old_focus ) )
+				|| 'on' === $current;
+		}
+		if ( '' === $current || $ours ) {
+			update_post_meta( $id, $key, $value );
+			$last[ $key ] = $value;
+		}
+	}
+	update_post_meta( $id, '_pb_seo_written', $last );
+}
+
+/**
+ * Rank Math home page title and description, set once if still empty.
+ */
+function powerbachat_rank_math_home() {
+	$opts = get_option( 'rank-math-options-titles' );
+	if ( ! is_array( $opts ) ) {
+		return;
+	}
+	$changed = false;
+	if ( empty( $opts['homepage_title'] ) || '%sitename% %page% %sep% %sitedesc%' === $opts['homepage_title'] ) {
+		$opts['homepage_title'] = 'Electricity Bill Calculator, Unit Rates and Solar Prices | PowerBachat';
+		$changed                = true;
+	}
+	if ( empty( $opts['homepage_description'] ) ) {
+		$opts['homepage_description'] = 'Free electricity bill calculators for Pakistan, India and Bangladesh, with current unit rates, slab tables, solar system prices and simple guides.';
+		$changed                      = true;
+	}
+	if ( empty( $opts['homepage_facebook_image'] ) && function_exists( 'powerbachat_share_image' ) ) {
+		$opts['homepage_facebook_image'] = powerbachat_share_image()[0];
+		$changed                         = true;
+	}
+	if ( $changed ) {
+		update_option( 'rank-math-options-titles', $opts );
+	}
 }

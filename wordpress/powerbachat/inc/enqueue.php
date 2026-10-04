@@ -52,6 +52,7 @@ function powerbachat_enqueue_assets() {
 		'geoUrl'         => esc_url_raw( rest_url( 'powerbachat/v1/country' ) ),
 		'subscribeUrl'   => esc_url_raw( rest_url( 'powerbachat/v1/subscribe' ) ),
 		'contactUrl'     => esc_url_raw( rest_url( 'powerbachat/v1/contact' ) ),
+		'leadUrl'        => esc_url_raw( rest_url( 'powerbachat/v1/lead' ) ),
 		'formError'      => __( 'Something went wrong. Please check your connection and try again.', 'powerbachat' ),
 	);
 	wp_add_inline_script( 'powerbachat-main', 'window.PowerBachat = ' . wp_json_encode( $config ) . ';', 'before' );

@@ -43,6 +43,13 @@ function powerbachat_mod_defaults() {
 		'pb_contact_email'   => 'hello@powerbachat.com',
 		'pb_legal_country'   => 'Pakistan',
 		'pb_credit_name'     => 'Vyntic Studio',
+		'pb_cookie_banner'   => true,
+		'pb_lead_popup'      => true,
+		'pb_lead_delay'      => 75,
+		'pb_lead_every'      => 24,
+		'pb_lead_url'        => 'https://vyntic.studio/',
+		'pb_lead_title'      => 'Want a website like this for your business?',
+		'pb_lead_text'       => 'PowerBachat was designed and built by Vyntic Studio. We make fast, search-friendly websites that bring in real customers. Leave your email or WhatsApp and we will send you a free plan and quote.',
 		'pb_credit_url'      => 'https://vyntic.studio/',
 		'pb_footer_note'     => 'PowerBachat is an independent site. We are not affiliated with any electricity regulator, distribution company or government body. Figures are estimates; your official bill is the final word.',
 	);
@@ -313,6 +320,29 @@ function powerbachat_customize_register( $wp_customize ) {
 			'type'        => 'text',
 		)
 	);
+
+	// Popups.
+	$wp_customize->add_section(
+		'powerbachat_popups',
+		array(
+			'title' => __( 'Popups', 'powerbachat' ),
+			'panel' => 'powerbachat',
+		)
+	);
+	$wp_customize->add_setting( 'pb_cookie_banner', array( 'default' => true, 'sanitize_callback' => 'wp_validate_boolean' ) );
+	$wp_customize->add_control( 'pb_cookie_banner', array( 'label' => __( 'Show the cookie consent popup', 'powerbachat' ), 'section' => 'powerbachat_popups', 'type' => 'checkbox' ) );
+	$wp_customize->add_setting( 'pb_lead_popup', array( 'default' => true, 'sanitize_callback' => 'wp_validate_boolean' ) );
+	$wp_customize->add_control( 'pb_lead_popup', array( 'label' => __( 'Show the "website like this" lead popup', 'powerbachat' ), 'section' => 'powerbachat_popups', 'type' => 'checkbox' ) );
+	$wp_customize->add_setting( 'pb_lead_delay', array( 'default' => $d['pb_lead_delay'], 'sanitize_callback' => 'absint' ) );
+	$wp_customize->add_control( 'pb_lead_delay', array( 'label' => __( 'Show after this many seconds on the site', 'powerbachat' ), 'section' => 'powerbachat_popups', 'type' => 'number', 'input_attrs' => array( 'min' => 10, 'max' => 600 ) ) );
+	$wp_customize->add_setting( 'pb_lead_every', array( 'default' => $d['pb_lead_every'], 'sanitize_callback' => 'absint' ) );
+	$wp_customize->add_control( 'pb_lead_every', array( 'label' => __( 'Show at most once every (hours)', 'powerbachat' ), 'section' => 'powerbachat_popups', 'type' => 'number', 'input_attrs' => array( 'min' => 1, 'max' => 720 ) ) );
+	$wp_customize->add_setting( 'pb_lead_url', array( 'default' => $d['pb_lead_url'], 'sanitize_callback' => 'esc_url_raw' ) );
+	$wp_customize->add_control( 'pb_lead_url', array( 'label' => __( 'Studio website (visitors are sent here)', 'powerbachat' ), 'section' => 'powerbachat_popups', 'type' => 'url' ) );
+	$wp_customize->add_setting( 'pb_lead_title', array( 'default' => $d['pb_lead_title'], 'sanitize_callback' => 'sanitize_text_field' ) );
+	$wp_customize->add_control( 'pb_lead_title', array( 'label' => __( 'Lead popup headline', 'powerbachat' ), 'section' => 'powerbachat_popups', 'type' => 'text' ) );
+	$wp_customize->add_setting( 'pb_lead_text', array( 'default' => $d['pb_lead_text'], 'sanitize_callback' => 'sanitize_textarea_field' ) );
+	$wp_customize->add_control( 'pb_lead_text', array( 'label' => __( 'Lead popup text', 'powerbachat' ), 'section' => 'powerbachat_popups', 'type' => 'textarea' ) );
 
 	$wp_customize->add_setting( 'pb_credit_name', array( 'default' => $d['pb_credit_name'], 'sanitize_callback' => 'sanitize_text_field' ) );
 	$wp_customize->add_control(

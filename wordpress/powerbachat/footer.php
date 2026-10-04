@@ -102,6 +102,9 @@ if ( ! is_front_page() && apply_filters( 'powerbachat_show_alerts', true ) ) {
 						<?php foreach ( $powerbachat_legal as $powerbachat_link ) : ?>
 							<li><a href="<?php echo esc_url( home_url( $powerbachat_link[1] ) ); ?>"><?php echo esc_html( $powerbachat_link[0] ); ?></a></li>
 						<?php endforeach; ?>
+						<?php if ( powerbachat_mod( 'pb_cookie_banner' ) ) : ?>
+							<li><button type="button" class="site-footer__linkbtn" data-cookie-settings><?php esc_html_e( 'Cookie settings', 'powerbachat' ); ?></button></li>
+						<?php endif; ?>
 					</ul>
 				<?php endif; ?>
 				<?php if ( powerbachat_mod( 'pb_credit_name' ) ) : ?>

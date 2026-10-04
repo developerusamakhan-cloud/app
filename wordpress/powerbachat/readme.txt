@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.6.1
+Stable tag: 1.7.0
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -181,6 +181,28 @@ in the article schema. Replace any of them by setting a different featured image
 To make covers for new posts, run wordpress/tools/covers.js (see the notes at the
 top of that file).
 
+== Cookie consent popup ==
+
+On the first visit a popup in the theme's style asks which cookies are okay:
+Essential (always on), Analytics and Marketing (off until switched on), with Accept
+all, Essential only and Save choices. The choice is kept for 6 months in the
+pb_consent cookie, and "Cookie settings" in the footer opens the popup again.
+Google consent mode v2 defaults are set to "denied" before any tag loads and
+updated when the visitor chooses, so Google Analytics, Site Kit or Tag Manager
+respect the choice automatically. Other scripts can read window.pbConsent or
+listen for the "pb:consent" event. Switch it off in Customize > PowerBachat > Popups.
+
+== Lead popup (Vyntic Studio) ==
+
+After a visitor has spent 75 seconds on the site (counted across pages, only while
+the tab is visible), a popup offers "Want a website like this for your business?"
+with a free quote form. It shows at most once every 24 hours, never on top of the
+cookie popup, never while someone is typing and never on the contact page.
+Sending the form saves the enquiry under Leads in the admin, emails it to the
+contact address and opens https://vyntic.studio/ in a new tab with campaign tags
+(utm_source=powerbachat). "See our work" links there too. Delay, frequency,
+headline, text and link are in Customize > PowerBachat > Popups.
+
 == Social share image ==
 
 The home page shares with a branded 1200 x 630 image (assets/img/share-home.jpg)
@@ -204,9 +226,13 @@ in assets/img/. Uploading a Site Icon in Customize > Site Identity replaces it.
 
 == SEO details ==
 
-Each content file carries a primary (focus) keyword and up to four secondary
-keywords. The importer writes them to Rank Math (multiple focus keywords), Yoast
-(related keyphrases, Premium) and SEOPress. Without an SEO plugin, the theme prints
+Each content file carries a primary (focus) keyword and four secondary keywords.
+The importer writes them to Rank Math as five focus keywords (primary first), plus
+the SEO title, meta description and social title/description; also to Yoast
+(related keyphrases, Premium) and SEOPress. "Create missing" fills these fields on
+items already on the site too, but never overwrites a field you changed in the SEO
+plugin. With Rank Math active it also sets the home page title, description and
+share image in Rank Math > Titles & Meta > Homepage if they are still empty. Without an SEO plugin, the theme prints
 the title, meta description, Open Graph tags and JSON-LD: Organization (logo,
 contact point), WebSite with search, BreadcrumbList, WebPage / AboutPage /
 ContactPage / BlogPosting (with keywords, word count, section and country),
@@ -249,6 +275,12 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.7.0 =
+* Rank Math: five keywords (focus plus four secondary), SEO title, meta description and social fields on every page and post, also written to items already on the site without overwriting your own edits; Rank Math home page title, description and image.
+* Cookie consent popup with Essential, Analytics and Marketing choices, Google consent mode v2 and a "Cookie settings" link in the footer.
+* Lead popup for Vyntic Studio: shown once per 24 hours after 75 seconds on the site, saves leads under Leads and opens vyntic.studio with campaign tags.
+* "Create missing" now also updates pages and posts you have not edited when the theme has a newer version (cookie and privacy policies updated for the popups).
 
 = 1.6.1 =
 * Social share image for the home page (1200 x 630), also used as the fallback for pages without an image; Twitter large image card; editable in the Customizer.

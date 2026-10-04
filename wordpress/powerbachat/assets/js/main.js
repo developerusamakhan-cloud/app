@@ -1072,6 +1072,226 @@
 	}
 
 	/* ------------------------------------------------------------------
+	 * Cookie consent
+	 * ---------------------------------------------------------------- */
+
+	function initConsent() {
+		var box = document.getElementById('pb-consent');
+		if (!box) {
+			return;
+		}
+		var state = window.pbConsent || { set: false, analytics: false, marketing: false };
+		var inputs = {
+			analytics: box.querySelector('[data-consent="analytics"]'),
+			marketing: box.querySelector('[data-consent="marketing"]')
+		};
+
+		function open() {
+			inputs.analytics.checked = !!state.analytics;
+			inputs.marketing.checked = !!state.marketing;
+			box.hidden = false;
+			requestAnimationFrame(function () {
+				box.classList.add('is-open');
+			});
+		}
+		function close() {
+			box.classList.remove('is-open');
+			setTimeout(function () {
+				box.hidden = true;
+				document.dispatchEvent(new CustomEvent('pb:consent-closed'));
+			}, 250);
+		}
+		function save(analytics, marketing) {
+			state = { set: true, analytics: analytics, marketing: marketing };
+			window.pbConsent = state;
+			document.cookie = 'pb_consent=' + encodeURIComponent('v=1&a=' + (analytics ? 1 : 0) + '&m=' + (marketing ? 1 : 0)) + ';path=/;max-age=15552000;SameSite=Lax';
+			if (typeof window.gtag === 'function') {
+				window.gtag('consent', 'update', {
+					analytics_storage: analytics ? 'granted' : 'denied',
+					ad_storage: marketing ? 'granted' : 'denied',
+					ad_user_data: marketing ? 'granted' : 'denied',
+					ad_personalization: marketing ? 'granted' : 'denied'
+				});
+			}
+			document.dispatchEvent(new CustomEvent('pb:consent', { detail: state }));
+			close();
+		}
+
+		box.addEventListener('click', function (e) {
+			var btn = e.target.closest('[data-consent-action]');
+			if (!btn) {
+				return;
+			}
+			var action = btn.getAttribute('data-consent-action');
+			if (action === 'all') {
+				save(true, true);
+			} else if (action === 'essential') {
+				save(false, false);
+			} else {
+				save(inputs.analytics.checked, inputs.marketing.checked);
+			}
+		});
+		$$('[data-cookie-settings]').forEach(function (btn) {
+			btn.addEventListener('click', open);
+		});
+		window.pbConsentOpen = function () {
+			return !box.hidden;
+		};
+		if (!state.set) {
+			setTimeout(open, 900);
+		}
+	}
+
+	/* ------------------------------------------------------------------
+	 * "Need a website like this?" lead popup
+	 * ---------------------------------------------------------------- */
+
+	function initLead() {
+		var box = document.getElementById('pb-lead');
+		if (!box) {
+			return;
+		}
+		var delay = parseInt(box.getAttribute('data-delay'), 10) || 75;
+		var every = (parseInt(box.getAttribute('data-every'), 10) || 24) * 3600 * 1000;
+		var studio = box.getAttribute('data-url');
+		var store = {
+			get: function (k, s) {
+				try {
+					return (s ? sessionStorage : localStorage).getItem(k);
+				} catch (e) {
+					return null;
+				}
+			},
+			set: function (k, v, s) {
+				try {
+					(s ? sessionStorage : localStorage).setItem(k, v);
+				} catch (e) {}
+			}
+		};
+		var lastShown = parseInt(store.get('pb_lead_last'), 10) || 0;
+		if (/(?:^|;\s*)pb_lead=1/.test(document.cookie) || Date.now() - lastShown < every) {
+			return;
+		}
+
+		// Count visible time on the site, across pages, for this visit.
+		var spent = parseInt(store.get('pb_lead_time', true), 10) || 0;
+		var lastFocus = null;
+		var timer = setInterval(function () {
+			if (document.hidden) {
+				return;
+			}
+			spent += 1;
+			if (spent % 5 === 0) {
+				store.set('pb_lead_time', String(spent), true);
+			}
+			if (spent >= delay) {
+				tryOpen();
+			}
+		}, 1000);
+
+		function busy() {
+			var el = document.activeElement;
+			var typing = el && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) && !box.contains(el);
+			var consentOpen = typeof window.pbConsentOpen === 'function' && window.pbConsentOpen();
+			return typing || consentOpen || document.body.classList.contains('nav-open');
+		}
+		function tryOpen() {
+			if (busy()) {
+				return;
+			}
+			clearInterval(timer);
+			open();
+		}
+		function open() {
+			lastFocus = document.activeElement;
+			store.set('pb_lead_last', String(Date.now()));
+			document.cookie = 'pb_lead=1;path=/;max-age=' + Math.round(every / 1000) + ';SameSite=Lax';
+			box.hidden = false;
+			document.documentElement.classList.add('lead-open');
+			requestAnimationFrame(function () {
+				box.classList.add('is-open');
+				var input = box.querySelector('input[name="contact"]');
+				if (input && window.matchMedia('(min-width: 721px)').matches) {
+					input.focus({ preventScroll: true });
+				} else {
+					box.querySelector('.lead__close').focus({ preventScroll: true });
+				}
+			});
+		}
+		function close() {
+			box.classList.remove('is-open');
+			document.documentElement.classList.remove('lead-open');
+			setTimeout(function () {
+				box.hidden = true;
+			}, 300);
+			if (lastFocus && lastFocus.focus) {
+				lastFocus.focus({ preventScroll: true });
+			}
+		}
+
+		$$('[data-lead-close]', box).forEach(function (el) {
+			el.addEventListener('click', close);
+		});
+		document.addEventListener('keydown', function (e) {
+			if (box.hidden) {
+				return;
+			}
+			if (e.key === 'Escape') {
+				close();
+			}
+			if (e.key === 'Tab') {
+				var focusable = $$('a[href], button, input:not([tabindex="-1"])', box).filter(function (el) {
+					return el.offsetParent !== null;
+				});
+				var first = focusable[0];
+				var last = focusable[focusable.length - 1];
+				if (e.shiftKey && document.activeElement === first) {
+					e.preventDefault();
+					last.focus();
+				} else if (!e.shiftKey && document.activeElement === last) {
+					e.preventDefault();
+					first.focus();
+				}
+			}
+		});
+
+		var form = box.querySelector('[data-lead-form]');
+		var status = box.querySelector('[data-lead-status]');
+		form.addEventListener('submit', function (e) {
+			e.preventDefault();
+			var contact = form.elements.contact.value.trim();
+			var digits = contact.replace(/\D/g, '');
+			var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact) || (digits.length >= 7 && digits.length <= 15);
+			status.hidden = false;
+			if (!ok) {
+				status.textContent = box.getAttribute('data-invalid') || 'Please enter an email address or a WhatsApp number.';
+				status.classList.add('is-error');
+				return;
+			}
+			status.classList.remove('is-error');
+			// Open the studio site straight away (inside the click, so it is not blocked).
+			var target = studio + (studio.indexOf('?') > -1 ? '&' : '?') + 'ref=' + encodeURIComponent(location.hostname);
+			window.open(target, '_blank', 'noopener');
+			if (window.fetch && CFG.leadUrl) {
+				fetch(CFG.leadUrl, {
+					method: 'POST',
+					keepalive: true,
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						contact: contact,
+						website: form.elements.website.value,
+						page: location.pathname,
+						country: document.documentElement.getAttribute('data-country') || ''
+					})
+				}).catch(function () {});
+			}
+			form.reset();
+			status.textContent = box.getAttribute('data-thanks') || 'Thank you. We will be in touch within 24 hours.';
+			setTimeout(close, 2600);
+		});
+	}
+
+	/* ------------------------------------------------------------------
 	 * Boot
 	 * ---------------------------------------------------------------- */
 
@@ -1083,5 +1303,7 @@
 	initHeader();
 	initDemoForms();
 	initAlertForms();
+	initConsent();
+	initLead();
 	confirmCountry();
 })();

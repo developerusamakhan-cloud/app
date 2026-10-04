@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -67,7 +67,8 @@ it to that country only. Posts without one of those categories show to everyone.
 == Ready-written content (Appearance > PowerBachat content) ==
 
 The theme ships with finished pages and guide posts for all three countries in
-/content/pk/, /content/in/, /content/bd/ and /content/blog/ (50 pages, 21 posts).
+/content/pk/, /content/in/, /content/bd/, /content/blog/ and /content/site/
+(57 pages, 21 posts).
 Go to Appearance > PowerBachat content and click "Create missing pages and posts". It
 creates the country hubs (/pk/, /in/, /bd/), every company calculator page, the unit price and
 tariff pages, the solar and battery pages, and the guide posts, with parents,
@@ -114,6 +115,68 @@ UPPCL, MSEDCL, BESCOM and Delhi for India; DESCO, DPDC and the BERC tariff for
 Bangladesh. To add another, add a tariff table in inc/data.php and set the
 company's `tariff` key.
 
+== Menu, footer and legal pages ==
+
+The header menu and the footer are built automatically for the visitor's country:
+Bill calculators, Unit rates, Solar (with dropdowns listing every page) and Guides
+(the country's guide archive, e.g. /category/pakistan/). Links only appear once their
+page exists, so nothing points to a 404. Assigning your own menu to "Primary menu"
+in Appearance > Menus replaces the automatic one (note: a WordPress menu is the same
+for every country). Add extra pages or sections with the `powerbachat_site_map` and
+`powerbachat_company_pages` filters.
+
+The footer lists every page for the country, the 6 latest guides, and the company and
+legal pages from /content/site/: About us, How we check rates (editorial policy),
+Contact us, Privacy policy, Terms of use, Disclaimer and Cookie policy. Legal pages
+are kept at their natural length rather than padded. They describe how the theme
+actually works (country lookup, the pb_cc and pb_alert cookies, Google Fonts, alert
+emails, contact form retention); review them with your own adviser and update them
+if you add analytics, ads or other services.
+
+== Tariff alerts (built-in newsletter) ==
+
+The sign-up box (home page and the bottom of every page) stores subscribers in
+WordPress: Tariff alerts > Subscribers, with country, status and date, plus a CSV
+export.
+
+* Double opt-in: a confirmation email is sent first (Customizer setting).
+* Every email has a one-click unsubscribe link and List-Unsubscribe headers.
+* New guides: when a guide post goes live (including scheduled posts), subscribers
+  in that country get one short email. Posts created by the importer do not trigger
+  emails until they go live on their scheduled date.
+* Tariff alerts > Send an alert: write your own message (e.g. a new NEPRA
+  notification) to all countries or one, with a "send me a test" button.
+* Emails go out in batches of 40 every two minutes via WP-Cron.
+* Unconfirmed and unsubscribed addresses are deleted after 30 days.
+
+Install an SMTP plugin (e.g. WP Mail SMTP with Brevo, Amazon SES or your host's mail
+server) so emails reach inboxes. To use Mailchimp or Brevo forms instead, paste the
+form action URL in the Customizer; the built-in list is then not used for sign-ups.
+
+== Contact form ==
+
+[powerbachat_contact] (used on /contact-us/) saves each message under Messages in
+the admin and emails it to the contact address (Customize > PowerBachat > Alerts &
+footer > Contact email, default hello@powerbachat.com: make sure that mailbox
+exists). Messages older than 12 months are deleted automatically. Spam protection:
+hidden honeypot field and a per-visitor rate limit.
+
+== Favicon ==
+
+The theme ships its own favicon (SVG, ICO, PNG, Apple touch icon and web manifest)
+in assets/img/. Uploading a Site Icon in Customize > Site Identity replaces it.
+
+== SEO details ==
+
+Each content file carries a primary (focus) keyword and up to four secondary
+keywords. The importer writes them to Rank Math (multiple focus keywords), Yoast
+(related keyphrases, Premium) and SEOPress. Without an SEO plugin, the theme prints
+the title, meta description, Open Graph tags and JSON-LD: Organization (logo,
+contact point), WebSite with search, BreadcrumbList, WebPage / AboutPage /
+ContactPage / BlogPosting (with keywords, word count, section and country),
+FAQPage, WebApplication for calculators, and CollectionPage for the country guide
+archives. The title separator is a plain bar, not a dash.
+
 == Shortcodes ==
 
 [powerbachat_calculator country="pk" utility="iesco" units="300"]
@@ -130,14 +193,18 @@ Tables used inside the articles:
 bd-ips, bd-battery)
 [powerbachat_subsidy_table sizes="1,2,3,5"] (PM Surya Ghar central subsidy)
 [powerbachat_battery] (battery and IPS backup calculator)
+[powerbachat_contact] (contact form)
+[powerbachat_contact_email], [powerbachat_updated], [powerbachat_legal_place]
+(used by the legal pages)
 
 == Customizer (Appearance → Customize → PowerBachat) ==
 
 * Home page: default country, hero headline (wrap words in *asterisks* for the
   hand-drawn underline), hero intro.
 * Rates & prices: tariffs-checked date, price board rows, currency, update date.
-* Alerts & footer: newsletter form action URL (Mailchimp, Brevo…), WhatsApp channel
-  URL, footer disclaimer.
+* Alerts & footer: newsletter form action URL (optional, Mailchimp or Brevo),
+  double opt-in, new guide emails, contact email, governing law country, WhatsApp
+  channel URL, footer disclaimer.
 
 == Credits ==
 
@@ -145,6 +212,16 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.4.0 =
+* Header menu now links to real pages, with dropdowns per country; Guides opens the country's guide archive; "Check my bill" opens the country bill calculator.
+* New footer: every page for the visitor's country, latest guides, company and legal links; outline wordmark removed.
+* Company and legal pages: About us, How we check rates, Contact us, Privacy policy, Terms of use, Disclaimer, Cookie policy.
+* Built-in tariff alerts: stored subscribers, double opt-in, one-click unsubscribe, automatic new guide emails per country, manual alerts, CSV export, automatic clean-up.
+* Contact form with saved messages and email notification.
+* Favicon set (SVG, ICO, PNG, Apple touch icon, manifest) and /favicon.ico redirect.
+* Secondary keywords for every page and post; richer schema (Organization with logo and contact, AboutPage, ContactPage, CollectionPage, keywords, country).
+* Title separator changed from a dash to a bar; country guide archives get titles, descriptions and schema.
 
 = 1.3.0 =
 * India and Bangladesh content: country hubs, calculators for TNEB, KSEB, UPPCL, MSEDCL, BESCOM, Delhi, DESCO and DPDC, solar, subsidy, IPS and battery pages, plus guide posts; 9 new cross-country guides.

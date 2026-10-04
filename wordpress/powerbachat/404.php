@@ -18,7 +18,7 @@ get_header();
 		<h1 class="page-head__title"><?php esc_html_e( 'This page is in load-shedding.', 'powerbachat' ); ?></h1>
 		<p class="page-head__lede"><?php esc_html_e( 'It may have moved, or it never had power to begin with. The calculators are still running, though.', 'powerbachat' ); ?></p>
 		<div class="notfound__actions">
-			<a class="btn btn--volt" href="<?php echo esc_url( home_url( '/#calculator' ) ); ?>"><?php esc_html_e( 'Check my bill', 'powerbachat' ); ?></a>
+			<?php foreach ( POWERBACHAT_COUNTRIES as $powerbachat_cc ) : ?><a data-only="<?php echo esc_attr( $powerbachat_cc ); ?>" class="btn btn--volt" href="<?php echo esc_url( powerbachat_bill_url( $powerbachat_cc ) ); ?>"><?php esc_html_e( 'Check my bill', 'powerbachat' ); ?></a><?php endforeach; ?>
 			<a class="btn btn--ghost" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Back to home', 'powerbachat' ); ?></a>
 		</div>
 	</div>

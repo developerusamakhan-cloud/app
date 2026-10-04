@@ -38,6 +38,10 @@ function powerbachat_mod_defaults() {
 		'pb_price_currency'  => 'Rs',
 		'pb_whatsapp_url'    => '',
 		'pb_newsletter_url'  => '',
+		'pb_double_optin'    => true,
+		'pb_alert_new_posts' => true,
+		'pb_contact_email'   => 'hello@powerbachat.com',
+		'pb_legal_country'   => 'Pakistan',
 		'pb_footer_note'     => 'PowerBachat is an independent site. We are not affiliated with any electricity regulator, distribution company or government body. Figures are estimates; your official bill is the final word.',
 	);
 }
@@ -248,6 +252,50 @@ function powerbachat_customize_register( $wp_customize ) {
 			'description' => __( 'Paste the form action from Mailchimp, Brevo, ConvertKit etc. The field is posted as "EMAIL" and "email".', 'powerbachat' ),
 			'section'     => 'powerbachat_alerts',
 			'type'        => 'url',
+		)
+	);
+
+	$wp_customize->add_setting( 'pb_double_optin', array( 'default' => true, 'sanitize_callback' => 'wp_validate_boolean' ) );
+	$wp_customize->add_control(
+		'pb_double_optin',
+		array(
+			'label'       => __( 'Ask new subscribers to confirm by email (recommended)', 'powerbachat' ),
+			'description' => __( 'Used by the built-in alerts when no newsletter form URL is set above.', 'powerbachat' ),
+			'section'     => 'powerbachat_alerts',
+			'type'        => 'checkbox',
+		)
+	);
+
+	$wp_customize->add_setting( 'pb_alert_new_posts', array( 'default' => true, 'sanitize_callback' => 'wp_validate_boolean' ) );
+	$wp_customize->add_control(
+		'pb_alert_new_posts',
+		array(
+			'label'       => __( 'Email subscribers when a new guide goes live', 'powerbachat' ),
+			'description' => __( 'Only subscribers in that guide\'s country. Posts created by the content importer are not emailed until they go live on their scheduled date.', 'powerbachat' ),
+			'section'     => 'powerbachat_alerts',
+			'type'        => 'checkbox',
+		)
+	);
+
+	$wp_customize->add_setting( 'pb_contact_email', array( 'default' => $d['pb_contact_email'], 'sanitize_callback' => 'sanitize_email' ) );
+	$wp_customize->add_control(
+		'pb_contact_email',
+		array(
+			'label'       => __( 'Contact email', 'powerbachat' ),
+			'description' => __( 'Shown on the contact and privacy pages and used for contact form messages. Make sure this mailbox exists.', 'powerbachat' ),
+			'section'     => 'powerbachat_alerts',
+			'type'        => 'email',
+		)
+	);
+
+	$wp_customize->add_setting( 'pb_legal_country', array( 'default' => $d['pb_legal_country'], 'sanitize_callback' => 'sanitize_text_field' ) );
+	$wp_customize->add_control(
+		'pb_legal_country',
+		array(
+			'label'       => __( 'Governing law (terms of use)', 'powerbachat' ),
+			'description' => __( 'The country where the site owner is based.', 'powerbachat' ),
+			'section'     => 'powerbachat_alerts',
+			'type'        => 'text',
 		)
 	);
 

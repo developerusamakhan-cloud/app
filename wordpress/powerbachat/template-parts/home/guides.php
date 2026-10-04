@@ -64,9 +64,9 @@ $powerbachat_planned = array(
 				<p class="kicker"><span class="kicker__num" aria-hidden="true"></span><?php esc_html_e( 'Guides', 'powerbachat' ); ?></p>
 				<h2 class="section__title"><?php esc_html_e( 'Read your bill like the meter reader does.', 'powerbachat' ); ?></h2>
 			</div>
-			<?php if ( get_option( 'page_for_posts' ) ) : ?>
-				<a class="btn btn--ghost" href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>"><?php esc_html_e( 'All guides', 'powerbachat' ); ?> <?php echo powerbachat_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
-			<?php endif; ?>
+			<?php foreach ( POWERBACHAT_COUNTRIES as $powerbachat_code ) : ?>
+				<a class="btn btn--ghost" data-only="<?php echo esc_attr( $powerbachat_code ); ?>" href="<?php echo esc_url( powerbachat_guides_url( $powerbachat_code ) ); ?>"><?php esc_html_e( 'All guides', 'powerbachat' ); ?> <?php echo powerbachat_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+			<?php endforeach; ?>
 		</header>
 
 		<?php foreach ( $powerbachat_planned as $powerbachat_code => $powerbachat_fallback ) : ?>

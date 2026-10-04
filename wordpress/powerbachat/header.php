@@ -71,9 +71,11 @@
 		</nav>
 
 		<div class="site-header__actions">
-			<a class="btn btn--volt btn--sm" href="<?php echo esc_url( home_url( '/#calculator' ) ); ?>">
-				<?php esc_html_e( 'Check my bill', 'powerbachat' ); ?>
-			</a>
+			<?php foreach ( POWERBACHAT_COUNTRIES as $powerbachat_code ) : ?>
+				<a class="btn btn--volt btn--sm" data-only="<?php echo esc_attr( $powerbachat_code ); ?>" href="<?php echo esc_url( powerbachat_bill_url( $powerbachat_code ) ); ?>">
+					<?php esc_html_e( 'Check my bill', 'powerbachat' ); ?>
+				</a>
+			<?php endforeach; ?>
 			<button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" data-nav-toggle>
 				<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'powerbachat' ); ?></span>
 				<?php echo powerbachat_icon( 'menu' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>

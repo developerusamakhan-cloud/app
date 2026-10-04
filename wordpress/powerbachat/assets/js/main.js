@@ -982,6 +982,96 @@
 	}
 
 	/* ------------------------------------------------------------------
+	 * Tariff alerts and contact form (built-in, posted to the REST API)
+	 * ---------------------------------------------------------------- */
+
+	function postForm(form, url, onDone) {
+		var button = form.querySelector('[type="submit"]');
+		var status = form.querySelector('[data-form-status]') || form.parentNode.querySelector('[data-form-status]');
+		var data = {};
+		Array.prototype.forEach.call(form.elements, function (el) {
+			if (el.name) {
+				data[el.name] = el.value;
+			}
+		});
+		data.country = document.documentElement.getAttribute('data-country') || '';
+
+		function show(message, ok) {
+			if (!status) {
+				return;
+			}
+			status.textContent = message;
+			status.hidden = false;
+			status.classList.toggle('is-error', !ok);
+		}
+
+		if (!window.fetch || !url) {
+			show(CFG.formError || 'Error', false);
+			return;
+		}
+		if (button) {
+			button.disabled = true;
+		}
+		fetch(url, {
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(data)
+		})
+			.then(function (r) {
+				return r.json().catch(function () {
+					return {};
+				});
+			})
+			.then(function (res) {
+				if (button) {
+					button.disabled = false;
+				}
+				if (res && res.ok) {
+					show(res.message || '', true);
+					onDone(res);
+				} else {
+					show((res && res.message) || CFG.formError, false);
+				}
+			})
+			.catch(function () {
+				if (button) {
+					button.disabled = false;
+				}
+				show(CFG.formError, false);
+			});
+	}
+
+	function initAlertForms() {
+		$$('[data-pb-form="alerts"]').forEach(function (form) {
+			var thanks = form.parentNode.querySelector('[data-form-thanks]');
+			if (/(?:^|;\s*)pb_alert=1/.test(document.cookie) && thanks) {
+				form.hidden = true;
+				thanks.hidden = false;
+			}
+			form.addEventListener('submit', function (e) {
+				e.preventDefault();
+				postForm(form, CFG.subscribeUrl, function () {
+					document.cookie = 'pb_alert=1;path=/;max-age=2592000;SameSite=Lax';
+					form.hidden = true;
+				});
+			});
+		});
+		$$('[data-pb-form="contact"]').forEach(function (form) {
+			form.addEventListener('submit', function (e) {
+				e.preventDefault();
+				if (!form.checkValidity()) {
+					form.reportValidity();
+					return;
+				}
+				postForm(form, CFG.contactUrl, function () {
+					form.reset();
+				});
+			});
+		});
+	}
+
+	/* ------------------------------------------------------------------
 	 * Boot
 	 * ---------------------------------------------------------------- */
 
@@ -992,5 +1082,6 @@
 	initReveal();
 	initHeader();
 	initDemoForms();
+	initAlertForms();
 	confirmCountry();
 })();

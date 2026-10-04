@@ -148,8 +148,14 @@ function powerbachat_singular_schema() {
 			'itemListElement' => $list,
 		);
 
-		$node = array(
-			'@type'         => 'post' === $post->post_type ? 'BlogPosting' : 'WebPage',
+		$type = 'post' === $post->post_type ? 'BlogPosting' : 'WebPage';
+		$custom_type = get_post_meta( $post->ID, 'pb_schema_type', true );
+		if ( 'page' === $post->post_type && in_array( $custom_type, array( 'AboutPage', 'ContactPage', 'CollectionPage', 'FAQPage' ), true ) ) {
+			$type = $custom_type;
+		}
+		$graph[] = powerbachat_organization_node();
+		$node    = array(
+			'@type'         => $type,
 			'@id'           => $url . '#main',
 			'url'           => $url,
 			'headline'      => get_the_title( $post ),
@@ -160,23 +166,35 @@ function powerbachat_singular_schema() {
 			'dateModified'  => get_the_modified_date( DATE_W3C, $post ),
 			'breadcrumb'    => array( '@id' => $url . '#breadcrumb' ),
 			'isPartOf'      => array( '@id' => home_url( '/#website' ) ),
-			'publisher'     => array(
-				'@type' => 'Organization',
-				'name'  => get_bloginfo( 'name' ),
-				'url'   => home_url( '/' ),
-			),
+			'publisher'     => array( '@id' => home_url( '/#organization' ) ),
 		);
 		if ( 'post' === $post->post_type ) {
-			$node['author']           = array(
-				'@type' => 'Organization',
-				'name'  => get_bloginfo( 'name' ),
-				'url'   => home_url( '/' ),
-			);
+			$node['author']           = array( '@id' => home_url( '/#organization' ) );
 			$node['mainEntityOfPage'] = $url;
+			$node['wordCount']        = str_word_count( wp_strip_all_tags( strip_shortcodes( $post->post_content ) ) );
+			$cats                     = get_the_category( $post->ID );
+			if ( $cats ) {
+				$node['articleSection'] = $cats[0]->name;
+			}
 		}
-		$keyword = get_post_meta( $post->ID, 'pb_focus_keyword', true );
-		if ( $keyword ) {
-			$node['keywords'] = $keyword;
+		$keywords = array_filter(
+			array_merge(
+				array( get_post_meta( $post->ID, 'pb_focus_keyword', true ) ),
+				array_map( 'trim', explode( ',', (string) get_post_meta( $post->ID, 'pb_secondary_keywords', true ) ) )
+			)
+		);
+		if ( $keywords ) {
+			$node['keywords'] = implode( ', ', array_unique( $keywords ) );
+		}
+		if ( function_exists( 'powerbachat_post_country' ) ) {
+			$names = wp_list_pluck( powerbachat_data()['countries'], 'name' );
+			$where = 'post' === $post->post_type ? powerbachat_post_country( $post->ID ) : powerbachat_forced_country();
+			if ( $where && isset( $names[ $where ] ) ) {
+				$node['spatialCoverage'] = array(
+					'@type' => 'Country',
+					'name'  => $names[ $where ],
+				);
+			}
 		}
 		if ( has_post_thumbnail( $post ) ) {
 			$node['image'] = get_the_post_thumbnail_url( $post, 'large' );
@@ -235,3 +253,153 @@ function powerbachat_singular_schema() {
 	}
 }
 add_action( 'wp_head', 'powerbachat_singular_schema', 20 );
+
+/**
+ * The site's Organization node, shared by every page's structured data.
+ *
+ * @return array
+ */
+function powerbachat_organization_node() {
+	$logo = has_custom_logo() ? wp_get_attachment_image_url( get_theme_mod( 'custom_logo' ), 'full' ) : POWERBACHAT_URI . '/assets/img/logo-512.png';
+	$node = array(
+		'@type'        => 'Organization',
+		'@id'          => home_url( '/#organization' ),
+		'name'         => get_bloginfo( 'name' ),
+		'url'          => home_url( '/' ),
+		'logo'         => array(
+			'@type' => 'ImageObject',
+			'url'   => $logo,
+		),
+		'areaServed'   => array( 'PK', 'IN', 'BD' ),
+		'contactPoint' => array(
+			'@type'       => 'ContactPoint',
+			'contactType' => 'customer support',
+			'email'       => function_exists( 'powerbachat_contact_address' ) ? powerbachat_contact_address() : get_option( 'admin_email' ),
+			'url'         => home_url( '/contact-us/' ),
+		),
+	);
+	$same = array_filter( array( powerbachat_mod( 'pb_whatsapp_url' ) ) );
+	if ( $same ) {
+		$node['sameAs'] = array_values( $same );
+	}
+	return $node;
+}
+
+/**
+ * Title separator: a plain bar instead of WordPress's default dash.
+ *
+ * @return string
+ */
+function powerbachat_title_separator() {
+	return '|';
+}
+add_filter( 'document_title_separator', 'powerbachat_title_separator' );
+
+/**
+ * Title, description and schema for the country guide archives.
+ *
+ * @return array|null title, description, country name.
+ */
+function powerbachat_country_archive_meta() {
+	if ( ! is_category() || ! function_exists( 'powerbachat_category_country' ) ) {
+		return null;
+	}
+	$code = powerbachat_category_country( get_queried_object() );
+	if ( ! $code ) {
+		return null;
+	}
+	$name = powerbachat_data()['countries'][ $code ]['name'];
+	return array(
+		/* translators: %s: country name */
+		'title' => sprintf( __( '%s Electricity Bill and Solar Guides', 'powerbachat' ), $name ),
+		'desc'  => sprintf(
+			/* translators: %s: country name */
+			__( 'Plain-English guides for %s: how your electricity bill is worked out, unit rates, subsidies, solar, batteries and simple ways to pay less.', 'powerbachat' ),
+			$name
+		),
+		'name'  => $name,
+	);
+}
+
+/**
+ * Document title parts for the country archives.
+ *
+ * @param array $parts Title parts.
+ * @return array
+ */
+function powerbachat_archive_title_parts( $parts ) {
+	$meta = powerbachat_country_archive_meta();
+	if ( $meta && ! powerbachat_seo_plugin_active() ) {
+		$parts['title'] = $meta['title'];
+	}
+	return $parts;
+}
+add_filter( 'document_title_parts', 'powerbachat_archive_title_parts' );
+
+/**
+ * Meta description and CollectionPage schema for the country archives.
+ */
+function powerbachat_archive_head() {
+	$meta = powerbachat_country_archive_meta();
+	if ( ! $meta || powerbachat_seo_plugin_active() ) {
+		return;
+	}
+	$url = get_category_link( get_queried_object() );
+	printf( '<meta name="description" content="%s">' . "\n", esc_attr( $meta['desc'] ) );
+	$items = array();
+	foreach ( $GLOBALS['wp_query']->posts as $i => $p ) {
+		$items[] = array(
+			'@type'    => 'ListItem',
+			'position' => $i + 1,
+			'url'      => get_permalink( $p ),
+			'name'     => get_the_title( $p ),
+		);
+	}
+	$graph = array(
+		powerbachat_organization_node(),
+		array(
+			'@type'           => 'BreadcrumbList',
+			'@id'             => $url . '#breadcrumb',
+			'itemListElement' => array(
+				array(
+					'@type'    => 'ListItem',
+					'position' => 1,
+					'name'     => get_bloginfo( 'name' ),
+					'item'     => home_url( '/' ),
+				),
+				array(
+					'@type'    => 'ListItem',
+					'position' => 2,
+					'name'     => $meta['title'],
+					'item'     => $url,
+				),
+			),
+		),
+		array(
+			'@type'           => 'CollectionPage',
+			'@id'             => $url . '#main',
+			'url'             => $url,
+			'name'            => $meta['title'],
+			'description'     => $meta['desc'],
+			'isPartOf'        => array( '@id' => home_url( '/#website' ) ),
+			'publisher'       => array( '@id' => home_url( '/#organization' ) ),
+			'breadcrumb'      => array( '@id' => $url . '#breadcrumb' ),
+			'spatialCoverage' => array(
+				'@type' => 'Country',
+				'name'  => $meta['name'],
+			),
+			'mainEntity'      => array(
+				'@type'           => 'ItemList',
+				'itemListElement' => $items,
+			),
+		),
+	);
+	echo '<script type="application/ld+json">' . wp_json_encode(
+		array(
+			'@context' => 'https://schema.org',
+			'@graph'   => $graph,
+		),
+		JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+	) . '</script>' . "\n";
+}
+add_action( 'wp_head', 'powerbachat_archive_head', 4 );

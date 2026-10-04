@@ -49,6 +49,8 @@ function powerbachat_content_items() {
 				'focus_keyword'    => '',
 				'category'         => '',
 				'order'            => 0,
+				'secondary_keywords' => array(),
+				'schema_type'      => '',
 			)
 		);
 		$meta['body']  = trim( substr( $raw, strlen( $m[0] ) ) );
@@ -127,7 +129,30 @@ function powerbachat_content_existing( $item ) {
  * @return string created|updated|skipped|error
  */
 function powerbachat_import_item( $item, $overwrite, $publish_at = '' ) {
+	// Imported guides must not trigger "new guide" alert emails.
+	$GLOBALS['powerbachat_importing'] = true;
+	try {
+		return powerbachat_import_item_run( $item, $overwrite, $publish_at );
+	} finally {
+		$GLOBALS['powerbachat_importing'] = false;
+	}
+}
+
+/**
+ * Worker for powerbachat_import_item().
+ *
+ * @param array  $item       Content item.
+ * @param bool   $overwrite  Replace content of an existing post.
+ * @param string $publish_at Local date to schedule a new post for, or ''.
+ * @return string created|updated|skipped|error
+ */
+function powerbachat_import_item_run( $item, $overwrite, $publish_at ) {
 	$existing = powerbachat_content_existing( $item );
+	// WordPress creates a draft "Privacy Policy" page on install. Replace it.
+	$wp_draft = $existing && 'page' === $item['type'] && in_array( $existing->post_status, array( 'draft', 'auto-draft' ), true ) && ! get_post_meta( $existing->ID, '_pb_content_file', true );
+	if ( $wp_draft ) {
+		$overwrite = true;
+	}
 	if ( $existing && ! $overwrite ) {
 		return 'skipped';
 	}
@@ -166,7 +191,7 @@ function powerbachat_import_item( $item, $overwrite, $publish_at = '' ) {
 
 	if ( $existing ) {
 		// Keep the status and date an existing item already has (published or scheduled).
-		$postarr['post_status'] = $existing->post_status;
+		$postarr['post_status'] = $wp_draft ? 'publish' : $existing->post_status;
 		unset( $postarr['post_date'] );
 	} elseif ( $publish_at ) {
 		$postarr['post_status']   = 'future';
@@ -187,7 +212,22 @@ function powerbachat_import_item( $item, $overwrite, $publish_at = '' ) {
 	if ( 'page' === $item['type'] ) {
 		update_post_meta( $id, '_wp_page_template', $item['template'] ? $item['template'] : 'default' );
 	}
-	$seo = array(
+	$secondary = array_values( array_filter( array_map( 'sanitize_text_field', (array) $item['secondary_keywords'] ) ) );
+	$all_kw    = array_merge( array( $item['focus_keyword'] ), $secondary );
+	$seo       = array(
+		'pb_secondary_keywords'    => implode( ', ', $secondary ),
+		'pb_schema_type'           => $item['schema_type'],
+		'_yoast_wpseo_focuskeywords' => $secondary ? wp_json_encode(
+			array_map(
+				function ( $kw ) {
+					return array(
+						'keyword' => $kw,
+						'score'   => 0,
+					);
+				},
+				$secondary
+			)
+		) : '',
 		'pb_seo_title'             => $item['seo_title'],
 		'pb_meta_description'      => $item['meta_description'],
 		'pb_focus_keyword'         => $item['focus_keyword'],
@@ -198,13 +238,13 @@ function powerbachat_import_item( $item, $overwrite, $publish_at = '' ) {
 		// Rank Math.
 		'rank_math_title'          => $item['seo_title'],
 		'rank_math_description'    => $item['meta_description'],
-		'rank_math_focus_keyword'  => $item['focus_keyword'],
+		'rank_math_focus_keyword'  => implode( ',', array_filter( $all_kw ) ),
 		// All in One SEO (legacy meta) and SEOPress.
 		'_aioseo_title'            => $item['seo_title'],
 		'_aioseo_description'      => $item['meta_description'],
 		'_seopress_titles_title'   => $item['seo_title'],
 		'_seopress_titles_desc'    => $item['meta_description'],
-		'_seopress_analysis_target_kw' => $item['focus_keyword'],
+		'_seopress_analysis_target_kw' => implode( ',', array_filter( $all_kw ) ),
 	);
 	foreach ( $seo as $key => $value ) {
 		if ( '' !== $value ) {
@@ -212,6 +252,9 @@ function powerbachat_import_item( $item, $overwrite, $publish_at = '' ) {
 		}
 	}
 	update_post_meta( $id, '_pb_content_file', $item['file'] );
+	if ( 'page' === $item['type'] && 'privacy-policy' === $item['path'] ) {
+		update_option( 'wp_page_for_privacy_policy', $id );
+	}
 	update_post_meta( $id, '_pb_content_hash', md5( $content ) );
 
 	return $existing ? 'updated' : 'created';
@@ -343,7 +386,7 @@ function powerbachat_content_screen() {
 				<th><?php esc_html_e( 'Type', 'powerbachat' ); ?></th>
 				<th><?php esc_html_e( 'URL', 'powerbachat' ); ?></th>
 				<th><?php esc_html_e( 'Words', 'powerbachat' ); ?></th>
-				<th><?php esc_html_e( 'Focus keyword', 'powerbachat' ); ?></th>
+				<th><?php esc_html_e( 'Keywords (primary, secondary)', 'powerbachat' ); ?></th>
 				<th><?php esc_html_e( 'Status', 'powerbachat' ); ?></th>
 				<th></th>
 			</tr></thead>
@@ -366,7 +409,7 @@ function powerbachat_content_screen() {
 					<td><?php echo esc_html( $item['type'] ); ?></td>
 					<td><?php if ( $post ) : ?><a href="<?php echo esc_url( get_permalink( $post ) ); ?>" target="_blank"><?php echo esc_html( $url ); ?></a><?php else : ?><code><?php echo esc_html( $url ); ?></code><?php endif; ?></td>
 					<td><?php echo esc_html( number_format_i18n( $item['words'] ) ); ?></td>
-					<td><?php echo esc_html( $item['focus_keyword'] ); ?></td>
+					<td><strong><?php echo esc_html( $item['focus_keyword'] ); ?></strong><?php if ( $item['secondary_keywords'] ) : ?><br><small><?php echo esc_html( implode( ', ', (array) $item['secondary_keywords'] ) ); ?></small><?php endif; ?></td>
 					<td><?php echo esc_html( $status ); ?></td>
 					<td>
 						<form method="post" onsubmit="return <?php echo $post ? "confirm('" . esc_js( __( 'Replace this item with the theme version?', 'powerbachat' ) ) . "')" : 'true'; ?>;">

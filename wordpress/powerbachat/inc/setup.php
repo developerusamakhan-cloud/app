@@ -77,3 +77,34 @@ function powerbachat_excerpt_more() {
 	return '&hellip;';
 }
 add_filter( 'excerpt_more', 'powerbachat_excerpt_more' );
+
+/**
+ * Favicons from the theme until a Site Icon is set in Customize > Site Identity.
+ */
+function powerbachat_favicons() {
+	if ( has_site_icon() ) {
+		return;
+	}
+	$base = POWERBACHAT_URI . '/assets/img/';
+	$ver  = '?v=' . rawurlencode( POWERBACHAT_VERSION );
+	printf( '<link rel="icon" href="%s" sizes="any">' . "\n", esc_url( $base . 'favicon.ico' . $ver ) );
+	printf( '<link rel="icon" href="%s" type="image/svg+xml">' . "\n", esc_url( $base . 'favicon.svg' . $ver ) );
+	printf( '<link rel="icon" href="%s" type="image/png" sizes="32x32">' . "\n", esc_url( $base . 'favicon-32.png' . $ver ) );
+	printf( '<link rel="apple-touch-icon" href="%s">' . "\n", esc_url( $base . 'apple-touch-icon.png' . $ver ) );
+	printf( '<link rel="manifest" href="%s">' . "\n", esc_url( $base . 'site.webmanifest' ) );
+}
+add_action( 'wp_head', 'powerbachat_favicons', 3 );
+add_action( 'admin_head', 'powerbachat_favicons' );
+add_action( 'login_head', 'powerbachat_favicons' );
+
+/**
+ * Browsers ask for /favicon.ico directly. Without a Site Icon, WordPress answers
+ * with its own logo, so send the theme icon instead.
+ */
+function powerbachat_favicon_ico() {
+	if ( ! has_site_icon() ) {
+		wp_safe_redirect( POWERBACHAT_URI . '/assets/img/favicon.ico', 302 );
+		exit;
+	}
+}
+add_action( 'do_favicon', 'powerbachat_favicon_ico', 5 );

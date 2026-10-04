@@ -40,7 +40,7 @@ while ( have_posts() ) :
 					<div class="aside-card">
 						<p class="aside-card__title"><?php esc_html_e( 'Check your own bill', 'powerbachat' ); ?></p>
 						<p><?php esc_html_e( 'Pick your company, enter your units, see the slab-by-slab total.', 'powerbachat' ); ?></p>
-						<a class="btn btn--volt btn--sm" href="<?php echo esc_url( home_url( '/#calculator' ) ); ?>"><?php esc_html_e( 'Open calculator', 'powerbachat' ); ?></a>
+						<?php foreach ( POWERBACHAT_COUNTRIES as $powerbachat_cc ) : ?><a data-only="<?php echo esc_attr( $powerbachat_cc ); ?>" class="btn btn--volt btn--sm" href="<?php echo esc_url( powerbachat_bill_url( $powerbachat_cc ) ); ?>"><?php esc_html_e( 'Open calculator', 'powerbachat' ); ?></a><?php endforeach; ?>
 					</div>
 				</aside>
 			<?php endif; ?>

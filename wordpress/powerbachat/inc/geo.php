@@ -69,8 +69,14 @@ function powerbachat_path_country() {
  */
 function powerbachat_forced_country() {
 	$country = powerbachat_path_country();
-	if ( $country || ! did_action( 'wp' ) || ! is_singular( 'post' ) ) {
+	if ( $country || ! did_action( 'wp' ) ) {
 		return $country;
+	}
+	if ( is_category() && function_exists( 'powerbachat_category_country' ) ) {
+		return powerbachat_category_country( get_queried_object() );
+	}
+	if ( ! is_singular( 'post' ) ) {
+		return '';
 	}
 	$map = array(
 		'pakistan'   => 'pk',

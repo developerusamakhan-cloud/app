@@ -97,18 +97,14 @@ function powerbachat_site_schema() {
 	$graph = array(
 		'@context' => 'https://schema.org',
 		'@graph'   => array(
-			array(
-				'@type' => 'Organization',
-				'@id'   => home_url( '/#organization' ),
-				'name'  => get_bloginfo( 'name' ),
-				'url'   => home_url( '/' ),
-			),
+			powerbachat_organization_node(),
 			array(
 				'@type'           => 'WebSite',
 				'@id'             => home_url( '/#website' ),
 				'url'             => home_url( '/' ),
 				'name'            => get_bloginfo( 'name' ),
 				'publisher'       => array( '@id' => home_url( '/#organization' ) ),
+				'inLanguage'      => 'en',
 				'potentialAction' => array(
 					'@type'       => 'SearchAction',
 					'target'      => home_url( '/?s={search_term_string}' ),

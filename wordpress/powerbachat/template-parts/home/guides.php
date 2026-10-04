@@ -87,11 +87,13 @@ $powerbachat_planned = array(
 				)
 			);
 			$powerbachat_i     = 0;
+			$powerbachat_shown = array();
 			?>
 			<div class="guide-list" data-only="<?php echo esc_attr( $powerbachat_code ); ?>">
 				<?php
 				while ( $powerbachat_query->have_posts() ) :
 					$powerbachat_query->the_post();
+					$powerbachat_shown[] = untrailingslashit( wp_make_link_relative( get_permalink() ) );
 					$powerbachat_cat = get_the_category();
 					$powerbachat_tag = ( $powerbachat_cat && 'uncategorized' !== $powerbachat_cat[0]->slug ) ? $powerbachat_cat[0]->name : __( 'Guide', 'powerbachat' );
 					?>
@@ -116,6 +118,12 @@ $powerbachat_planned = array(
 				endwhile;
 				wp_reset_postdata();
 
+				$powerbachat_fallback = array_filter(
+					$powerbachat_fallback,
+					function ( $guide ) use ( $powerbachat_shown ) {
+						return ! in_array( untrailingslashit( $guide[3] ), $powerbachat_shown, true );
+					}
+				);
 				foreach ( array_slice( $powerbachat_fallback, 0, max( 0, 5 - $powerbachat_i ) ) as $powerbachat_guide ) :
 					?>
 					<article class="guide reveal<?php echo 0 === $powerbachat_i ? ' guide--lead' : ''; ?>" style="--i:<?php echo (int) $powerbachat_i; ?>">

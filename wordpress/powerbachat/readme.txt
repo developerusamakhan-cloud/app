@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -125,8 +125,8 @@ in Appearance > Menus replaces the automatic one (note: a WordPress menu is the 
 for every country). Add extra pages or sections with the `powerbachat_site_map` and
 `powerbachat_company_pages` filters.
 
-The footer lists every page for the country, the 6 latest guides, and the company and
-legal pages from /content/site/: About us, How we check rates (editorial policy),
+The footer lists every page for the country plus the company and legal pages from
+/content/site/: About us, How we check rates (editorial policy),
 Contact us, Privacy policy, Terms of use, Disclaimer and Cookie policy. Legal pages
 are kept at their natural length rather than padded. They describe how the theme
 actually works (country lookup, the pb_cc and pb_alert cookies, Google Fonts, alert
@@ -160,6 +160,24 @@ the admin and emails it to the contact address (Customize > PowerBachat > Alerts
 footer > Contact email, default hello@powerbachat.com: make sure that mailbox
 exists). Messages older than 12 months are deleted automatically. Spam protection:
 hidden honeypot field and a per-visitor rate limit.
+
+== Featured images ==
+
+Every guide post ships with a branded cover image (content/images/{slug}.jpg,
+1200 x 675). The importer adds it to the Media Library and sets it as the featured
+image, with the post title as alt text, unless the post already has one. Covers are
+used on the guide cards, at the top of each post, in Open Graph / Twitter cards and
+in the article schema. Replace any of them by setting a different featured image.
+To make covers for new posts, run wordpress/tools/covers.js (see the notes at the
+top of that file).
+
+== Comments ==
+
+Comments are switched off everywhere: no comment forms or lists, no pingbacks or
+trackbacks, no comment feeds or REST endpoints, and the Comments and Discussion
+screens are removed from the admin. Existing comments are hidden, not deleted. To
+turn comments back on, use add_filter( 'powerbachat_disable_comments',
+'__return_false' ); in a small plugin.
 
 == Favicon ==
 
@@ -203,8 +221,9 @@ bd-ips, bd-battery)
   hand-drawn underline), hero intro.
 * Rates & prices: tariffs-checked date, price board rows, currency, update date.
 * Alerts & footer: newsletter form action URL (optional, Mailchimp or Brevo),
-  double opt-in, new guide emails, contact email, governing law country, WhatsApp
-  channel URL, footer disclaimer.
+  double opt-in, new guide emails, contact email, governing law country, footer
+  credit ("Made with love by", name and link), WhatsApp channel URL, footer
+  disclaimer.
 
 == Credits ==
 
@@ -212,6 +231,12 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.5.0 =
+* Featured images: branded cover for every guide post, attached by the importer and used on cards, posts, social shares and schema; card images now 16:9.
+* Comments disabled site-wide (forms, lists, pingbacks, feeds, REST, admin screens).
+* Footer: guides column removed; new bottom bar with copyright, legal links and a "Made with love by Vyntic Studio" credit (editable in the Customizer).
+* Home guides grid no longer repeats a post as a placeholder.
 
 = 1.4.0 =
 * Header menu now links to real pages, with dropdowns per country; Guides opens the country's guide archive; "Check my bill" opens the country bill calculator.

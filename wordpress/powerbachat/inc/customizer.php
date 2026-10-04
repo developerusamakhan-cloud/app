@@ -42,6 +42,8 @@ function powerbachat_mod_defaults() {
 		'pb_alert_new_posts' => true,
 		'pb_contact_email'   => 'hello@powerbachat.com',
 		'pb_legal_country'   => 'Pakistan',
+		'pb_credit_name'     => 'Vyntic Studio',
+		'pb_credit_url'      => 'https://vyntic.studio/',
 		'pb_footer_note'     => 'PowerBachat is an independent site. We are not affiliated with any electricity regulator, distribution company or government body. Figures are estimates; your official bill is the final word.',
 	);
 }
@@ -298,6 +300,19 @@ function powerbachat_customize_register( $wp_customize ) {
 			'type'        => 'text',
 		)
 	);
+
+	$wp_customize->add_setting( 'pb_credit_name', array( 'default' => $d['pb_credit_name'], 'sanitize_callback' => 'sanitize_text_field' ) );
+	$wp_customize->add_control(
+		'pb_credit_name',
+		array(
+			'label'       => __( 'Footer credit: made by', 'powerbachat' ),
+			'description' => __( 'Shown as "Made with love by ..." in the footer. Leave empty to hide it.', 'powerbachat' ),
+			'section'     => 'powerbachat_alerts',
+			'type'        => 'text',
+		)
+	);
+	$wp_customize->add_setting( 'pb_credit_url', array( 'default' => $d['pb_credit_url'], 'sanitize_callback' => 'esc_url_raw' ) );
+	$wp_customize->add_control( 'pb_credit_url', array( 'label' => __( 'Footer credit link', 'powerbachat' ), 'section' => 'powerbachat_alerts', 'type' => 'url' ) );
 
 	$wp_customize->add_setting( 'pb_footer_note', array( 'default' => $d['pb_footer_note'], 'sanitize_callback' => 'sanitize_textarea_field' ) );
 	$wp_customize->add_control( 'pb_footer_note', array( 'label' => __( 'Footer disclaimer', 'powerbachat' ), 'section' => 'powerbachat_alerts', 'type' => 'textarea' ) );

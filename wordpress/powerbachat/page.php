@@ -30,11 +30,6 @@ while ( have_posts() ) :
 		</div>
 	</article>
 	<?php
-	if ( comments_open() || get_comments_number() ) {
-		echo '<div class="wrap"><div class="prose">';
-		comments_template();
-		echo '</div></div>';
-	}
 endwhile;
 
 get_footer();

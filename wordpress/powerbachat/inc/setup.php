@@ -20,7 +20,7 @@ function powerbachat_setup() {
 	add_theme_support( 'editor-styles' );
 	add_theme_support(
 		'html5',
-		array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script', 'navigation-widgets' )
+		array( 'search-form', 'gallery', 'caption', 'style', 'script', 'navigation-widgets' )
 	);
 	add_theme_support(
 		'custom-logo',
@@ -32,7 +32,7 @@ function powerbachat_setup() {
 		)
 	);
 
-	add_image_size( 'powerbachat-card', 720, 480, true );
+	add_image_size( 'powerbachat-card', 720, 405, true );
 
 	register_nav_menus(
 		array(

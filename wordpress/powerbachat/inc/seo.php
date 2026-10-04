@@ -65,7 +65,14 @@ function powerbachat_seo_meta() {
 	if ( is_singular() ) {
 		printf( '<meta property="og:url" content="%s">' . "\n", esc_url( get_permalink() ) );
 		if ( has_post_thumbnail() ) {
-			printf( '<meta property="og:image" content="%s">' . "\n", esc_url( get_the_post_thumbnail_url( null, 'large' ) ) );
+			$image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+			if ( $image ) {
+				printf( '<meta property="og:image" content="%s">' . "\n", esc_url( $image[0] ) );
+				printf( '<meta property="og:image:width" content="%d">' . "\n", (int) $image[1] );
+				printf( '<meta property="og:image:height" content="%d">' . "\n", (int) $image[2] );
+				printf( '<meta property="og:image:alt" content="%s">' . "\n", esc_attr( get_the_title() ) );
+				echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+			}
 		}
 	}
 }
@@ -197,7 +204,7 @@ function powerbachat_singular_schema() {
 			}
 		}
 		if ( has_post_thumbnail( $post ) ) {
-			$node['image'] = get_the_post_thumbnail_url( $post, 'large' );
+			$node['image'] = get_the_post_thumbnail_url( $post, 'full' );
 		}
 		$graph[] = $node;
 	}

@@ -161,6 +161,8 @@ function powerbachat_import_item_run( $item, $overwrite, $publish_at ) {
 	$postarr = array(
 		'post_type'    => $item['type'],
 		'post_status'  => 'publish',
+		'comment_status' => 'closed',
+		'ping_status'  => 'closed',
 		'post_title'   => $item['title'],
 		'post_name'    => $item['slug'],
 		'post_content' => $content,
@@ -252,6 +254,7 @@ function powerbachat_import_item_run( $item, $overwrite, $publish_at ) {
 		}
 	}
 	update_post_meta( $id, '_pb_content_file', $item['file'] );
+	powerbachat_import_cover( $id, $item );
 	if ( 'page' === $item['type'] && 'privacy-policy' === $item['path'] ) {
 		update_option( 'wp_page_for_privacy_policy', $id );
 	}
@@ -424,4 +427,38 @@ function powerbachat_content_screen() {
 		</table>
 	</div>
 	<?php
+}
+
+/**
+ * Attach the shipped cover image (content/images/{slug}.jpg) as the featured image,
+ * unless the post already has one.
+ *
+ * @param int   $id   Post ID.
+ * @param array $item Content item.
+ */
+function powerbachat_import_cover( $id, $item ) {
+	$file = POWERBACHAT_DIR . '/content/images/' . sanitize_file_name( $item['slug'] ) . '.jpg';
+	if ( ! file_exists( $file ) || has_post_thumbnail( $id ) ) {
+		return;
+	}
+	$upload = wp_upload_bits( basename( $file ), null, file_get_contents( $file ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+	if ( ! empty( $upload['error'] ) ) {
+		return;
+	}
+	$attachment_id = wp_insert_attachment(
+		array(
+			'post_mime_type' => 'image/jpeg',
+			'post_title'     => $item['title'],
+			'post_status'    => 'inherit',
+		),
+		$upload['file'],
+		$id
+	);
+	if ( ! $attachment_id || is_wp_error( $attachment_id ) ) {
+		return;
+	}
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	wp_update_attachment_metadata( $attachment_id, wp_generate_attachment_metadata( $attachment_id, $upload['file'] ) );
+	update_post_meta( $attachment_id, '_wp_attachment_image_alt', $item['title'] );
+	set_post_thumbnail( $id, $attachment_id );
 }

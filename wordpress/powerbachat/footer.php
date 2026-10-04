@@ -1,7 +1,7 @@
 <?php
 /**
- * Site footer: every page for the visitor's country, latest guides, company and
- * legal pages. Links appear only once their page exists.
+ * Site footer: every page for the visitor's country, company and legal pages,
+ * and the credit line. Links appear only once their page exists.
  *
  * @package PowerBachat
  */
@@ -63,27 +63,6 @@ if ( ! is_front_page() && apply_filters( 'powerbachat_show_alerts', true ) ) {
 							<?php endif; ?>
 						<?php endforeach; ?>
 
-						<?php
-						$powerbachat_term   = powerbachat_country_category( $powerbachat_code );
-						$powerbachat_guides = $powerbachat_term ? get_posts(
-							array(
-								'cat'            => $powerbachat_term->term_id,
-								'posts_per_page' => 6,
-								'no_found_rows'  => true,
-							)
-						) : array();
-						?>
-						<?php if ( $powerbachat_guides ) : ?>
-							<nav class="site-footer__col" aria-label="<?php esc_attr_e( 'Latest guides', 'powerbachat' ); ?>">
-								<h2 class="site-footer__heading"><a href="<?php echo esc_url( powerbachat_guides_url( $powerbachat_code ) ); ?>"><?php esc_html_e( 'Latest guides', 'powerbachat' ); ?></a></h2>
-								<ul>
-									<?php foreach ( $powerbachat_guides as $powerbachat_guide ) : ?>
-										<li><a href="<?php echo esc_url( get_permalink( $powerbachat_guide ) ); ?>"><?php echo esc_html( get_the_title( $powerbachat_guide ) ); ?></a></li>
-									<?php endforeach; ?>
-									<li><a class="site-footer__more" href="<?php echo esc_url( powerbachat_guides_url( $powerbachat_code ) ); ?>"><?php esc_html_e( 'All guides', 'powerbachat' ); ?> <?php echo powerbachat_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a></li>
-								</ul>
-							</nav>
-						<?php endif; ?>
 					</div>
 				<?php endforeach; ?>
 
@@ -116,15 +95,28 @@ if ( ! is_front_page() && apply_filters( 'powerbachat_show_alerts', true ) ) {
 
 		<div class="site-footer__bottom">
 			<p class="site-footer__note"><?php echo esc_html( powerbachat_mod( 'pb_footer_note' ) ); ?></p>
-			<div class="site-footer__legal">
+			<div class="site-footer__bar">
+				<p class="site-footer__copy">&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'All rights reserved.', 'powerbachat' ); ?></p>
 				<?php if ( $powerbachat_legal ) : ?>
-					<ul>
+					<ul class="site-footer__legal">
 						<?php foreach ( $powerbachat_legal as $powerbachat_link ) : ?>
 							<li><a href="<?php echo esc_url( home_url( $powerbachat_link[1] ) ); ?>"><?php echo esc_html( $powerbachat_link[0] ); ?></a></li>
 						<?php endforeach; ?>
 					</ul>
 				<?php endif; ?>
-				<p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?></p>
+				<?php if ( powerbachat_mod( 'pb_credit_name' ) ) : ?>
+					<p class="site-footer__credit">
+						<?php esc_html_e( 'Made with', 'powerbachat' ); ?>
+						<svg class="site-footer__heart" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20.5s-7.5-4.6-9.3-9.4C1.4 7.6 3.6 4 7.2 4c2 0 3.6 1.1 4.8 2.8C13.2 5.1 14.8 4 16.8 4c3.6 0 5.8 3.6 4.5 7.1-1.8 4.8-9.3 9.4-9.3 9.4Z"/></svg>
+						<span class="screen-reader-text"><?php esc_html_e( 'love', 'powerbachat' ); ?></span>
+						<?php esc_html_e( 'by', 'powerbachat' ); ?>
+						<?php if ( powerbachat_mod( 'pb_credit_url' ) ) : ?>
+							<a href="<?php echo esc_url( powerbachat_mod( 'pb_credit_url' ) ); ?>" target="_blank" rel="noopener"><?php echo esc_html( powerbachat_mod( 'pb_credit_name' ) ); ?></a>
+						<?php else : ?>
+							<?php echo esc_html( powerbachat_mod( 'pb_credit_name' ) ); ?>
+						<?php endif; ?>
+					</p>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>

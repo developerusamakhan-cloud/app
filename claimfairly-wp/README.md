@@ -17,7 +17,7 @@ The tools live in a plugin so they keep working even if you change the theme lat
 3. **Import everything.** Go to *Appearance > ClaimFairly Setup* and click **Import everything**. This creates:
    - Home, About, Editorial Policy, Methodology, Disclaimer, Privacy Policy and Contact
    - The 5 tool pages
-   - 12 guides, sorted into 5 categories
+   - 12 guides, sorted into 5 categories, plus **15 more guides scheduled** to publish one every other day
    - 5 "How much of a $X settlement will I get?" pages
    - 4 injury pages and 3 insurer pages
    - The States hub and **40 state pages as drafts**
@@ -60,6 +60,16 @@ The articles live in the Guides section at `/guides/`, as the plan says. It work
 - **New guides:** write a normal WordPress post, pick a category, add a featured image if you like, and fill in the Trust & SEO box. Everything else is automatic.
 - **Moving from theme 2.3:** that version kept the articles at `/blog/`. Run *Appearance > ClaimFairly Setup* once after updating: the Guides page becomes the posts page again, menus are updated, the old Blog page is set to draft, and `/blog/` redirects to `/guides/` with a permanent (301) redirect.
 
+## Scheduled guides
+
+Guides 13 to 27 (in `content/guides/`) carry a `publish_in_days` value in their front matter. The first time setup imports them, it counts from that day: the first publishes the next morning at 9:00 am site time, then one every other day for 30 days. You will find them under *Posts > All Posts > Scheduled*, and you can change any date there.
+
+- Each one already has its SEO title, meta description, focus keyword (Rank Math and Yoast), category, share image, FAQ schema, sources and related links.
+- Internal links only point to pages that are live by the guide's publish date, so there are no broken links while the schedule runs.
+- WordPress publishes scheduled posts only when someone visits the site. On a quiet new site a post can show "Missed schedule", so the theme checks every 10 minutes and publishes anything overdue.
+- Running setup again never moves the dates.
+- To schedule your own future guide this way, add `publish_in_days: 31` (or any number of days) to its front matter.
+
 ## Author
 
 The site owner is shown as **James** everywhere: bylines, author boxes, the homepage note, the About and Editorial pages, and the schema. Change the name, bio and photo in *Appearance > Customize > ClaimFairly settings*. It does not depend on your WordPress account's display name.
@@ -86,7 +96,7 @@ The site owner is shown as **James** everywhere: bylines, author boxes, the home
 - Each calculator has its own color: blue for the estimator, violet for diminished value, rose for pain and suffering, orange for take-home and navy for the demand letter.
 - The hero "image" is a live-looking calculator preview built in HTML, so it is sharp and fast.
 - There are no fake stats and no fake testimonials. Every number on the homepage is true.
-- There are no long dashes in any file or page.
+- There are no long dashes in any file or page. The browser title uses a bar ("Contact | ClaimFairly"), and any long dash WordPress's typography filter would create is turned back into a hyphen.
 
 ## Calculators (plugin)
 

@@ -9,7 +9,8 @@ function iconFor(it){ if(it.label==='State rules')return 'pin'; if(it.label==='I
   return {blue:'calculator',violet:'car-down',rose:'pulse',orange:'pie',navy:'letter',green:'book'}[it.color]; }
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 const p = await b.newPage({ viewport: { width: 1200, height: 630 } });
-for (const it of items) {
+const only = process.env.ONLY ? process.env.ONLY.split(",") : null;
+for (const it of items.filter(i => !only || only.includes(i.slug))) {
   const [c,t] = C[it.color]; const ic = icons[iconFor(it)];
   const size = it.title.length > 80 ? 50 : it.title.length > 55 ? 58 : 66;
   await p.setContent(`<html><head><style>

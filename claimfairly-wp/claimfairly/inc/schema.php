@@ -78,6 +78,32 @@ function claimfairly_document_title( $title ) {
 add_filter( 'pre_get_document_title', 'claimfairly_document_title' );
 
 /**
+ * Use a vertical bar between the page title and site name, not WordPress's
+ * default en dash ("Contact | ClaimFairly").
+ *
+ * @return string
+ */
+function claimfairly_title_separator() {
+	return '|';
+}
+add_filter( 'document_title_separator', 'claimfairly_title_separator' );
+
+/**
+ * Turn the long dashes WordPress's typography filter creates (from " - " and
+ * "--") back into plain hyphens. The site style uses no long dashes.
+ *
+ * @param string $text Text.
+ * @return string
+ */
+function claimfairly_no_long_dashes( $text ) {
+	return str_replace( array( '&#8211;', '&#8212;', "\u{2013}", "\u{2014}" ), '-', (string) $text );
+}
+foreach ( array( 'the_content', 'the_title', 'the_excerpt', 'get_the_excerpt', 'single_post_title', 'single_cat_title', 'widget_text_content', 'document_title' ) as $claimfairly_filter ) {
+	add_filter( $claimfairly_filter, 'claimfairly_no_long_dashes', 99 );
+}
+unset( $claimfairly_filter );
+
+/**
  * Description for the current view.
  *
  * @return string

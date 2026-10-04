@@ -53,3 +53,35 @@ function claimfairly_dequeue_unused() {
 	wp_dequeue_style( 'classic-theme-styles' );
 }
 add_action( 'wp_enqueue_scripts', 'claimfairly_dequeue_unused', 20 );
+
+/**
+ * Publish scheduled posts that missed their time.
+ *
+ * WordPress publishes scheduled posts through WP-Cron, which only runs when
+ * someone visits. On a quiet site a post can sit as "Missed schedule". This
+ * check runs at most every 10 minutes and publishes anything overdue.
+ */
+function claimfairly_publish_missed_schedule() {
+	if ( wp_doing_ajax() || get_transient( 'claimfairly_missed_check' ) ) {
+		return;
+	}
+	set_transient( 'claimfairly_missed_check', 1, 10 * MINUTE_IN_SECONDS );
+	$overdue = get_posts(
+		array(
+			'post_type'      => 'post',
+			'post_status'    => 'future',
+			'posts_per_page' => 20,
+			'fields'         => 'ids',
+			'date_query'     => array(
+				array(
+					'column' => 'post_date_gmt',
+					'before' => gmdate( 'Y-m-d H:i:s' ),
+				),
+			),
+		)
+	);
+	foreach ( $overdue as $post_id ) {
+		wp_publish_post( $post_id );
+	}
+}
+add_action( 'init', 'claimfairly_publish_missed_schedule', 20 );

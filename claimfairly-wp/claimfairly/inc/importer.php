@@ -306,6 +306,27 @@ function claimfairly_fill_placeholders( $text ) {
 }
 
 /**
+ * Publish date for a scheduled item: 9:00 am site time, N days after the day
+ * scheduled content was first imported. The start day is stored, so running
+ * setup again never moves a date.
+ *
+ * @param int $days Days after the start day.
+ * @return DateTimeImmutable|null
+ */
+function claimfairly_schedule_date( $days ) {
+	if ( $days < 1 ) {
+		return null;
+	}
+	$start = get_option( 'claimfairly_schedule_start' );
+	if ( ! $start ) {
+		$start = wp_date( 'Y-m-d' );
+		update_option( 'claimfairly_schedule_start', $start, false );
+	}
+	$when = DateTimeImmutable::createFromFormat( 'Y-m-d H:i:s', $start . ' 09:00:00', wp_timezone() );
+	return $when ? $when->modify( '+' . $days . ' days' ) : null;
+}
+
+/**
  * Create or update one item.
  *
  * @param array  $meta   Front matter.
@@ -379,6 +400,13 @@ function claimfairly_upsert( $meta, $blocks, $update, &$report ) {
 		$id                  = wp_update_post( wp_slash( $data ), true );
 		++$report['updated'];
 	} else {
+		$when = isset( $meta['publish_in_days'] ) ? claimfairly_schedule_date( (int) $meta['publish_in_days'] ) : null;
+		if ( $when ) {
+			$data['post_date']     = $when->format( 'Y-m-d H:i:s' );
+			$data['post_date_gmt'] = $when->setTimezone( new DateTimeZone( 'UTC' ) )->format( 'Y-m-d H:i:s' );
+			$data['post_status']   = $when->getTimestamp() > time() ? 'future' : 'publish';
+			$report['scheduled'][] = $when;
+		}
 		$id = wp_insert_post( wp_slash( $data ), true );
 		++$report['created'];
 	}
@@ -740,6 +768,17 @@ function claimfairly_run_import( $update = false ) {
 		if ( $id ) {
 			$ids[ $item['meta']['slug'] ] = $id;
 		}
+	}
+	if ( ! empty( $report['scheduled'] ) ) {
+		sort( $report['scheduled'] );
+		$report['notes'][] = sprintf(
+			/* translators: 1: number of guides, 2: first date, 3: last date. */
+			__( '%1$d new guides scheduled, one every other day at 9:00 am: the first on %2$s, the last on %3$s. See Posts > All Posts > Scheduled.', 'claimfairly' ),
+			count( $report['scheduled'] ),
+			wp_date( 'F j', reset( $report['scheduled'] )->getTimestamp() ),
+			wp_date( 'F j, Y', end( $report['scheduled'] )->getTimestamp() )
+		);
+		unset( $report['scheduled'] );
 	}
 
 	// State pages from the plugin's data (drafts).

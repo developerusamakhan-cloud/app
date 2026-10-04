@@ -985,12 +985,46 @@
 	 * Tariff alerts and contact form (built-in, posted to the REST API)
 	 * ---------------------------------------------------------------- */
 
-	// Send a form through admin-ajax.php and show the result next to it.
+	var PAGE_START = Date.now();
+	var REST_FOR = { pb_contact: 'contactUrl', pb_subscribe: 'subscribeUrl', pb_lead: 'leadUrl' };
+
+	// Send form data: admin-ajax.php first, then the REST API if that is blocked.
+	// Resolves with the JSON reply, or rejects when neither route answered.
+	function sendForm(action, data) {
+		data.set('action', action);
+		data.set('pb_elapsed', String(Date.now() - PAGE_START));
+		function asJson(r) {
+			return r.json().then(function (res) {
+				if (res && typeof res === 'object' && ('ok' in res)) {
+					return res;
+				}
+				throw new Error('bad reply');
+			});
+		}
+		function viaRest() {
+			var url = CFG[REST_FOR[action]];
+			if (!url) {
+				return Promise.reject(new Error('no route'));
+			}
+			var body = {};
+			data.forEach(function (v, k) {
+				body[k] = v;
+			});
+			return fetch(url, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).then(asJson);
+		}
+		if (!CFG.ajaxUrl) {
+			return viaRest();
+		}
+		return fetch(CFG.ajaxUrl, { method: 'POST', credentials: 'same-origin', body: data })
+			.then(asJson)
+			.catch(viaRest);
+	}
+
+	// Send a form and show the result next to it.
 	function postForm(form, action, onDone) {
 		var button = form.querySelector('[type="submit"]');
 		var status = form.querySelector('[data-form-status]') || form.parentNode.querySelector('[data-form-status]');
 		var data = new FormData(form);
-		data.set('action', action);
 		data.set('country', document.documentElement.getAttribute('data-country') || '');
 
 		function show(message, ok) {
@@ -1024,19 +1058,14 @@
 			}
 		}
 
-		if (!window.fetch || !CFG.ajaxUrl) {
+		if (!window.fetch || !window.FormData) {
 			form.submit();
 			return;
 		}
 		fieldErrors(null);
 		show('', true);
 		busy(true);
-		fetch(CFG.ajaxUrl, { method: 'POST', credentials: 'same-origin', body: data })
-			.then(function (r) {
-				return r.json().catch(function () {
-					return {};
-				});
-			})
+		sendForm(action, data)
 			.then(function (res) {
 				busy(false);
 				if (res && res.ok) {
@@ -1049,6 +1078,17 @@
 			})
 			.catch(function () {
 				busy(false);
+				// Both routes failed (blocked or offline). A form with a real target,
+				// like the contact form, is sent the classic way so nothing is lost.
+				if ((form.getAttribute('method') || '').toLowerCase() === 'post' && form.getAttribute('action')) {
+					var t = document.createElement('input');
+					t.type = 'hidden';
+					t.name = 'pb_elapsed';
+					t.value = String(Date.now() - PAGE_START);
+					form.appendChild(t);
+					form.submit();
+					return;
+				}
 				show(CFG.formError, false);
 			});
 	}
@@ -1309,14 +1349,13 @@
 			// Open the studio site straight away (inside the click, so it is not blocked).
 			var target = studio + (studio.indexOf('?') > -1 ? '&' : '?') + 'ref=' + encodeURIComponent(location.hostname);
 			window.open(target, '_blank', 'noopener');
-			if (window.fetch && CFG.ajaxUrl) {
+			if (window.fetch && window.FormData) {
 				var body = new FormData();
-				body.set('action', 'pb_lead');
 				body.set('contact', contact);
-				body.set('website', form.elements.website.value);
+				body.set('pb_hp', form.elements.pb_hp.value);
 				body.set('page', location.pathname);
 				body.set('country', document.documentElement.getAttribute('data-country') || '');
-				fetch(CFG.ajaxUrl, { method: 'POST', credentials: 'same-origin', keepalive: true, body: body }).catch(function () {});
+				sendForm('pb_lead', body).catch(function () {});
 			}
 			form.reset();
 			status.textContent = box.getAttribute('data-thanks') || 'Thank you. We will be in touch within 24 hours.';

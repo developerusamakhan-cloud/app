@@ -112,7 +112,7 @@ function powerbachat_alerts_routes() {
 					'type'    => 'string',
 					'default' => '',
 				),
-				'website' => array(
+				'pb_hp'   => array(
 					'type'    => 'string',
 					'default' => '',
 				),
@@ -139,20 +139,42 @@ function powerbachat_rest_subscribe( $request ) {
 		);
 	};
 
-	// Bots fill the hidden "website" field; pretend all is well.
-	if ( '' !== trim( (string) $request['website'] ) ) {
-		return new WP_REST_Response( array( 'ok' => true ), 200 );
-	}
-	$email = sanitize_email( strtolower( trim( (string) $request['email'] ) ) );
-	if ( ! $email || ! is_email( $email ) ) {
-		return $fail( __( 'Please enter a valid email address.', 'powerbachat' ) );
-	}
-	if ( ! powerbachat_rate_ok( 'sub', 6 ) ) {
-		return $fail( __( 'Too many attempts. Please try again in an hour.', 'powerbachat' ), 429 );
-	}
+	$raw     = sanitize_text_field( strtolower( trim( (string) $request['email'] ) ) );
+	$email   = sanitize_email( $raw );
 	$country = sanitize_key( (string) $request['country'] );
 	if ( ! in_array( $country, POWERBACHAT_COUNTRIES, true ) ) {
 		$country = powerbachat_current_country();
+	}
+	$spam = powerbachat_spam_reason( $request, 'sub', 10 );
+	if ( $spam ) {
+		// Keep a record for review; spam is never emailed and never confirmed.
+		$known = $email ? powerbachat_find_subscriber( $email ) : null;
+		if ( ! $known && $raw ) {
+			$id = wp_insert_post(
+				array(
+					'post_type'   => 'pb_subscriber',
+					'post_status' => 'private',
+					'post_title'  => $email ? $email : $raw,
+				)
+			);
+			if ( $id && ! is_wp_error( $id ) ) {
+				update_post_meta( $id, 'pb_status', 'spam' );
+				update_post_meta( $id, 'pb_country', $country );
+				update_post_meta( $id, 'pb_signed_up', time() );
+				update_post_meta( $id, 'pb_token', wp_generate_password( 32, false ) );
+				powerbachat_mark_spam( $id, $spam );
+			}
+		}
+		return new WP_REST_Response(
+			array(
+				'ok'      => true,
+				'message' => __( 'Almost done. Check your inbox and tap the link to confirm.', 'powerbachat' ),
+			),
+			200
+		);
+	}
+	if ( ! $email || ! is_email( $email ) ) {
+		return $fail( __( 'Please enter a valid email address.', 'powerbachat' ) );
 	}
 
 	$double = (bool) powerbachat_mod( 'pb_double_optin' );
@@ -185,6 +207,7 @@ function powerbachat_rest_subscribe( $request ) {
 	update_post_meta( $id, 'pb_country', $country );
 	update_post_meta( $id, 'pb_token', wp_generate_password( 32, false ) );
 	update_post_meta( $id, 'pb_signed_up', time() );
+	delete_post_meta( $id, 'pb_spam' );
 
 	if ( $double ) {
 		update_post_meta( $id, 'pb_status', 'pending' );
@@ -589,6 +612,7 @@ function powerbachat_subscriber_column( $column, $post_id ) {
 			'pending'      => __( 'Waiting for confirmation', 'powerbachat' ),
 			'confirmed'    => __( 'Confirmed', 'powerbachat' ),
 			'unsubscribed' => __( 'Unsubscribed', 'powerbachat' ),
+			'spam'         => __( 'Spam', 'powerbachat' ),
 		);
 		$s = get_post_meta( $post_id, 'pb_status', true );
 		echo esc_html( isset( $labels[ $s ] ) ? $labels[ $s ] : $s );

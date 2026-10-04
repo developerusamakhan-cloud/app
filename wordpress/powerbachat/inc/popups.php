@@ -138,13 +138,11 @@ add_action( 'rest_api_init', 'powerbachat_lead_route' );
  * @return WP_REST_Response
  */
 function powerbachat_rest_lead( $request ) {
-	if ( '' !== trim( (string) $request['website'] ) ) {
-		return new WP_REST_Response( array( 'ok' => true ), 200 );
-	}
 	$contact = sanitize_text_field( (string) $request['contact'] );
 	$is_mail = is_email( $contact );
 	$digits  = preg_replace( '/[^0-9]/', '', $contact );
-	if ( ! $is_mail && ( strlen( $digits ) < 7 || strlen( $digits ) > 15 ) ) {
+	$spam    = powerbachat_spam_reason( $request, 'lead', 10 );
+	if ( ! $spam && ! $is_mail && ( strlen( $digits ) < 7 || strlen( $digits ) > 15 ) ) {
 		return new WP_REST_Response(
 			array(
 				'ok'      => false,
@@ -153,22 +151,13 @@ function powerbachat_rest_lead( $request ) {
 			400
 		);
 	}
-	if ( ! powerbachat_rate_ok( 'lead', 5 ) ) {
-		return new WP_REST_Response(
-			array(
-				'ok'      => false,
-				'message' => __( 'Too many attempts. Please try again later.', 'powerbachat' ),
-			),
-			429
-		);
-	}
 	$page    = '/' . ltrim( wp_parse_url( (string) $request['page'], PHP_URL_PATH ) ?: '', '/' );
 	$country = sanitize_key( (string) $request['country'] );
 	$id      = wp_insert_post(
 		array(
 			'post_type'   => 'pb_lead',
 			'post_status' => 'private',
-			'post_title'  => $contact,
+			'post_title'  => '' !== $contact ? $contact : __( '(empty)', 'powerbachat' ),
 		),
 		true
 	);
@@ -177,6 +166,10 @@ function powerbachat_rest_lead( $request ) {
 	}
 	update_post_meta( $id, 'pb_page', sanitize_text_field( $page ) );
 	update_post_meta( $id, 'pb_country', in_array( $country, POWERBACHAT_COUNTRIES, true ) ? $country : '' );
+	if ( $spam ) {
+		powerbachat_mark_spam( $id, $spam );
+		return new WP_REST_Response( array( 'ok' => true ), 200 );
+	}
 
 	$site = wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES );
 	wp_mail(
@@ -331,7 +324,7 @@ function powerbachat_popups() {
 							<?php echo powerbachat_icon( 'mail' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 							<input id="pb-lead-contact" name="contact" type="text" inputmode="email" autocomplete="email" placeholder="<?php esc_attr_e( 'Email or WhatsApp number', 'powerbachat' ); ?>" required>
 						</div>
-						<span class="contact-form__trap" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></span>
+						<span class="contact-form__trap" aria-hidden="true"><input type="text" name="pb_hp" tabindex="-1" autocomplete="new-password" value=""></span>
 						<button type="submit" class="btn lead__cta"><?php esc_html_e( 'Get a free quote', 'powerbachat' ); ?> <?php echo powerbachat_icon( 'arrow-ne' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></button>
 						<p class="lead__status" data-lead-status role="status" aria-live="polite" hidden></p>
 					</form>

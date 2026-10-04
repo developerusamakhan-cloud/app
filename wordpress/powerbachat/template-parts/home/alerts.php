@@ -28,7 +28,7 @@ $powerbachat_whatsapp = powerbachat_mod( 'pb_whatsapp_url' );
 						<label class="screen-reader-text" for="alerts-email"><?php esc_html_e( 'Email address', 'powerbachat' ); ?></label>
 						<?php echo powerbachat_icon( 'mail' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 						<input id="alerts-email" type="email" name="email" autocomplete="email" required placeholder="<?php esc_attr_e( 'you@example.com', 'powerbachat' ); ?>">
-						<span class="contact-form__trap" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></span>
+						<span class="contact-form__trap" aria-hidden="true"><input type="text" name="pb_hp" tabindex="-1" autocomplete="new-password" value=""></span>
 						<button class="btn btn--ink" type="submit"><?php esc_html_e( 'Notify me', 'powerbachat' ); ?></button>
 					</form>
 					<p class="form-status alerts__status" data-form-status role="status" aria-live="polite" hidden></p>

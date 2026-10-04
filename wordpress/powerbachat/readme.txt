@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.7.2
+Stable tag: 1.8.0
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -165,8 +165,12 @@ that needs fixing, and a thank-you card. With JavaScript off it still works and 
 back to the page with a message. It saves each message under Messages in
 the admin and emails it to the contact address (Customize > PowerBachat > Alerts &
 footer > Contact email, default hello@powerbachat.com: make sure that mailbox
-exists). Messages older than 12 months are deleted automatically. Spam protection:
-hidden honeypot field and a per-visitor rate limit.
+exists). Messages older than 12 months are deleted automatically. Spam is never thrown away:
+anything flagged (hidden trap field, sent within 2 seconds, more than 10 per hour
+from one connection, more than 3 links) is saved in the Spam view with the reason,
+without an email, and deleted after 30 days. Use "Not spam" to move it to the inbox.
+"Run form test" on the Messages screen checks saving and email delivery on your
+server.
 
 == Featured images ==
 
@@ -281,6 +285,12 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.8.0 =
+* Every form submission is saved, spam included. Spam (hidden trap filled, sent too fast, too many from one connection, stuffed with links) is marked with the reason, not emailed, and shown in a separate Spam view with a "Not spam" link. Spam is deleted after 30 days.
+* Fixed: the hidden anti-spam field was named "website", which browser autofill could fill in, so real messages could be silently dropped. It is renamed and no longer drops anything.
+* Forms fall back to the REST API if admin-ajax.php is blocked, and the contact form falls back to a normal submit, so a message always gets through.
+* Messages screen: "Run form test" checks that messages are saved and that email is sent, and says what to fix if not. New-item counters on the Messages and Leads menus; email, country and status columns.
 
 = 1.7.2 =
 * Contact form, tariff alerts and lead popup now send through admin-ajax.php, so they work even when a security plugin blocks the REST API.

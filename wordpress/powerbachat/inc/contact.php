@@ -99,40 +99,40 @@ function powerbachat_rest_contact( $request ) {
 			$code
 		);
 	};
-	if ( '' !== trim( (string) $request['website'] ) ) {
-		return new WP_REST_Response( array( 'ok' => true ), 200 );
-	}
 	$name    = sanitize_text_field( (string) $request['name'] );
 	$email   = sanitize_email( (string) $request['email'] );
 	$topic   = sanitize_key( (string) $request['topic'] );
 	$message = sanitize_textarea_field( (string) $request['message'] );
 	$country = sanitize_key( (string) $request['country'] );
 	$topics  = powerbachat_contact_topics();
+	$test    = (string) $request['pb_test'];
+	$is_test = '' !== $test && get_transient( 'pb_form_test_token' ) === $test;
+	$spam    = $is_test ? '' : powerbachat_spam_reason( $request, 'contact', 10, $message );
 
-	$fields = array();
-	if ( ! $name ) {
-		$fields['name'] = __( 'Please tell us your name.', 'powerbachat' );
-	}
-	if ( ! is_email( $email ) ) {
-		$fields['email'] = __( 'Please enter a valid email address so we can reply.', 'powerbachat' );
-	}
-	if ( mb_strlen( $message ) < 10 ) {
-		$fields['message'] = __( 'Please write a little more (at least 10 characters).', 'powerbachat' );
-	} elseif ( mb_strlen( $message ) > 5000 ) {
-		$fields['message'] = __( 'Please keep your message under 5,000 characters.', 'powerbachat' );
-	}
-	if ( $fields ) {
-		return new WP_REST_Response(
-			array(
-				'ok'      => false,
-				'message' => __( 'Please check the highlighted fields.', 'powerbachat' ),
-				'fields'  => $fields,
-			),
-			400
-		);
-	}
-	if ( ! powerbachat_rate_ok( 'contact', 5 ) ) {
-		return $fail( __( 'Too many messages. Please try again in an hour.', 'powerbachat' ), 429 );
+	// Real visitors get told what to fix. Spam is saved as it is, whatever it contains.
+	if ( ! $spam ) {
+		$fields = array();
+		if ( ! $name ) {
+			$fields['name'] = __( 'Please tell us your name.', 'powerbachat' );
+		}
+		if ( ! is_email( $email ) ) {
+			$fields['email'] = __( 'Please enter a valid email address so we can reply.', 'powerbachat' );
+		}
+		if ( mb_strlen( $message ) < 10 ) {
+			$fields['message'] = __( 'Please write a little more (at least 10 characters).', 'powerbachat' );
+		} elseif ( mb_strlen( $message ) > 5000 ) {
+			$fields['message'] = __( 'Please keep your message under 5,000 characters.', 'powerbachat' );
+		}
+		if ( $fields ) {
+			return new WP_REST_Response(
+				array(
+					'ok'      => false,
+					'message' => __( 'Please check the highlighted fields.', 'powerbachat' ),
+					'fields'  => $fields,
+				),
+				400
+			);
+		}
 	}
 	$topic_label = isset( $topics[ $topic ] ) ? $topics[ $topic ] : $topics['other'];
 
@@ -140,8 +140,8 @@ function powerbachat_rest_contact( $request ) {
 		array(
 			'post_type'    => 'pb_message',
 			'post_status'  => 'private',
-			'post_title'   => $topic_label . ': ' . $name,
-			'post_content' => $message,
+			'post_title'   => $topic_label . ': ' . ( $name ? $name : __( '(no name)', 'powerbachat' ) ),
+			'post_content' => mb_substr( $message, 0, 5000 ),
 		),
 		true
 	);
@@ -151,14 +151,47 @@ function powerbachat_rest_contact( $request ) {
 	update_post_meta( $id, 'pb_name', $name );
 	update_post_meta( $id, 'pb_email', $email );
 	update_post_meta( $id, 'pb_country', in_array( $country, POWERBACHAT_COUNTRIES, true ) ? $country : '' );
+	if ( $is_test ) {
+		update_post_meta( $id, 'pb_test', 1 );
+	}
+	if ( $spam ) {
+		// Saved for you to review, but no email and the sender sees the usual thank you.
+		powerbachat_mark_spam( $id, $spam );
+		return new WP_REST_Response(
+			array(
+				'ok'      => true,
+				'message' => __( 'Thank you. Your message has reached us and we usually reply within two working days.', 'powerbachat' ),
+			),
+			200
+		);
+	}
 
+	$mail_error = '';
+	$catch      = function ( $error ) use ( &$mail_error ) {
+		$mail_error = $error->get_error_message();
+	};
+	add_action( 'wp_mail_failed', $catch );
 	$site = wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES );
-	wp_mail(
+	$sent = wp_mail(
 		powerbachat_contact_address(),
 		sprintf( '[%s] %s', $site, $topic_label ),
 		sprintf( "%s <%s>\n%s: %s\n\n%s\n\n%s", $name, $email, __( 'Country', 'powerbachat' ), strtoupper( $country ), $message, admin_url( 'post.php?post=' . $id . '&action=edit' ) ),
 		array( 'Content-Type: text/plain; charset=UTF-8', 'Reply-To: ' . $name . ' <' . $email . '>' )
 	);
+	remove_action( 'wp_mail_failed', $catch );
+	update_post_meta( $id, 'pb_mailed', $sent ? 1 : 0 );
+
+	if ( $is_test ) {
+		delete_transient( 'pb_form_test_token' );
+		return new WP_REST_Response(
+			array(
+				'ok'         => true,
+				'mail'       => (bool) $sent,
+				'mail_error' => $mail_error,
+			),
+			200
+		);
+	}
 
 	return new WP_REST_Response(
 		array(
@@ -255,8 +288,8 @@ function powerbachat_contact_shortcode() {
 			<span class="field-error" id="pb-message-error" data-error-for="message" hidden></span>
 		</p>
 		<p class="contact-form__trap" aria-hidden="true">
-			<label for="pb-website"><?php esc_html_e( 'Leave this empty', 'powerbachat' ); ?></label>
-			<input id="pb-website" name="website" type="text" tabindex="-1" autocomplete="off">
+			<label for="pb-hp"><?php esc_html_e( 'Leave this empty', 'powerbachat' ); ?></label>
+			<input id="pb-hp" name="pb_hp" type="text" tabindex="-1" autocomplete="new-password" value="">
 		</p>
 		<p class="contact-form__foot">
 			<button class="btn btn--ink contact-form__submit" type="submit"><span class="contact-form__label"><?php esc_html_e( 'Send message', 'powerbachat' ); ?></span><span class="contact-form__sending"><?php esc_html_e( 'Sending', 'powerbachat' ); ?></span></button>

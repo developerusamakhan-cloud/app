@@ -1,7 +1,7 @@
 // Cover images for guide posts: node tools/covers.js powerbachat [slug]
 // Writes powerbachat/content/images/{slug}.jpg (1200x675) for every post, or one slug.
 // Each post header sets "cover" (slabs, solar, battery, meter, fan, ac, geyser, clock,
-// bill) and optionally "cover_label". Needs: npm i playwright. Fonts: SIL OFL (Google Fonts).
+// bill), "cover_title" (2 to 4 words) and optionally "cover_label". Needs: npm i playwright.
 const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path');
 const root = process.argv[2];
@@ -23,27 +23,33 @@ const art = {
 };
 const country = { pakistan: ['Pakistan', '#7fd3a6'], india: ['India', '#f5b82e'], bangladesh: ['Bangladesh', '#ff9a7a'] };
 
+function esc(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 function html(meta) {
   const [cname, ccol] = country[meta.category] || ['Guide', V];
-  const t = meta.title;
-  const size = t.length > 70 ? 54 : t.length > 52 ? 62 : 70;
+  const label = meta.cover_title || meta.title;
+  const words = label.split(' ');
+  const last = words.pop();
+  const title = (words.length ? esc(words.join(' ')) + ' ' : '') + '<em>' + esc(last) + '</em>';
+  const size = label.length > 18 ? 84 : label.length > 12 ? 98 : 112;
+  const art_svg = (art[meta.cover] || art.meter).replace('>200</text>', '>' + (meta.cover_label || '200') + '</text>');
   return `<!doctype html><html><head><style>${FONTS}
-  *{box-sizing:border-box}body{margin:0;width:1200px;height:675px;overflow:hidden;background:#10201b;color:${P};font-family:'Hanken Grotesk'}
-  .bg{position:absolute;inset:0;background:radial-gradient(60% 80% at 85% 20%,rgba(245,184,46,.18),transparent 60%),linear-gradient(rgba(244,239,228,.045) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(244,239,228,.045) 1px,transparent 1px) 0 0/48px 48px}
-  .wrap{position:absolute;inset:0;padding:64px 72px;display:grid;grid-template-columns:1fr 420px;gap:40px}
-  .left{display:flex;flex-direction:column}
+  *{box-sizing:border-box}body{margin:0;width:1200px;height:675px;overflow:hidden;background:#10201b;color:${P};font-family:'JetBrains Mono'}
+  .bg{position:absolute;inset:0;background:radial-gradient(55% 75% at 80% 30%,rgba(245,184,46,.20),transparent 62%),linear-gradient(rgba(244,239,228,.045) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(244,239,228,.045) 1px,transparent 1px) 0 0/48px 48px}
+  .wrap{position:absolute;inset:0;padding:60px 72px;display:grid;grid-template-columns:1fr 470px;gap:24px}
+  .left{display:flex;flex-direction:column;min-width:0}
   .brand{display:flex;align-items:center;gap:14px;font-family:Fraunces;font-size:30px;font-weight:600;letter-spacing:-.02em}.brand em{font-weight:400;color:${V}}
-  .tag{margin-top:auto;display:inline-flex;align-self:flex-start;gap:10px;align-items:center;font-family:'JetBrains Mono';font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:${ccol}}
-  .tag i{width:34px;height:2px;background:${ccol};display:block}
-  h1{margin:22px 0 0;font-family:Fraunces;font-weight:500;font-size:${size}px;line-height:1.04;letter-spacing:-.035em;font-variation-settings:"SOFT" 50,"opsz" 144}
-  .url{margin-top:34px;font-family:'JetBrains Mono';font-size:17px;color:rgba(244,239,228,.55);letter-spacing:.06em}
-  .art{align-self:center;justify-self:center}
+  .tag{margin-top:auto;display:inline-flex;align-self:flex-start;gap:12px;align-items:center;font-size:19px;letter-spacing:.16em;text-transform:uppercase;color:${ccol}}
+  .tag i{width:40px;height:2px;background:${ccol};display:block}
+  h1{margin:20px 0 0;font-family:Fraunces;font-weight:500;font-size:${size}px;line-height:.98;letter-spacing:-.045em;font-variation-settings:"SOFT" 60,"opsz" 144}
+  h1 em{font-style:italic;font-weight:400;color:${V}}
+  .url{margin-top:30px;font-size:17px;color:rgba(244,239,228,.5);letter-spacing:.08em}
+  .art{align-self:center;justify-self:end}
   </style></head><body><div class="bg"></div><div class="wrap"><div class="left">
   <div class="brand"><svg width="44" height="44" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#22403a"/><path d="M8 26a12.4 12.4 0 0 1 24 0" fill="none" stroke="${P}" stroke-opacity=".28" stroke-width="3.2" stroke-linecap="round"/><path d="M8 26a12.4 12.4 0 0 1 9.4-11.7" fill="none" stroke="${V}" stroke-width="3.2" stroke-linecap="round"/><path d="M20 26 14.3 15.6" stroke="${P}" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="26" r="2.8" fill="${V}"/></svg><span>Power<em>Bachat</em></span></div>
   <span class="tag"><i></i>${cname} guide</span>
-  <h1>${t.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</h1>
+  <h1>${title}</h1>
   <div class="url">powerbachat.com</div></div>
-  <svg class="art" width="420" height="400" viewBox="0 0 420 400">${(art[meta.cover] || art.meter).replace('>200</text>', '>' + (meta.cover_label || '200') + '</text>')}</svg></div></body></html>`;
+  <svg class="art" width="470" height="448" viewBox="0 0 420 400">${art_svg}</svg></div></body></html>`;
 }
 
 (async () => {

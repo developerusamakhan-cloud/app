@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.5.0
+Stable tag: 1.6.0
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -68,7 +68,7 @@ it to that country only. Posts without one of those categories show to everyone.
 
 The theme ships with finished pages and guide posts for all three countries in
 /content/pk/, /content/in/, /content/bd/, /content/blog/ and /content/site/
-(57 pages, 21 posts).
+(57 pages, 36 posts).
 Go to Appearance > PowerBachat content and click "Create missing pages and posts". It
 creates the country hubs (/pk/, /in/, /bd/), every company calculator page, the unit price and
 tariff pages, the solar and battery pages, and the guide posts, with parents,
@@ -78,7 +78,10 @@ unless you press "Re-import" on that row.
 Publishing schedule: all pages go live at once. Guide posts are taken in their set
 order: the first ones publish immediately ("Publish now", default 15) and the rest
 are scheduled one every few days ("Then one post every", default 2 days) at 09:00
-site time, so new posts keep appearing on their own. Change both numbers on the same
+site time, so new posts keep appearing on their own. When a theme update adds more
+posts, "Create missing" queues them after the last post that is already scheduled,
+so the rhythm continues without two posts on the same day. The order rotates
+Pakistan, India and Bangladesh, so every country gets new guides regularly. Change both numbers on the same
 screen before you import. Published content never links to a post that is still
 scheduled, so there are no broken links while the queue runs.
 
@@ -164,8 +167,15 @@ hidden honeypot field and a per-visitor rate limit.
 == Featured images ==
 
 Every guide post ships with a branded cover image (content/images/{slug}.jpg,
-1200 x 675). The importer adds it to the Media Library and sets it as the featured
-image, with the post title as alt text, unless the post already has one. Covers are
+1200 x 675) showing a short topic label rather than the full title, so it stays
+readable on small cards. The importer adds it to the Media Library and sets it as
+the featured image, with the post title as alt text. "Create missing" also gives
+posts that already exist their cover if they have none, and swaps older theme
+covers for the current design. A featured image you chose yourself is never
+replaced.
+
+Each post ends with "Related guides": up to three published guides for the same
+country, so new posts get internal links as soon as they go live. Covers are
 used on the guide cards, at the top of each post, in Open Graph / Twitter cards and
 in the article schema. Replace any of them by setting a different featured image.
 To make covers for new posts, run wordpress/tools/covers.js (see the notes at the
@@ -231,6 +241,13 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.6.0 =
+* 15 new guide posts (5 per country), scheduled one every other day after the existing queue, rotating Pakistan, India and Bangladesh, each with internal links and links to official sources.
+* Scheduling continues after the last scheduled post when more content is added later.
+* New cover design with a short topic label; existing posts get their cover (or the new version of a theme cover) on "Create missing".
+* "Related guides" section under every post.
+* Tariff alerts box on inner pages now has proper spacing instead of touching the content above.
 
 = 1.5.0 =
 * Featured images: branded cover for every guide post, attached by the importer and used on cards, posts, social shares and schema; card images now 16:9.

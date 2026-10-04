@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -221,8 +221,10 @@ turn comments back on, use add_filter( 'powerbachat_disable_comments',
 
 == Favicon ==
 
-The theme ships its own favicon (SVG, ICO, PNG, Apple touch icon and web manifest)
-in assets/img/. Uploading a Site Icon in Customize > Site Identity replaces it.
+The theme ships its own favicon (SVG, ICO, PNG in 32, 48, 96 and 192 px, Apple
+touch icon and web manifest) in assets/img/. Google shows a site's icon in search
+results and Search Console only after it recrawls the home page, which can take a
+few days to a few weeks. Uploading a Site Icon in Customize > Site Identity replaces it.
 
 == SEO details ==
 
@@ -275,6 +277,9 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.7.1 =
+* Favicon in 48, 96 and 192 pixel sizes so Google Search and Search Console can use it (Google needs a multiple of 48px).
 
 = 1.7.0 =
 * Rank Math: five keywords (focus plus four secondary), SEO title, meta description and social fields on every page and post, also written to items already on the site without overwriting your own edits; Rank Math home page title, description and image.

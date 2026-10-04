@@ -89,6 +89,10 @@ function powerbachat_favicons() {
 	$ver  = '?v=' . rawurlencode( POWERBACHAT_VERSION );
 	printf( '<link rel="icon" href="%s" sizes="any">' . "\n", esc_url( $base . 'favicon.ico' . $ver ) );
 	printf( '<link rel="icon" href="%s" type="image/svg+xml">' . "\n", esc_url( $base . 'favicon.svg' . $ver ) );
+	// Google Search shows favicons that are a multiple of 48px, so offer 48, 96 and 192.
+	printf( '<link rel="icon" href="%s" type="image/png" sizes="48x48">' . "\n", esc_url( $base . 'favicon-48.png' . $ver ) );
+	printf( '<link rel="icon" href="%s" type="image/png" sizes="96x96">' . "\n", esc_url( $base . 'favicon-96.png' . $ver ) );
+	printf( '<link rel="icon" href="%s" type="image/png" sizes="192x192">' . "\n", esc_url( $base . 'icon-192.png' . $ver ) );
 	printf( '<link rel="icon" href="%s" type="image/png" sizes="32x32">' . "\n", esc_url( $base . 'favicon-32.png' . $ver ) );
 	printf( '<link rel="apple-touch-icon" href="%s">' . "\n", esc_url( $base . 'apple-touch-icon.png' . $ver ) );
 	printf( '<link rel="manifest" href="%s">' . "\n", esc_url( $base . 'site.webmanifest' ) );

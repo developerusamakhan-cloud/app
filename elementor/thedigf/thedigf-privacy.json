@@ -1,0 +1,181 @@
+{
+ "content": [
+  {
+   "id": "5eb561a",
+   "elType": "container",
+   "isInner": false,
+   "settings": {
+    "_title": "Privacy",
+    "content_width": "boxed",
+    "boxed_width": {
+     "unit": "px",
+     "size": 820,
+     "sizes": []
+    },
+    "flex_direction": "column",
+    "flex_gap": {
+     "column": "0",
+     "row": "0",
+     "isLinked": true,
+     "unit": "px",
+     "size": 0
+    },
+    "padding": {
+     "unit": "px",
+     "top": "72",
+     "right": "40",
+     "bottom": "72",
+     "left": "40",
+     "isLinked": false
+    },
+    "padding_tablet": {
+     "unit": "px",
+     "top": "72",
+     "right": "24",
+     "bottom": "72",
+     "left": "24",
+     "isLinked": false
+    },
+    "padding_mobile": {
+     "unit": "px",
+     "top": "34",
+     "right": "18",
+     "bottom": "34",
+     "left": "18",
+     "isLinked": false
+    },
+    "background_background": "classic",
+    "__globals__": {
+     "background_color": "globals/colors?id=dgcream"
+    }
+   },
+   "elements": [
+    {
+     "id": "2163636",
+     "elType": "container",
+     "isInner": true,
+     "settings": {
+      "_title": "Privacy article",
+      "flex_direction": "column",
+      "flex_gap": {
+       "column": "0",
+       "row": "0",
+       "isLinked": true,
+       "unit": "px",
+       "size": 0
+      },
+      "padding": {
+       "unit": "px",
+       "top": "40",
+       "right": "40",
+       "bottom": "40",
+       "left": "40",
+       "isLinked": true
+      },
+      "border_border": "solid",
+      "border_width": {
+       "unit": "px",
+       "top": "1",
+       "right": "1",
+       "bottom": "1",
+       "left": "1",
+       "isLinked": true
+      },
+      "border_radius": {
+       "unit": "px",
+       "top": "12",
+       "right": "12",
+       "bottom": "12",
+       "left": "12",
+       "isLinked": true
+      },
+      "background_background": "classic",
+      "padding_mobile": {
+       "unit": "px",
+       "top": "26",
+       "right": "22",
+       "bottom": "26",
+       "left": "22",
+       "isLinked": false
+      },
+      "__globals__": {
+       "background_color": "globals/colors?id=dgwhite",
+       "border_color": "globals/colors?id=dgline"
+      },
+      "content_width": "full"
+     },
+     "elements": [
+      {
+       "id": "3ceb3ff",
+       "elType": "widget",
+       "widgetType": "heading",
+       "isInner": false,
+       "settings": {
+        "_margin": {
+         "unit": "px",
+         "top": "0",
+         "right": "0",
+         "bottom": "28",
+         "left": "0",
+         "isLinked": false
+        },
+        "title": "Privacy",
+        "header_size": "h1",
+        "__globals__": {
+         "typography_typography": "globals/typography?id=dgh2",
+         "title_color": "globals/colors?id=dgink"
+        }
+       },
+       "elements": []
+      },
+      {
+       "id": "97b7509",
+       "elType": "widget",
+       "widgetType": "text-editor",
+       "isInner": false,
+       "settings": {
+        "editor": "<p>TeleTech Solutions, LLC collects the contact information you submit through this site to schedule and conduct your discovery conversation.</p><p>We do not sell, rent or share your information with third parties for marketing.</p><p>Documents shared during an engagement are protected by a mutual confidentiality agreement and stored in access-controlled folders.</p><p>To update or remove your information, email <a href=\"mailto:Reggie@TeleTechTX.com\">Reggie@TeleTechTX.com</a>.</p>",
+        "paragraph_spacing": {
+         "unit": "px",
+         "size": 18,
+         "sizes": []
+        },
+        "__globals__": {
+         "typography_typography": "globals/typography?id=dgintro",
+         "text_color": "globals/colors?id=dgmuted"
+        }
+       },
+       "elements": []
+      },
+      {
+       "id": "8b529b4",
+       "elType": "widget",
+       "widgetType": "text-editor",
+       "isInner": false,
+       "settings": {
+        "editor": "<p>TeleTech Solutions, LLC · 5 Cowboys Way, Suite 300, Frisco, Texas 75034</p>",
+        "paragraph_spacing": {
+         "unit": "px",
+         "size": 0,
+         "sizes": []
+        },
+        "__globals__": {
+         "typography_typography": "globals/typography?id=dgintro",
+         "text_color": "globals/colors?id=dgmuted"
+        }
+       },
+       "elements": []
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "page_settings": {
+  "template": "elementor_canvas",
+  "hide_title": "yes"
+ },
+ "version": "0.4",
+ "title": "TheDIGF – Privacy",
+ "type": "page"
+}

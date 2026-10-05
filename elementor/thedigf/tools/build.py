@@ -353,7 +353,10 @@ def card(children, bg="dgwhite", border="dgline", radius=12, pad=(28, 30), pad_m
     if pad_m:
         s["padding_mobile"] = dim(pad_m[0], pad_m[1])
     gl = s.setdefault("__globals__", {})
-    gl["background_color"] = C(bg)
+    if bg.startswith("#") or bg.startswith("rgba"):
+        s["background_color"] = bg
+    else:
+        gl["background_color"] = C(bg)
     if border.startswith("#") or border.startswith("rgba"):
         s["border_color"] = border
     else:
@@ -396,10 +399,10 @@ def accordion(items, numbered=False, content_pad=(0, 0, 23, 32)):
         settings[f"accordion_background_{st}_background"] = "classic"
         settings[f"accordion_background_{st}_color"] = "#00000000"
         settings[f"accordion_border_{st}_border"] = "solid"
-        settings[f"accordion_border_{st}_width"] = dim(0, 0, 1, 0)
+        settings[f"accordion_border_{st}_width"] = dim(0)
         settings["__globals__"][f"accordion_border_{st}_color"] = C("dgline")
     children = [
-        con([text(body, "dgsmall")], _title=f"item #{i + 1}", flex_direction="column", padding=dim(0),
+        con([text(body, "dgsmall")], _title=f"item #{i + 1}", flex_direction="column", padding=dim(*content_pad),
             border_border="none")
         for i, (_, body) in enumerate(items)
     ]
@@ -493,11 +496,13 @@ PAGE_CSS_JS = """<style>
 .elementor .dg-tabs .e-n-tab-title[aria-selected="true"] .e-n-tab-title-text::before{color:#D5AE65}
 /* Accordions: no box around the answer, rule above the first item, 16px titles, gold index numbers */
 .elementor .dg-acc .e-n-accordion-item>.e-con{border:0!important}
-.elementor .dg-acc .e-n-accordion-item:first-child>.e-n-accordion-item-title{border-top:1px solid #D9DFDF}
+.elementor .dg-acc .e-n-accordion-item{border-bottom:1px solid #D9DFDF}
+.elementor .dg-acc .e-n-accordion-item:first-child{border-top:1px solid #D9DFDF}
+.elementor .dg-acc .e-n-accordion-item-title{border:0!important}
 .elementor .dg-acc .e-n-accordion-item-title-text{font-size:1rem!important;font-weight:500!important}
 .elementor .dg-acc-num .e-n-accordion{counter-reset:dgacc}
 .elementor .dg-acc-num .e-n-accordion-item{counter-increment:dgacc}
-.elementor .dg-acc-num .e-n-accordion-item-title-text::before{content:counter(dgacc,decimal-leading-zero);display:inline-block;min-width:32px;font-size:.73rem;font-weight:400;letter-spacing:.04em;color:#94723B}
+.elementor .dg-acc-num .e-n-accordion-item-title-text::before{content:counter(dgacc,decimal-leading-zero);display:inline-block;margin-right:15px;font-size:.73rem;font-weight:400;letter-spacing:.04em;color:#94723B}
 /* Scorecard: filter bar, collapsible rows, status pills */
 .elementor .dg-filters{display:flex;gap:8px;flex-wrap:wrap;background:#F5F7F7;padding:18px 30px;border-bottom:1px solid #D9DFDF}
 .elementor .dg-filters .dg-filter{background:#fff;border:1px solid #D9DFDF;border-radius:6px;font-family:inherit;font-size:.78rem;font-weight:400;line-height:1.3;padding:9px 13px;color:#5D6E78;cursor:pointer;box-shadow:none;transform:none}
@@ -508,6 +513,7 @@ PAGE_CSS_JS = """<style>
 .elementor .dg-score-row .dg-finding{display:none}
 .elementor .dg-score-row.is-open .dg-finding,.elementor-editor-active .dg-score-row .dg-finding{display:block}
 .elementor .dg-score-row.is-hidden{display:none!important}
+.elementor .dg-preview-status p{white-space:nowrap;font-size:.69rem;line-height:2.4}
 .elementor .dg-pill{flex:0 0 auto!important;width:auto!important;white-space:nowrap}
 /* Pricing bullets in two columns */
 .elementor .dg-tier-list .elementor-icon-list-items{display:grid!important;grid-template-columns:1fr 1fr;gap:13px 20px}
@@ -571,7 +577,8 @@ def hero():
         col([eyebrow("Your executive view", _margin=dim(0, 0, 9, 0)),
              heading("Seven domains.<br>One clear scorecard.", "div", "dgh3", "dgink")], g=0),
         text("<p>" + "<br>".join([status_line("dggreen", "Good to go"), status_line("dgyellow", "Watch closely"),
-                                   status_line("dgred", "Take action")]) + "</p>", "dgxs", "dgmuted"),
+                                   status_line("dgred", "Take action")]) + "</p>", "dgxs", "dgmuted",
+             _flex_size="none", _css_classes="dg-preview-status"),
     ], pad=(24, 24), radius=12, flex_direction="row", flex_justify_content="space-between", flex_align_items="center",
         flex_gap=gap(20), html_tag="a", link=link("#scorecard"), margin=dim(-55, 22, 0, -22),
         margin_mobile=dim(-15, 12, 0, 12),
@@ -582,9 +589,9 @@ def hero():
                 width=sz(48, "%"), width_mobile=sz(100, "%"), _title="Hero visual")
     top = row([left, right], g=55, padding=dim(70, 0, 54, 0), padding_mobile=dim(37, 0, 30, 0), _title="Hero grid")
     cred = grid([
-        row([heading("1989", "div", "dgstat", "dggoldlt"), text("Building businesses since", "dgxs", "dgondark")], g=18, mobile_col=False),
-        row([heading("07", "div", "dgstat", "dggoldlt"), text("Connected technology domains", "dgxs", "dgondark")], g=18, mobile_col=False),
-        row([heading("01", "div", "dgstat", "dggoldlt"), text("Accountable advisor", "dgxs", "dgondark")], g=18, mobile_col=False),
+        row([heading("1989", "div", "dgstat", "dggoldlt", _flex_size="none"), text("Building businesses since", "dgxs", "dgondark")], g=18, mobile_col=False),
+        row([heading("07", "div", "dgstat", "dggoldlt", _flex_size="none"), text("Connected technology domains", "dgxs", "dgondark")], g=18, mobile_col=False),
+        row([heading("01", "div", "dgstat", "dggoldlt", _flex_size="none"), text("Accountable advisor", "dgxs", "dgondark")], g=18, mobile_col=False),
     ], 3, 3, 1, g=30, padding=dim(25, 0, 32, 0), border_border="solid", border_width=dim(1, 0, 0, 0),
         border_color="rgba(255,255,255,0.15)", _title="Credibility")
     canvas = html(HERO_CANVAS, _position="absolute", _title="Hero motion (optional)")
@@ -619,9 +626,9 @@ def problem():
              "Payment processing costs above market", "Security and PCI exposure without clear ownership",
              "Vendors managing themselves", "No documentation a buyer can rely on"]
     items = [card([
-        heading(f"{i + 1:02d}", "div", "dgxs", "dggold", _margin=dim(3, 0, 0, 0)),
-        text(f, "dgsmall", "dgwhite"),
-    ], bg="dgnavy", border="rgba(255,255,255,0.13)", radius=9, pad=(21, 18), pad_m=(17, 14), flex_direction="row",
+        heading(f"{i + 1:02d}", "div", "dgxs", "dggold", _margin=dim(3, 0, 0, 0), _flex_size="none"),
+        text(f, "dgsmall", "dgwhite", _flex_size="grow"),
+    ], bg="rgba(255,255,255,0.03)", border="rgba(255,255,255,0.13)", radius=9, pad=(21, 18), pad_m=(17, 14), flex_direction="row",
         flex_gap=gap(13), flex_align_items="flex-start") for i, f in enumerate(finds)]
     left = col([
         eyebrow("The hidden exposure", "dggold", _margin=dim(0, 0, 18, 0)),

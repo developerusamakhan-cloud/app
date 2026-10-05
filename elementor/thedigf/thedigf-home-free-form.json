@@ -597,6 +597,8 @@
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_flex_size": "none",
+            "_css_classes": "dg-preview-status",
             "editor": "<p><span style=\"color:#30896F;font-size:11px;margin-right:8px\">&#9679;</span>Good to go<br><span style=\"color:#C99735;font-size:11px;margin-right:8px\">&#9679;</span>Watch closely<br><span style=\"color:#BC5C5E;font-size:11px;margin-right:8px\">&#9679;</span>Take action</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -705,6 +707,7 @@
          "widgetType": "heading",
          "isInner": false,
          "settings": {
+          "_flex_size": "none",
           "title": "1989",
           "header_size": "div",
           "__globals__": {
@@ -758,6 +761,7 @@
          "widgetType": "heading",
          "isInner": false,
          "settings": {
+          "_flex_size": "none",
           "title": "07",
           "header_size": "div",
           "__globals__": {
@@ -811,6 +815,7 @@
          "widgetType": "heading",
          "isInner": false,
          "settings": {
+          "_flex_size": "none",
           "title": "01",
           "header_size": "div",
           "__globals__": {
@@ -863,7 +868,7 @@
      "settings": {
       "_position": "absolute",
       "_title": "Page styles & scripts (keep)",
-      "html": "<style>\n/* Lifecycle tabs: equal-width tabs with a small \"01 / OWNERSHIP\" label above each title */\n.elementor .dg-tabs .e-n-tabs{counter-reset:dgtab}\n.elementor .dg-tabs .e-n-tab-title{flex:1 1 0;counter-increment:dgtab;justify-content:flex-start;text-align:left;line-height:1.4}\n.elementor .dg-tabs .e-n-tab-title-text{display:block}\n.elementor .dg-tabs .e-n-tab-title-text::before{content:counter(dgtab,decimal-leading-zero) \" / OWNERSHIP\";display:block;font-size:.61rem;font-weight:500;letter-spacing:.08em;margin-bottom:7px;color:#97743D}\n.elementor .dg-tabs .e-n-tab-title[aria-selected=\"true\"] .e-n-tab-title-text::before{color:#D5AE65}\n/* Accordions: no box around the answer, rule above the first item, 16px titles, gold index numbers */\n.elementor .dg-acc .e-n-accordion-item>.e-con{border:0!important}\n.elementor .dg-acc .e-n-accordion-item:first-child>.e-n-accordion-item-title{border-top:1px solid #D9DFDF}\n.elementor .dg-acc .e-n-accordion-item-title-text{font-size:1rem!important;font-weight:500!important}\n.elementor .dg-acc-num .e-n-accordion{counter-reset:dgacc}\n.elementor .dg-acc-num .e-n-accordion-item{counter-increment:dgacc}\n.elementor .dg-acc-num .e-n-accordion-item-title-text::before{content:counter(dgacc,decimal-leading-zero);display:inline-block;min-width:32px;font-size:.73rem;font-weight:400;letter-spacing:.04em;color:#94723B}\n/* Scorecard: filter bar, collapsible rows, status pills */\n.elementor .dg-filters{display:flex;gap:8px;flex-wrap:wrap;background:#F5F7F7;padding:18px 30px;border-bottom:1px solid #D9DFDF}\n.elementor .dg-filters .dg-filter{background:#fff;border:1px solid #D9DFDF;border-radius:6px;font-family:inherit;font-size:.78rem;font-weight:400;line-height:1.3;padding:9px 13px;color:#5D6E78;cursor:pointer;box-shadow:none;transform:none}\n.elementor .dg-filters .dg-filter:hover{background:#fff;color:#142E40;border-color:#C6AA7B}\n.elementor .dg-filters .dg-filter[aria-pressed=\"true\"]{background:#102E43;color:#fff;border-color:#102E43}\n.elementor .dg-score-row{cursor:pointer;transition:background-color .2s}\n.elementor .dg-score-row:hover,.elementor .dg-score-row.is-open{background-color:#F7F8F5!important}\n.elementor .dg-score-row .dg-finding{display:none}\n.elementor .dg-score-row.is-open .dg-finding,.elementor-editor-active .dg-score-row .dg-finding{display:block}\n.elementor .dg-score-row.is-hidden{display:none!important}\n.elementor .dg-pill{flex:0 0 auto!important;width:auto!important;white-space:nowrap}\n/* Pricing bullets in two columns */\n.elementor .dg-tier-list .elementor-icon-list-items{display:grid!important;grid-template-columns:1fr 1fr;gap:13px 20px}\n.elementor .dg-tier-list .elementor-icon-list-item{margin:0!important;padding:0!important}\n/* Discovery section: smaller title, compact form fields */\n.elementor .dg-request-title .elementor-heading-title{font-size:clamp(2rem,2.6vw,2.5rem)!important;line-height:1.16!important}\n.elementor .dg-form .elementor-field-textual{min-height:42px;padding:8px 12px;font-size:.9rem}\n.elementor .dg-form .elementor-field-type-html{font-size:.73rem;line-height:1.6;color:#5D6E78;padding-top:6px}\n/* Reading progress bar and mobile sticky CTA */\n.dg-progress{position:fixed;top:0;left:0;height:3px;width:0;background:#D5AE65;z-index:99999;pointer-events:none}\n.dg-sticky-cta{display:none}\n@media(max-width:767px){\n .elementor .dg-tier-list .elementor-icon-list-items{grid-template-columns:1fr}\n .elementor .dg-filters{padding:15px;gap:6px}\n .elementor .dg-filters .dg-filter{font-size:.68rem;padding:8px 10px}\n .elementor .dg-request-title .elementor-heading-title{font-size:2.3rem!important}\n .dg-sticky-cta.show{display:block;position:fixed;left:0;right:0;bottom:0;z-index:999;padding:10px 13px;background:rgba(247,245,239,.96);backdrop-filter:blur(10px);border-top:1px solid #D9DFDF}\n .dg-sticky-cta a{display:flex;align-items:center;justify-content:center;height:48px;border-radius:7px;background:#102E43;color:#fff!important;font:600 13px/1 Inter,sans-serif;text-decoration:none}\n}\n@media(max-width:400px){.elementor .dg-pill{display:none}}\n</style>\n<script>\n(function(){if(window.dgPageInit)return;window.dgPageInit=true;\nfunction init(){\n var rows=[].slice.call(document.querySelectorAll('.dg-score-row'));\n rows.forEach(function(r){r.setAttribute('role','button');r.setAttribute('tabindex','0');r.setAttribute('aria-expanded','false');\n  function t(){var o=!r.classList.contains('is-open');r.classList.toggle('is-open',o);r.setAttribute('aria-expanded',String(o))}\n  r.addEventListener('click',t);r.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();t()}})});\n var fs=[].slice.call(document.querySelectorAll('.dg-filter'));\n fs.forEach(function(f){f.addEventListener('click',function(){var v=f.getAttribute('data-filter');\n  fs.forEach(function(b){b.setAttribute('aria-pressed',String(b===f))});\n  rows.forEach(function(r){r.classList.toggle('is-hidden',v!=='all'&&!r.classList.contains('dg-status-'+v))})})});\n if(document.body.classList.contains('elementor-editor-active'))return;\n var bar=document.createElement('div');bar.className='dg-progress';bar.setAttribute('aria-hidden','true');document.body.appendChild(bar);\n var cta=document.createElement('div');cta.className='dg-sticky-cta';cta.innerHTML='<a href=\"#discovery\">Request Complimentary Discovery</a>';document.body.appendChild(cta);\n var hero=document.querySelector('.dg-hero'),req=document.getElementById('discovery'),q=false;\n function u(){var m=document.documentElement.scrollHeight-innerHeight;bar.style.width=(m>0?scrollY/m*100:0)+'%';\n  cta.classList.toggle('show',!!hero&&!!req&&hero.getBoundingClientRect().bottom<0&&req.getBoundingClientRect().top>innerHeight*.8);q=false}\n addEventListener('scroll',function(){if(!q){q=true;requestAnimationFrame(u)}},{passive:true});addEventListener('resize',u);u()}\nif(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();\n</script>"
+      "html": "<style>\n/* Lifecycle tabs: equal-width tabs with a small \"01 / OWNERSHIP\" label above each title */\n.elementor .dg-tabs .e-n-tabs{counter-reset:dgtab}\n.elementor .dg-tabs .e-n-tab-title{flex:1 1 0;counter-increment:dgtab;justify-content:flex-start;text-align:left;line-height:1.4}\n.elementor .dg-tabs .e-n-tab-title-text{display:block}\n.elementor .dg-tabs .e-n-tab-title-text::before{content:counter(dgtab,decimal-leading-zero) \" / OWNERSHIP\";display:block;font-size:.61rem;font-weight:500;letter-spacing:.08em;margin-bottom:7px;color:#97743D}\n.elementor .dg-tabs .e-n-tab-title[aria-selected=\"true\"] .e-n-tab-title-text::before{color:#D5AE65}\n/* Accordions: no box around the answer, rule above the first item, 16px titles, gold index numbers */\n.elementor .dg-acc .e-n-accordion-item>.e-con{border:0!important}\n.elementor .dg-acc .e-n-accordion-item{border-bottom:1px solid #D9DFDF}\n.elementor .dg-acc .e-n-accordion-item:first-child{border-top:1px solid #D9DFDF}\n.elementor .dg-acc .e-n-accordion-item-title{border:0!important}\n.elementor .dg-acc .e-n-accordion-item-title-text{font-size:1rem!important;font-weight:500!important}\n.elementor .dg-acc-num .e-n-accordion{counter-reset:dgacc}\n.elementor .dg-acc-num .e-n-accordion-item{counter-increment:dgacc}\n.elementor .dg-acc-num .e-n-accordion-item-title-text::before{content:counter(dgacc,decimal-leading-zero);display:inline-block;margin-right:15px;font-size:.73rem;font-weight:400;letter-spacing:.04em;color:#94723B}\n/* Scorecard: filter bar, collapsible rows, status pills */\n.elementor .dg-filters{display:flex;gap:8px;flex-wrap:wrap;background:#F5F7F7;padding:18px 30px;border-bottom:1px solid #D9DFDF}\n.elementor .dg-filters .dg-filter{background:#fff;border:1px solid #D9DFDF;border-radius:6px;font-family:inherit;font-size:.78rem;font-weight:400;line-height:1.3;padding:9px 13px;color:#5D6E78;cursor:pointer;box-shadow:none;transform:none}\n.elementor .dg-filters .dg-filter:hover{background:#fff;color:#142E40;border-color:#C6AA7B}\n.elementor .dg-filters .dg-filter[aria-pressed=\"true\"]{background:#102E43;color:#fff;border-color:#102E43}\n.elementor .dg-score-row{cursor:pointer;transition:background-color .2s}\n.elementor .dg-score-row:hover,.elementor .dg-score-row.is-open{background-color:#F7F8F5!important}\n.elementor .dg-score-row .dg-finding{display:none}\n.elementor .dg-score-row.is-open .dg-finding,.elementor-editor-active .dg-score-row .dg-finding{display:block}\n.elementor .dg-score-row.is-hidden{display:none!important}\n.elementor .dg-preview-status p{white-space:nowrap;font-size:.69rem;line-height:2.4}\n.elementor .dg-pill{flex:0 0 auto!important;width:auto!important;white-space:nowrap}\n/* Pricing bullets in two columns */\n.elementor .dg-tier-list .elementor-icon-list-items{display:grid!important;grid-template-columns:1fr 1fr;gap:13px 20px}\n.elementor .dg-tier-list .elementor-icon-list-item{margin:0!important;padding:0!important}\n/* Discovery section: smaller title, compact form fields */\n.elementor .dg-request-title .elementor-heading-title{font-size:clamp(2rem,2.6vw,2.5rem)!important;line-height:1.16!important}\n.elementor .dg-form .elementor-field-textual{min-height:42px;padding:8px 12px;font-size:.9rem}\n.elementor .dg-form .elementor-field-type-html{font-size:.73rem;line-height:1.6;color:#5D6E78;padding-top:6px}\n/* Reading progress bar and mobile sticky CTA */\n.dg-progress{position:fixed;top:0;left:0;height:3px;width:0;background:#D5AE65;z-index:99999;pointer-events:none}\n.dg-sticky-cta{display:none}\n@media(max-width:767px){\n .elementor .dg-tier-list .elementor-icon-list-items{grid-template-columns:1fr}\n .elementor .dg-filters{padding:15px;gap:6px}\n .elementor .dg-filters .dg-filter{font-size:.68rem;padding:8px 10px}\n .elementor .dg-request-title .elementor-heading-title{font-size:2.3rem!important}\n .dg-sticky-cta.show{display:block;position:fixed;left:0;right:0;bottom:0;z-index:999;padding:10px 13px;background:rgba(247,245,239,.96);backdrop-filter:blur(10px);border-top:1px solid #D9DFDF}\n .dg-sticky-cta a{display:flex;align-items:center;justify-content:center;height:48px;border-radius:7px;background:#102E43;color:#fff!important;font:600 13px/1 Inter,sans-serif;text-decoration:none}\n}\n@media(max-width:400px){.elementor .dg-pill{display:none}}\n</style>\n<script>\n(function(){if(window.dgPageInit)return;window.dgPageInit=true;\nfunction init(){\n var rows=[].slice.call(document.querySelectorAll('.dg-score-row'));\n rows.forEach(function(r){r.setAttribute('role','button');r.setAttribute('tabindex','0');r.setAttribute('aria-expanded','false');\n  function t(){var o=!r.classList.contains('is-open');r.classList.toggle('is-open',o);r.setAttribute('aria-expanded',String(o))}\n  r.addEventListener('click',t);r.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();t()}})});\n var fs=[].slice.call(document.querySelectorAll('.dg-filter'));\n fs.forEach(function(f){f.addEventListener('click',function(){var v=f.getAttribute('data-filter');\n  fs.forEach(function(b){b.setAttribute('aria-pressed',String(b===f))});\n  rows.forEach(function(r){r.classList.toggle('is-hidden',v!=='all'&&!r.classList.contains('dg-status-'+v))})})});\n if(document.body.classList.contains('elementor-editor-active'))return;\n var bar=document.createElement('div');bar.className='dg-progress';bar.setAttribute('aria-hidden','true');document.body.appendChild(bar);\n var cta=document.createElement('div');cta.className='dg-sticky-cta';cta.innerHTML='<a href=\"#discovery\">Request Complimentary Discovery</a>';document.body.appendChild(cta);\n var hero=document.querySelector('.dg-hero'),req=document.getElementById('discovery'),q=false;\n function u(){var m=document.documentElement.scrollHeight-innerHeight;bar.style.width=(m>0?scrollY/m*100:0)+'%';\n  cta.classList.toggle('show',!!hero&&!!req&&hero.getBoundingClientRect().bottom<0&&req.getBoundingClientRect().top>innerHeight*.8);q=false}\n addEventListener('scroll',function(){if(!q){q=true;requestAnimationFrame(u)}},{passive:true});addEventListener('resize',u);u()}\nif(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();\n</script>"
      },
      "elements": []
     }
@@ -1885,9 +1890,8 @@
              "left": "14",
              "isLinked": false
             },
-            "__globals__": {
-             "background_color": "globals/colors?id=dgnavy"
-            },
+            "__globals__": {},
+            "background_color": "rgba(255,255,255,0.03)",
             "border_color": "rgba(255,255,255,0.13)",
             "content_width": "full"
            },
@@ -1906,6 +1910,7 @@
                "left": "0",
                "isLinked": false
               },
+              "_flex_size": "none",
               "title": "01",
               "header_size": "div",
               "__globals__": {
@@ -1921,6 +1926,7 @@
              "widgetType": "text-editor",
              "isInner": false,
              "settings": {
+              "_flex_size": "grow",
               "editor": "<p>Duplicate carriers and overlapping software contracts</p>",
               "paragraph_spacing": {
                "unit": "px",
@@ -1984,9 +1990,8 @@
              "left": "14",
              "isLinked": false
             },
-            "__globals__": {
-             "background_color": "globals/colors?id=dgnavy"
-            },
+            "__globals__": {},
+            "background_color": "rgba(255,255,255,0.03)",
             "border_color": "rgba(255,255,255,0.13)",
             "content_width": "full"
            },
@@ -2005,6 +2010,7 @@
                "left": "0",
                "isLinked": false
               },
+              "_flex_size": "none",
               "title": "02",
               "header_size": "div",
               "__globals__": {
@@ -2020,6 +2026,7 @@
              "widgetType": "text-editor",
              "isInner": false,
              "settings": {
+              "_flex_size": "grow",
               "editor": "<p>Auto-renewing agreements no one is reviewing</p>",
               "paragraph_spacing": {
                "unit": "px",
@@ -2083,9 +2090,8 @@
              "left": "14",
              "isLinked": false
             },
-            "__globals__": {
-             "background_color": "globals/colors?id=dgnavy"
-            },
+            "__globals__": {},
+            "background_color": "rgba(255,255,255,0.03)",
             "border_color": "rgba(255,255,255,0.13)",
             "content_width": "full"
            },
@@ -2104,6 +2110,7 @@
                "left": "0",
                "isLinked": false
               },
+              "_flex_size": "none",
               "title": "03",
               "header_size": "div",
               "__globals__": {
@@ -2119,6 +2126,7 @@
              "widgetType": "text-editor",
              "isInner": false,
              "settings": {
+              "_flex_size": "grow",
               "editor": "<p>Payment processing costs above market</p>",
               "paragraph_spacing": {
                "unit": "px",
@@ -2182,9 +2190,8 @@
              "left": "14",
              "isLinked": false
             },
-            "__globals__": {
-             "background_color": "globals/colors?id=dgnavy"
-            },
+            "__globals__": {},
+            "background_color": "rgba(255,255,255,0.03)",
             "border_color": "rgba(255,255,255,0.13)",
             "content_width": "full"
            },
@@ -2203,6 +2210,7 @@
                "left": "0",
                "isLinked": false
               },
+              "_flex_size": "none",
               "title": "04",
               "header_size": "div",
               "__globals__": {
@@ -2218,6 +2226,7 @@
              "widgetType": "text-editor",
              "isInner": false,
              "settings": {
+              "_flex_size": "grow",
               "editor": "<p>Security and PCI exposure without clear ownership</p>",
               "paragraph_spacing": {
                "unit": "px",
@@ -2281,9 +2290,8 @@
              "left": "14",
              "isLinked": false
             },
-            "__globals__": {
-             "background_color": "globals/colors?id=dgnavy"
-            },
+            "__globals__": {},
+            "background_color": "rgba(255,255,255,0.03)",
             "border_color": "rgba(255,255,255,0.13)",
             "content_width": "full"
            },
@@ -2302,6 +2310,7 @@
                "left": "0",
                "isLinked": false
               },
+              "_flex_size": "none",
               "title": "05",
               "header_size": "div",
               "__globals__": {
@@ -2317,6 +2326,7 @@
              "widgetType": "text-editor",
              "isInner": false,
              "settings": {
+              "_flex_size": "grow",
               "editor": "<p>Vendors managing themselves</p>",
               "paragraph_spacing": {
                "unit": "px",
@@ -2380,9 +2390,8 @@
              "left": "14",
              "isLinked": false
             },
-            "__globals__": {
-             "background_color": "globals/colors?id=dgnavy"
-            },
+            "__globals__": {},
+            "background_color": "rgba(255,255,255,0.03)",
             "border_color": "rgba(255,255,255,0.13)",
             "content_width": "full"
            },
@@ -2401,6 +2410,7 @@
                "left": "0",
                "isLinked": false
               },
+              "_flex_size": "none",
               "title": "06",
               "header_size": "div",
               "__globals__": {
@@ -2416,6 +2426,7 @@
              "widgetType": "text-editor",
              "isInner": false,
              "settings": {
+              "_flex_size": "grow",
               "editor": "<p>No documentation a buyer can rely on</p>",
               "paragraph_spacing": {
                "unit": "px",
@@ -5439,9 +5450,9 @@
            "unit": "px",
            "top": "0",
            "right": "0",
-           "bottom": "1",
+           "bottom": "0",
            "left": "0",
-           "isLinked": false
+           "isLinked": true
           },
           "accordion_background_hover_background": "classic",
           "accordion_background_hover_color": "#00000000",
@@ -5450,9 +5461,9 @@
            "unit": "px",
            "top": "0",
            "right": "0",
-           "bottom": "1",
+           "bottom": "0",
            "left": "0",
-           "isLinked": false
+           "isLinked": true
           },
           "accordion_background_active_background": "classic",
           "accordion_background_active_color": "#00000000",
@@ -5461,9 +5472,9 @@
            "unit": "px",
            "top": "0",
            "right": "0",
-           "bottom": "1",
+           "bottom": "0",
            "left": "0",
-           "isLinked": false
+           "isLinked": true
           }
          },
          "elements": [
@@ -5478,9 +5489,9 @@
              "unit": "px",
              "top": "0",
              "right": "0",
-             "bottom": "0",
-             "left": "0",
-             "isLinked": true
+             "bottom": "23",
+             "left": "32",
+             "isLinked": false
             },
             "border_border": "none",
             "content_width": "full"
@@ -5518,9 +5529,9 @@
              "unit": "px",
              "top": "0",
              "right": "0",
-             "bottom": "0",
-             "left": "0",
-             "isLinked": true
+             "bottom": "23",
+             "left": "32",
+             "isLinked": false
             },
             "border_border": "none",
             "content_width": "full"
@@ -5558,9 +5569,9 @@
              "unit": "px",
              "top": "0",
              "right": "0",
-             "bottom": "0",
-             "left": "0",
-             "isLinked": true
+             "bottom": "23",
+             "left": "32",
+             "isLinked": false
             },
             "border_border": "none",
             "content_width": "full"
@@ -5598,9 +5609,9 @@
              "unit": "px",
              "top": "0",
              "right": "0",
-             "bottom": "0",
-             "left": "0",
-             "isLinked": true
+             "bottom": "23",
+             "left": "32",
+             "isLinked": false
             },
             "border_border": "none",
             "content_width": "full"
@@ -5638,9 +5649,9 @@
              "unit": "px",
              "top": "0",
              "right": "0",
-             "bottom": "0",
-             "left": "0",
-             "isLinked": true
+             "bottom": "23",
+             "left": "32",
+             "isLinked": false
             },
             "border_border": "none",
             "content_width": "full"
@@ -5678,9 +5689,9 @@
              "unit": "px",
              "top": "0",
              "right": "0",
-             "bottom": "0",
-             "left": "0",
-             "isLinked": true
+             "bottom": "23",
+             "left": "32",
+             "isLinked": false
             },
             "border_border": "none",
             "content_width": "full"
@@ -5718,9 +5729,9 @@
              "unit": "px",
              "top": "0",
              "right": "0",
-             "bottom": "0",
-             "left": "0",
-             "isLinked": true
+             "bottom": "23",
+             "left": "32",
+             "isLinked": false
             },
             "border_border": "none",
             "content_width": "full"
@@ -8857,9 +8868,9 @@
            "unit": "px",
            "top": "0",
            "right": "0",
-           "bottom": "1",
+           "bottom": "0",
            "left": "0",
-           "isLinked": false
+           "isLinked": true
           },
           "accordion_background_hover_background": "classic",
           "accordion_background_hover_color": "#00000000",
@@ -8868,9 +8879,9 @@
            "unit": "px",
            "top": "0",
            "right": "0",
-           "bottom": "1",
+           "bottom": "0",
            "left": "0",
-           "isLinked": false
+           "isLinked": true
           },
           "accordion_background_active_background": "classic",
           "accordion_background_active_color": "#00000000",
@@ -8879,9 +8890,9 @@
            "unit": "px",
            "top": "0",
            "right": "0",
-           "bottom": "1",
+           "bottom": "0",
            "left": "0",
-           "isLinked": false
+           "isLinked": true
           }
          },
          "elements": [
@@ -8896,9 +8907,9 @@
              "unit": "px",
              "top": "0",
              "right": "0",
-             "bottom": "0",
+             "bottom": "23",
              "left": "0",
-             "isLinked": true
+             "isLinked": false
             },
             "border_border": "none",
             "content_width": "full"
@@ -8936,9 +8947,9 @@
              "unit": "px",
              "top": "0",
              "right": "0",
-             "bottom": "0",
+             "bottom": "23",
              "left": "0",
-             "isLinked": true
+             "isLinked": false
             },
             "border_border": "none",
             "content_width": "full"
@@ -8976,9 +8987,9 @@
              "unit": "px",
              "top": "0",
              "right": "0",
-             "bottom": "0",
+             "bottom": "23",
              "left": "0",
-             "isLinked": true
+             "isLinked": false
             },
             "border_border": "none",
             "content_width": "full"
@@ -9016,9 +9027,9 @@
              "unit": "px",
              "top": "0",
              "right": "0",
-             "bottom": "0",
+             "bottom": "23",
              "left": "0",
-             "isLinked": true
+             "isLinked": false
             },
             "border_border": "none",
             "content_width": "full"
@@ -9056,9 +9067,9 @@
              "unit": "px",
              "top": "0",
              "right": "0",
-             "bottom": "0",
+             "bottom": "23",
              "left": "0",
-             "isLinked": true
+             "isLinked": false
             },
             "border_border": "none",
             "content_width": "full"

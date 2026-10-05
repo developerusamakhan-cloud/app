@@ -189,3 +189,22 @@ class is attached under *Advanced › CSS Classes* on the widget or container it
 
 The script also adds the gold **reading-progress bar** at the top of the screen and the **sticky "Request Complimentary
 Discovery" button** on mobile, which shows between the hero and the discovery form.
+
+## Favicon
+
+The `favicon/` folder holds the original site's icon (a gold "D" on navy, taken from the favicon built into `index.html`)
+in every size WordPress and browsers use:
+
+| File | Use |
+|---|---|
+| `site-icon-512x512.png` | **WordPress Site Icon**. Upload this one |
+| `favicon.svg` | Sharp vector icon for modern browsers |
+| `favicon.ico` | Classic icon (16, 32 and 48px inside) for older browsers |
+| `favicon-16x16.png`, `favicon-32x32.png` | Browser tab icons |
+| `apple-touch-icon.png` (180px) | iPhone / iPad home screen |
+| `android-chrome-192x192.png` | Android home screen |
+
+**How to set it in WordPress:** go to **Appearance › Customize › Site Identity › Site Icon**, upload
+`site-icon-512x512.png` and click **Publish**. If your theme has no Customizer (block themes), open
+**Settings › General › Site Icon** instead. WordPress then creates the tab, Apple and Android sizes from that one image,
+so the other files are only needed if you add the icons by hand or use them elsewhere.

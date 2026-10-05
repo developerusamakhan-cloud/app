@@ -463,11 +463,11 @@
           "flex_justify_content": "space-between",
           "flex_align_items": "center",
           "flex_gap": {
-           "column": "0",
-           "row": "0",
+           "column": "20",
+           "row": "20",
            "isLinked": true,
            "unit": "px",
-           "size": 0
+           "size": 20
           },
           "html_tag": "a",
           "link": {
@@ -1024,7 +1024,6 @@
        "isInner": true,
        "settings": {
         "animation": "fadeInUp",
-        "flex_direction": "column",
         "flex_gap": {
          "column": "0",
          "row": "0",
@@ -1032,6 +1031,7 @@
          "unit": "px",
          "size": 0
         },
+        "flex_direction": "column",
         "padding": {
          "unit": "px",
          "top": "27",
@@ -1154,7 +1154,6 @@
        "isInner": true,
        "settings": {
         "animation": "fadeInUp",
-        "flex_direction": "column",
         "flex_gap": {
          "column": "0",
          "row": "0",
@@ -1162,6 +1161,7 @@
          "unit": "px",
          "size": 0
         },
+        "flex_direction": "column",
         "padding": {
          "unit": "px",
          "top": "27",
@@ -1284,7 +1284,6 @@
        "isInner": true,
        "settings": {
         "animation": "fadeInUp",
-        "flex_direction": "column",
         "flex_gap": {
          "column": "0",
          "row": "0",
@@ -1292,6 +1291,7 @@
          "unit": "px",
          "size": 0
         },
+        "flex_direction": "column",
         "padding": {
          "unit": "px",
          "top": "27",
@@ -1414,7 +1414,6 @@
        "isInner": true,
        "settings": {
         "animation": "fadeInUp",
-        "flex_direction": "column",
         "flex_gap": {
          "column": "0",
          "row": "0",
@@ -1422,6 +1421,7 @@
          "unit": "px",
          "size": 0
         },
+        "flex_direction": "column",
         "padding": {
          "unit": "px",
          "top": "27",
@@ -1848,11 +1848,11 @@
            "isInner": true,
            "settings": {
             "flex_gap": {
-             "column": "0",
-             "row": "0",
+             "column": "13",
+             "row": "13",
              "isLinked": true,
              "unit": "px",
-             "size": 0
+             "size": 13
             },
             "flex_align_items": "flex-start",
             "flex_direction": "row",
@@ -1948,11 +1948,11 @@
            "isInner": true,
            "settings": {
             "flex_gap": {
-             "column": "0",
-             "row": "0",
+             "column": "13",
+             "row": "13",
              "isLinked": true,
              "unit": "px",
-             "size": 0
+             "size": 13
             },
             "flex_align_items": "flex-start",
             "flex_direction": "row",
@@ -2048,11 +2048,11 @@
            "isInner": true,
            "settings": {
             "flex_gap": {
-             "column": "0",
-             "row": "0",
+             "column": "13",
+             "row": "13",
              "isLinked": true,
              "unit": "px",
-             "size": 0
+             "size": 13
             },
             "flex_align_items": "flex-start",
             "flex_direction": "row",
@@ -2148,11 +2148,11 @@
            "isInner": true,
            "settings": {
             "flex_gap": {
-             "column": "0",
-             "row": "0",
+             "column": "13",
+             "row": "13",
              "isLinked": true,
              "unit": "px",
-             "size": 0
+             "size": 13
             },
             "flex_align_items": "flex-start",
             "flex_direction": "row",
@@ -2248,11 +2248,11 @@
            "isInner": true,
            "settings": {
             "flex_gap": {
-             "column": "0",
-             "row": "0",
+             "column": "13",
+             "row": "13",
              "isLinked": true,
              "unit": "px",
-             "size": 0
+             "size": 13
             },
             "flex_align_items": "flex-start",
             "flex_direction": "row",
@@ -2348,11 +2348,11 @@
            "isInner": true,
            "settings": {
             "flex_gap": {
-             "column": "0",
-             "row": "0",
+             "column": "13",
+             "row": "13",
              "isLinked": true,
              "unit": "px",
-             "size": 0
+             "size": 13
             },
             "flex_align_items": "flex-start",
             "flex_direction": "row",
@@ -3609,7 +3609,6 @@
        "color": "rgba(20,46,64,0.05)"
       },
       "_title": "Scorecard",
-      "flex_direction": "column",
       "flex_gap": {
        "column": "0",
        "row": "0",
@@ -3617,6 +3616,7 @@
        "unit": "px",
        "size": 0
       },
+      "flex_direction": "column",
       "padding": {
        "unit": "px",
        "top": "0",
@@ -3816,7 +3816,7 @@
          "unit": "px",
          "size": 15
         },
-        "flex_align_items": "center",
+        "flex_align_items": "flex-start",
         "content_width": "full"
        },
        "elements": [
@@ -3836,6 +3836,23 @@
            "sizes": []
           },
           "align": "left",
+          "_flex_size": "none",
+          "_margin": {
+           "unit": "px",
+           "top": "10",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
+          "_margin_mobile": {
+           "unit": "px",
+           "top": "9",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
           "__globals__": {
            "primary_color": "globals/colors?id=dgyellow"
           }
@@ -3983,7 +4000,7 @@
          "unit": "px",
          "size": 15
         },
-        "flex_align_items": "center",
+        "flex_align_items": "flex-start",
         "content_width": "full"
        },
        "elements": [
@@ -4003,6 +4020,23 @@
            "sizes": []
           },
           "align": "left",
+          "_flex_size": "none",
+          "_margin": {
+           "unit": "px",
+           "top": "10",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
+          "_margin_mobile": {
+           "unit": "px",
+           "top": "9",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
           "__globals__": {
            "primary_color": "globals/colors?id=dggreen"
           }
@@ -4150,7 +4184,7 @@
          "unit": "px",
          "size": 15
         },
-        "flex_align_items": "center",
+        "flex_align_items": "flex-start",
         "content_width": "full"
        },
        "elements": [
@@ -4170,6 +4204,23 @@
            "sizes": []
           },
           "align": "left",
+          "_flex_size": "none",
+          "_margin": {
+           "unit": "px",
+           "top": "10",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
+          "_margin_mobile": {
+           "unit": "px",
+           "top": "9",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
           "__globals__": {
            "primary_color": "globals/colors?id=dgyellow"
           }
@@ -4317,7 +4368,7 @@
          "unit": "px",
          "size": 15
         },
-        "flex_align_items": "center",
+        "flex_align_items": "flex-start",
         "content_width": "full"
        },
        "elements": [
@@ -4337,6 +4388,23 @@
            "sizes": []
           },
           "align": "left",
+          "_flex_size": "none",
+          "_margin": {
+           "unit": "px",
+           "top": "10",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
+          "_margin_mobile": {
+           "unit": "px",
+           "top": "9",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
           "__globals__": {
            "primary_color": "globals/colors?id=dgred"
           }
@@ -4484,7 +4552,7 @@
          "unit": "px",
          "size": 15
         },
-        "flex_align_items": "center",
+        "flex_align_items": "flex-start",
         "content_width": "full"
        },
        "elements": [
@@ -4504,6 +4572,23 @@
            "sizes": []
           },
           "align": "left",
+          "_flex_size": "none",
+          "_margin": {
+           "unit": "px",
+           "top": "10",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
+          "_margin_mobile": {
+           "unit": "px",
+           "top": "9",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
           "__globals__": {
            "primary_color": "globals/colors?id=dgyellow"
           }
@@ -4651,7 +4736,7 @@
          "unit": "px",
          "size": 15
         },
-        "flex_align_items": "center",
+        "flex_align_items": "flex-start",
         "content_width": "full"
        },
        "elements": [
@@ -4671,6 +4756,23 @@
            "sizes": []
           },
           "align": "left",
+          "_flex_size": "none",
+          "_margin": {
+           "unit": "px",
+           "top": "10",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
+          "_margin_mobile": {
+           "unit": "px",
+           "top": "9",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
           "__globals__": {
            "primary_color": "globals/colors?id=dgred"
           }
@@ -4818,7 +4920,7 @@
          "unit": "px",
          "size": 15
         },
-        "flex_align_items": "center",
+        "flex_align_items": "flex-start",
         "content_width": "full"
        },
        "elements": [
@@ -4838,6 +4940,23 @@
            "sizes": []
           },
           "align": "left",
+          "_flex_size": "none",
+          "_margin": {
+           "unit": "px",
+           "top": "10",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
+          "_margin_mobile": {
+           "unit": "px",
+           "top": "9",
+           "right": "0",
+           "bottom": "0",
+           "left": "0",
+           "isLinked": false
+          },
           "__globals__": {
            "primary_color": "globals/colors?id=dggreen"
           }
@@ -7153,7 +7272,6 @@
        "isInner": true,
        "settings": {
         "_title": "Complimentary Discovery",
-        "flex_direction": "column",
         "flex_gap": {
          "column": "0",
          "row": "0",
@@ -7161,6 +7279,7 @@
          "unit": "px",
          "size": 0
         },
+        "flex_direction": "column",
         "padding": {
          "unit": "px",
          "top": "28",
@@ -7428,7 +7547,6 @@
        "isInner": true,
        "settings": {
         "_title": "Executive Advisory",
-        "flex_direction": "column",
         "flex_gap": {
          "column": "0",
          "row": "0",
@@ -7436,6 +7554,7 @@
          "unit": "px",
          "size": 0
         },
+        "flex_direction": "column",
         "padding": {
          "unit": "px",
          "top": "28",
@@ -7711,7 +7830,6 @@
        "isInner": true,
        "settings": {
         "_title": "Governance Blueprint",
-        "flex_direction": "column",
         "flex_gap": {
          "column": "0",
          "row": "0",
@@ -7719,6 +7837,7 @@
          "unit": "px",
          "size": 0
         },
+        "flex_direction": "column",
         "padding": {
          "unit": "px",
          "top": "28",
@@ -7994,7 +8113,6 @@
        "isInner": true,
        "settings": {
         "_title": "Infrastructure Governance",
-        "flex_direction": "column",
         "flex_gap": {
          "column": "0",
          "row": "0",
@@ -8002,6 +8120,7 @@
          "unit": "px",
          "size": 0
         },
+        "flex_direction": "column",
         "padding": {
          "unit": "px",
          "top": "28",
@@ -9630,7 +9749,6 @@
          "color": "rgba(20,46,64,0.05)"
         },
         "_title": "Form card",
-        "flex_direction": "column",
         "flex_gap": {
          "column": "0",
          "row": "0",
@@ -9638,6 +9756,7 @@
          "unit": "px",
          "size": 0
         },
+        "flex_direction": "column",
         "padding": {
          "unit": "px",
          "top": "28",

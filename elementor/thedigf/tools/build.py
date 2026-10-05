@@ -347,7 +347,8 @@ def dot(color, size=8):
 
 
 def card(children, bg="dgwhite", border="dgline", radius=12, pad=(28, 30), pad_m=None, g=0, **s):
-    s.update(flex_direction=s.pop("flex_direction", "column"), flex_gap=gap(g),
+    s.setdefault("flex_gap", gap(g))
+    s.update(flex_direction=s.pop("flex_direction", "column"),
              padding=dim(pad[0], pad[1]), border_border="solid", border_width=dim(1),
              border_radius=dim(radius), background_background="classic")
     if pad_m:
@@ -708,12 +709,13 @@ def scorecard():
     for color, name, label, finding in rows:
         status = color.replace("dg", "")
         body.append(row([
-            dot(color, 9),
+            widget("icon", selected_icon=icon("fas fa-circle"), size=sz(9), align="left", _flex_size="none",
+                   _margin=dim(10, 0, 0, 0), _margin_mobile=dim(9, 0, 0, 0), __globals__={"primary_color": C(color)}),
             col([heading(name, "h4", "dgemph", "dgink", __globals__={"typography_typography": T("dgintro"), "title_color": C("dgink")}),
                  text(finding, "dgsmall", _css_classes="dg-finding")], g=6, _flex_size="grow"),
             heading(label, "div", "dgxs", "dgmuted", _padding=dim(4, 12), _border_border="solid", _border_width=dim(1),
                     _border_color=HEX["dgline"], _border_radius=dim(20), _css_classes="dg-pill"),
-        ], g=15, mobile_col=False, padding=dim(20, 30), padding_mobile=dim(18), border_border="solid",
+        ], g=15, align="flex-start", mobile_col=False, padding=dim(20, 30), padding_mobile=dim(18), border_border="solid",
             border_width=dim(0, 0, 1, 0), border_color=HEX["dgline"], background_background="classic",
             background_color="#FFFFFF", css_classes=f"dg-score-row dg-status-{status}", _title=name))
     note = con([text("Select a domain to see its finding. Illustrative examples only, not an assessment of your business.", "dgxs")],

@@ -56,7 +56,6 @@
      "isInner": true,
      "settings": {
       "_title": "Privacy article",
-      "flex_direction": "column",
       "flex_gap": {
        "column": "0",
        "row": "0",
@@ -64,6 +63,7 @@
        "unit": "px",
        "size": 0
       },
+      "flex_direction": "column",
       "padding": {
        "unit": "px",
        "top": "40",

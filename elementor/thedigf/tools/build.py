@@ -515,6 +515,10 @@ PAGE_CSS_JS = """<style>
 .elementor .dg-score-row.is-open .dg-finding,.elementor-editor-active .dg-score-row .dg-finding{display:block}
 .elementor .dg-score-row.is-hidden{display:none!important}
 .elementor .dg-preview-status p{white-space:nowrap;font-size:.69rem;line-height:2.4}
+.elementor .dg-exposure-text{min-width:0;flex:1 1 auto}
+.elementor .dg-dot,.elementor .dg-dot .elementor-widget-container,.elementor .dg-dot .elementor-icon-wrapper{line-height:0!important;height:9px}
+.elementor .dg-dot .elementor-icon{display:block;line-height:0!important;font-size:9px}
+.elementor .dg-dot .elementor-icon i,.elementor .dg-dot .elementor-icon svg{display:block;width:9px;height:9px;line-height:9px}
 .elementor .dg-pill{flex:0 0 auto!important;width:auto!important;white-space:nowrap}
 /* Pricing bullets in two columns */
 .elementor .dg-tier-list .elementor-icon-list-items{display:grid!important;grid-template-columns:1fr 1fr;gap:13px 20px}
@@ -628,7 +632,8 @@ def problem():
              "Vendors managing themselves", "No documentation a buyer can rely on"]
     items = [card([
         heading(f"{i + 1:02d}", "div", "dgxs", "dggold", _margin=dim(3, 0, 0, 0), _flex_size="none"),
-        text(f, "dgsmall", "dgwhite", _flex_size="grow"),
+        text(f, "dgsmall", "dgwhite", _element_width="initial", _element_custom_width=sz(90, "%"),
+             _css_classes="dg-exposure-text"),
     ], bg="rgba(255,255,255,0.03)", border="rgba(255,255,255,0.13)", radius=9, pad=(21, 18), pad_m=(17, 14), flex_direction="row",
         flex_gap=gap(13), flex_align_items="flex-start") for i, f in enumerate(finds)]
     left = col([
@@ -710,7 +715,7 @@ def scorecard():
         status = color.replace("dg", "")
         body.append(row([
             widget("icon", selected_icon=icon("fas fa-circle"), size=sz(9), align="left", _flex_size="none",
-                   _margin=dim(10, 0, 0, 0), _margin_mobile=dim(9, 0, 0, 0), __globals__={"primary_color": C(color)}),
+                   _margin=dim(10, 0, 0, 0), _css_classes="dg-dot", __globals__={"primary_color": C(color)}),
             col([heading(name, "h4", "dgemph", "dgink", __globals__={"typography_typography": T("dgintro"), "title_color": C("dgink")}),
                  text(finding, "dgsmall", _css_classes="dg-finding")], g=6, _flex_size="grow"),
             heading(label, "div", "dgxs", "dgmuted", _padding=dim(4, 12), _border_border="solid", _border_width=dim(1),

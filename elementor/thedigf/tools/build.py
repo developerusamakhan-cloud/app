@@ -491,7 +491,8 @@ PRIVACY_NOTE = "Your information is used only to schedule your discovery convers
 PAGE_CSS_JS = """<style>
 /* Lifecycle tabs: equal-width tabs with a small "01 / OWNERSHIP" label above each title */
 .elementor .dg-tabs .e-n-tabs{counter-reset:dgtab}
-.elementor .dg-tabs .e-n-tab-title{flex:1 1 0;counter-increment:dgtab;justify-content:flex-start;text-align:left;line-height:1.4}
+.elementor .dg-tabs .e-n-tab-title{counter-increment:dgtab;justify-content:flex-start;text-align:left;line-height:1.4}
+@media(min-width:768px){.elementor .dg-tabs .e-n-tabs-heading>.e-n-tab-title{flex:1 1 0}}
 .elementor .dg-tabs .e-n-tab-title-text{display:block}
 .elementor .dg-tabs .e-n-tab-title-text::before{content:counter(dgtab,decimal-leading-zero) " / OWNERSHIP";display:block;font-size:.61rem;font-weight:500;letter-spacing:.08em;margin-bottom:7px;color:#97743D}
 .elementor .dg-tabs .e-n-tab-title[aria-selected="true"] .e-n-tab-title-text::before{color:#D5AE65}
@@ -539,6 +540,7 @@ PAGE_CSS_JS = """<style>
  .dg-sticky-cta a{display:flex;align-items:center;justify-content:center;height:48px;border-radius:7px;background:#102E43;color:#fff!important;font:600 13px/1 Inter,sans-serif;text-decoration:none}
 }
 @media(max-width:400px){.elementor .dg-pill{display:none}}
+@media(max-width:380px){.elementor .dg-grid-xs1{--e-con-grid-template-columns:repeat(1,1fr)!important}}
 </style>
 <script>
 (function(){if(window.dgPageInit)return;window.dgPageInit=true;
@@ -622,7 +624,7 @@ def audience():
     return section([
         eyebrow("Who we serve", _margin=dim(0, 0, 18, 0)),
         heading("For the people<br>carrying the outcome.", "h2", "dgh2", _margin=dim(0, 0, 38, 0)),
-        grid(cards, 4, 2, 1, g=18, _title="Audience cards"),
+        grid(cards, 4, 2, 2, g=18, grid_gaps_mobile=gap(12), css_classes="dg-grid-xs1", _title="Audience cards"),
     ], bg="dgwhite", _title="Who we serve")
 
 
@@ -643,7 +645,7 @@ def problem():
              "dgintro", "dgondark", _margin=dim(23, 0, 0, 0)),
         text("Every item affects EBITDA, risk, or valuation.", "dgemph", "dgwhite", _margin=dim(25, 0, 0, 0)),
     ], width=sz(47, "%"), width_mobile=sz(100, "%"))
-    right = col([eyebrow("What we commonly find", "dggold", _margin=dim(0, 0, 18, 0)), grid(items, 2, 1, 1, g=16)],
+    right = col([eyebrow("What we commonly find", "dggold", _margin=dim(0, 0, 18, 0)), grid(items, 2, 1, 2, g=16, grid_gaps_mobile=gap(10), css_classes="dg-grid-xs1")],
                 width=sz(53, "%"), width_mobile=sz(100, "%"))
     return section([row([left, right], g=80, align="flex-start", flex_gap_tablet=gap(40), flex_gap_mobile=gap(30))],
                    bg="dgnavy", anchor="approach", _title="The hidden exposure")
@@ -715,7 +717,7 @@ def scorecard():
         status = color.replace("dg", "")
         body.append(row([
             widget("icon", selected_icon=icon("fas fa-circle"), size=sz(9), align="left", _flex_size="none",
-                   _margin=dim(10, 0, 0, 0), _css_classes="dg-dot", __globals__={"primary_color": C(color)}),
+                   _margin=dim(5, 0, 0, 0), _margin_mobile=dim(5, 0, 0, 0), _css_classes="dg-dot", __globals__={"primary_color": C(color)}),
             col([heading(name, "h4", "dgemph", "dgink", __globals__={"typography_typography": T("dgintro"), "title_color": C("dgink")}),
                  text(finding, "dgsmall", _css_classes="dg-finding")], g=6, _flex_size="grow"),
             heading(label, "div", "dgxs", "dgmuted", _padding=dim(4, 12), _border_border="solid", _border_width=dim(1),

@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -285,6 +285,9 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.8.1 =
+* "Sitemap" link in the footer bottom bar: Rank Math or Yoast's sitemap_index.xml when active, otherwise WordPress's wp-sitemap.xml. robots.txt names the same sitemap if no plugin already does.
 
 = 1.8.0 =
 * Every form submission is saved, spam included. Spam (hidden trap filled, sent too fast, too many from one connection, stuffed with links) is marked with the reason, not emailed, and shown in a separate Spam view with a "Not spam" link. Spam is deleted after 30 days.

@@ -476,3 +476,37 @@ function powerbachat_seo_plugin_share_image() {
 	}
 }
 add_action( 'wp', 'powerbachat_seo_plugin_share_image' );
+
+/**
+ * The XML sitemap address: Rank Math's or Yoast's sitemap index when one of them
+ * is active, otherwise the sitemap WordPress builds in.
+ *
+ * @return string
+ */
+function powerbachat_sitemap_url() {
+	if ( class_exists( 'RankMath' ) || defined( 'WPSEO_VERSION' ) ) {
+		$url = home_url( '/sitemap_index.xml' );
+	} elseif ( defined( 'SEOPRESS_VERSION' ) ) {
+		$url = home_url( '/sitemaps.xml' );
+	} elseif ( function_exists( 'get_sitemap_url' ) && get_sitemap_url( 'index' ) ) {
+		$url = get_sitemap_url( 'index' );
+	} else {
+		$url = home_url( '/sitemap_index.xml' );
+	}
+	return apply_filters( 'powerbachat_sitemap_url', $url );
+}
+
+/**
+ * Name the sitemap in robots.txt if no plugin has already done so, so crawlers find it.
+ *
+ * @param string $output Robots.txt content.
+ * @param bool   $public Whether the site is visible to search engines.
+ * @return string
+ */
+function powerbachat_robots_sitemap( $output, $public ) {
+	if ( $public && false === stripos( $output, powerbachat_sitemap_url() ) ) {
+		$output = rtrim( $output ) . "\nSitemap: " . powerbachat_sitemap_url() . "\n";
+	}
+	return $output;
+}
+add_filter( 'robots_txt', 'powerbachat_robots_sitemap', 99, 2 );

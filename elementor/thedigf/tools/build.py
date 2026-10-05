@@ -367,17 +367,19 @@ def html(code, **s):
 
 
 def accordion(items, numbered=False, content_pad=(0, 0, 23, 32)):
-    """Nested Accordion (core widget) - items: list of (title, body_html)."""
+    """Nested Accordion (core widget) - items: list of (title, body_html).
+    Gold index numbers (01, 02 ...) are added by the page CSS (class dg-acc-num)."""
     settings = {
-        "items": [{"item_title": (f"{i + 1:02d}   " if numbered else "") + t, "_id": uid()} for i, (t, _) in enumerate(items)],
+        "items": [{"item_title": t, "_id": uid()} for t, _ in items],
+        "_css_classes": "dg-acc" + (" dg-acc-num" if numbered else ""),
         "title_tag": "div",
         "default_state": "all_collapsed",
         "max_items_expended": "one",
         "faq_schema": "yes" if not numbered else "",
         "accordion_item_title_position_horizontal": "stretch",
         "accordion_item_title_icon_position": "end",
-        "accordion_item_title_icon": icon("fas fa-plus"),
-        "accordion_item_title_icon_active": icon("fas fa-minus"),
+        "accordion_item_title_icon": icon("", ""),
+        "accordion_item_title_icon_active": icon("", ""),
         "accordion_item_title_space_between": sz(0),
         "accordion_item_title_distance_from_content": sz(0),
         "accordion_padding": dim(22, 0, 22, 0),
@@ -397,7 +399,8 @@ def accordion(items, numbered=False, content_pad=(0, 0, 23, 32)):
         settings[f"accordion_border_{st}_width"] = dim(0, 0, 1, 0)
         settings["__globals__"][f"accordion_border_{st}_color"] = C("dgline")
     children = [
-        con([text(body, "dgsmall")], _title=f"item #{i + 1}", flex_direction="column", padding=dim(0))
+        con([text(body, "dgsmall")], _title=f"item #{i + 1}", flex_direction="column", padding=dim(0),
+            border_border="none")
         for i, (_, body) in enumerate(items)
     ]
     w = widget("nested-accordion", **settings)
@@ -409,6 +412,7 @@ def tabs(items):
     """Nested Tabs (core widget) - items: list of (tab_title, panel_title, panel_text)."""
     settings = {
         "tabs": [{"tab_title": t, "_id": uid()} for t, _, _ in items],
+        "_css_classes": "dg-tabs",
         "tabs_direction": "block-start",
         "tabs_justify_horizontal": "stretch",
         "title_alignment": "start",
@@ -431,7 +435,6 @@ def tabs(items):
         "box_border_border": "solid",
         "box_border_width": dim(1),
         "box_border_radius": dim(13),
-        "box_padding": dim(35),
         "__globals__": {
             "title_typography_typography": T("dgemph"),
             "title_text_color": C("dgmuted"), "title_text_color_hover": C("dgink"), "title_text_color_active": C("dgwhite"),
@@ -444,10 +447,11 @@ def tabs(items):
     children = []
     for i, (_, ptitle, ptext) in enumerate(items):
         children.append(con([
-            col([eyebrow(f"{i + 1:02d} / Ownership"), heading(ptitle, "h3", "dgh3lg")], g=10, width=sz(40, "%"), width_mobile=sz(100, "%")),
+            col([heading(ptitle, "h3", "dgh3lg")], width=sz(40, "%"), width_mobile=sz(100, "%")),
             text(ptext, "dgintro"),
         ], _title=f"Tab #{i + 1}", flex_direction="row", flex_direction_mobile="column", flex_align_items="center",
-            flex_align_items_mobile="stretch", flex_gap=gap(45), flex_gap_mobile=gap(17), padding=dim(0), min_height=sz(90)))
+            flex_align_items_mobile="stretch", flex_gap=gap(45), flex_gap_mobile=gap(17), padding=dim(35), padding_mobile=dim(24), min_height=sz(160),
+            min_height_mobile=sz(0)))
     w = widget("nested-tabs", **settings)
     w["elements"] = children
     return w
@@ -476,27 +480,79 @@ document.addEventListener('visibilitychange',sy);rs();sy()})();
 </script>"""
 
 
+PRIVACY_NOTE = "Your information is used only to schedule your discovery conversation. It is never sold or shared."
+
+# Styles and behaviour Elementor (free) cannot set natively. Loaded once by an HTML widget in the hero.
+# Widgets/containers carry the matching classes in Advanced > CSS Classes.
+PAGE_CSS_JS = """<style>
+/* Lifecycle tabs: equal-width tabs with a small "01 / OWNERSHIP" label above each title */
+.elementor .dg-tabs .e-n-tabs{counter-reset:dgtab}
+.elementor .dg-tabs .e-n-tab-title{flex:1 1 0;counter-increment:dgtab;justify-content:flex-start;text-align:left;line-height:1.4}
+.elementor .dg-tabs .e-n-tab-title-text{display:block}
+.elementor .dg-tabs .e-n-tab-title-text::before{content:counter(dgtab,decimal-leading-zero) " / OWNERSHIP";display:block;font-size:.61rem;font-weight:500;letter-spacing:.08em;margin-bottom:7px;color:#97743D}
+.elementor .dg-tabs .e-n-tab-title[aria-selected="true"] .e-n-tab-title-text::before{color:#D5AE65}
+/* Accordions: no box around the answer, rule above the first item, 16px titles, gold index numbers */
+.elementor .dg-acc .e-n-accordion-item>.e-con{border:0!important}
+.elementor .dg-acc .e-n-accordion-item:first-child>.e-n-accordion-item-title{border-top:1px solid #D9DFDF}
+.elementor .dg-acc .e-n-accordion-item-title-text{font-size:1rem!important;font-weight:500!important}
+.elementor .dg-acc-num .e-n-accordion{counter-reset:dgacc}
+.elementor .dg-acc-num .e-n-accordion-item{counter-increment:dgacc}
+.elementor .dg-acc-num .e-n-accordion-item-title-text::before{content:counter(dgacc,decimal-leading-zero);display:inline-block;min-width:32px;font-size:.73rem;font-weight:400;letter-spacing:.04em;color:#94723B}
+/* Scorecard: filter bar, collapsible rows, status pills */
+.elementor .dg-filters{display:flex;gap:8px;flex-wrap:wrap;background:#F5F7F7;padding:18px 30px;border-bottom:1px solid #D9DFDF}
+.elementor .dg-filters .dg-filter{background:#fff;border:1px solid #D9DFDF;border-radius:6px;font-family:inherit;font-size:.78rem;font-weight:400;line-height:1.3;padding:9px 13px;color:#5D6E78;cursor:pointer;box-shadow:none;transform:none}
+.elementor .dg-filters .dg-filter:hover{background:#fff;color:#142E40;border-color:#C6AA7B}
+.elementor .dg-filters .dg-filter[aria-pressed="true"]{background:#102E43;color:#fff;border-color:#102E43}
+.elementor .dg-score-row{cursor:pointer;transition:background-color .2s}
+.elementor .dg-score-row:hover,.elementor .dg-score-row.is-open{background-color:#F7F8F5!important}
+.elementor .dg-score-row .dg-finding{display:none}
+.elementor .dg-score-row.is-open .dg-finding,.elementor-editor-active .dg-score-row .dg-finding{display:block}
+.elementor .dg-score-row.is-hidden{display:none!important}
+.elementor .dg-pill{flex:0 0 auto!important;width:auto!important;white-space:nowrap}
+/* Pricing bullets in two columns */
+.elementor .dg-tier-list .elementor-icon-list-items{display:grid!important;grid-template-columns:1fr 1fr;gap:13px 20px}
+.elementor .dg-tier-list .elementor-icon-list-item{margin:0!important;padding:0!important}
+/* Discovery section: smaller title, compact form fields */
+.elementor .dg-request-title .elementor-heading-title{font-size:clamp(2rem,2.6vw,2.5rem)!important;line-height:1.16!important}
+.elementor .dg-form .elementor-field-textual{min-height:42px;padding:8px 12px;font-size:.9rem}
+.elementor .dg-form .elementor-field-type-html{font-size:.73rem;line-height:1.6;color:#5D6E78;padding-top:6px}
+/* Reading progress bar and mobile sticky CTA */
+.dg-progress{position:fixed;top:0;left:0;height:3px;width:0;background:#D5AE65;z-index:99999;pointer-events:none}
+.dg-sticky-cta{display:none}
+@media(max-width:767px){
+ .elementor .dg-tier-list .elementor-icon-list-items{grid-template-columns:1fr}
+ .elementor .dg-filters{padding:15px;gap:6px}
+ .elementor .dg-filters .dg-filter{font-size:.68rem;padding:8px 10px}
+ .elementor .dg-request-title .elementor-heading-title{font-size:2.3rem!important}
+ .dg-sticky-cta.show{display:block;position:fixed;left:0;right:0;bottom:0;z-index:999;padding:10px 13px;background:rgba(247,245,239,.96);backdrop-filter:blur(10px);border-top:1px solid #D9DFDF}
+ .dg-sticky-cta a{display:flex;align-items:center;justify-content:center;height:48px;border-radius:7px;background:#102E43;color:#fff!important;font:600 13px/1 Inter,sans-serif;text-decoration:none}
+}
+@media(max-width:400px){.elementor .dg-pill{display:none}}
+</style>
+<script>
+(function(){if(window.dgPageInit)return;window.dgPageInit=true;
+function init(){
+ var rows=[].slice.call(document.querySelectorAll('.dg-score-row'));
+ rows.forEach(function(r){r.setAttribute('role','button');r.setAttribute('tabindex','0');r.setAttribute('aria-expanded','false');
+  function t(){var o=!r.classList.contains('is-open');r.classList.toggle('is-open',o);r.setAttribute('aria-expanded',String(o))}
+  r.addEventListener('click',t);r.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();t()}})});
+ var fs=[].slice.call(document.querySelectorAll('.dg-filter'));
+ fs.forEach(function(f){f.addEventListener('click',function(){var v=f.getAttribute('data-filter');
+  fs.forEach(function(b){b.setAttribute('aria-pressed',String(b===f))});
+  rows.forEach(function(r){r.classList.toggle('is-hidden',v!=='all'&&!r.classList.contains('dg-status-'+v))})})});
+ if(document.body.classList.contains('elementor-editor-active'))return;
+ var bar=document.createElement('div');bar.className='dg-progress';bar.setAttribute('aria-hidden','true');document.body.appendChild(bar);
+ var cta=document.createElement('div');cta.className='dg-sticky-cta';cta.innerHTML='<a href="#discovery">Request Complimentary Discovery</a>';document.body.appendChild(cta);
+ var hero=document.querySelector('.dg-hero'),req=document.getElementById('discovery'),q=false;
+ function u(){var m=document.documentElement.scrollHeight-innerHeight;bar.style.width=(m>0?scrollY/m*100:0)+'%';
+  cta.classList.toggle('show',!!hero&&!!req&&hero.getBoundingClientRect().bottom<0&&req.getBoundingClientRect().top>innerHeight*.8);q=false}
+ addEventListener('scroll',function(){if(!q){q=true;requestAnimationFrame(u)}},{passive:true});addEventListener('resize',u);u()}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
+</script>"""
+
+
 def status_line(color, label):
     return f'<span style="color:{HEX[color]};font-size:11px;margin-right:8px">&#9679;</span>{label}'
-
-
-def header():
-    brand = col([
-        heading('TheDIGF<span style="color:#DFBD7A">.com</span>', "div", "dgbrand", "dgwhite", url="#main"),
-        heading("TeleTech Solutions™", "div", "dgeyebrow", "dgondark"),
-    ], g=4, width=sz(260), width_mobile=sz(100, "%"))
-    nav = widget("icon-list", view="inline", icon_list=[
-        {"text": "Our approach", "selected_icon": icon(""), "link": link("#approach"), "_id": uid()},
-        {"text": "The scorecard", "selected_icon": icon(""), "link": link("#scorecard"), "_id": uid()},
-        {"text": "Engagements", "selected_icon": icon(""), "link": link("#engagement"), "_id": uid()},
-    ], space_between=sz(26), hide_mobile="hidden-mobile",
-        __globals__={"icon_typography_typography": T("dgemph"), "text_color": C("dgondark"), "text_color_hover": C("dggoldlt")})
-    right = row([nav, button(CTA, style="gold", hide_mobile="hidden-mobile")], g=26, mobile_col=False, justify="flex-end",
-                width=sz(70, "%"))
-    inner = row([brand, right], g=25, justify="space-between", mobile_col=False, min_height=sz(82), min_height_mobile=sz(68))
-    return section([inner], bg="dgnight", pt=0, pb=0, pt_m=0, pb_m=0, anchor="main",
-                   border_border="solid", border_width=dim(0, 0, 1, 0), border_color="rgba(255,255,255,0.07)",
-                   _title="Header")
 
 
 def hero():
@@ -532,7 +588,8 @@ def hero():
     ], 3, 3, 1, g=30, padding=dim(25, 0, 32, 0), border_border="solid", border_width=dim(1, 0, 0, 0),
         border_color="rgba(255,255,255,0.15)", _title="Credibility")
     canvas = html(HERO_CANVAS, _position="absolute", _title="Hero motion (optional)")
-    return section([top, cred, canvas], pt=0, pb=0, pt_m=0, pb_m=0, css_classes="dg-hero", _title="Hero",
+    page_code = html(PAGE_CSS_JS, _position="absolute", _title="Page styles & scripts (keep)")
+    return section([top, cred, canvas, page_code], pt=0, pb=0, pt_m=0, pb_m=0, css_classes="dg-hero", _title="Hero",
                    gradient={"background_background": "gradient", "background_color": "#071E30", "background_color_b": "#14374F",
                              "background_gradient_angle": sz(120, "deg")})
 
@@ -599,11 +656,15 @@ def lifecycle():
 
 
 def scorecard():
-    legend = text("<p>" + "<br>".join([
-        status_line("dggreen", "<strong>Green · Good to Go</strong> — Operating well. No immediate action."),
-        status_line("dgyellow", "<strong>Yellow · Watch Closely</strong> — Monitor and plan ahead."),
-        status_line("dgred", "<strong>Red · Take Action</strong> — High risk or cost leakage. Needs attention."),
-    ]) + "</p>", "dgxs", "dgmuted", _margin=dim(22, 0, 0, 0))
+    def legend_item(color, title, body):
+        label = status_line(color, '<strong style="color:#142E40">' + title + "</strong>")
+        return text(f'<p>{label}<br>'
+                    f'<span style="padding-left:19px;display:inline-block">{body}</span></p>', "dgxs", "dgmuted")
+    legend = row([
+        legend_item("dggreen", "Green · Good to Go", "Operating well. No immediate action."),
+        legend_item("dgyellow", "Yellow · Watch Closely", "Monitor and plan ahead."),
+        legend_item("dgred", "Red · Take Action", "High risk or cost leakage. Needs attention."),
+    ], g=20, align="flex-start", wrap="wrap", mobile_col=False, margin=dim(22, 0, 0, 0), _title="Legend")
     top = row([
         col([eyebrow("What the Review delivers", _margin=dim(0, 0, 18, 0)),
              heading("See the business.<br>Know the priorities.", "h2", "dgh2")], width=sz(50, "%"), width_mobile=sz(100, "%")),
@@ -630,16 +691,25 @@ def scorecard():
         heading("7", "div", "dgstat", "dggold"),
     ], g=20, justify="space-between", mobile_col=False, padding=dim(25, 30), padding_mobile=dim(22),
         background_background="classic", __globals__={"background_color": C("dgnavy")}, _title="Scorecard head")
-    body = []
+    filters = html('<div class="dg-filters" aria-label="Filter sample findings">'
+                   '<button type="button" class="dg-filter" data-filter="all" aria-pressed="true">All domains</button>'
+                   '<button type="button" class="dg-filter" data-filter="red" aria-pressed="false">Take action</button>'
+                   '<button type="button" class="dg-filter" data-filter="yellow" aria-pressed="false">Watch closely</button>'
+                   '<button type="button" class="dg-filter" data-filter="green" aria-pressed="false">Good to go</button></div>',
+                   _title="Scorecard filters")
+    body = [filters]
     for color, name, label, finding in rows:
+        status = color.replace("dg", "")
         body.append(row([
             dot(color, 9),
-            col([heading(name, "h4", "dgemph", "dgink"), text(finding, "dgsmall")], g=4, _flex_size="grow"),
+            col([heading(name, "h4", "dgemph", "dgink", __globals__={"typography_typography": T("dgintro"), "title_color": C("dgink")}),
+                 text(finding, "dgsmall", _css_classes="dg-finding")], g=6, _flex_size="grow"),
             heading(label, "div", "dgxs", "dgmuted", _padding=dim(4, 12), _border_border="solid", _border_width=dim(1),
-                    _border_color=HEX["dgline"], _border_radius=dim(20), hide_mobile="hidden-mobile"),
+                    _border_color=HEX["dgline"], _border_radius=dim(20), _css_classes="dg-pill"),
         ], g=15, mobile_col=False, padding=dim(20, 30), padding_mobile=dim(18), border_border="solid",
-            border_width=dim(0, 0, 1, 0), border_color=HEX["dgline"], _title=name))
-    note = con([text("Illustrative examples only, not an assessment of your business.", "dgxs")],
+            border_width=dim(0, 0, 1, 0), border_color=HEX["dgline"], background_background="classic",
+            background_color="#FFFFFF", css_classes=f"dg-score-row dg-status-{status}", _title=name))
+    note = con([text("Select a domain to see its finding. Illustrative examples only, not an assessment of your business.", "dgxs")],
                padding=dim(18, 30), padding_mobile=dim(17), background_background="classic",
                __globals__={"background_color": C("dgpaper")})
     sc = card([head] + body + [note], radius=13, pad=(0, 0), overflow="hidden", box_shadow_box_shadow_type="yes",
@@ -748,7 +818,7 @@ def engagement():
     cards = []
     for i, (title, price, meta, featured, bullets) in enumerate(tiers):
         lst = widget("icon-list", icon_list=[{"text": b, "selected_icon": icon("fas fa-circle"), "_id": uid()} for b in bullets],
-                     space_between=sz(12), icon_size=sz(5), text_indent=sz(10), icon_self_vertical_align="flex-start",
+                     _css_classes="dg-tier-list", icon_size=sz(5), text_indent=sz(10), icon_self_vertical_align="flex-start",
                      icon_vertical_offset=sz(9),
                      __globals__={"icon_typography_typography": T("dgsmall"), "icon_color": C("dggolddk"), "text_color": C("dgmuted")})
         cards.append(card([
@@ -808,7 +878,11 @@ def pro_form():
         "form",
         form_name="Discovery",
         form_fields=[{"custom_id": cid, "field_type": ft, "field_label": lbl, "placeholder": "", "required": "true",
-                      "width": w, "width_mobile": "100", "_id": uid()} for cid, ft, lbl, w in fields],
+                      "width": w, "width_mobile": "100", "_id": uid()} for cid, ft, lbl, w in fields]
+                    # privacy note sits between the fields and the button, as in the original page
+                    + [{"custom_id": "privacy_note", "field_type": "html", "field_label": "", "field_html": PRIVACY_NOTE,
+                        "width": "100", "_id": uid()}],
+        _css_classes="dg-form",
         input_size="sm",
         show_labels="yes",
         mark_required="",
@@ -828,11 +902,12 @@ def pro_form():
         row_gap=sz(14),
         label_spacing=sz(6),
         field_border_radius=dim(6),
+        field_background_color="#FAFBFA",
+        field_border_color="#D3DCDC",
         button_border_radius=dim(7),
         __globals__={
             "label_color": C("dgink"), "label_typography_typography": T("dgemph"),
             "field_text_color": C("dgink"), "field_typography_typography": T("dgsmall"),
-            "field_border_color": C("dgline"), "field_background_color": C("dgwhite"),
             "button_background_color": C("dgnavy"), "button_text_color": C("dgwhite"),
             "button_background_hover_color": C("dgnavyhv"), "button_hover_color": C("dgwhite"),
             "button_typography_typography": T("dgbutton"),
@@ -858,7 +933,7 @@ def request(pro=True):
         border_color="#C8C0B2", _title="Contact")
     left = col([
         eyebrow("Request Complimentary Discovery", _margin=dim(0, 0, 18, 0)),
-        heading("Let’s make your<br>next decision clearer.", "h2", "dgh2"),
+        heading("Let’s make your<br>next decision clearer.", "h2", "dgh2", _css_classes="dg-request-title"),
         text("We review one company at no cost. You see the scorecard. You decide whether governance should extend across the portfolio.",
              "dgintro", _margin=dim(20, 0, 0, 0)),
         col([benefit(1, "A 30-minute discovery conversation"), benefit(2, "One company reviewed at no cost"),
@@ -868,38 +943,12 @@ def request(pro=True):
     form_card = card([
         heading("Request your discovery conversation", "h3", "dgh3"),
         text("Tell us about your firm. Reggie will coordinate the next step with you.", "dgsmall", _margin=dim(9, 0, 20, 0)),
-        pro_form() if pro else free_form(),
-        text("Your information is used only to schedule your discovery conversation. It is never sold or shared.", "dgxs",
-             _margin=dim(14, 0, 0, 0)),
-    ], border="#D8D2C6", radius=14, pad=(28, 28), pad_m=(23, 20), width=sz(66, "%"), width_mobile=sz(100, "%"),
+    ] + ([pro_form()] if pro else [free_form(), text(PRIVACY_NOTE, "dgxs", _margin=dim(14, 0, 0, 0))]), border="#D8D2C6", radius=14, pad=(28, 28), pad_m=(23, 20), width=sz(66, "%"), width_mobile=sz(100, "%"),
         box_shadow_box_shadow_type="yes",
         box_shadow_box_shadow={"horizontal": 0, "vertical": 12, "blur": 35, "spread": 0, "color": "rgba(20,46,64,0.05)"},
         _title="Form card")
     return section([row([left, form_card], g=48, align="stretch", flex_gap_tablet=gap(28), flex_gap_mobile=gap(30))],
                    bg="dgsand", anchor="discovery", _title="Request discovery")
-
-
-def footer():
-    left = col([
-        heading('TheDIGF<span style="color:#DFBD7A">.com</span>', "div", "dgbrand", "dgwhite", url="#main"),
-        text("TeleTech Solutions™ | The Digital Infrastructure Governance Firm", "dgxs", "dgondark", _margin=dim(14, 0, 0, 0)),
-        text("We navigate the complex architecture and make it simple.", "dgxs", "dgondark", _margin=dim(6, 0, 0, 0)),
-    ])
-    addr = text('<p>5 Cowboys Way, Suite 300<br>Frisco, Texas 75034<br><a href="tel:+19452628477">945.262.8477</a><br>'
-                '<a href="mailto:Reggie@TeleTechTX.com">Reggie@TeleTechTX.com</a><br>'
-                '<a href="https://www.linkedin.com/in/reggie-hilliard/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>',
-                "dgxs", "dgondark", align="right", align_mobile="left", __globals__={
-                    "typography_typography": T("dgxs"), "text_color": C("dgondark"), "link_color": C("dgondark"),
-                    "link_hover_color": C("dggoldlt")})
-    bottom = row([
-        text('<p>© 2026 TeleTech Solutions™ · <a href="/privacy/">Privacy</a></p>', "dgxs", "dgondark",
-             __globals__={"typography_typography": T("dgxs"), "text_color": C("dgondark"), "link_color": C("dgondark"),
-                          "link_hover_color": C("dggoldlt")}),
-        text("One advisor. Every stage. Every location.", "dgxs", "dgondark"),
-    ], g=20, justify="space-between", align="center", margin=dim(30, 0, 0, 0), padding=dim(20, 0, 0, 0),
-        border_border="solid", border_width=dim(1, 0, 0, 0), border_color="rgba(255,255,255,0.125)")
-    return section([row([left, addr], g=40, justify="space-between", align="flex-start"), bottom], bg="dgdeep", pt=44, pb=44,
-                   pt_m=44, pb_m=44, _title="Footer")
 
 
 # ---------------------------------------------------------------- page: PRIVACY
@@ -928,16 +977,19 @@ def mark_inner(elements, depth=0):
     return elements
 
 
-PAGE_SETTINGS = {"template": "elementor_canvas", "hide_title": "yes"}
+# "Elementor Full Width": keeps the theme / Theme Builder header and footer, hides the page title.
+PAGE_SETTINGS = {"template": "elementor_header_footer", "hide_title": "yes"}
 
 
-def template(title, content):
-    return {"content": mark_inner(content), "page_settings": dict(PAGE_SETTINGS), "version": "0.4", "title": title, "type": "page"}
+def template(title, content, page_settings=None):
+    return {"content": mark_inner(content), "page_settings": dict(page_settings or PAGE_SETTINGS), "version": "0.4",
+            "title": title, "type": "page"}
 
 
 def home(pro=True):
-    return [header(), hero(), audience(), problem(), lifecycle(), scorecard(), domains(), process(), founder(), engagement(),
-            faq(), request(pro), footer()]
+    # Header and footer come from the theme / Elementor Theme Builder, so the page holds content sections only.
+    return [hero(), audience(), problem(), lifecycle(), scorecard(), domains(), process(), founder(), engagement(),
+            faq(), request(pro)]
 
 
 def main():

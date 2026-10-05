@@ -1,298 +1,7 @@
 {
  "content": [
   {
-   "id": "7311d8a",
-   "elType": "container",
-   "isInner": false,
-   "settings": {
-    "border_border": "solid",
-    "border_width": {
-     "unit": "px",
-     "top": "0",
-     "right": "0",
-     "bottom": "1",
-     "left": "0",
-     "isLinked": false
-    },
-    "border_color": "rgba(255,255,255,0.07)",
-    "_title": "Header",
-    "content_width": "boxed",
-    "boxed_width": {
-     "unit": "px",
-     "size": 1220,
-     "sizes": []
-    },
-    "flex_direction": "column",
-    "flex_gap": {
-     "column": "0",
-     "row": "0",
-     "isLinked": true,
-     "unit": "px",
-     "size": 0
-    },
-    "padding": {
-     "unit": "px",
-     "top": "0",
-     "right": "40",
-     "bottom": "0",
-     "left": "40",
-     "isLinked": false
-    },
-    "padding_tablet": {
-     "unit": "px",
-     "top": "0",
-     "right": "24",
-     "bottom": "0",
-     "left": "24",
-     "isLinked": false
-    },
-    "padding_mobile": {
-     "unit": "px",
-     "top": "0",
-     "right": "18",
-     "bottom": "0",
-     "left": "18",
-     "isLinked": false
-    },
-    "background_background": "classic",
-    "__globals__": {
-     "background_color": "globals/colors?id=dgnight"
-    },
-    "_element_id": "main"
-   },
-   "elements": [
-    {
-     "id": "c2ce6f4",
-     "elType": "container",
-     "isInner": true,
-     "settings": {
-      "min_height": {
-       "unit": "px",
-       "size": 82,
-       "sizes": []
-      },
-      "min_height_mobile": {
-       "unit": "px",
-       "size": 68,
-       "sizes": []
-      },
-      "flex_direction": "row",
-      "flex_gap": {
-       "column": "25",
-       "row": "25",
-       "isLinked": true,
-       "unit": "px",
-       "size": 25
-      },
-      "flex_align_items": "center",
-      "flex_justify_content": "space-between",
-      "content_width": "full"
-     },
-     "elements": [
-      {
-       "id": "d8f16ad",
-       "elType": "container",
-       "isInner": true,
-       "settings": {
-        "width": {
-         "unit": "px",
-         "size": 260,
-         "sizes": []
-        },
-        "width_mobile": {
-         "unit": "%",
-         "size": 100,
-         "sizes": []
-        },
-        "flex_direction": "column",
-        "flex_gap": {
-         "column": "4",
-         "row": "4",
-         "isLinked": true,
-         "unit": "px",
-         "size": 4
-        },
-        "content_width": "full"
-       },
-       "elements": [
-        {
-         "id": "2265b1f",
-         "elType": "widget",
-         "widgetType": "heading",
-         "isInner": false,
-         "settings": {
-          "title": "TheDIGF<span style=\"color:#DFBD7A\">.com</span>",
-          "header_size": "div",
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgbrand",
-           "title_color": "globals/colors?id=dgwhite"
-          },
-          "link": {
-           "url": "#main",
-           "is_external": "",
-           "nofollow": "",
-           "custom_attributes": ""
-          }
-         },
-         "elements": []
-        },
-        {
-         "id": "91b7584",
-         "elType": "widget",
-         "widgetType": "heading",
-         "isInner": false,
-         "settings": {
-          "title": "TeleTech Solutions™",
-          "header_size": "div",
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgeyebrow",
-           "title_color": "globals/colors?id=dgondark"
-          }
-         },
-         "elements": []
-        }
-       ]
-      },
-      {
-       "id": "7ed4d57",
-       "elType": "container",
-       "isInner": true,
-       "settings": {
-        "width": {
-         "unit": "%",
-         "size": 70,
-         "sizes": []
-        },
-        "flex_direction": "row",
-        "flex_gap": {
-         "column": "26",
-         "row": "26",
-         "isLinked": true,
-         "unit": "px",
-         "size": 26
-        },
-        "flex_align_items": "center",
-        "flex_justify_content": "flex-end",
-        "content_width": "full"
-       },
-       "elements": [
-        {
-         "id": "414c343",
-         "elType": "widget",
-         "widgetType": "icon-list",
-         "isInner": false,
-         "settings": {
-          "view": "inline",
-          "icon_list": [
-           {
-            "text": "Our approach",
-            "selected_icon": {
-             "value": "",
-             "library": "fa-solid"
-            },
-            "link": {
-             "url": "#approach",
-             "is_external": "",
-             "nofollow": "",
-             "custom_attributes": ""
-            },
-            "_id": "cd613e3"
-           },
-           {
-            "text": "The scorecard",
-            "selected_icon": {
-             "value": "",
-             "library": "fa-solid"
-            },
-            "link": {
-             "url": "#scorecard",
-             "is_external": "",
-             "nofollow": "",
-             "custom_attributes": ""
-            },
-            "_id": "c386bbc"
-           },
-           {
-            "text": "Engagements",
-            "selected_icon": {
-             "value": "",
-             "library": "fa-solid"
-            },
-            "link": {
-             "url": "#engagement",
-             "is_external": "",
-             "nofollow": "",
-             "custom_attributes": ""
-            },
-            "_id": "1027c4d"
-           }
-          ],
-          "space_between": {
-           "unit": "px",
-           "size": 26,
-           "sizes": []
-          },
-          "hide_mobile": "hidden-mobile",
-          "__globals__": {
-           "icon_typography_typography": "globals/typography?id=dgemph",
-           "text_color": "globals/colors?id=dgondark",
-           "text_color_hover": "globals/colors?id=dggoldlt"
-          }
-         },
-         "elements": []
-        },
-        {
-         "id": "1e2feb8",
-         "elType": "widget",
-         "widgetType": "button",
-         "isInner": false,
-         "settings": {
-          "hide_mobile": "hidden-mobile",
-          "text": "Request Complimentary Discovery",
-          "link": {
-           "url": "#discovery",
-           "is_external": "",
-           "nofollow": "",
-           "custom_attributes": ""
-          },
-          "border_radius": {
-           "unit": "px",
-           "top": "7",
-           "right": "7",
-           "bottom": "7",
-           "left": "7",
-           "isLinked": true
-          },
-          "text_padding": {
-           "unit": "px",
-           "top": "17",
-           "right": "20",
-           "bottom": "17",
-           "left": "20",
-           "isLinked": false
-          },
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgbutton",
-           "background_color": "globals/colors?id=dggoldlt",
-           "button_text_color": "globals/colors?id=dgnavy",
-           "button_background_hover_color": "globals/colors?id=dggoldhv",
-           "hover_color": "globals/colors?id=dgnavy"
-          },
-          "background_background": "classic",
-          "button_background_hover_background": "classic",
-          "hover_animation": "float",
-          "align_mobile": "justify"
-         },
-         "elements": []
-        }
-       ]
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "06839eb",
+   "id": "b8b6d8f",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -347,7 +56,7 @@
    },
    "elements": [
     {
-     "id": "7204e52",
+     "id": "7ce42c8",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -383,7 +92,7 @@
      },
      "elements": [
       {
-       "id": "d5f4b3b",
+       "id": "c2ce6f4",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -410,7 +119,7 @@
        },
        "elements": [
         {
-         "id": "78e5106",
+         "id": "2265b1f",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -433,7 +142,7 @@
          "elements": []
         },
         {
-         "id": "a6cecc1",
+         "id": "91b7584",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -448,7 +157,7 @@
          "elements": []
         },
         {
-         "id": "612e769",
+         "id": "d8f16ad",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -475,7 +184,7 @@
          "elements": []
         },
         {
-         "id": "c9e9c61",
+         "id": "cd613e3",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -502,7 +211,7 @@
          "elements": []
         },
         {
-         "id": "35bf992",
+         "id": "c386bbc",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -529,7 +238,7 @@
          "elements": []
         },
         {
-         "id": "0741c7a",
+         "id": "1e2feb8",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -558,7 +267,7 @@
          },
          "elements": [
           {
-           "id": "18072e8",
+           "id": "1027c4d",
            "elType": "widget",
            "widgetType": "button",
            "isInner": false,
@@ -601,7 +310,7 @@
            "elements": []
           },
           {
-           "id": "7ce42c8",
+           "id": "414c343",
            "elType": "widget",
            "widgetType": "button",
            "isInner": false,
@@ -654,7 +363,7 @@
          ]
         },
         {
-         "id": "e4b06ce",
+         "id": "7ed4d57",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -683,7 +392,7 @@
        ]
       },
       {
-       "id": "b2221a5",
+       "id": "18072e8",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -710,7 +419,7 @@
        },
        "elements": [
         {
-         "id": "008a05a",
+         "id": "35bf992",
          "elType": "widget",
          "widgetType": "image",
          "isInner": false,
@@ -747,7 +456,7 @@
          "elements": []
         },
         {
-         "id": "c464715",
+         "id": "c9e9c61",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -827,7 +536,7 @@
          },
          "elements": [
           {
-           "id": "9b810e7",
+           "id": "a6cecc1",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -843,7 +552,7 @@
            },
            "elements": [
             {
-             "id": "63ca828",
+             "id": "7311d8a",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -866,7 +575,7 @@
              "elements": []
             },
             {
-             "id": "6ec9d28",
+             "id": "78e5106",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -883,7 +592,7 @@
            ]
           },
           {
-           "id": "c324c98",
+           "id": "612e769",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
@@ -908,7 +617,7 @@
      ]
     },
     {
-     "id": "07d4bed",
+     "id": "b2221a5",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -974,7 +683,7 @@
      },
      "elements": [
       {
-       "id": "cd447e3",
+       "id": "d5f4b3b",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -991,7 +700,7 @@
        },
        "elements": [
         {
-         "id": "442e3d4",
+         "id": "0741c7a",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1006,7 +715,7 @@
          "elements": []
         },
         {
-         "id": "b8b6d8f",
+         "id": "e4b06ce",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1027,7 +736,7 @@
        ]
       },
       {
-       "id": "f1fd42a",
+       "id": "9b810e7",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1044,7 +753,7 @@
        },
        "elements": [
         {
-         "id": "3a90293",
+         "id": "63ca828",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1059,7 +768,7 @@
          "elements": []
         },
         {
-         "id": "9755d4c",
+         "id": "6ec9d28",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1080,7 +789,7 @@
        ]
       },
       {
-       "id": "5143119",
+       "id": "008a05a",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1097,7 +806,7 @@
        },
        "elements": [
         {
-         "id": "1a2b8f1",
+         "id": "c324c98",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1112,7 +821,7 @@
          "elements": []
         },
         {
-         "id": "e6c3f33",
+         "id": "c464715",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1135,7 +844,7 @@
      ]
     },
     {
-     "id": "05b6e6e",
+     "id": "7204e52",
      "elType": "widget",
      "widgetType": "html",
      "isInner": false,
@@ -1145,11 +854,23 @@
       "html": "<script>\n/* Ambient hero motion (optional). Delete this HTML widget to remove the animation. */\n(function(){var s=document.currentScript,hero=s&&s.closest('.dg-hero');if(!hero||hero.querySelector('canvas.dg-hero-motion'))return;\nvar c=document.createElement('canvas');c.className='dg-hero-motion';c.setAttribute('aria-hidden','true');\nc.style.cssText='position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.55';\nhero.style.isolation='isolate';hero.prepend(c);var x=c.getContext('2d');if(!x)return;\nvar rm=matchMedia('(prefers-reduced-motion: reduce)'),w=0,h=0,f=0,v=true,t=0,l=0;\nfunction rs(){var r=hero.getBoundingClientRect();w=r.width;h=r.height;var p=Math.min(devicePixelRatio||1,1.5);c.width=Math.round(w*p);c.height=Math.round(h*p);x.setTransform(p,0,0,p,0,0);d()}\nfunction d(){x.clearRect(0,0,w,h);for(var i=0;i<7;i++){var y=h*(.16+i*.115);x.beginPath();for(var X=-20;X<=w+20;X+=20){var Y=y+Math.sin(X/330+t*.16+i*.8)*24+Math.cos(X/620-t*.1+i)*16;X===-20?x.moveTo(X,Y):x.lineTo(X,Y)}x.strokeStyle=i%3===0?'rgba(224,188,121,.13)':'rgba(168,207,232,.1)';x.lineWidth=1;x.stroke()}\nfor(var j=0;j<9;j++){var px=((j*.137+t*.006)%1)*w,py=h*(.2+(j%5)*.135)+Math.sin(t*.2+j)*13;x.beginPath();x.arc(px,py,1.5,0,Math.PI*2);x.fillStyle='rgba(224,188,121,.3)';x.fill()}}\nfunction tk(n){f=0;if(!v||document.hidden||rm.matches){l=0;return}if(l)t+=Math.min((n-l)/1000,.05);l=n;d();f=requestAnimationFrame(tk)}\nfunction sy(){if(f)cancelAnimationFrame(f);f=0;l=0;if(v&&!document.hidden&&!rm.matches)f=requestAnimationFrame(tk);else d()}\nnew ResizeObserver(rs).observe(hero);new IntersectionObserver(function(e){v=e[0].isIntersecting;sy()}).observe(hero);\ndocument.addEventListener('visibilitychange',sy);rs();sy()})();\n</script>"
      },
      "elements": []
+    },
+    {
+     "id": "442e3d4",
+     "elType": "widget",
+     "widgetType": "html",
+     "isInner": false,
+     "settings": {
+      "_position": "absolute",
+      "_title": "Page styles & scripts (keep)",
+      "html": "<style>\n/* Lifecycle tabs: equal-width tabs with a small \"01 / OWNERSHIP\" label above each title */\n.elementor .dg-tabs .e-n-tabs{counter-reset:dgtab}\n.elementor .dg-tabs .e-n-tab-title{flex:1 1 0;counter-increment:dgtab;justify-content:flex-start;text-align:left;line-height:1.4}\n.elementor .dg-tabs .e-n-tab-title-text{display:block}\n.elementor .dg-tabs .e-n-tab-title-text::before{content:counter(dgtab,decimal-leading-zero) \" / OWNERSHIP\";display:block;font-size:.61rem;font-weight:500;letter-spacing:.08em;margin-bottom:7px;color:#97743D}\n.elementor .dg-tabs .e-n-tab-title[aria-selected=\"true\"] .e-n-tab-title-text::before{color:#D5AE65}\n/* Accordions: no box around the answer, rule above the first item, 16px titles, gold index numbers */\n.elementor .dg-acc .e-n-accordion-item>.e-con{border:0!important}\n.elementor .dg-acc .e-n-accordion-item:first-child>.e-n-accordion-item-title{border-top:1px solid #D9DFDF}\n.elementor .dg-acc .e-n-accordion-item-title-text{font-size:1rem!important;font-weight:500!important}\n.elementor .dg-acc-num .e-n-accordion{counter-reset:dgacc}\n.elementor .dg-acc-num .e-n-accordion-item{counter-increment:dgacc}\n.elementor .dg-acc-num .e-n-accordion-item-title-text::before{content:counter(dgacc,decimal-leading-zero);display:inline-block;min-width:32px;font-size:.73rem;font-weight:400;letter-spacing:.04em;color:#94723B}\n/* Scorecard: filter bar, collapsible rows, status pills */\n.elementor .dg-filters{display:flex;gap:8px;flex-wrap:wrap;background:#F5F7F7;padding:18px 30px;border-bottom:1px solid #D9DFDF}\n.elementor .dg-filters .dg-filter{background:#fff;border:1px solid #D9DFDF;border-radius:6px;font-family:inherit;font-size:.78rem;font-weight:400;line-height:1.3;padding:9px 13px;color:#5D6E78;cursor:pointer;box-shadow:none;transform:none}\n.elementor .dg-filters .dg-filter:hover{background:#fff;color:#142E40;border-color:#C6AA7B}\n.elementor .dg-filters .dg-filter[aria-pressed=\"true\"]{background:#102E43;color:#fff;border-color:#102E43}\n.elementor .dg-score-row{cursor:pointer;transition:background-color .2s}\n.elementor .dg-score-row:hover,.elementor .dg-score-row.is-open{background-color:#F7F8F5!important}\n.elementor .dg-score-row .dg-finding{display:none}\n.elementor .dg-score-row.is-open .dg-finding,.elementor-editor-active .dg-score-row .dg-finding{display:block}\n.elementor .dg-score-row.is-hidden{display:none!important}\n.elementor .dg-pill{flex:0 0 auto!important;width:auto!important;white-space:nowrap}\n/* Pricing bullets in two columns */\n.elementor .dg-tier-list .elementor-icon-list-items{display:grid!important;grid-template-columns:1fr 1fr;gap:13px 20px}\n.elementor .dg-tier-list .elementor-icon-list-item{margin:0!important;padding:0!important}\n/* Discovery section: smaller title, compact form fields */\n.elementor .dg-request-title .elementor-heading-title{font-size:clamp(2rem,2.6vw,2.5rem)!important;line-height:1.16!important}\n.elementor .dg-form .elementor-field-textual{min-height:42px;padding:8px 12px;font-size:.9rem}\n.elementor .dg-form .elementor-field-type-html{font-size:.73rem;line-height:1.6;color:#5D6E78;padding-top:6px}\n/* Reading progress bar and mobile sticky CTA */\n.dg-progress{position:fixed;top:0;left:0;height:3px;width:0;background:#D5AE65;z-index:99999;pointer-events:none}\n.dg-sticky-cta{display:none}\n@media(max-width:767px){\n .elementor .dg-tier-list .elementor-icon-list-items{grid-template-columns:1fr}\n .elementor .dg-filters{padding:15px;gap:6px}\n .elementor .dg-filters .dg-filter{font-size:.68rem;padding:8px 10px}\n .elementor .dg-request-title .elementor-heading-title{font-size:2.3rem!important}\n .dg-sticky-cta.show{display:block;position:fixed;left:0;right:0;bottom:0;z-index:999;padding:10px 13px;background:rgba(247,245,239,.96);backdrop-filter:blur(10px);border-top:1px solid #D9DFDF}\n .dg-sticky-cta a{display:flex;align-items:center;justify-content:center;height:48px;border-radius:7px;background:#102E43;color:#fff!important;font:600 13px/1 Inter,sans-serif;text-decoration:none}\n}\n@media(max-width:400px){.elementor .dg-pill{display:none}}\n</style>\n<script>\n(function(){if(window.dgPageInit)return;window.dgPageInit=true;\nfunction init(){\n var rows=[].slice.call(document.querySelectorAll('.dg-score-row'));\n rows.forEach(function(r){r.setAttribute('role','button');r.setAttribute('tabindex','0');r.setAttribute('aria-expanded','false');\n  function t(){var o=!r.classList.contains('is-open');r.classList.toggle('is-open',o);r.setAttribute('aria-expanded',String(o))}\n  r.addEventListener('click',t);r.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();t()}})});\n var fs=[].slice.call(document.querySelectorAll('.dg-filter'));\n fs.forEach(function(f){f.addEventListener('click',function(){var v=f.getAttribute('data-filter');\n  fs.forEach(function(b){b.setAttribute('aria-pressed',String(b===f))});\n  rows.forEach(function(r){r.classList.toggle('is-hidden',v!=='all'&&!r.classList.contains('dg-status-'+v))})})});\n if(document.body.classList.contains('elementor-editor-active'))return;\n var bar=document.createElement('div');bar.className='dg-progress';bar.setAttribute('aria-hidden','true');document.body.appendChild(bar);\n var cta=document.createElement('div');cta.className='dg-sticky-cta';cta.innerHTML='<a href=\"#discovery\">Request Complimentary Discovery</a>';document.body.appendChild(cta);\n var hero=document.querySelector('.dg-hero'),req=document.getElementById('discovery'),q=false;\n function u(){var m=document.documentElement.scrollHeight-innerHeight;bar.style.width=(m>0?scrollY/m*100:0)+'%';\n  cta.classList.toggle('show',!!hero&&!!req&&hero.getBoundingClientRect().bottom<0&&req.getBoundingClientRect().top>innerHeight*.8);q=false}\n addEventListener('scroll',function(){if(!q){q=true;requestAnimationFrame(u)}},{passive:true});addEventListener('resize',u);u()}\nif(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();\n</script>"
+     },
+     "elements": []
     }
    ]
   },
   {
-   "id": "3bab6c3",
+   "id": "6c0fd4f",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -1199,7 +920,7 @@
    },
    "elements": [
     {
-     "id": "f06d3fe",
+     "id": "afbd67f",
      "elType": "widget",
      "widgetType": "heading",
      "isInner": false,
@@ -1222,7 +943,7 @@
      "elements": []
     },
     {
-     "id": "7eed8d1",
+     "id": "37730ed",
      "elType": "widget",
      "widgetType": "heading",
      "isInner": false,
@@ -1245,7 +966,7 @@
      "elements": []
     },
     {
-     "id": "8d88348",
+     "id": "f8130c4",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -1293,7 +1014,7 @@
      },
      "elements": [
       {
-       "id": "f06c144",
+       "id": "f1fd42a",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1348,7 +1069,7 @@
        },
        "elements": [
         {
-         "id": "a648a7d",
+         "id": "cd447e3",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1379,7 +1100,7 @@
          "elements": []
         },
         {
-         "id": "8a9a021",
+         "id": "3a90293",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1394,7 +1115,7 @@
          "elements": []
         },
         {
-         "id": "025b413",
+         "id": "9755d4c",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1423,7 +1144,7 @@
        ]
       },
       {
-       "id": "37730ed",
+       "id": "07d4bed",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1478,7 +1199,7 @@
        },
        "elements": [
         {
-         "id": "e1988ad",
+         "id": "1a2b8f1",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1509,7 +1230,7 @@
          "elements": []
         },
         {
-         "id": "619699c",
+         "id": "e6c3f33",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1524,7 +1245,7 @@
          "elements": []
         },
         {
-         "id": "afbd67f",
+         "id": "5143119",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1553,7 +1274,7 @@
        ]
       },
       {
-       "id": "076f378",
+       "id": "8a9a021",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1608,7 +1329,7 @@
        },
        "elements": [
         {
-         "id": "f8130c4",
+         "id": "05b6e6e",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1639,7 +1360,7 @@
          "elements": []
         },
         {
-         "id": "6c0fd4f",
+         "id": "06839eb",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1654,7 +1375,7 @@
          "elements": []
         },
         {
-         "id": "b9d179e",
+         "id": "a648a7d",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1683,7 +1404,7 @@
        ]
       },
       {
-       "id": "701966a",
+       "id": "619699c",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1738,7 +1459,7 @@
        },
        "elements": [
         {
-         "id": "8712b8b",
+         "id": "025b413",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1769,7 +1490,7 @@
          "elements": []
         },
         {
-         "id": "38c0c8f",
+         "id": "f06c144",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1784,7 +1505,7 @@
          "elements": []
         },
         {
-         "id": "c381e88",
+         "id": "e1988ad",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1817,7 +1538,7 @@
    ]
   },
   {
-   "id": "b8b333a",
+   "id": "2f978d8",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -1868,7 +1589,7 @@
    },
    "elements": [
     {
-     "id": "e5446dd",
+     "id": "19999e3",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -1901,7 +1622,7 @@
      },
      "elements": [
       {
-       "id": "4be03db",
+       "id": "ea90a8f",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1927,7 +1648,7 @@
        },
        "elements": [
         {
-         "id": "a11d459",
+         "id": "ed2f89d",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1950,7 +1671,7 @@
          "elements": []
         },
         {
-         "id": "fe17533",
+         "id": "0580597",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1965,7 +1686,7 @@
          "elements": []
         },
         {
-         "id": "b94067e",
+         "id": "6a8ac4b",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1992,7 +1713,7 @@
          "elements": []
         },
         {
-         "id": "dc2574b",
+         "id": "d66b829",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -2021,7 +1742,7 @@
        ]
       },
       {
-       "id": "552b82f",
+       "id": "a46d675",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -2047,7 +1768,7 @@
        },
        "elements": [
         {
-         "id": "1ef2a4f",
+         "id": "8e73ca4",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -2070,7 +1791,7 @@
          "elements": []
         },
         {
-         "id": "be3edc0",
+         "id": "ec148cb",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -2117,7 +1838,7 @@
          },
          "elements": [
           {
-           "id": "ad45f23",
+           "id": "8712b8b",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -2172,7 +1893,7 @@
            },
            "elements": [
             {
-             "id": "587fd28",
+             "id": "b9d179e",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -2195,7 +1916,7 @@
              "elements": []
             },
             {
-             "id": "3b1a11d",
+             "id": "076f378",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -2216,7 +1937,7 @@
            ]
           },
           {
-           "id": "75a8929",
+           "id": "701966a",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -2271,7 +1992,7 @@
            },
            "elements": [
             {
-             "id": "380208a",
+             "id": "38c0c8f",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -2294,7 +2015,7 @@
              "elements": []
             },
             {
-             "id": "c2cd789",
+             "id": "c381e88",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -2315,7 +2036,7 @@
            ]
           },
           {
-           "id": "ed2f89d",
+           "id": "8d88348",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -2370,7 +2091,7 @@
            },
            "elements": [
             {
-             "id": "f3c64af",
+             "id": "f06d3fe",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -2393,7 +2114,7 @@
              "elements": []
             },
             {
-             "id": "4a2f20a",
+             "id": "7eed8d1",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -2414,7 +2135,7 @@
            ]
           },
           {
-           "id": "d66b829",
+           "id": "3b1a11d",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -2469,7 +2190,7 @@
            },
            "elements": [
             {
-             "id": "0580597",
+             "id": "3bab6c3",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -2492,7 +2213,7 @@
              "elements": []
             },
             {
-             "id": "6a8ac4b",
+             "id": "587fd28",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -2513,7 +2234,7 @@
            ]
           },
           {
-           "id": "ec148cb",
+           "id": "c2cd789",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -2568,7 +2289,7 @@
            },
            "elements": [
             {
-             "id": "ea90a8f",
+             "id": "ad45f23",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -2591,7 +2312,7 @@
              "elements": []
             },
             {
-             "id": "8e73ca4",
+             "id": "380208a",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -2612,7 +2333,7 @@
            ]
           },
           {
-           "id": "2f978d8",
+           "id": "4a2f20a",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -2667,7 +2388,7 @@
            },
            "elements": [
             {
-             "id": "a46d675",
+             "id": "75a8929",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -2690,7 +2411,7 @@
              "elements": []
             },
             {
-             "id": "19999e3",
+             "id": "f3c64af",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -2719,7 +2440,7 @@
    ]
   },
   {
-   "id": "8c7e134",
+   "id": "815a47c",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -2769,7 +2490,7 @@
    },
    "elements": [
     {
-     "id": "f79b17a",
+     "id": "4be03db",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -2797,7 +2518,7 @@
      },
      "elements": [
       {
-       "id": "803468b",
+       "id": "b94067e",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -2813,7 +2534,7 @@
        },
        "elements": [
         {
-         "id": "f9270f4",
+         "id": "a11d459",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -2836,7 +2557,7 @@
          "elements": []
         },
         {
-         "id": "b610a9f",
+         "id": "fe17533",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -2853,7 +2574,7 @@
        ]
       },
       {
-       "id": "efba91f",
+       "id": "dc2574b",
        "elType": "widget",
        "widgetType": "text-editor",
        "isInner": false,
@@ -2881,7 +2602,7 @@
      ]
     },
     {
-     "id": "6a107b7",
+     "id": "e1ea24c",
      "elType": "widget",
      "widgetType": "nested-tabs",
      "isInner": false,
@@ -2889,21 +2610,22 @@
       "tabs": [
        {
         "tab_title": "Before Acquisition",
-        "_id": "6c0f345"
+        "_id": "1ef2a4f"
        },
        {
         "tab_title": "First 100 Days",
-        "_id": "81f9c1f"
+        "_id": "be3edc0"
        },
        {
         "tab_title": "Hold Period",
-        "_id": "d47d380"
+        "_id": "552b82f"
        },
        {
         "tab_title": "Before Exit or Capital Raise",
-        "_id": "e901e35"
+        "_id": "e5446dd"
        }
       ],
+      "_css_classes": "dg-tabs",
       "tabs_direction": "block-start",
       "tabs_justify_horizontal": "stretch",
       "title_alignment": "start",
@@ -2983,14 +2705,6 @@
        "left": "13",
        "isLinked": true
       },
-      "box_padding": {
-       "unit": "px",
-       "top": "35",
-       "right": "35",
-       "bottom": "35",
-       "left": "35",
-       "isLinked": true
-      },
       "__globals__": {
        "title_typography_typography": "globals/typography?id=dgemph",
        "title_text_color": "globals/colors?id=dgmuted",
@@ -3007,7 +2721,7 @@
      },
      "elements": [
       {
-       "id": "966baea",
+       "id": "803468b",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3032,22 +2746,35 @@
         },
         "padding": {
          "unit": "px",
-         "top": "0",
-         "right": "0",
-         "bottom": "0",
-         "left": "0",
+         "top": "35",
+         "right": "35",
+         "bottom": "35",
+         "left": "35",
+         "isLinked": true
+        },
+        "padding_mobile": {
+         "unit": "px",
+         "top": "24",
+         "right": "24",
+         "bottom": "24",
+         "left": "24",
          "isLinked": true
         },
         "min_height": {
          "unit": "px",
-         "size": 90,
+         "size": 160,
+         "sizes": []
+        },
+        "min_height_mobile": {
+         "unit": "px",
+         "size": 0,
          "sizes": []
         },
         "content_width": "full"
        },
        "elements": [
         {
-         "id": "4da98f1",
+         "id": "f9270f4",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -3063,32 +2790,17 @@
           },
           "flex_direction": "column",
           "flex_gap": {
-           "column": "10",
-           "row": "10",
+           "column": "0",
+           "row": "0",
            "isLinked": true,
            "unit": "px",
-           "size": 10
+           "size": 0
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "ab99254",
-           "elType": "widget",
-           "widgetType": "heading",
-           "isInner": false,
-           "settings": {
-            "title": "01 / Ownership",
-            "header_size": "div",
-            "__globals__": {
-             "typography_typography": "globals/typography?id=dgeyebrow",
-             "title_color": "globals/colors?id=dggolddk"
-            }
-           },
-           "elements": []
-          },
-          {
-           "id": "3099fdf",
+           "id": "b8b333a",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -3105,7 +2817,7 @@
          ]
         },
         {
-         "id": "48beab1",
+         "id": "b610a9f",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -3126,7 +2838,7 @@
        ]
       },
       {
-       "id": "f0dfb4a",
+       "id": "81f9c1f",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3151,22 +2863,35 @@
         },
         "padding": {
          "unit": "px",
-         "top": "0",
-         "right": "0",
-         "bottom": "0",
-         "left": "0",
+         "top": "35",
+         "right": "35",
+         "bottom": "35",
+         "left": "35",
+         "isLinked": true
+        },
+        "padding_mobile": {
+         "unit": "px",
+         "top": "24",
+         "right": "24",
+         "bottom": "24",
+         "left": "24",
          "isLinked": true
         },
         "min_height": {
          "unit": "px",
-         "size": 90,
+         "size": 160,
+         "sizes": []
+        },
+        "min_height_mobile": {
+         "unit": "px",
+         "size": 0,
          "sizes": []
         },
         "content_width": "full"
        },
        "elements": [
         {
-         "id": "7fd6311",
+         "id": "f79b17a",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -3182,32 +2907,17 @@
           },
           "flex_direction": "column",
           "flex_gap": {
-           "column": "10",
-           "row": "10",
+           "column": "0",
+           "row": "0",
            "isLinked": true,
            "unit": "px",
-           "size": 10
+           "size": 0
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "f9341c6",
-           "elType": "widget",
-           "widgetType": "heading",
-           "isInner": false,
-           "settings": {
-            "title": "02 / Ownership",
-            "header_size": "div",
-            "__globals__": {
-             "typography_typography": "globals/typography?id=dgeyebrow",
-             "title_color": "globals/colors?id=dggolddk"
-            }
-           },
-           "elements": []
-          },
-          {
-           "id": "e1ea24c",
+           "id": "efba91f",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -3224,7 +2934,7 @@
          ]
         },
         {
-         "id": "d8a064d",
+         "id": "6c0f345",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -3245,7 +2955,7 @@
        ]
       },
       {
-       "id": "08d6af5",
+       "id": "3099fdf",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3270,22 +2980,35 @@
         },
         "padding": {
          "unit": "px",
-         "top": "0",
-         "right": "0",
-         "bottom": "0",
-         "left": "0",
+         "top": "35",
+         "right": "35",
+         "bottom": "35",
+         "left": "35",
+         "isLinked": true
+        },
+        "padding_mobile": {
+         "unit": "px",
+         "top": "24",
+         "right": "24",
+         "bottom": "24",
+         "left": "24",
          "isLinked": true
         },
         "min_height": {
          "unit": "px",
-         "size": 90,
+         "size": 160,
+         "sizes": []
+        },
+        "min_height_mobile": {
+         "unit": "px",
+         "size": 0,
          "sizes": []
         },
         "content_width": "full"
        },
        "elements": [
         {
-         "id": "96c8da1",
+         "id": "e901e35",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -3301,32 +3024,17 @@
           },
           "flex_direction": "column",
           "flex_gap": {
-           "column": "10",
-           "row": "10",
+           "column": "0",
+           "row": "0",
            "isLinked": true,
            "unit": "px",
-           "size": 10
+           "size": 0
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "815a47c",
-           "elType": "widget",
-           "widgetType": "heading",
-           "isInner": false,
-           "settings": {
-            "title": "03 / Ownership",
-            "header_size": "div",
-            "__globals__": {
-             "typography_typography": "globals/typography?id=dgeyebrow",
-             "title_color": "globals/colors?id=dggolddk"
-            }
-           },
-           "elements": []
-          },
-          {
-           "id": "64b2d2b",
+           "id": "d47d380",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -3343,7 +3051,7 @@
          ]
         },
         {
-         "id": "da71144",
+         "id": "ab99254",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -3364,7 +3072,7 @@
        ]
       },
       {
-       "id": "677f6cb",
+       "id": "f9341c6",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3389,22 +3097,35 @@
         },
         "padding": {
          "unit": "px",
-         "top": "0",
-         "right": "0",
-         "bottom": "0",
-         "left": "0",
+         "top": "35",
+         "right": "35",
+         "bottom": "35",
+         "left": "35",
+         "isLinked": true
+        },
+        "padding_mobile": {
+         "unit": "px",
+         "top": "24",
+         "right": "24",
+         "bottom": "24",
+         "left": "24",
          "isLinked": true
         },
         "min_height": {
          "unit": "px",
-         "size": 90,
+         "size": 160,
+         "sizes": []
+        },
+        "min_height_mobile": {
+         "unit": "px",
+         "size": 0,
          "sizes": []
         },
         "content_width": "full"
        },
        "elements": [
         {
-         "id": "be6521c",
+         "id": "48beab1",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -3420,32 +3141,17 @@
           },
           "flex_direction": "column",
           "flex_gap": {
-           "column": "10",
-           "row": "10",
+           "column": "0",
+           "row": "0",
            "isLinked": true,
            "unit": "px",
-           "size": 10
+           "size": 0
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "7af027b",
-           "elType": "widget",
-           "widgetType": "heading",
-           "isInner": false,
-           "settings": {
-            "title": "04 / Ownership",
-            "header_size": "div",
-            "__globals__": {
-             "typography_typography": "globals/typography?id=dgeyebrow",
-             "title_color": "globals/colors?id=dggolddk"
-            }
-           },
-           "elements": []
-          },
-          {
-           "id": "3e2434e",
+           "id": "4da98f1",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -3462,7 +3168,7 @@
          ]
         },
         {
-         "id": "cc22af5",
+         "id": "966baea",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -3485,7 +3191,7 @@
      ]
     },
     {
-     "id": "5dfbd3d",
+     "id": "f0dfb4a",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -3506,7 +3212,7 @@
      },
      "elements": [
       {
-       "id": "aa2ca1a",
+       "id": "7fd6311",
        "elType": "widget",
        "widgetType": "text-editor",
        "isInner": false,
@@ -3525,7 +3231,7 @@
        "elements": []
       },
       {
-       "id": "2c4a369",
+       "id": "d8a064d",
        "elType": "widget",
        "widgetType": "button",
        "isInner": false,
@@ -3572,7 +3278,7 @@
    ]
   },
   {
-   "id": "bab9f87",
+   "id": "d8f3341",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -3623,7 +3329,7 @@
    },
    "elements": [
     {
-     "id": "705fca1",
+     "id": "aa2ca1a",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -3650,7 +3356,7 @@
      },
      "elements": [
       {
-       "id": "acab1a6",
+       "id": "be6521c",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3676,7 +3382,7 @@
        },
        "elements": [
         {
-         "id": "b3fa7aa",
+         "id": "7af027b",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -3699,7 +3405,7 @@
          "elements": []
         },
         {
-         "id": "c69d4bd",
+         "id": "3e2434e",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -3716,7 +3422,7 @@
        ]
       },
       {
-       "id": "1622bd7",
+       "id": "6a107b7",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3742,7 +3448,7 @@
        },
        "elements": [
         {
-         "id": "bcfbb05",
+         "id": "cc22af5",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -3761,12 +3467,11 @@
          "elements": []
         },
         {
-         "id": "e1fab9d",
-         "elType": "widget",
-         "widgetType": "text-editor",
-         "isInner": false,
+         "id": "08d6af5",
+         "elType": "container",
+         "isInner": true,
          "settings": {
-          "_margin": {
+          "margin": {
            "unit": "px",
            "top": "22",
            "right": "0",
@@ -3774,21 +3479,81 @@
            "left": "0",
            "isLinked": false
           },
-          "editor": "<p><span style=\"color:#30896F;font-size:11px;margin-right:8px\">&#9679;</span><strong>Green · Good to Go</strong> — Operating well. No immediate action.<br><span style=\"color:#C99735;font-size:11px;margin-right:8px\">&#9679;</span><strong>Yellow · Watch Closely</strong> — Monitor and plan ahead.<br><span style=\"color:#BC5C5E;font-size:11px;margin-right:8px\">&#9679;</span><strong>Red · Take Action</strong> — High risk or cost leakage. Needs attention.</p>",
-          "paragraph_spacing": {
+          "_title": "Legend",
+          "flex_direction": "row",
+          "flex_gap": {
+           "column": "20",
+           "row": "20",
+           "isLinked": true,
            "unit": "px",
-           "size": 0,
-           "sizes": []
+           "size": 20
           },
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgxs",
-           "text_color": "globals/colors?id=dgmuted"
-          }
+          "flex_align_items": "flex-start",
+          "flex_wrap": "wrap",
+          "content_width": "full"
          },
-         "elements": []
+         "elements": [
+          {
+           "id": "64b2d2b",
+           "elType": "widget",
+           "widgetType": "text-editor",
+           "isInner": false,
+           "settings": {
+            "editor": "<p><span style=\"color:#30896F;font-size:11px;margin-right:8px\">&#9679;</span><strong style=\"color:#142E40\">Green · Good to Go</strong><br><span style=\"padding-left:19px;display:inline-block\">Operating well. No immediate action.</span></p>",
+            "paragraph_spacing": {
+             "unit": "px",
+             "size": 0,
+             "sizes": []
+            },
+            "__globals__": {
+             "typography_typography": "globals/typography?id=dgxs",
+             "text_color": "globals/colors?id=dgmuted"
+            }
+           },
+           "elements": []
+          },
+          {
+           "id": "96c8da1",
+           "elType": "widget",
+           "widgetType": "text-editor",
+           "isInner": false,
+           "settings": {
+            "editor": "<p><span style=\"color:#C99735;font-size:11px;margin-right:8px\">&#9679;</span><strong style=\"color:#142E40\">Yellow · Watch Closely</strong><br><span style=\"padding-left:19px;display:inline-block\">Monitor and plan ahead.</span></p>",
+            "paragraph_spacing": {
+             "unit": "px",
+             "size": 0,
+             "sizes": []
+            },
+            "__globals__": {
+             "typography_typography": "globals/typography?id=dgxs",
+             "text_color": "globals/colors?id=dgmuted"
+            }
+           },
+           "elements": []
+          },
+          {
+           "id": "da71144",
+           "elType": "widget",
+           "widgetType": "text-editor",
+           "isInner": false,
+           "settings": {
+            "editor": "<p><span style=\"color:#BC5C5E;font-size:11px;margin-right:8px\">&#9679;</span><strong style=\"color:#142E40\">Red · Take Action</strong><br><span style=\"padding-left:19px;display:inline-block\">High risk or cost leakage. Needs attention.</span></p>",
+            "paragraph_spacing": {
+             "unit": "px",
+             "size": 0,
+             "sizes": []
+            },
+            "__globals__": {
+             "typography_typography": "globals/typography?id=dgxs",
+             "text_color": "globals/colors?id=dgmuted"
+            }
+           },
+           "elements": []
+          }
+         ]
         },
         {
-         "id": "5fec898",
+         "id": "677f6cb",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -3819,7 +3584,7 @@
      ]
     },
     {
-     "id": "f505928",
+     "id": "f3d4e71",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -3875,7 +3640,7 @@
      },
      "elements": [
       {
-       "id": "29e821a",
+       "id": "b3fa7aa",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3914,7 +3679,7 @@
        },
        "elements": [
         {
-         "id": "1ba1621",
+         "id": "8c7e134",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -3930,7 +3695,7 @@
          },
          "elements": [
           {
-           "id": "a9ec080",
+           "id": "2c4a369",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -3945,7 +3710,7 @@
            "elements": []
           },
           {
-           "id": "82283d1",
+           "id": "5dfbd3d",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -3970,7 +3735,7 @@
          ]
         },
         {
-         "id": "c74803e",
+         "id": "e1fab9d",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -3987,7 +3752,18 @@
        ]
       },
       {
-       "id": "bb968a4",
+       "id": "c69d4bd",
+       "elType": "widget",
+       "widgetType": "html",
+       "isInner": false,
+       "settings": {
+        "_title": "Scorecard filters",
+        "html": "<div class=\"dg-filters\" aria-label=\"Filter sample findings\"><button type=\"button\" class=\"dg-filter\" data-filter=\"all\" aria-pressed=\"true\">All domains</button><button type=\"button\" class=\"dg-filter\" data-filter=\"red\" aria-pressed=\"false\">Take action</button><button type=\"button\" class=\"dg-filter\" data-filter=\"yellow\" aria-pressed=\"false\">Watch closely</button><button type=\"button\" class=\"dg-filter\" data-filter=\"green\" aria-pressed=\"false\">Good to go</button></div>"
+       },
+       "elements": []
+      },
+      {
+       "id": "a9ec080",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4017,6 +3793,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-yellow",
         "_title": "Connectivity and WAN",
         "flex_direction": "row",
         "flex_gap": {
@@ -4031,7 +3810,7 @@
        },
        "elements": [
         {
-         "id": "855c384",
+         "id": "acab1a6",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -4053,43 +3832,44 @@
          "elements": []
         },
         {
-         "id": "5eda92d",
+         "id": "1622bd7",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "d707107",
+           "id": "bcfbb05",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "Connectivity and WAN",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "Connectivity and WAN",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "64ac5db",
+           "id": "5fec898",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>Two carriers at four locations. Contracts end on different dates.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -4106,7 +3886,7 @@
          ]
         },
         {
-         "id": "7d5c8df",
+         "id": "705fca1",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -4137,7 +3917,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Watch Closely",
           "header_size": "div",
           "__globals__": {
@@ -4150,7 +3930,7 @@
        ]
       },
       {
-       "id": "d92a4aa",
+       "id": "d707107",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4180,6 +3960,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-green",
         "_title": "Network Infrastructure",
         "flex_direction": "row",
         "flex_gap": {
@@ -4194,7 +3977,7 @@
        },
        "elements": [
         {
-         "id": "0792398",
+         "id": "82283d1",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -4216,43 +3999,44 @@
          "elements": []
         },
         {
-         "id": "4efbc8d",
+         "id": "29e821a",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "78255d6",
+           "id": "1ba1621",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "Network Infrastructure",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "Network Infrastructure",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "0b21fba",
+           "id": "c74803e",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>Current equipment supported. Documentation in place.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -4269,7 +4053,7 @@
          ]
         },
         {
-         "id": "b410d93",
+         "id": "855c384",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -4300,7 +4084,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Good to Go",
           "header_size": "div",
           "__globals__": {
@@ -4313,7 +4097,7 @@
        ]
       },
       {
-       "id": "a5ac06d",
+       "id": "78255d6",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4343,6 +4127,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-yellow",
         "_title": "Communications and AI",
         "flex_direction": "row",
         "flex_gap": {
@@ -4357,7 +4144,7 @@
        },
        "elements": [
         {
-         "id": "fbb230b",
+         "id": "64ac5db",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -4379,43 +4166,44 @@
          "elements": []
         },
         {
-         "id": "9403560",
+         "id": "bb968a4",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "9d643c2",
+           "id": "5eda92d",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "Communications and AI",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "Communications and AI",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "97dae38",
+           "id": "7d5c8df",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>Phone system renewal in 90 days. No competitive review completed.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -4432,7 +4220,7 @@
          ]
         },
         {
-         "id": "64c2f2e",
+         "id": "0792398",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -4463,7 +4251,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Watch Closely",
           "header_size": "div",
           "__globals__": {
@@ -4476,7 +4264,7 @@
        ]
       },
       {
-       "id": "0326324",
+       "id": "9d643c2",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4506,6 +4294,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-red",
         "_title": "Security and Compliance",
         "flex_direction": "row",
         "flex_gap": {
@@ -4520,7 +4311,7 @@
        },
        "elements": [
         {
-         "id": "2b9c014",
+         "id": "0b21fba",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -4542,43 +4333,44 @@
          "elements": []
         },
         {
-         "id": "3a1890c",
+         "id": "d92a4aa",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "2b28fef",
+           "id": "4efbc8d",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "Security and Compliance",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "Security and Compliance",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "8092b4d",
+           "id": "b410d93",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>PCI responsibility not assigned. No incident response plan.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -4595,7 +4387,7 @@
          ]
         },
         {
-         "id": "fb695ff",
+         "id": "fbb230b",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -4626,7 +4418,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Take Action",
           "header_size": "div",
           "__globals__": {
@@ -4639,7 +4431,7 @@
        ]
       },
       {
-       "id": "8c5fe8f",
+       "id": "2b28fef",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4669,6 +4461,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-yellow",
         "_title": "Cloud, Data and Resiliency",
         "flex_direction": "row",
         "flex_gap": {
@@ -4683,7 +4478,7 @@
        },
        "elements": [
         {
-         "id": "c541013",
+         "id": "97dae38",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -4705,43 +4500,44 @@
          "elements": []
         },
         {
-         "id": "eb8ac8c",
+         "id": "a5ac06d",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "3313813",
+           "id": "9403560",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "Cloud, Data and Resiliency",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "Cloud, Data and Resiliency",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "8a245e6",
+           "id": "64c2f2e",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>Backups run. Recovery never tested.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -4758,7 +4554,7 @@
          ]
         },
         {
-         "id": "dc3bf36",
+         "id": "2b9c014",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -4789,7 +4585,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Watch Closely",
           "header_size": "div",
           "__globals__": {
@@ -4802,7 +4598,7 @@
        ]
       },
       {
-       "id": "d8f3341",
+       "id": "3313813",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4832,6 +4628,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-red",
         "_title": "POS and Merchant Services",
         "flex_direction": "row",
         "flex_gap": {
@@ -4846,7 +4645,7 @@
        },
        "elements": [
         {
-         "id": "3b6fe50",
+         "id": "8092b4d",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -4868,43 +4667,44 @@
          "elements": []
         },
         {
-         "id": "5804f92",
+         "id": "0326324",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "678a5aa",
+           "id": "3a1890c",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "POS and Merchant Services",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "POS and Merchant Services",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "83868a2",
+           "id": "fb695ff",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>Processing rate above market. Contract terms not on file.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -4921,7 +4721,7 @@
          ]
         },
         {
-         "id": "f3d4e71",
+         "id": "c541013",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -4952,7 +4752,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Take Action",
           "header_size": "div",
           "__globals__": {
@@ -4965,7 +4765,7 @@
        ]
       },
       {
-       "id": "a8c24d4",
+       "id": "678a5aa",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4995,6 +4795,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-green",
         "_title": "Business Operations Technology",
         "flex_direction": "row",
         "flex_gap": {
@@ -5009,7 +4812,7 @@
        },
        "elements": [
         {
-         "id": "93ea5c4",
+         "id": "8a245e6",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -5031,43 +4834,44 @@
          "elements": []
         },
         {
-         "id": "e8e5b46",
+         "id": "8c5fe8f",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "5a702cf",
+           "id": "eb8ac8c",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "Business Operations Technology",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "Business Operations Technology",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "7589a82",
+           "id": "dc3bf36",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>Help desk responsive. Vendor list current.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -5084,7 +4888,7 @@
          ]
         },
         {
-         "id": "44ef7fe",
+         "id": "3b6fe50",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -5115,7 +4919,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Good to Go",
           "header_size": "div",
           "__globals__": {
@@ -5128,7 +4932,7 @@
        ]
       },
       {
-       "id": "9be3cec",
+       "id": "5804f92",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -5156,12 +4960,12 @@
        },
        "elements": [
         {
-         "id": "8c497c6",
+         "id": "83868a2",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
          "settings": {
-          "editor": "<p>Illustrative examples only, not an assessment of your business.</p>",
+          "editor": "<p>Select a domain to see its finding. Illustrative examples only, not an assessment of your business.</p>",
           "paragraph_spacing": {
            "unit": "px",
            "size": 0,
@@ -5181,7 +4985,7 @@
    ]
   },
   {
-   "id": "0067dba",
+   "id": "8ded3c9",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -5231,7 +5035,7 @@
    },
    "elements": [
     {
-     "id": "5898900",
+     "id": "91eb79f",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -5264,7 +5068,7 @@
      },
      "elements": [
       {
-       "id": "f03edca",
+       "id": "9be3cec",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -5290,7 +5094,7 @@
        },
        "elements": [
         {
-         "id": "d20b5d5",
+         "id": "44ef7fe",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -5313,7 +5117,7 @@
          "elements": []
         },
         {
-         "id": "f463b33",
+         "id": "a8c24d4",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -5328,7 +5132,7 @@
          "elements": []
         },
         {
-         "id": "e2dcaa3",
+         "id": "8c497c6",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -5355,7 +5159,7 @@
          "elements": []
         },
         {
-         "id": "db61048",
+         "id": "e8e5b46",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -5404,7 +5208,7 @@
          },
          "elements": [
           {
-           "id": "0176274",
+           "id": "93ea5c4",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -5419,7 +5223,7 @@
            "elements": []
           },
           {
-           "id": "62397bc",
+           "id": "5a702cf",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
@@ -5446,7 +5250,7 @@
            "elements": []
           },
           {
-           "id": "c89da11",
+           "id": "7589a82",
            "elType": "widget",
            "widgetType": "button",
            "isInner": false,
@@ -5501,7 +5305,7 @@
        ]
       },
       {
-       "id": "6a17b9a",
+       "id": "5d5f576",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -5527,41 +5331,42 @@
        },
        "elements": [
         {
-         "id": "d037cdf",
+         "id": "7b297d0",
          "elType": "widget",
          "widgetType": "nested-accordion",
          "isInner": false,
          "settings": {
           "items": [
            {
-            "item_title": "01   Connectivity and WAN",
-            "_id": "bd91a1b"
+            "item_title": "Connectivity and WAN",
+            "_id": "f505928"
            },
            {
-            "item_title": "02   Network Infrastructure",
-            "_id": "8333321"
+            "item_title": "Network Infrastructure",
+            "_id": "bab9f87"
            },
            {
-            "item_title": "03   Communications and AI",
-            "_id": "cf23cae"
+            "item_title": "Communications and AI",
+            "_id": "0176274"
            },
            {
-            "item_title": "04   Security and Compliance",
-            "_id": "21167d8"
+            "item_title": "Security and Compliance",
+            "_id": "62397bc"
            },
            {
-            "item_title": "05   Cloud, Data and Resiliency",
-            "_id": "84c8199"
+            "item_title": "Cloud, Data and Resiliency",
+            "_id": "c89da11"
            },
            {
-            "item_title": "06   POS and Merchant Services",
-            "_id": "c703806"
+            "item_title": "POS and Merchant Services",
+            "_id": "db61048"
            },
            {
-            "item_title": "07   Business Operations Technology",
-            "_id": "8fb5262"
+            "item_title": "Business Operations Technology",
+            "_id": "d20b5d5"
            }
           ],
+          "_css_classes": "dg-acc dg-acc-num",
           "title_tag": "div",
           "default_state": "all_collapsed",
           "max_items_expended": "one",
@@ -5569,12 +5374,12 @@
           "accordion_item_title_position_horizontal": "stretch",
           "accordion_item_title_icon_position": "end",
           "accordion_item_title_icon": {
-           "value": "fas fa-plus",
-           "library": "fa-solid"
+           "value": "",
+           "library": ""
           },
           "accordion_item_title_icon_active": {
-           "value": "fas fa-minus",
-           "library": "fa-solid"
+           "value": "",
+           "library": ""
           },
           "accordion_item_title_space_between": {
            "unit": "px",
@@ -5663,7 +5468,7 @@
          },
          "elements": [
           {
-           "id": "6d14475",
+           "id": "e2dcaa3",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5677,11 +5482,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "349aae9",
+             "id": "f463b33",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5702,7 +5508,7 @@
            ]
           },
           {
-           "id": "0e5e18b",
+           "id": "bd91a1b",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5716,11 +5522,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "f320cd5",
+             "id": "f03edca",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5741,7 +5548,7 @@
            ]
           },
           {
-           "id": "deb8fc4",
+           "id": "cf23cae",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5755,11 +5562,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "7b297d0",
+             "id": "8333321",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5780,7 +5588,7 @@
            ]
           },
           {
-           "id": "91eb79f",
+           "id": "84c8199",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5794,11 +5602,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "5d5f576",
+             "id": "21167d8",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5819,7 +5628,7 @@
            ]
           },
           {
-           "id": "3328ad0",
+           "id": "8fb5262",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5833,11 +5642,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "8ded3c9",
+             "id": "c703806",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5858,7 +5668,7 @@
            ]
           },
           {
-           "id": "81355c5",
+           "id": "6d14475",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5872,11 +5682,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "f0e642f",
+             "id": "349aae9",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5897,7 +5708,7 @@
            ]
           },
           {
-           "id": "7c240d4",
+           "id": "0e5e18b",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5911,11 +5722,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "69d495d",
+             "id": "f320cd5",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5938,7 +5750,7 @@
          ]
         },
         {
-         "id": "5b56964",
+         "id": "deb8fc4",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -5971,7 +5783,7 @@
    ]
   },
   {
-   "id": "d77c96c",
+   "id": "dc6b13a",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -6021,7 +5833,7 @@
    },
    "elements": [
     {
-     "id": "d1020a1",
+     "id": "2d5db79",
      "elType": "widget",
      "widgetType": "heading",
      "isInner": false,
@@ -6044,7 +5856,7 @@
      "elements": []
     },
     {
-     "id": "ee52bdb",
+     "id": "8cfe5cd",
      "elType": "widget",
      "widgetType": "heading",
      "isInner": false,
@@ -6067,7 +5879,7 @@
      "elements": []
     },
     {
-     "id": "415af34",
+     "id": "959f3a5",
      "elType": "widget",
      "widgetType": "text-editor",
      "isInner": false,
@@ -6101,7 +5913,7 @@
      "elements": []
     },
     {
-     "id": "084f3dd",
+     "id": "2e47dc0",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -6135,7 +5947,7 @@
      },
      "elements": [
       {
-       "id": "d9ed17e",
+       "id": "a2a7ae1",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -6161,7 +5973,7 @@
        },
        "elements": [
         {
-         "id": "cc0e95e",
+         "id": "3ac7652",
          "elType": "widget",
          "widgetType": "image",
          "isInner": false,
@@ -6204,7 +6016,7 @@
        ]
       },
       {
-       "id": "8d103ed",
+       "id": "cdf8440",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -6230,7 +6042,7 @@
        },
        "elements": [
         {
-         "id": "54c56c9",
+         "id": "d037cdf",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -6266,7 +6078,7 @@
          },
          "elements": [
           {
-           "id": "8a449eb",
+           "id": "f0e642f",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -6300,7 +6112,7 @@
            },
            "elements": [
             {
-             "id": "89d9bf0",
+             "id": "3328ad0",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -6317,7 +6129,7 @@
            ]
           },
           {
-           "id": "9cc9af4",
+           "id": "7c240d4",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -6333,7 +6145,7 @@
            },
            "elements": [
             {
-             "id": "9f9d012",
+             "id": "81355c5",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -6356,7 +6168,7 @@
              "elements": []
             },
             {
-             "id": "c9546b4",
+             "id": "69d495d",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -6379,7 +6191,7 @@
          ]
         },
         {
-         "id": "a2a7ae1",
+         "id": "8a449eb",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -6415,7 +6227,7 @@
          },
          "elements": [
           {
-           "id": "99901c0",
+           "id": "6a17b9a",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -6449,7 +6261,7 @@
            },
            "elements": [
             {
-             "id": "75491bc",
+             "id": "5b56964",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -6466,7 +6278,7 @@
            ]
           },
           {
-           "id": "3ac7652",
+           "id": "89d9bf0",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -6482,7 +6294,7 @@
            },
            "elements": [
             {
-             "id": "07295e4",
+             "id": "5898900",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -6505,7 +6317,7 @@
              "elements": []
             },
             {
-             "id": "cdf8440",
+             "id": "0067dba",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -6528,7 +6340,7 @@
          ]
         },
         {
-         "id": "1773308",
+         "id": "99901c0",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -6564,7 +6376,7 @@
          },
          "elements": [
           {
-           "id": "8cfe5cd",
+           "id": "c9546b4",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -6598,7 +6410,7 @@
            },
            "elements": [
             {
-             "id": "2d5db79",
+             "id": "9f9d012",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -6615,7 +6427,7 @@
            ]
           },
           {
-           "id": "dc6b13a",
+           "id": "75491bc",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -6631,7 +6443,7 @@
            },
            "elements": [
             {
-             "id": "959f3a5",
+             "id": "9cc9af4",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -6654,7 +6466,7 @@
              "elements": []
             },
             {
-             "id": "2e47dc0",
+             "id": "54c56c9",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -6677,7 +6489,7 @@
          ]
         },
         {
-         "id": "cc667e9",
+         "id": "07295e4",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -6702,7 +6514,7 @@
    ]
   },
   {
-   "id": "2f429ce",
+   "id": "73f7ba8",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -6752,7 +6564,7 @@
    },
    "elements": [
     {
-     "id": "9ff3078",
+     "id": "0445d65",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -6786,7 +6598,7 @@
      },
      "elements": [
       {
-       "id": "cc1b0c3",
+       "id": "de3a5db",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -6813,7 +6625,7 @@
        },
        "elements": [
         {
-         "id": "1c07724",
+         "id": "154ed51",
          "elType": "widget",
          "widgetType": "image",
          "isInner": false,
@@ -6844,7 +6656,7 @@
        ]
       },
       {
-       "id": "44c5b47",
+       "id": "12093d2",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -6870,7 +6682,7 @@
        },
        "elements": [
         {
-         "id": "03ba33d",
+         "id": "415af34",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -6893,7 +6705,7 @@
          "elements": []
         },
         {
-         "id": "c10faa4",
+         "id": "084f3dd",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -6908,7 +6720,7 @@
          "elements": []
         },
         {
-         "id": "c16e228",
+         "id": "d77c96c",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -6935,7 +6747,7 @@
          "elements": []
         },
         {
-         "id": "47fc816",
+         "id": "f18dd1e",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -6958,7 +6770,7 @@
          "elements": []
         },
         {
-         "id": "3fe31d0",
+         "id": "ac512b0",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -6977,7 +6789,7 @@
          "elements": []
         },
         {
-         "id": "73f7ba8",
+         "id": "ee52bdb",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -7051,7 +6863,7 @@
          },
          "elements": [
           {
-           "id": "12093d2",
+           "id": "8d103ed",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -7067,7 +6879,7 @@
            },
            "elements": [
             {
-             "id": "f18dd1e",
+             "id": "1773308",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -7090,7 +6902,7 @@
              "elements": []
             },
             {
-             "id": "ac512b0",
+             "id": "cc667e9",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -7111,7 +6923,7 @@
            ]
           },
           {
-           "id": "0445d65",
+           "id": "d1020a1",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -7127,7 +6939,7 @@
            },
            "elements": [
             {
-             "id": "154ed51",
+             "id": "cc0e95e",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -7150,7 +6962,7 @@
              "elements": []
             },
             {
-             "id": "de3a5db",
+             "id": "d9ed17e",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -7179,7 +6991,7 @@
    ]
   },
   {
-   "id": "a604845",
+   "id": "3879399",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -7230,7 +7042,7 @@
    },
    "elements": [
     {
-     "id": "f9c08fe",
+     "id": "2904ace",
      "elType": "widget",
      "widgetType": "heading",
      "isInner": false,
@@ -7253,7 +7065,7 @@
      "elements": []
     },
     {
-     "id": "a17a434",
+     "id": "721754e",
      "elType": "widget",
      "widgetType": "heading",
      "isInner": false,
@@ -7276,7 +7088,7 @@
      "elements": []
     },
     {
-     "id": "cc3d550",
+     "id": "b46108c",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -7325,7 +7137,7 @@
      },
      "elements": [
       {
-       "id": "a5f09e6",
+       "id": "4a5012d",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -7380,7 +7192,7 @@
        },
        "elements": [
         {
-         "id": "28dd37e",
+         "id": "3fe31d0",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -7403,7 +7215,7 @@
          "elements": []
         },
         {
-         "id": "a81aa40",
+         "id": "2f429ce",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -7421,7 +7233,7 @@
          },
          "elements": [
           {
-           "id": "4155d7e",
+           "id": "44c5b47",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -7436,7 +7248,7 @@
            "elements": []
           },
           {
-           "id": "2b0b8c1",
+           "id": "9ff3078",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -7457,7 +7269,7 @@
            },
            "elements": [
             {
-             "id": "870266c",
+             "id": "1c07724",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -7473,7 +7285,7 @@
              "elements": []
             },
             {
-             "id": "f3b37f3",
+             "id": "cc1b0c3",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -7505,7 +7317,7 @@
          ]
         },
         {
-         "id": "45ddb87",
+         "id": "582c18c",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -7539,7 +7351,7 @@
          },
          "elements": [
           {
-           "id": "2adf559",
+           "id": "47fc816",
            "elType": "widget",
            "widgetType": "icon-list",
            "isInner": false,
@@ -7551,7 +7363,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "582c18c"
+              "_id": "03ba33d"
              },
              {
               "text": "High-level opportunity identification",
@@ -7559,7 +7371,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "4a5012d"
+              "_id": "c10faa4"
              },
              {
               "text": "Executive scorecard showing what needs attention and where to focus first",
@@ -7567,14 +7379,10 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "11cbc28"
+              "_id": "c16e228"
              }
             ],
-            "space_between": {
-             "unit": "px",
-             "size": 12,
-             "sizes": []
-            },
+            "_css_classes": "dg-tier-list",
             "icon_size": {
              "unit": "px",
              "size": 5,
@@ -7604,7 +7412,7 @@
        ]
       },
       {
-       "id": "6bc1538",
+       "id": "7467537",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -7659,7 +7467,7 @@
        },
        "elements": [
         {
-         "id": "7f1a355",
+         "id": "f3b37f3",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -7682,7 +7490,7 @@
          "elements": []
         },
         {
-         "id": "62f5680",
+         "id": "b62ac1f",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -7700,7 +7508,7 @@
          },
          "elements": [
           {
-           "id": "79490ea",
+           "id": "2b0b8c1",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -7715,7 +7523,7 @@
            "elements": []
           },
           {
-           "id": "4fdf8e1",
+           "id": "a5f09e6",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -7736,7 +7544,7 @@
            },
            "elements": [
             {
-             "id": "1d3b993",
+             "id": "a81aa40",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -7752,7 +7560,7 @@
              "elements": []
             },
             {
-             "id": "060cea6",
+             "id": "45ddb87",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -7784,7 +7592,7 @@
          ]
         },
         {
-         "id": "57e54ac",
+         "id": "4b63e0e",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -7818,7 +7626,7 @@
          },
          "elements": [
           {
-           "id": "526eb52",
+           "id": "870266c",
            "elType": "widget",
            "widgetType": "icon-list",
            "isInner": false,
@@ -7830,7 +7638,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "b62ac1f"
+              "_id": "11cbc28"
              },
              {
               "text": "Supplier review and contract discussion",
@@ -7838,7 +7646,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "4b63e0e"
+              "_id": "2adf559"
              },
              {
               "text": "Strategic decision support",
@@ -7846,7 +7654,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "7467537"
+              "_id": "28dd37e"
              },
              {
               "text": "Recommended 4-hour minimum",
@@ -7854,14 +7662,10 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "b3df44a"
+              "_id": "4155d7e"
              }
             ],
-            "space_between": {
-             "unit": "px",
-             "size": 12,
-             "sizes": []
-            },
+            "_css_classes": "dg-tier-list",
             "icon_size": {
              "unit": "px",
              "size": 5,
@@ -7891,7 +7695,7 @@
        ]
       },
       {
-       "id": "6e80fa4",
+       "id": "4227de2",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -7946,7 +7750,7 @@
        },
        "elements": [
         {
-         "id": "e65a814",
+         "id": "060cea6",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -7969,7 +7773,7 @@
          "elements": []
         },
         {
-         "id": "f72f2bb",
+         "id": "cbd3f5e",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -7987,7 +7791,7 @@
          },
          "elements": [
           {
-           "id": "baeb41a",
+           "id": "4fdf8e1",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -8002,7 +7806,7 @@
            "elements": []
           },
           {
-           "id": "3586fca",
+           "id": "6bc1538",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -8023,7 +7827,7 @@
            },
            "elements": [
             {
-             "id": "8296f5e",
+             "id": "62f5680",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -8039,7 +7843,7 @@
              "elements": []
             },
             {
-             "id": "fa0b851",
+             "id": "57e54ac",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -8071,7 +7875,7 @@
          ]
         },
         {
-         "id": "9b0bca1",
+         "id": "3023580",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -8105,7 +7909,7 @@
          },
          "elements": [
           {
-           "id": "40e2a20",
+           "id": "1d3b993",
            "elType": "widget",
            "widgetType": "icon-list",
            "isInner": false,
@@ -8117,7 +7921,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "cbd3f5e"
+              "_id": "b3df44a"
              },
              {
               "text": "Current, Aging, and Future-Ready lifecycle classification",
@@ -8125,7 +7929,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "3023580"
+              "_id": "526eb52"
              },
              {
               "text": "Good, Better, Best recommendations",
@@ -8133,7 +7937,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "4227de2"
+              "_id": "7f1a355"
              },
              {
               "text": "90-day executive roadmap",
@@ -8141,14 +7945,10 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "1bd7ce7"
+              "_id": "79490ea"
              }
             ],
-            "space_between": {
-             "unit": "px",
-             "size": 12,
-             "sizes": []
-            },
+            "_css_classes": "dg-tier-list",
             "icon_size": {
              "unit": "px",
              "size": 5,
@@ -8178,7 +7978,7 @@
        ]
       },
       {
-       "id": "b46108c",
+       "id": "055455e",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -8233,7 +8033,7 @@
        },
        "elements": [
         {
-         "id": "65b675c",
+         "id": "fa0b851",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -8256,7 +8056,7 @@
          "elements": []
         },
         {
-         "id": "2904ace",
+         "id": "d12982e",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -8274,7 +8074,7 @@
          },
          "elements": [
           {
-           "id": "257e845",
+           "id": "3586fca",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -8289,7 +8089,7 @@
            "elements": []
           },
           {
-           "id": "f5bb918",
+           "id": "6e80fa4",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -8310,7 +8110,7 @@
            },
            "elements": [
             {
-             "id": "090b20b",
+             "id": "f72f2bb",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -8326,7 +8126,7 @@
              "elements": []
             },
             {
-             "id": "b80599e",
+             "id": "9b0bca1",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -8358,7 +8158,7 @@
          ]
         },
         {
-         "id": "721754e",
+         "id": "f9bddea",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -8392,7 +8192,7 @@
          },
          "elements": [
           {
-           "id": "0492c4f",
+           "id": "8296f5e",
            "elType": "widget",
            "widgetType": "icon-list",
            "isInner": false,
@@ -8404,7 +8204,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "d12982e"
+              "_id": "1bd7ce7"
              },
              {
               "text": "Lifecycle management and recurring review",
@@ -8412,7 +8212,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "f9bddea"
+              "_id": "40e2a20"
              },
              {
               "text": "Executive guidance",
@@ -8420,7 +8220,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "055455e"
+              "_id": "e65a814"
              },
              {
               "text": "Infrastructure accountability",
@@ -8428,14 +8228,10 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "39b21c9"
+              "_id": "baeb41a"
              }
             ],
-            "space_between": {
-             "unit": "px",
-             "size": 12,
-             "sizes": []
-            },
+            "_css_classes": "dg-tier-list",
             "icon_size": {
              "unit": "px",
              "size": 5,
@@ -8467,7 +8263,7 @@
      ]
     },
     {
-     "id": "b1eedaf",
+     "id": "819d7ca",
      "elType": "widget",
      "widgetType": "text-editor",
      "isInner": false,
@@ -8494,7 +8290,7 @@
      "elements": []
     },
     {
-     "id": "843fdda",
+     "id": "ad9cedd",
      "elType": "widget",
      "widgetType": "text-editor",
      "isInner": false,
@@ -8521,7 +8317,7 @@
      "elements": []
     },
     {
-     "id": "fa1b1bf",
+     "id": "f5bb918",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -8586,7 +8382,7 @@
      },
      "elements": [
       {
-       "id": "6d39eb4",
+       "id": "65b675c",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -8602,7 +8398,7 @@
        },
        "elements": [
         {
-         "id": "819d7ca",
+         "id": "39b21c9",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -8617,7 +8413,7 @@
          "elements": []
         },
         {
-         "id": "ad9cedd",
+         "id": "0492c4f",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -8638,7 +8434,7 @@
        ]
       },
       {
-       "id": "3879399",
+       "id": "b80599e",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -8654,7 +8450,7 @@
        },
        "elements": [
         {
-         "id": "8b7199c",
+         "id": "257e845",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -8669,7 +8465,7 @@
          "elements": []
         },
         {
-         "id": "d50e009",
+         "id": "090b20b",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -8692,7 +8488,7 @@
      ]
     },
     {
-     "id": "861e02e",
+     "id": "d50e009",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -8720,7 +8516,7 @@
      },
      "elements": [
       {
-       "id": "736a947",
+       "id": "6d39eb4",
        "elType": "widget",
        "widgetType": "text-editor",
        "isInner": false,
@@ -8739,7 +8535,7 @@
        "elements": []
       },
       {
-       "id": "39235bc",
+       "id": "8b7199c",
        "elType": "widget",
        "widgetType": "button",
        "isInner": false,
@@ -8786,7 +8582,7 @@
    ]
   },
   {
-   "id": "4f73fd9",
+   "id": "4c71709",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -8836,7 +8632,7 @@
    },
    "elements": [
     {
-     "id": "1391f9b",
+     "id": "bcc99ae",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -8869,7 +8665,7 @@
      },
      "elements": [
       {
-       "id": "acc66a5",
+       "id": "a17a434",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -8895,7 +8691,7 @@
        },
        "elements": [
         {
-         "id": "07dbf92",
+         "id": "fa1b1bf",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -8918,7 +8714,7 @@
          "elements": []
         },
         {
-         "id": "6518093",
+         "id": "f9c08fe",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -8935,7 +8731,7 @@
        ]
       },
       {
-       "id": "dbc799b",
+       "id": "0f0c8a8",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -8961,7 +8757,7 @@
        },
        "elements": [
         {
-         "id": "121b280",
+         "id": "6d21f4c",
          "elType": "widget",
          "widgetType": "nested-accordion",
          "isInner": false,
@@ -8969,25 +8765,26 @@
           "items": [
            {
             "item_title": "What happens in the first conversation?",
-            "_id": "936aa40"
+            "_id": "cc3d550"
            },
            {
             "item_title": "What will leadership receive?",
-            "_id": "cdaaac4"
+            "_id": "b1eedaf"
            },
            {
             "item_title": "Is discovery a paid engagement?",
-            "_id": "523d2a5"
+            "_id": "843fdda"
            },
            {
             "item_title": "Can we begin with one company?",
-            "_id": "a8ea37f"
+            "_id": "736a947"
            },
            {
             "item_title": "How is our information protected?",
-            "_id": "a185cc8"
+            "_id": "39235bc"
            }
           ],
+          "_css_classes": "dg-acc",
           "title_tag": "div",
           "default_state": "all_collapsed",
           "max_items_expended": "one",
@@ -8995,12 +8792,12 @@
           "accordion_item_title_position_horizontal": "stretch",
           "accordion_item_title_icon_position": "end",
           "accordion_item_title_icon": {
-           "value": "fas fa-plus",
-           "library": "fa-solid"
+           "value": "",
+           "library": ""
           },
           "accordion_item_title_icon_active": {
-           "value": "fas fa-minus",
-           "library": "fa-solid"
+           "value": "",
+           "library": ""
           },
           "accordion_item_title_space_between": {
            "unit": "px",
@@ -9089,7 +8886,7 @@
          },
          "elements": [
           {
-           "id": "0f0c8a8",
+           "id": "a604845",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9103,11 +8900,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "6d21f4c",
+             "id": "861e02e",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9128,7 +8926,7 @@
            ]
           },
           {
-           "id": "4c71709",
+           "id": "6518093",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9142,11 +8940,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "bcc99ae",
+             "id": "07dbf92",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9167,7 +8966,7 @@
            ]
           },
           {
-           "id": "f7c882f",
+           "id": "936aa40",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9181,11 +8980,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "202cc82",
+             "id": "acc66a5",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9206,7 +9006,7 @@
            ]
           },
           {
-           "id": "e023033",
+           "id": "523d2a5",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9220,11 +9020,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "364e433",
+             "id": "cdaaac4",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9245,7 +9046,7 @@
            ]
           },
           {
-           "id": "4e6f5a9",
+           "id": "a185cc8",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9259,11 +9060,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "0c250a0",
+             "id": "a8ea37f",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9292,7 +9094,7 @@
    ]
   },
   {
-   "id": "0994940",
+   "id": "75fa6dd",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -9343,7 +9145,7 @@
    },
    "elements": [
     {
-     "id": "82458cc",
+     "id": "91fde85",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -9376,7 +9178,7 @@
      },
      "elements": [
       {
-       "id": "f652d00",
+       "id": "409a8a7",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -9402,7 +9204,7 @@
        },
        "elements": [
         {
-         "id": "2880479",
+         "id": "0c250a0",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -9425,11 +9227,12 @@
          "elements": []
         },
         {
-         "id": "6a8a43e",
+         "id": "4e6f5a9",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
          "settings": {
+          "_css_classes": "dg-request-title",
           "title": "Let’s make your<br>next decision clearer.",
           "header_size": "h2",
           "__globals__": {
@@ -9440,7 +9243,7 @@
          "elements": []
         },
         {
-         "id": "909ff49",
+         "id": "121b280",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -9467,7 +9270,7 @@
          "elements": []
         },
         {
-         "id": "37b4000",
+         "id": "909ff49",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -9491,7 +9294,7 @@
          },
          "elements": [
           {
-           "id": "022bc32",
+           "id": "4f73fd9",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9508,7 +9311,7 @@
            },
            "elements": [
             {
-             "id": "409a8a7",
+             "id": "dbc799b",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -9530,7 +9333,7 @@
              "elements": []
             },
             {
-             "id": "2161502",
+             "id": "1391f9b",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9551,7 +9354,7 @@
            ]
           },
           {
-           "id": "d9bc1d9",
+           "id": "4c41d9c",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9568,7 +9371,7 @@
            },
            "elements": [
             {
-             "id": "8f8b2b8",
+             "id": "eacc110",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -9590,7 +9393,7 @@
              "elements": []
             },
             {
-             "id": "e0f3a7e",
+             "id": "f07534f",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9611,7 +9414,7 @@
            ]
           },
           {
-           "id": "d1c51f8",
+           "id": "6a8a43e",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9628,7 +9431,7 @@
            },
            "elements": [
             {
-             "id": "09b4e5d",
+             "id": "be6c6fe",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -9650,7 +9453,7 @@
              "elements": []
             },
             {
-             "id": "973082d",
+             "id": "2880479",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9673,7 +9476,7 @@
          ]
         },
         {
-         "id": "be6c6fe",
+         "id": "e023033",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -9716,7 +9519,7 @@
          },
          "elements": [
           {
-           "id": "eacc110",
+           "id": "202cc82",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -9731,7 +9534,7 @@
            "elements": []
           },
           {
-           "id": "f07534f",
+           "id": "f7c882f",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -9760,7 +9563,7 @@
            "elements": []
           },
           {
-           "id": "4c41d9c",
+           "id": "364e433",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -9793,7 +9596,7 @@
        ]
       },
       {
-       "id": "9f7a7da",
+       "id": "e69bae2",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -9866,7 +9669,7 @@
        },
        "elements": [
         {
-         "id": "e69bae2",
+         "id": "2161502",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -9881,7 +9684,7 @@
          "elements": []
         },
         {
-         "id": "91fde85",
+         "id": "022bc32",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -9908,7 +9711,7 @@
          "elements": []
         },
         {
-         "id": "c7af362",
+         "id": "f652d00",
          "elType": "widget",
          "widgetType": "form",
          "isInner": false,
@@ -9923,7 +9726,7 @@
             "required": "true",
             "width": "50",
             "width_mobile": "100",
-            "_id": "75fa6dd"
+            "_id": "8f8b2b8"
            },
            {
             "custom_id": "firm_name",
@@ -9933,7 +9736,7 @@
             "required": "true",
             "width": "50",
             "width_mobile": "100",
-            "_id": "2be88b4"
+            "_id": "e0f3a7e"
            },
            {
             "custom_id": "role",
@@ -9943,7 +9746,7 @@
             "required": "true",
             "width": "50",
             "width_mobile": "100",
-            "_id": "d3f21dc"
+            "_id": "d9bc1d9"
            },
            {
             "custom_id": "companies_or_locations",
@@ -9953,7 +9756,7 @@
             "required": "true",
             "width": "50",
             "width_mobile": "100",
-            "_id": "de26e65"
+            "_id": "09b4e5d"
            },
            {
             "custom_id": "email",
@@ -9963,7 +9766,7 @@
             "required": "true",
             "width": "50",
             "width_mobile": "100",
-            "_id": "deb0e06"
+            "_id": "973082d"
            },
            {
             "custom_id": "phone",
@@ -9973,9 +9776,18 @@
             "required": "true",
             "width": "50",
             "width_mobile": "100",
-            "_id": "f949556"
+            "_id": "d1c51f8"
+           },
+           {
+            "custom_id": "privacy_note",
+            "field_type": "html",
+            "field_label": "",
+            "field_html": "Your information is used only to schedule your discovery conversation. It is never sold or shared.",
+            "width": "100",
+            "_id": "37b4000"
            }
           ],
+          "_css_classes": "dg-form",
           "input_size": "sm",
           "show_labels": "yes",
           "mark_required": "",
@@ -10016,6 +9828,8 @@
            "left": "6",
            "isLinked": true
           },
+          "field_background_color": "#FAFBFA",
+          "field_border_color": "#D3DCDC",
           "button_border_radius": {
            "unit": "px",
            "top": "7",
@@ -10029,8 +9843,6 @@
            "label_typography_typography": "globals/typography?id=dgemph",
            "field_text_color": "globals/colors?id=dgink",
            "field_typography_typography": "globals/typography?id=dgsmall",
-           "field_border_color": "globals/colors?id=dgline",
-           "field_background_color": "globals/colors?id=dgwhite",
            "button_background_color": "globals/colors?id=dgnavy",
            "button_text_color": "globals/colors?id=dgwhite",
            "button_background_hover_color": "globals/colors?id=dgnavyhv",
@@ -10039,313 +9851,8 @@
           }
          },
          "elements": []
-        },
-        {
-         "id": "b43adc4",
-         "elType": "widget",
-         "widgetType": "text-editor",
-         "isInner": false,
-         "settings": {
-          "_margin": {
-           "unit": "px",
-           "top": "14",
-           "right": "0",
-           "bottom": "0",
-           "left": "0",
-           "isLinked": false
-          },
-          "editor": "<p>Your information is used only to schedule your discovery conversation. It is never sold or shared.</p>",
-          "paragraph_spacing": {
-           "unit": "px",
-           "size": 0,
-           "sizes": []
-          },
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgxs",
-           "text_color": "globals/colors?id=dgmuted"
-          }
-         },
-         "elements": []
         }
        ]
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "976699c",
-   "elType": "container",
-   "isInner": false,
-   "settings": {
-    "_title": "Footer",
-    "content_width": "boxed",
-    "boxed_width": {
-     "unit": "px",
-     "size": 1220,
-     "sizes": []
-    },
-    "flex_direction": "column",
-    "flex_gap": {
-     "column": "0",
-     "row": "0",
-     "isLinked": true,
-     "unit": "px",
-     "size": 0
-    },
-    "padding": {
-     "unit": "px",
-     "top": "44",
-     "right": "40",
-     "bottom": "44",
-     "left": "40",
-     "isLinked": false
-    },
-    "padding_tablet": {
-     "unit": "px",
-     "top": "44",
-     "right": "24",
-     "bottom": "44",
-     "left": "24",
-     "isLinked": false
-    },
-    "padding_mobile": {
-     "unit": "px",
-     "top": "44",
-     "right": "18",
-     "bottom": "44",
-     "left": "18",
-     "isLinked": false
-    },
-    "background_background": "classic",
-    "__globals__": {
-     "background_color": "globals/colors?id=dgdeep"
-    }
-   },
-   "elements": [
-    {
-     "id": "6ed5d1b",
-     "elType": "container",
-     "isInner": true,
-     "settings": {
-      "flex_direction": "row",
-      "flex_gap": {
-       "column": "40",
-       "row": "40",
-       "isLinked": true,
-       "unit": "px",
-       "size": 40
-      },
-      "flex_align_items": "flex-start",
-      "flex_justify_content": "space-between",
-      "flex_direction_mobile": "column",
-      "flex_align_items_mobile": "stretch",
-      "content_width": "full"
-     },
-     "elements": [
-      {
-       "id": "1959b9e",
-       "elType": "container",
-       "isInner": true,
-       "settings": {
-        "flex_direction": "column",
-        "flex_gap": {
-         "column": "0",
-         "row": "0",
-         "isLinked": true,
-         "unit": "px",
-         "size": 0
-        },
-        "content_width": "full"
-       },
-       "elements": [
-        {
-         "id": "60c290d",
-         "elType": "widget",
-         "widgetType": "heading",
-         "isInner": false,
-         "settings": {
-          "title": "TheDIGF<span style=\"color:#DFBD7A\">.com</span>",
-          "header_size": "div",
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgbrand",
-           "title_color": "globals/colors?id=dgwhite"
-          },
-          "link": {
-           "url": "#main",
-           "is_external": "",
-           "nofollow": "",
-           "custom_attributes": ""
-          }
-         },
-         "elements": []
-        },
-        {
-         "id": "334de73",
-         "elType": "widget",
-         "widgetType": "text-editor",
-         "isInner": false,
-         "settings": {
-          "_margin": {
-           "unit": "px",
-           "top": "14",
-           "right": "0",
-           "bottom": "0",
-           "left": "0",
-           "isLinked": false
-          },
-          "editor": "<p>TeleTech Solutions™ | The Digital Infrastructure Governance Firm</p>",
-          "paragraph_spacing": {
-           "unit": "px",
-           "size": 0,
-           "sizes": []
-          },
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgxs",
-           "text_color": "globals/colors?id=dgondark"
-          }
-         },
-         "elements": []
-        },
-        {
-         "id": "58d0767",
-         "elType": "widget",
-         "widgetType": "text-editor",
-         "isInner": false,
-         "settings": {
-          "_margin": {
-           "unit": "px",
-           "top": "6",
-           "right": "0",
-           "bottom": "0",
-           "left": "0",
-           "isLinked": false
-          },
-          "editor": "<p>We navigate the complex architecture and make it simple.</p>",
-          "paragraph_spacing": {
-           "unit": "px",
-           "size": 0,
-           "sizes": []
-          },
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgxs",
-           "text_color": "globals/colors?id=dgondark"
-          }
-         },
-         "elements": []
-        }
-       ]
-      },
-      {
-       "id": "34accd7",
-       "elType": "widget",
-       "widgetType": "text-editor",
-       "isInner": false,
-       "settings": {
-        "align": "right",
-        "align_mobile": "left",
-        "__globals__": {
-         "typography_typography": "globals/typography?id=dgxs",
-         "text_color": "globals/colors?id=dgondark",
-         "link_color": "globals/colors?id=dgondark",
-         "link_hover_color": "globals/colors?id=dggoldlt"
-        },
-        "editor": "<p>5 Cowboys Way, Suite 300<br>Frisco, Texas 75034<br><a href=\"tel:+19452628477\">945.262.8477</a><br><a href=\"mailto:Reggie@TeleTechTX.com\">Reggie@TeleTechTX.com</a><br><a href=\"https://www.linkedin.com/in/reggie-hilliard/\" target=\"_blank\" rel=\"noopener noreferrer\">LinkedIn</a></p>",
-        "paragraph_spacing": {
-         "unit": "px",
-         "size": 0,
-         "sizes": []
-        }
-       },
-       "elements": []
-      }
-     ]
-    },
-    {
-     "id": "e585552",
-     "elType": "container",
-     "isInner": true,
-     "settings": {
-      "margin": {
-       "unit": "px",
-       "top": "30",
-       "right": "0",
-       "bottom": "0",
-       "left": "0",
-       "isLinked": false
-      },
-      "padding": {
-       "unit": "px",
-       "top": "20",
-       "right": "0",
-       "bottom": "0",
-       "left": "0",
-       "isLinked": false
-      },
-      "border_border": "solid",
-      "border_width": {
-       "unit": "px",
-       "top": "1",
-       "right": "0",
-       "bottom": "0",
-       "left": "0",
-       "isLinked": false
-      },
-      "border_color": "rgba(255,255,255,0.125)",
-      "flex_direction": "row",
-      "flex_gap": {
-       "column": "20",
-       "row": "20",
-       "isLinked": true,
-       "unit": "px",
-       "size": 20
-      },
-      "flex_align_items": "center",
-      "flex_justify_content": "space-between",
-      "flex_direction_mobile": "column",
-      "flex_align_items_mobile": "stretch",
-      "content_width": "full"
-     },
-     "elements": [
-      {
-       "id": "92c9357",
-       "elType": "widget",
-       "widgetType": "text-editor",
-       "isInner": false,
-       "settings": {
-        "__globals__": {
-         "typography_typography": "globals/typography?id=dgxs",
-         "text_color": "globals/colors?id=dgondark",
-         "link_color": "globals/colors?id=dgondark",
-         "link_hover_color": "globals/colors?id=dggoldlt"
-        },
-        "editor": "<p>© 2026 TeleTech Solutions™ · <a href=\"/privacy/\">Privacy</a></p>",
-        "paragraph_spacing": {
-         "unit": "px",
-         "size": 0,
-         "sizes": []
-        }
-       },
-       "elements": []
-      },
-      {
-       "id": "ac954ab",
-       "elType": "widget",
-       "widgetType": "text-editor",
-       "isInner": false,
-       "settings": {
-        "editor": "<p>One advisor. Every stage. Every location.</p>",
-        "paragraph_spacing": {
-         "unit": "px",
-         "size": 0,
-         "sizes": []
-        },
-        "__globals__": {
-         "typography_typography": "globals/typography?id=dgxs",
-         "text_color": "globals/colors?id=dgondark"
-        }
-       },
-       "elements": []
       }
      ]
     }
@@ -10353,7 +9860,7 @@
   }
  ],
  "page_settings": {
-  "template": "elementor_canvas",
+  "template": "elementor_header_footer",
   "hide_title": "yes"
  },
  "version": "0.4",

@@ -172,7 +172,7 @@
   }
  ],
  "page_settings": {
-  "template": "elementor_canvas",
+  "template": "elementor_header_footer",
   "hide_title": "yes"
  },
  "version": "0.4",

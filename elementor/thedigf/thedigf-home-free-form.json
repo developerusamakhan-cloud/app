@@ -1,298 +1,7 @@
 {
  "content": [
   {
-   "id": "bc68877",
-   "elType": "container",
-   "isInner": false,
-   "settings": {
-    "border_border": "solid",
-    "border_width": {
-     "unit": "px",
-     "top": "0",
-     "right": "0",
-     "bottom": "1",
-     "left": "0",
-     "isLinked": false
-    },
-    "border_color": "rgba(255,255,255,0.07)",
-    "_title": "Header",
-    "content_width": "boxed",
-    "boxed_width": {
-     "unit": "px",
-     "size": 1220,
-     "sizes": []
-    },
-    "flex_direction": "column",
-    "flex_gap": {
-     "column": "0",
-     "row": "0",
-     "isLinked": true,
-     "unit": "px",
-     "size": 0
-    },
-    "padding": {
-     "unit": "px",
-     "top": "0",
-     "right": "40",
-     "bottom": "0",
-     "left": "40",
-     "isLinked": false
-    },
-    "padding_tablet": {
-     "unit": "px",
-     "top": "0",
-     "right": "24",
-     "bottom": "0",
-     "left": "24",
-     "isLinked": false
-    },
-    "padding_mobile": {
-     "unit": "px",
-     "top": "0",
-     "right": "18",
-     "bottom": "0",
-     "left": "18",
-     "isLinked": false
-    },
-    "background_background": "classic",
-    "__globals__": {
-     "background_color": "globals/colors?id=dgnight"
-    },
-    "_element_id": "main"
-   },
-   "elements": [
-    {
-     "id": "2b49104",
-     "elType": "container",
-     "isInner": true,
-     "settings": {
-      "min_height": {
-       "unit": "px",
-       "size": 82,
-       "sizes": []
-      },
-      "min_height_mobile": {
-       "unit": "px",
-       "size": 68,
-       "sizes": []
-      },
-      "flex_direction": "row",
-      "flex_gap": {
-       "column": "25",
-       "row": "25",
-       "isLinked": true,
-       "unit": "px",
-       "size": 25
-      },
-      "flex_align_items": "center",
-      "flex_justify_content": "space-between",
-      "content_width": "full"
-     },
-     "elements": [
-      {
-       "id": "f2a4d27",
-       "elType": "container",
-       "isInner": true,
-       "settings": {
-        "width": {
-         "unit": "px",
-         "size": 260,
-         "sizes": []
-        },
-        "width_mobile": {
-         "unit": "%",
-         "size": 100,
-         "sizes": []
-        },
-        "flex_direction": "column",
-        "flex_gap": {
-         "column": "4",
-         "row": "4",
-         "isLinked": true,
-         "unit": "px",
-         "size": 4
-        },
-        "content_width": "full"
-       },
-       "elements": [
-        {
-         "id": "f4bea97",
-         "elType": "widget",
-         "widgetType": "heading",
-         "isInner": false,
-         "settings": {
-          "title": "TheDIGF<span style=\"color:#DFBD7A\">.com</span>",
-          "header_size": "div",
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgbrand",
-           "title_color": "globals/colors?id=dgwhite"
-          },
-          "link": {
-           "url": "#main",
-           "is_external": "",
-           "nofollow": "",
-           "custom_attributes": ""
-          }
-         },
-         "elements": []
-        },
-        {
-         "id": "dcf4bb9",
-         "elType": "widget",
-         "widgetType": "heading",
-         "isInner": false,
-         "settings": {
-          "title": "TeleTech Solutions™",
-          "header_size": "div",
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgeyebrow",
-           "title_color": "globals/colors?id=dgondark"
-          }
-         },
-         "elements": []
-        }
-       ]
-      },
-      {
-       "id": "d5e3412",
-       "elType": "container",
-       "isInner": true,
-       "settings": {
-        "width": {
-         "unit": "%",
-         "size": 70,
-         "sizes": []
-        },
-        "flex_direction": "row",
-        "flex_gap": {
-         "column": "26",
-         "row": "26",
-         "isLinked": true,
-         "unit": "px",
-         "size": 26
-        },
-        "flex_align_items": "center",
-        "flex_justify_content": "flex-end",
-        "content_width": "full"
-       },
-       "elements": [
-        {
-         "id": "15ba2bd",
-         "elType": "widget",
-         "widgetType": "icon-list",
-         "isInner": false,
-         "settings": {
-          "view": "inline",
-          "icon_list": [
-           {
-            "text": "Our approach",
-            "selected_icon": {
-             "value": "",
-             "library": "fa-solid"
-            },
-            "link": {
-             "url": "#approach",
-             "is_external": "",
-             "nofollow": "",
-             "custom_attributes": ""
-            },
-            "_id": "d95bafc"
-           },
-           {
-            "text": "The scorecard",
-            "selected_icon": {
-             "value": "",
-             "library": "fa-solid"
-            },
-            "link": {
-             "url": "#scorecard",
-             "is_external": "",
-             "nofollow": "",
-             "custom_attributes": ""
-            },
-            "_id": "0e7a269"
-           },
-           {
-            "text": "Engagements",
-            "selected_icon": {
-             "value": "",
-             "library": "fa-solid"
-            },
-            "link": {
-             "url": "#engagement",
-             "is_external": "",
-             "nofollow": "",
-             "custom_attributes": ""
-            },
-            "_id": "177219d"
-           }
-          ],
-          "space_between": {
-           "unit": "px",
-           "size": 26,
-           "sizes": []
-          },
-          "hide_mobile": "hidden-mobile",
-          "__globals__": {
-           "icon_typography_typography": "globals/typography?id=dgemph",
-           "text_color": "globals/colors?id=dgondark",
-           "text_color_hover": "globals/colors?id=dggoldlt"
-          }
-         },
-         "elements": []
-        },
-        {
-         "id": "5c6e433",
-         "elType": "widget",
-         "widgetType": "button",
-         "isInner": false,
-         "settings": {
-          "hide_mobile": "hidden-mobile",
-          "text": "Request Complimentary Discovery",
-          "link": {
-           "url": "#discovery",
-           "is_external": "",
-           "nofollow": "",
-           "custom_attributes": ""
-          },
-          "border_radius": {
-           "unit": "px",
-           "top": "7",
-           "right": "7",
-           "bottom": "7",
-           "left": "7",
-           "isLinked": true
-          },
-          "text_padding": {
-           "unit": "px",
-           "top": "17",
-           "right": "20",
-           "bottom": "17",
-           "left": "20",
-           "isLinked": false
-          },
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgbutton",
-           "background_color": "globals/colors?id=dggoldlt",
-           "button_text_color": "globals/colors?id=dgnavy",
-           "button_background_hover_color": "globals/colors?id=dggoldhv",
-           "hover_color": "globals/colors?id=dgnavy"
-          },
-          "background_background": "classic",
-          "button_background_hover_background": "classic",
-          "hover_animation": "float",
-          "align_mobile": "justify"
-         },
-         "elements": []
-        }
-       ]
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "0932562",
+   "id": "feac7eb",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -347,7 +56,7 @@
    },
    "elements": [
     {
-     "id": "b91751d",
+     "id": "3653f8d",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -383,7 +92,7 @@
      },
      "elements": [
       {
-       "id": "94c9c95",
+       "id": "2b49104",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -410,7 +119,7 @@
        },
        "elements": [
         {
-         "id": "cf1822f",
+         "id": "f4bea97",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -433,7 +142,7 @@
          "elements": []
         },
         {
-         "id": "ab73738",
+         "id": "dcf4bb9",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -448,7 +157,7 @@
          "elements": []
         },
         {
-         "id": "da94e3e",
+         "id": "f2a4d27",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -475,7 +184,7 @@
          "elements": []
         },
         {
-         "id": "4ee207f",
+         "id": "d95bafc",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -502,7 +211,7 @@
          "elements": []
         },
         {
-         "id": "4067c35",
+         "id": "0e7a269",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -529,7 +238,7 @@
          "elements": []
         },
         {
-         "id": "9b575bd",
+         "id": "5c6e433",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -558,7 +267,7 @@
          },
          "elements": [
           {
-           "id": "9b1f282",
+           "id": "177219d",
            "elType": "widget",
            "widgetType": "button",
            "isInner": false,
@@ -601,7 +310,7 @@
            "elements": []
           },
           {
-           "id": "3653f8d",
+           "id": "15ba2bd",
            "elType": "widget",
            "widgetType": "button",
            "isInner": false,
@@ -654,7 +363,7 @@
          ]
         },
         {
-         "id": "0925e47",
+         "id": "d5e3412",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -683,7 +392,7 @@
        ]
       },
       {
-       "id": "cdbd47d",
+       "id": "9b1f282",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -710,7 +419,7 @@
        },
        "elements": [
         {
-         "id": "64be804",
+         "id": "4067c35",
          "elType": "widget",
          "widgetType": "image",
          "isInner": false,
@@ -747,7 +456,7 @@
          "elements": []
         },
         {
-         "id": "a372db8",
+         "id": "4ee207f",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -827,7 +536,7 @@
          },
          "elements": [
           {
-           "id": "ffed923",
+           "id": "ab73738",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -843,7 +552,7 @@
            },
            "elements": [
             {
-             "id": "ae66267",
+             "id": "bc68877",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -866,7 +575,7 @@
              "elements": []
             },
             {
-             "id": "288bc78",
+             "id": "cf1822f",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -883,7 +592,7 @@
            ]
           },
           {
-           "id": "6e405d9",
+           "id": "da94e3e",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
@@ -908,7 +617,7 @@
      ]
     },
     {
-     "id": "44ab6cc",
+     "id": "cdbd47d",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -974,7 +683,7 @@
      },
      "elements": [
       {
-       "id": "82523e8",
+       "id": "94c9c95",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -991,7 +700,7 @@
        },
        "elements": [
         {
-         "id": "dc38f51",
+         "id": "9b575bd",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1006,7 +715,7 @@
          "elements": []
         },
         {
-         "id": "feac7eb",
+         "id": "0925e47",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1027,7 +736,7 @@
        ]
       },
       {
-       "id": "8b4f2fc",
+       "id": "ffed923",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1044,7 +753,7 @@
        },
        "elements": [
         {
-         "id": "f30b94f",
+         "id": "ae66267",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1059,7 +768,7 @@
          "elements": []
         },
         {
-         "id": "5f3f57e",
+         "id": "288bc78",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1080,7 +789,7 @@
        ]
       },
       {
-       "id": "80877b6",
+       "id": "64be804",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1097,7 +806,7 @@
        },
        "elements": [
         {
-         "id": "ef8acd1",
+         "id": "6e405d9",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1112,7 +821,7 @@
          "elements": []
         },
         {
-         "id": "71e1f6d",
+         "id": "a372db8",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1135,7 +844,7 @@
      ]
     },
     {
-     "id": "e6b58de",
+     "id": "b91751d",
      "elType": "widget",
      "widgetType": "html",
      "isInner": false,
@@ -1145,11 +854,23 @@
       "html": "<script>\n/* Ambient hero motion (optional). Delete this HTML widget to remove the animation. */\n(function(){var s=document.currentScript,hero=s&&s.closest('.dg-hero');if(!hero||hero.querySelector('canvas.dg-hero-motion'))return;\nvar c=document.createElement('canvas');c.className='dg-hero-motion';c.setAttribute('aria-hidden','true');\nc.style.cssText='position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.55';\nhero.style.isolation='isolate';hero.prepend(c);var x=c.getContext('2d');if(!x)return;\nvar rm=matchMedia('(prefers-reduced-motion: reduce)'),w=0,h=0,f=0,v=true,t=0,l=0;\nfunction rs(){var r=hero.getBoundingClientRect();w=r.width;h=r.height;var p=Math.min(devicePixelRatio||1,1.5);c.width=Math.round(w*p);c.height=Math.round(h*p);x.setTransform(p,0,0,p,0,0);d()}\nfunction d(){x.clearRect(0,0,w,h);for(var i=0;i<7;i++){var y=h*(.16+i*.115);x.beginPath();for(var X=-20;X<=w+20;X+=20){var Y=y+Math.sin(X/330+t*.16+i*.8)*24+Math.cos(X/620-t*.1+i)*16;X===-20?x.moveTo(X,Y):x.lineTo(X,Y)}x.strokeStyle=i%3===0?'rgba(224,188,121,.13)':'rgba(168,207,232,.1)';x.lineWidth=1;x.stroke()}\nfor(var j=0;j<9;j++){var px=((j*.137+t*.006)%1)*w,py=h*(.2+(j%5)*.135)+Math.sin(t*.2+j)*13;x.beginPath();x.arc(px,py,1.5,0,Math.PI*2);x.fillStyle='rgba(224,188,121,.3)';x.fill()}}\nfunction tk(n){f=0;if(!v||document.hidden||rm.matches){l=0;return}if(l)t+=Math.min((n-l)/1000,.05);l=n;d();f=requestAnimationFrame(tk)}\nfunction sy(){if(f)cancelAnimationFrame(f);f=0;l=0;if(v&&!document.hidden&&!rm.matches)f=requestAnimationFrame(tk);else d()}\nnew ResizeObserver(rs).observe(hero);new IntersectionObserver(function(e){v=e[0].isIntersecting;sy()}).observe(hero);\ndocument.addEventListener('visibilitychange',sy);rs();sy()})();\n</script>"
      },
      "elements": []
+    },
+    {
+     "id": "dc38f51",
+     "elType": "widget",
+     "widgetType": "html",
+     "isInner": false,
+     "settings": {
+      "_position": "absolute",
+      "_title": "Page styles & scripts (keep)",
+      "html": "<style>\n/* Lifecycle tabs: equal-width tabs with a small \"01 / OWNERSHIP\" label above each title */\n.elementor .dg-tabs .e-n-tabs{counter-reset:dgtab}\n.elementor .dg-tabs .e-n-tab-title{flex:1 1 0;counter-increment:dgtab;justify-content:flex-start;text-align:left;line-height:1.4}\n.elementor .dg-tabs .e-n-tab-title-text{display:block}\n.elementor .dg-tabs .e-n-tab-title-text::before{content:counter(dgtab,decimal-leading-zero) \" / OWNERSHIP\";display:block;font-size:.61rem;font-weight:500;letter-spacing:.08em;margin-bottom:7px;color:#97743D}\n.elementor .dg-tabs .e-n-tab-title[aria-selected=\"true\"] .e-n-tab-title-text::before{color:#D5AE65}\n/* Accordions: no box around the answer, rule above the first item, 16px titles, gold index numbers */\n.elementor .dg-acc .e-n-accordion-item>.e-con{border:0!important}\n.elementor .dg-acc .e-n-accordion-item:first-child>.e-n-accordion-item-title{border-top:1px solid #D9DFDF}\n.elementor .dg-acc .e-n-accordion-item-title-text{font-size:1rem!important;font-weight:500!important}\n.elementor .dg-acc-num .e-n-accordion{counter-reset:dgacc}\n.elementor .dg-acc-num .e-n-accordion-item{counter-increment:dgacc}\n.elementor .dg-acc-num .e-n-accordion-item-title-text::before{content:counter(dgacc,decimal-leading-zero);display:inline-block;min-width:32px;font-size:.73rem;font-weight:400;letter-spacing:.04em;color:#94723B}\n/* Scorecard: filter bar, collapsible rows, status pills */\n.elementor .dg-filters{display:flex;gap:8px;flex-wrap:wrap;background:#F5F7F7;padding:18px 30px;border-bottom:1px solid #D9DFDF}\n.elementor .dg-filters .dg-filter{background:#fff;border:1px solid #D9DFDF;border-radius:6px;font-family:inherit;font-size:.78rem;font-weight:400;line-height:1.3;padding:9px 13px;color:#5D6E78;cursor:pointer;box-shadow:none;transform:none}\n.elementor .dg-filters .dg-filter:hover{background:#fff;color:#142E40;border-color:#C6AA7B}\n.elementor .dg-filters .dg-filter[aria-pressed=\"true\"]{background:#102E43;color:#fff;border-color:#102E43}\n.elementor .dg-score-row{cursor:pointer;transition:background-color .2s}\n.elementor .dg-score-row:hover,.elementor .dg-score-row.is-open{background-color:#F7F8F5!important}\n.elementor .dg-score-row .dg-finding{display:none}\n.elementor .dg-score-row.is-open .dg-finding,.elementor-editor-active .dg-score-row .dg-finding{display:block}\n.elementor .dg-score-row.is-hidden{display:none!important}\n.elementor .dg-pill{flex:0 0 auto!important;width:auto!important;white-space:nowrap}\n/* Pricing bullets in two columns */\n.elementor .dg-tier-list .elementor-icon-list-items{display:grid!important;grid-template-columns:1fr 1fr;gap:13px 20px}\n.elementor .dg-tier-list .elementor-icon-list-item{margin:0!important;padding:0!important}\n/* Discovery section: smaller title, compact form fields */\n.elementor .dg-request-title .elementor-heading-title{font-size:clamp(2rem,2.6vw,2.5rem)!important;line-height:1.16!important}\n.elementor .dg-form .elementor-field-textual{min-height:42px;padding:8px 12px;font-size:.9rem}\n.elementor .dg-form .elementor-field-type-html{font-size:.73rem;line-height:1.6;color:#5D6E78;padding-top:6px}\n/* Reading progress bar and mobile sticky CTA */\n.dg-progress{position:fixed;top:0;left:0;height:3px;width:0;background:#D5AE65;z-index:99999;pointer-events:none}\n.dg-sticky-cta{display:none}\n@media(max-width:767px){\n .elementor .dg-tier-list .elementor-icon-list-items{grid-template-columns:1fr}\n .elementor .dg-filters{padding:15px;gap:6px}\n .elementor .dg-filters .dg-filter{font-size:.68rem;padding:8px 10px}\n .elementor .dg-request-title .elementor-heading-title{font-size:2.3rem!important}\n .dg-sticky-cta.show{display:block;position:fixed;left:0;right:0;bottom:0;z-index:999;padding:10px 13px;background:rgba(247,245,239,.96);backdrop-filter:blur(10px);border-top:1px solid #D9DFDF}\n .dg-sticky-cta a{display:flex;align-items:center;justify-content:center;height:48px;border-radius:7px;background:#102E43;color:#fff!important;font:600 13px/1 Inter,sans-serif;text-decoration:none}\n}\n@media(max-width:400px){.elementor .dg-pill{display:none}}\n</style>\n<script>\n(function(){if(window.dgPageInit)return;window.dgPageInit=true;\nfunction init(){\n var rows=[].slice.call(document.querySelectorAll('.dg-score-row'));\n rows.forEach(function(r){r.setAttribute('role','button');r.setAttribute('tabindex','0');r.setAttribute('aria-expanded','false');\n  function t(){var o=!r.classList.contains('is-open');r.classList.toggle('is-open',o);r.setAttribute('aria-expanded',String(o))}\n  r.addEventListener('click',t);r.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();t()}})});\n var fs=[].slice.call(document.querySelectorAll('.dg-filter'));\n fs.forEach(function(f){f.addEventListener('click',function(){var v=f.getAttribute('data-filter');\n  fs.forEach(function(b){b.setAttribute('aria-pressed',String(b===f))});\n  rows.forEach(function(r){r.classList.toggle('is-hidden',v!=='all'&&!r.classList.contains('dg-status-'+v))})})});\n if(document.body.classList.contains('elementor-editor-active'))return;\n var bar=document.createElement('div');bar.className='dg-progress';bar.setAttribute('aria-hidden','true');document.body.appendChild(bar);\n var cta=document.createElement('div');cta.className='dg-sticky-cta';cta.innerHTML='<a href=\"#discovery\">Request Complimentary Discovery</a>';document.body.appendChild(cta);\n var hero=document.querySelector('.dg-hero'),req=document.getElementById('discovery'),q=false;\n function u(){var m=document.documentElement.scrollHeight-innerHeight;bar.style.width=(m>0?scrollY/m*100:0)+'%';\n  cta.classList.toggle('show',!!hero&&!!req&&hero.getBoundingClientRect().bottom<0&&req.getBoundingClientRect().top>innerHeight*.8);q=false}\n addEventListener('scroll',function(){if(!q){q=true;requestAnimationFrame(u)}},{passive:true});addEventListener('resize',u);u()}\nif(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();\n</script>"
+     },
+     "elements": []
     }
    ]
   },
   {
-   "id": "533c913",
+   "id": "e44c505",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -1199,7 +920,7 @@
    },
    "elements": [
     {
-     "id": "3b08c6e",
+     "id": "e8624fa",
      "elType": "widget",
      "widgetType": "heading",
      "isInner": false,
@@ -1222,7 +943,7 @@
      "elements": []
     },
     {
-     "id": "061b903",
+     "id": "6148a86",
      "elType": "widget",
      "widgetType": "heading",
      "isInner": false,
@@ -1245,7 +966,7 @@
      "elements": []
     },
     {
-     "id": "2d3d854",
+     "id": "6c71c4a",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -1293,7 +1014,7 @@
      },
      "elements": [
       {
-       "id": "770348a",
+       "id": "8b4f2fc",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1348,7 +1069,7 @@
        },
        "elements": [
         {
-         "id": "defc044",
+         "id": "82523e8",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1379,7 +1100,7 @@
          "elements": []
         },
         {
-         "id": "0706a04",
+         "id": "f30b94f",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1394,7 +1115,7 @@
          "elements": []
         },
         {
-         "id": "5d300cb",
+         "id": "5f3f57e",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1423,7 +1144,7 @@
        ]
       },
       {
-       "id": "6148a86",
+       "id": "44ab6cc",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1478,7 +1199,7 @@
        },
        "elements": [
         {
-         "id": "ee8d7ee",
+         "id": "ef8acd1",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1509,7 +1230,7 @@
          "elements": []
         },
         {
-         "id": "5186ee3",
+         "id": "71e1f6d",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1524,7 +1245,7 @@
          "elements": []
         },
         {
-         "id": "e8624fa",
+         "id": "80877b6",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1553,7 +1274,7 @@
        ]
       },
       {
-       "id": "8697bbd",
+       "id": "0706a04",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1608,7 +1329,7 @@
        },
        "elements": [
         {
-         "id": "6c71c4a",
+         "id": "e6b58de",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1639,7 +1360,7 @@
          "elements": []
         },
         {
-         "id": "e44c505",
+         "id": "0932562",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1654,7 +1375,7 @@
          "elements": []
         },
         {
-         "id": "e2520e3",
+         "id": "defc044",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1683,7 +1404,7 @@
        ]
       },
       {
-       "id": "3c72957",
+       "id": "5186ee3",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1738,7 +1459,7 @@
        },
        "elements": [
         {
-         "id": "2a1be9c",
+         "id": "5d300cb",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1769,7 +1490,7 @@
          "elements": []
         },
         {
-         "id": "8f7d9b7",
+         "id": "770348a",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1784,7 +1505,7 @@
          "elements": []
         },
         {
-         "id": "2d6c797",
+         "id": "ee8d7ee",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1817,7 +1538,7 @@
    ]
   },
   {
-   "id": "f63f23d",
+   "id": "e816856",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -1868,7 +1589,7 @@
    },
    "elements": [
     {
-     "id": "dbe53fc",
+     "id": "867e5e1",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -1901,7 +1622,7 @@
      },
      "elements": [
       {
-       "id": "97eeab6",
+       "id": "72154e7",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -1927,7 +1648,7 @@
        },
        "elements": [
         {
-         "id": "e89204e",
+         "id": "8f54f8c",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1950,7 +1671,7 @@
          "elements": []
         },
         {
-         "id": "c34c769",
+         "id": "2e8d4b8",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -1965,7 +1686,7 @@
          "elements": []
         },
         {
-         "id": "5d3fd98",
+         "id": "fec3f6b",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -1992,7 +1713,7 @@
          "elements": []
         },
         {
-         "id": "ca2ce6b",
+         "id": "e4c11ab",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -2021,7 +1742,7 @@
        ]
       },
       {
-       "id": "fb2147d",
+       "id": "bc01bfc",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -2047,7 +1768,7 @@
        },
        "elements": [
         {
-         "id": "5a91c89",
+         "id": "cbf8754",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -2070,7 +1791,7 @@
          "elements": []
         },
         {
-         "id": "5ca495f",
+         "id": "6a27e0d",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -2117,7 +1838,7 @@
          },
          "elements": [
           {
-           "id": "829a48d",
+           "id": "2a1be9c",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -2172,7 +1893,7 @@
            },
            "elements": [
             {
-             "id": "2c70501",
+             "id": "e2520e3",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -2195,7 +1916,7 @@
              "elements": []
             },
             {
-             "id": "22fe99a",
+             "id": "8697bbd",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -2216,7 +1937,7 @@
            ]
           },
           {
-           "id": "ffa9b9f",
+           "id": "3c72957",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -2271,7 +1992,7 @@
            },
            "elements": [
             {
-             "id": "829e07b",
+             "id": "8f7d9b7",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -2294,7 +2015,7 @@
              "elements": []
             },
             {
-             "id": "5c14bc4",
+             "id": "2d6c797",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -2315,7 +2036,7 @@
            ]
           },
           {
-           "id": "8f54f8c",
+           "id": "2d3d854",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -2370,7 +2091,7 @@
            },
            "elements": [
             {
-             "id": "83844b4",
+             "id": "3b08c6e",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -2393,7 +2114,7 @@
              "elements": []
             },
             {
-             "id": "acaab39",
+             "id": "061b903",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -2414,7 +2135,7 @@
            ]
           },
           {
-           "id": "e4c11ab",
+           "id": "22fe99a",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -2469,7 +2190,7 @@
            },
            "elements": [
             {
-             "id": "2e8d4b8",
+             "id": "533c913",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -2492,7 +2213,7 @@
              "elements": []
             },
             {
-             "id": "fec3f6b",
+             "id": "2c70501",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -2513,7 +2234,7 @@
            ]
           },
           {
-           "id": "6a27e0d",
+           "id": "5c14bc4",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -2568,7 +2289,7 @@
            },
            "elements": [
             {
-             "id": "72154e7",
+             "id": "829a48d",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -2591,7 +2312,7 @@
              "elements": []
             },
             {
-             "id": "cbf8754",
+             "id": "829e07b",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -2612,7 +2333,7 @@
            ]
           },
           {
-           "id": "e816856",
+           "id": "acaab39",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -2667,7 +2388,7 @@
            },
            "elements": [
             {
-             "id": "bc01bfc",
+             "id": "ffa9b9f",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -2690,7 +2411,7 @@
              "elements": []
             },
             {
-             "id": "867e5e1",
+             "id": "83844b4",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -2719,7 +2440,7 @@
    ]
   },
   {
-   "id": "7c9260d",
+   "id": "5a9ac6d",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -2769,7 +2490,7 @@
    },
    "elements": [
     {
-     "id": "665d743",
+     "id": "97eeab6",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -2797,7 +2518,7 @@
      },
      "elements": [
       {
-       "id": "f4767f2",
+       "id": "5d3fd98",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -2813,7 +2534,7 @@
        },
        "elements": [
         {
-         "id": "721dea3",
+         "id": "e89204e",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -2836,7 +2557,7 @@
          "elements": []
         },
         {
-         "id": "294365b",
+         "id": "c34c769",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -2853,7 +2574,7 @@
        ]
       },
       {
-       "id": "c106693",
+       "id": "ca2ce6b",
        "elType": "widget",
        "widgetType": "text-editor",
        "isInner": false,
@@ -2881,7 +2602,7 @@
      ]
     },
     {
-     "id": "eb9ac68",
+     "id": "80371eb",
      "elType": "widget",
      "widgetType": "nested-tabs",
      "isInner": false,
@@ -2889,21 +2610,22 @@
       "tabs": [
        {
         "tab_title": "Before Acquisition",
-        "_id": "b714210"
+        "_id": "5a91c89"
        },
        {
         "tab_title": "First 100 Days",
-        "_id": "bd143fa"
+        "_id": "5ca495f"
        },
        {
         "tab_title": "Hold Period",
-        "_id": "761ebfd"
+        "_id": "fb2147d"
        },
        {
         "tab_title": "Before Exit or Capital Raise",
-        "_id": "a7a83ee"
+        "_id": "dbe53fc"
        }
       ],
+      "_css_classes": "dg-tabs",
       "tabs_direction": "block-start",
       "tabs_justify_horizontal": "stretch",
       "title_alignment": "start",
@@ -2983,14 +2705,6 @@
        "left": "13",
        "isLinked": true
       },
-      "box_padding": {
-       "unit": "px",
-       "top": "35",
-       "right": "35",
-       "bottom": "35",
-       "left": "35",
-       "isLinked": true
-      },
       "__globals__": {
        "title_typography_typography": "globals/typography?id=dgemph",
        "title_text_color": "globals/colors?id=dgmuted",
@@ -3007,7 +2721,7 @@
      },
      "elements": [
       {
-       "id": "ecc1cb6",
+       "id": "f4767f2",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3032,22 +2746,35 @@
         },
         "padding": {
          "unit": "px",
-         "top": "0",
-         "right": "0",
-         "bottom": "0",
-         "left": "0",
+         "top": "35",
+         "right": "35",
+         "bottom": "35",
+         "left": "35",
+         "isLinked": true
+        },
+        "padding_mobile": {
+         "unit": "px",
+         "top": "24",
+         "right": "24",
+         "bottom": "24",
+         "left": "24",
          "isLinked": true
         },
         "min_height": {
          "unit": "px",
-         "size": 90,
+         "size": 160,
+         "sizes": []
+        },
+        "min_height_mobile": {
+         "unit": "px",
+         "size": 0,
          "sizes": []
         },
         "content_width": "full"
        },
        "elements": [
         {
-         "id": "7d718d7",
+         "id": "721dea3",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -3063,32 +2790,17 @@
           },
           "flex_direction": "column",
           "flex_gap": {
-           "column": "10",
-           "row": "10",
+           "column": "0",
+           "row": "0",
            "isLinked": true,
            "unit": "px",
-           "size": 10
+           "size": 0
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "87c5647",
-           "elType": "widget",
-           "widgetType": "heading",
-           "isInner": false,
-           "settings": {
-            "title": "01 / Ownership",
-            "header_size": "div",
-            "__globals__": {
-             "typography_typography": "globals/typography?id=dgeyebrow",
-             "title_color": "globals/colors?id=dggolddk"
-            }
-           },
-           "elements": []
-          },
-          {
-           "id": "3ff98ff",
+           "id": "f63f23d",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -3105,7 +2817,7 @@
          ]
         },
         {
-         "id": "47733e8",
+         "id": "294365b",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -3126,7 +2838,7 @@
        ]
       },
       {
-       "id": "cbd4d3e",
+       "id": "bd143fa",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3151,22 +2863,35 @@
         },
         "padding": {
          "unit": "px",
-         "top": "0",
-         "right": "0",
-         "bottom": "0",
-         "left": "0",
+         "top": "35",
+         "right": "35",
+         "bottom": "35",
+         "left": "35",
+         "isLinked": true
+        },
+        "padding_mobile": {
+         "unit": "px",
+         "top": "24",
+         "right": "24",
+         "bottom": "24",
+         "left": "24",
          "isLinked": true
         },
         "min_height": {
          "unit": "px",
-         "size": 90,
+         "size": 160,
+         "sizes": []
+        },
+        "min_height_mobile": {
+         "unit": "px",
+         "size": 0,
          "sizes": []
         },
         "content_width": "full"
        },
        "elements": [
         {
-         "id": "83f0be4",
+         "id": "665d743",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -3182,32 +2907,17 @@
           },
           "flex_direction": "column",
           "flex_gap": {
-           "column": "10",
-           "row": "10",
+           "column": "0",
+           "row": "0",
            "isLinked": true,
            "unit": "px",
-           "size": 10
+           "size": 0
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "7f81375",
-           "elType": "widget",
-           "widgetType": "heading",
-           "isInner": false,
-           "settings": {
-            "title": "02 / Ownership",
-            "header_size": "div",
-            "__globals__": {
-             "typography_typography": "globals/typography?id=dgeyebrow",
-             "title_color": "globals/colors?id=dggolddk"
-            }
-           },
-           "elements": []
-          },
-          {
-           "id": "80371eb",
+           "id": "c106693",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -3224,7 +2934,7 @@
          ]
         },
         {
-         "id": "d4dec9e",
+         "id": "b714210",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -3245,7 +2955,7 @@
        ]
       },
       {
-       "id": "e652c71",
+       "id": "3ff98ff",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3270,22 +2980,35 @@
         },
         "padding": {
          "unit": "px",
-         "top": "0",
-         "right": "0",
-         "bottom": "0",
-         "left": "0",
+         "top": "35",
+         "right": "35",
+         "bottom": "35",
+         "left": "35",
+         "isLinked": true
+        },
+        "padding_mobile": {
+         "unit": "px",
+         "top": "24",
+         "right": "24",
+         "bottom": "24",
+         "left": "24",
          "isLinked": true
         },
         "min_height": {
          "unit": "px",
-         "size": 90,
+         "size": 160,
+         "sizes": []
+        },
+        "min_height_mobile": {
+         "unit": "px",
+         "size": 0,
          "sizes": []
         },
         "content_width": "full"
        },
        "elements": [
         {
-         "id": "e202849",
+         "id": "a7a83ee",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -3301,32 +3024,17 @@
           },
           "flex_direction": "column",
           "flex_gap": {
-           "column": "10",
-           "row": "10",
+           "column": "0",
+           "row": "0",
            "isLinked": true,
            "unit": "px",
-           "size": 10
+           "size": 0
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "5a9ac6d",
-           "elType": "widget",
-           "widgetType": "heading",
-           "isInner": false,
-           "settings": {
-            "title": "03 / Ownership",
-            "header_size": "div",
-            "__globals__": {
-             "typography_typography": "globals/typography?id=dgeyebrow",
-             "title_color": "globals/colors?id=dggolddk"
-            }
-           },
-           "elements": []
-          },
-          {
-           "id": "a9643a2",
+           "id": "761ebfd",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -3343,7 +3051,7 @@
          ]
         },
         {
-         "id": "74667bf",
+         "id": "87c5647",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -3364,7 +3072,7 @@
        ]
       },
       {
-       "id": "b9d39cc",
+       "id": "7f81375",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3389,22 +3097,35 @@
         },
         "padding": {
          "unit": "px",
-         "top": "0",
-         "right": "0",
-         "bottom": "0",
-         "left": "0",
+         "top": "35",
+         "right": "35",
+         "bottom": "35",
+         "left": "35",
+         "isLinked": true
+        },
+        "padding_mobile": {
+         "unit": "px",
+         "top": "24",
+         "right": "24",
+         "bottom": "24",
+         "left": "24",
          "isLinked": true
         },
         "min_height": {
          "unit": "px",
-         "size": 90,
+         "size": 160,
+         "sizes": []
+        },
+        "min_height_mobile": {
+         "unit": "px",
+         "size": 0,
          "sizes": []
         },
         "content_width": "full"
        },
        "elements": [
         {
-         "id": "59cc60b",
+         "id": "47733e8",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -3420,32 +3141,17 @@
           },
           "flex_direction": "column",
           "flex_gap": {
-           "column": "10",
-           "row": "10",
+           "column": "0",
+           "row": "0",
            "isLinked": true,
            "unit": "px",
-           "size": 10
+           "size": 0
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "e73695c",
-           "elType": "widget",
-           "widgetType": "heading",
-           "isInner": false,
-           "settings": {
-            "title": "04 / Ownership",
-            "header_size": "div",
-            "__globals__": {
-             "typography_typography": "globals/typography?id=dgeyebrow",
-             "title_color": "globals/colors?id=dggolddk"
-            }
-           },
-           "elements": []
-          },
-          {
-           "id": "7604e4b",
+           "id": "7d718d7",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -3462,7 +3168,7 @@
          ]
         },
         {
-         "id": "91551e8",
+         "id": "ecc1cb6",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -3485,7 +3191,7 @@
      ]
     },
     {
-     "id": "74e088a",
+     "id": "cbd4d3e",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -3506,7 +3212,7 @@
      },
      "elements": [
       {
-       "id": "8ebdbfe",
+       "id": "83f0be4",
        "elType": "widget",
        "widgetType": "text-editor",
        "isInner": false,
@@ -3525,7 +3231,7 @@
        "elements": []
       },
       {
-       "id": "b9492f2",
+       "id": "d4dec9e",
        "elType": "widget",
        "widgetType": "button",
        "isInner": false,
@@ -3572,7 +3278,7 @@
    ]
   },
   {
-   "id": "aeb6db2",
+   "id": "ff3fe32",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -3623,7 +3329,7 @@
    },
    "elements": [
     {
-     "id": "2a838af",
+     "id": "8ebdbfe",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -3650,7 +3356,7 @@
      },
      "elements": [
       {
-       "id": "531d646",
+       "id": "59cc60b",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3676,7 +3382,7 @@
        },
        "elements": [
         {
-         "id": "38c89b3",
+         "id": "e73695c",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -3699,7 +3405,7 @@
          "elements": []
         },
         {
-         "id": "f0caeef",
+         "id": "7604e4b",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -3716,7 +3422,7 @@
        ]
       },
       {
-       "id": "d5c44a4",
+       "id": "eb9ac68",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3742,7 +3448,7 @@
        },
        "elements": [
         {
-         "id": "d08f1bb",
+         "id": "91551e8",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -3761,12 +3467,11 @@
          "elements": []
         },
         {
-         "id": "a8acb51",
-         "elType": "widget",
-         "widgetType": "text-editor",
-         "isInner": false,
+         "id": "e652c71",
+         "elType": "container",
+         "isInner": true,
          "settings": {
-          "_margin": {
+          "margin": {
            "unit": "px",
            "top": "22",
            "right": "0",
@@ -3774,21 +3479,81 @@
            "left": "0",
            "isLinked": false
           },
-          "editor": "<p><span style=\"color:#30896F;font-size:11px;margin-right:8px\">&#9679;</span><strong>Green · Good to Go</strong> — Operating well. No immediate action.<br><span style=\"color:#C99735;font-size:11px;margin-right:8px\">&#9679;</span><strong>Yellow · Watch Closely</strong> — Monitor and plan ahead.<br><span style=\"color:#BC5C5E;font-size:11px;margin-right:8px\">&#9679;</span><strong>Red · Take Action</strong> — High risk or cost leakage. Needs attention.</p>",
-          "paragraph_spacing": {
+          "_title": "Legend",
+          "flex_direction": "row",
+          "flex_gap": {
+           "column": "20",
+           "row": "20",
+           "isLinked": true,
            "unit": "px",
-           "size": 0,
-           "sizes": []
+           "size": 20
           },
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgxs",
-           "text_color": "globals/colors?id=dgmuted"
-          }
+          "flex_align_items": "flex-start",
+          "flex_wrap": "wrap",
+          "content_width": "full"
          },
-         "elements": []
+         "elements": [
+          {
+           "id": "a9643a2",
+           "elType": "widget",
+           "widgetType": "text-editor",
+           "isInner": false,
+           "settings": {
+            "editor": "<p><span style=\"color:#30896F;font-size:11px;margin-right:8px\">&#9679;</span><strong style=\"color:#142E40\">Green · Good to Go</strong><br><span style=\"padding-left:19px;display:inline-block\">Operating well. No immediate action.</span></p>",
+            "paragraph_spacing": {
+             "unit": "px",
+             "size": 0,
+             "sizes": []
+            },
+            "__globals__": {
+             "typography_typography": "globals/typography?id=dgxs",
+             "text_color": "globals/colors?id=dgmuted"
+            }
+           },
+           "elements": []
+          },
+          {
+           "id": "e202849",
+           "elType": "widget",
+           "widgetType": "text-editor",
+           "isInner": false,
+           "settings": {
+            "editor": "<p><span style=\"color:#C99735;font-size:11px;margin-right:8px\">&#9679;</span><strong style=\"color:#142E40\">Yellow · Watch Closely</strong><br><span style=\"padding-left:19px;display:inline-block\">Monitor and plan ahead.</span></p>",
+            "paragraph_spacing": {
+             "unit": "px",
+             "size": 0,
+             "sizes": []
+            },
+            "__globals__": {
+             "typography_typography": "globals/typography?id=dgxs",
+             "text_color": "globals/colors?id=dgmuted"
+            }
+           },
+           "elements": []
+          },
+          {
+           "id": "74667bf",
+           "elType": "widget",
+           "widgetType": "text-editor",
+           "isInner": false,
+           "settings": {
+            "editor": "<p><span style=\"color:#BC5C5E;font-size:11px;margin-right:8px\">&#9679;</span><strong style=\"color:#142E40\">Red · Take Action</strong><br><span style=\"padding-left:19px;display:inline-block\">High risk or cost leakage. Needs attention.</span></p>",
+            "paragraph_spacing": {
+             "unit": "px",
+             "size": 0,
+             "sizes": []
+            },
+            "__globals__": {
+             "typography_typography": "globals/typography?id=dgxs",
+             "text_color": "globals/colors?id=dgmuted"
+            }
+           },
+           "elements": []
+          }
+         ]
         },
         {
-         "id": "b317206",
+         "id": "b9d39cc",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -3819,7 +3584,7 @@
      ]
     },
     {
-     "id": "3a038a7",
+     "id": "30ffc4e",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -3875,7 +3640,7 @@
      },
      "elements": [
       {
-       "id": "c5e2486",
+       "id": "38c89b3",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -3914,7 +3679,7 @@
        },
        "elements": [
         {
-         "id": "9dc8db4",
+         "id": "7c9260d",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -3930,7 +3695,7 @@
          },
          "elements": [
           {
-           "id": "e06f291",
+           "id": "b9492f2",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -3945,7 +3710,7 @@
            "elements": []
           },
           {
-           "id": "e86ec9c",
+           "id": "74e088a",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -3970,7 +3735,7 @@
          ]
         },
         {
-         "id": "44a4a8f",
+         "id": "a8acb51",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -3987,7 +3752,18 @@
        ]
       },
       {
-       "id": "cc9c3ad",
+       "id": "f0caeef",
+       "elType": "widget",
+       "widgetType": "html",
+       "isInner": false,
+       "settings": {
+        "_title": "Scorecard filters",
+        "html": "<div class=\"dg-filters\" aria-label=\"Filter sample findings\"><button type=\"button\" class=\"dg-filter\" data-filter=\"all\" aria-pressed=\"true\">All domains</button><button type=\"button\" class=\"dg-filter\" data-filter=\"red\" aria-pressed=\"false\">Take action</button><button type=\"button\" class=\"dg-filter\" data-filter=\"yellow\" aria-pressed=\"false\">Watch closely</button><button type=\"button\" class=\"dg-filter\" data-filter=\"green\" aria-pressed=\"false\">Good to go</button></div>"
+       },
+       "elements": []
+      },
+      {
+       "id": "e06f291",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4017,6 +3793,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-yellow",
         "_title": "Connectivity and WAN",
         "flex_direction": "row",
         "flex_gap": {
@@ -4031,7 +3810,7 @@
        },
        "elements": [
         {
-         "id": "e9500ec",
+         "id": "531d646",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -4053,43 +3832,44 @@
          "elements": []
         },
         {
-         "id": "4da4dae",
+         "id": "d5c44a4",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "7ad1f45",
+           "id": "d08f1bb",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "Connectivity and WAN",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "Connectivity and WAN",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "4f3f877",
+           "id": "b317206",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>Two carriers at four locations. Contracts end on different dates.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -4106,7 +3886,7 @@
          ]
         },
         {
-         "id": "f515a82",
+         "id": "2a838af",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -4137,7 +3917,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Watch Closely",
           "header_size": "div",
           "__globals__": {
@@ -4150,7 +3930,7 @@
        ]
       },
       {
-       "id": "81e220d",
+       "id": "7ad1f45",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4180,6 +3960,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-green",
         "_title": "Network Infrastructure",
         "flex_direction": "row",
         "flex_gap": {
@@ -4194,7 +3977,7 @@
        },
        "elements": [
         {
-         "id": "b4c9e75",
+         "id": "e86ec9c",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -4216,43 +3999,44 @@
          "elements": []
         },
         {
-         "id": "8feb994",
+         "id": "c5e2486",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "d4c0dca",
+           "id": "9dc8db4",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "Network Infrastructure",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "Network Infrastructure",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "8116734",
+           "id": "44a4a8f",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>Current equipment supported. Documentation in place.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -4269,7 +4053,7 @@
          ]
         },
         {
-         "id": "848b1df",
+         "id": "e9500ec",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -4300,7 +4084,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Good to Go",
           "header_size": "div",
           "__globals__": {
@@ -4313,7 +4097,7 @@
        ]
       },
       {
-       "id": "bb1e386",
+       "id": "d4c0dca",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4343,6 +4127,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-yellow",
         "_title": "Communications and AI",
         "flex_direction": "row",
         "flex_gap": {
@@ -4357,7 +4144,7 @@
        },
        "elements": [
         {
-         "id": "a6c3181",
+         "id": "4f3f877",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -4379,43 +4166,44 @@
          "elements": []
         },
         {
-         "id": "681b8f5",
+         "id": "cc9c3ad",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "9da59b7",
+           "id": "4da4dae",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "Communications and AI",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "Communications and AI",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "96838b7",
+           "id": "f515a82",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>Phone system renewal in 90 days. No competitive review completed.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -4432,7 +4220,7 @@
          ]
         },
         {
-         "id": "4fd5079",
+         "id": "b4c9e75",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -4463,7 +4251,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Watch Closely",
           "header_size": "div",
           "__globals__": {
@@ -4476,7 +4264,7 @@
        ]
       },
       {
-       "id": "af29d11",
+       "id": "9da59b7",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4506,6 +4294,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-red",
         "_title": "Security and Compliance",
         "flex_direction": "row",
         "flex_gap": {
@@ -4520,7 +4311,7 @@
        },
        "elements": [
         {
-         "id": "3533977",
+         "id": "8116734",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -4542,43 +4333,44 @@
          "elements": []
         },
         {
-         "id": "5dd961e",
+         "id": "81e220d",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "7d28f93",
+           "id": "8feb994",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "Security and Compliance",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "Security and Compliance",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "830b54f",
+           "id": "848b1df",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>PCI responsibility not assigned. No incident response plan.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -4595,7 +4387,7 @@
          ]
         },
         {
-         "id": "ef24bd6",
+         "id": "a6c3181",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -4626,7 +4418,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Take Action",
           "header_size": "div",
           "__globals__": {
@@ -4639,7 +4431,7 @@
        ]
       },
       {
-       "id": "5769da0",
+       "id": "7d28f93",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4669,6 +4461,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-yellow",
         "_title": "Cloud, Data and Resiliency",
         "flex_direction": "row",
         "flex_gap": {
@@ -4683,7 +4478,7 @@
        },
        "elements": [
         {
-         "id": "9f8e4ce",
+         "id": "96838b7",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -4705,43 +4500,44 @@
          "elements": []
         },
         {
-         "id": "c8c6906",
+         "id": "bb1e386",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "e1cf4f5",
+           "id": "681b8f5",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "Cloud, Data and Resiliency",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "Cloud, Data and Resiliency",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "134bccd",
+           "id": "4fd5079",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>Backups run. Recovery never tested.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -4758,7 +4554,7 @@
          ]
         },
         {
-         "id": "d205bbf",
+         "id": "3533977",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -4789,7 +4585,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Watch Closely",
           "header_size": "div",
           "__globals__": {
@@ -4802,7 +4598,7 @@
        ]
       },
       {
-       "id": "ff3fe32",
+       "id": "e1cf4f5",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4832,6 +4628,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-red",
         "_title": "POS and Merchant Services",
         "flex_direction": "row",
         "flex_gap": {
@@ -4846,7 +4645,7 @@
        },
        "elements": [
         {
-         "id": "b9d7d01",
+         "id": "830b54f",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -4868,43 +4667,44 @@
          "elements": []
         },
         {
-         "id": "d0a7bd0",
+         "id": "af29d11",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "0227eeb",
+           "id": "5dd961e",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "POS and Merchant Services",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "POS and Merchant Services",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "e85bfcd",
+           "id": "ef24bd6",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>Processing rate above market. Contract terms not on file.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -4921,7 +4721,7 @@
          ]
         },
         {
-         "id": "30ffc4e",
+         "id": "9f8e4ce",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -4952,7 +4752,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Take Action",
           "header_size": "div",
           "__globals__": {
@@ -4965,7 +4765,7 @@
        ]
       },
       {
-       "id": "0c855fd",
+       "id": "0227eeb",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -4995,6 +4795,9 @@
          "isLinked": false
         },
         "border_color": "#D9DFDF",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "css_classes": "dg-score-row dg-status-green",
         "_title": "Business Operations Technology",
         "flex_direction": "row",
         "flex_gap": {
@@ -5009,7 +4812,7 @@
        },
        "elements": [
         {
-         "id": "beaa14a",
+         "id": "134bccd",
          "elType": "widget",
          "widgetType": "icon",
          "isInner": false,
@@ -5031,43 +4834,44 @@
          "elements": []
         },
         {
-         "id": "930cdbd",
+         "id": "5769da0",
          "elType": "container",
          "isInner": true,
          "settings": {
           "_flex_size": "grow",
           "flex_direction": "column",
           "flex_gap": {
-           "column": "4",
-           "row": "4",
+           "column": "6",
+           "row": "6",
            "isLinked": true,
            "unit": "px",
-           "size": 4
+           "size": 6
           },
           "content_width": "full"
          },
          "elements": [
           {
-           "id": "1b2d19a",
+           "id": "c8c6906",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
            "settings": {
-            "title": "Business Operations Technology",
-            "header_size": "h4",
             "__globals__": {
              "typography_typography": "globals/typography?id=dgemph",
              "title_color": "globals/colors?id=dgink"
-            }
+            },
+            "title": "Business Operations Technology",
+            "header_size": "h4"
            },
            "elements": []
           },
           {
-           "id": "0f0ad2a",
+           "id": "d205bbf",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
            "settings": {
+            "_css_classes": "dg-finding",
             "editor": "<p>Help desk responsive. Vendor list current.</p>",
             "paragraph_spacing": {
              "unit": "px",
@@ -5084,7 +4888,7 @@
          ]
         },
         {
-         "id": "a7251af",
+         "id": "b9d7d01",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -5115,7 +4919,7 @@
            "left": "20",
            "isLinked": true
           },
-          "hide_mobile": "hidden-mobile",
+          "_css_classes": "dg-pill",
           "title": "Good to Go",
           "header_size": "div",
           "__globals__": {
@@ -5128,7 +4932,7 @@
        ]
       },
       {
-       "id": "9779ac1",
+       "id": "d0a7bd0",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -5156,12 +4960,12 @@
        },
        "elements": [
         {
-         "id": "45e9dd3",
+         "id": "e85bfcd",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
          "settings": {
-          "editor": "<p>Illustrative examples only, not an assessment of your business.</p>",
+          "editor": "<p>Select a domain to see its finding. Illustrative examples only, not an assessment of your business.</p>",
           "paragraph_spacing": {
            "unit": "px",
            "size": 0,
@@ -5181,7 +4985,7 @@
    ]
   },
   {
-   "id": "eb2b569",
+   "id": "3fdf57c",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -5231,7 +5035,7 @@
    },
    "elements": [
     {
-     "id": "babb7fb",
+     "id": "2c00649",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -5264,7 +5068,7 @@
      },
      "elements": [
       {
-       "id": "440e2b4",
+       "id": "9779ac1",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -5290,7 +5094,7 @@
        },
        "elements": [
         {
-         "id": "85b98f5",
+         "id": "a7251af",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -5313,7 +5117,7 @@
          "elements": []
         },
         {
-         "id": "22f1a83",
+         "id": "0c855fd",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -5328,7 +5132,7 @@
          "elements": []
         },
         {
-         "id": "da9c025",
+         "id": "45e9dd3",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -5355,7 +5159,7 @@
          "elements": []
         },
         {
-         "id": "c11e60d",
+         "id": "930cdbd",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -5404,7 +5208,7 @@
          },
          "elements": [
           {
-           "id": "e020307",
+           "id": "beaa14a",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -5419,7 +5223,7 @@
            "elements": []
           },
           {
-           "id": "ea748db",
+           "id": "1b2d19a",
            "elType": "widget",
            "widgetType": "text-editor",
            "isInner": false,
@@ -5446,7 +5250,7 @@
            "elements": []
           },
           {
-           "id": "1b343f5",
+           "id": "0f0ad2a",
            "elType": "widget",
            "widgetType": "button",
            "isInner": false,
@@ -5501,7 +5305,7 @@
        ]
       },
       {
-       "id": "0a76c19",
+       "id": "5c37474",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -5527,41 +5331,42 @@
        },
        "elements": [
         {
-         "id": "11457d9",
+         "id": "0e8a35b",
          "elType": "widget",
          "widgetType": "nested-accordion",
          "isInner": false,
          "settings": {
           "items": [
            {
-            "item_title": "01   Connectivity and WAN",
-            "_id": "3ead4ef"
+            "item_title": "Connectivity and WAN",
+            "_id": "3a038a7"
            },
            {
-            "item_title": "02   Network Infrastructure",
-            "_id": "d322a73"
+            "item_title": "Network Infrastructure",
+            "_id": "aeb6db2"
            },
            {
-            "item_title": "03   Communications and AI",
-            "_id": "35e1f29"
+            "item_title": "Communications and AI",
+            "_id": "e020307"
            },
            {
-            "item_title": "04   Security and Compliance",
-            "_id": "f18e859"
+            "item_title": "Security and Compliance",
+            "_id": "ea748db"
            },
            {
-            "item_title": "05   Cloud, Data and Resiliency",
-            "_id": "e16dce7"
+            "item_title": "Cloud, Data and Resiliency",
+            "_id": "1b343f5"
            },
            {
-            "item_title": "06   POS and Merchant Services",
-            "_id": "0f75613"
+            "item_title": "POS and Merchant Services",
+            "_id": "c11e60d"
            },
            {
-            "item_title": "07   Business Operations Technology",
-            "_id": "6c4454b"
+            "item_title": "Business Operations Technology",
+            "_id": "85b98f5"
            }
           ],
+          "_css_classes": "dg-acc dg-acc-num",
           "title_tag": "div",
           "default_state": "all_collapsed",
           "max_items_expended": "one",
@@ -5569,12 +5374,12 @@
           "accordion_item_title_position_horizontal": "stretch",
           "accordion_item_title_icon_position": "end",
           "accordion_item_title_icon": {
-           "value": "fas fa-plus",
-           "library": "fa-solid"
+           "value": "",
+           "library": ""
           },
           "accordion_item_title_icon_active": {
-           "value": "fas fa-minus",
-           "library": "fa-solid"
+           "value": "",
+           "library": ""
           },
           "accordion_item_title_space_between": {
            "unit": "px",
@@ -5663,7 +5468,7 @@
          },
          "elements": [
           {
-           "id": "b78ac33",
+           "id": "da9c025",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5677,11 +5482,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "e5e138e",
+             "id": "22f1a83",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5702,7 +5508,7 @@
            ]
           },
           {
-           "id": "0828d56",
+           "id": "3ead4ef",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5716,11 +5522,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "c268a20",
+             "id": "440e2b4",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5741,7 +5548,7 @@
            ]
           },
           {
-           "id": "5cc36c2",
+           "id": "35e1f29",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5755,11 +5562,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "0e8a35b",
+             "id": "d322a73",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5780,7 +5588,7 @@
            ]
           },
           {
-           "id": "2c00649",
+           "id": "e16dce7",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5794,11 +5602,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "5c37474",
+             "id": "f18e859",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5819,7 +5628,7 @@
            ]
           },
           {
-           "id": "ac3a5b2",
+           "id": "6c4454b",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5833,11 +5642,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "3fdf57c",
+             "id": "0f75613",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5858,7 +5668,7 @@
            ]
           },
           {
-           "id": "1539248",
+           "id": "b78ac33",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5872,11 +5682,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "0600571",
+             "id": "e5e138e",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5897,7 +5708,7 @@
            ]
           },
           {
-           "id": "f45e2fa",
+           "id": "0828d56",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -5911,11 +5722,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "1d7f427",
+             "id": "c268a20",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -5938,7 +5750,7 @@
          ]
         },
         {
-         "id": "067cfdc",
+         "id": "5cc36c2",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -5971,7 +5783,7 @@
    ]
   },
   {
-   "id": "be11d56",
+   "id": "fd70bdd",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -6021,7 +5833,7 @@
    },
    "elements": [
     {
-     "id": "581d8e8",
+     "id": "62b4720",
      "elType": "widget",
      "widgetType": "heading",
      "isInner": false,
@@ -6044,7 +5856,7 @@
      "elements": []
     },
     {
-     "id": "f03f2d7",
+     "id": "96e6bc4",
      "elType": "widget",
      "widgetType": "heading",
      "isInner": false,
@@ -6067,7 +5879,7 @@
      "elements": []
     },
     {
-     "id": "9d8055a",
+     "id": "0b0c995",
      "elType": "widget",
      "widgetType": "text-editor",
      "isInner": false,
@@ -6101,7 +5913,7 @@
      "elements": []
     },
     {
-     "id": "a0b4a29",
+     "id": "cb4deee",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -6135,7 +5947,7 @@
      },
      "elements": [
       {
-       "id": "0112ff0",
+       "id": "007ee4f",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -6161,7 +5973,7 @@
        },
        "elements": [
         {
-         "id": "0948ecc",
+         "id": "b105d83",
          "elType": "widget",
          "widgetType": "image",
          "isInner": false,
@@ -6204,7 +6016,7 @@
        ]
       },
       {
-       "id": "f8877ac",
+       "id": "85e9518",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -6230,7 +6042,7 @@
        },
        "elements": [
         {
-         "id": "ef9b6bf",
+         "id": "11457d9",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -6266,7 +6078,7 @@
          },
          "elements": [
           {
-           "id": "5f834da",
+           "id": "0600571",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -6300,7 +6112,7 @@
            },
            "elements": [
             {
-             "id": "0569c01",
+             "id": "ac3a5b2",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -6317,7 +6129,7 @@
            ]
           },
           {
-           "id": "d037fe2",
+           "id": "f45e2fa",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -6333,7 +6145,7 @@
            },
            "elements": [
             {
-             "id": "4174e75",
+             "id": "1539248",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -6356,7 +6168,7 @@
              "elements": []
             },
             {
-             "id": "20b6a84",
+             "id": "1d7f427",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -6379,7 +6191,7 @@
          ]
         },
         {
-         "id": "007ee4f",
+         "id": "5f834da",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -6415,7 +6227,7 @@
          },
          "elements": [
           {
-           "id": "bc1b00d",
+           "id": "0a76c19",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -6449,7 +6261,7 @@
            },
            "elements": [
             {
-             "id": "2838e76",
+             "id": "067cfdc",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -6466,7 +6278,7 @@
            ]
           },
           {
-           "id": "b105d83",
+           "id": "0569c01",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -6482,7 +6294,7 @@
            },
            "elements": [
             {
-             "id": "2f0981a",
+             "id": "babb7fb",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -6505,7 +6317,7 @@
              "elements": []
             },
             {
-             "id": "85e9518",
+             "id": "eb2b569",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -6528,7 +6340,7 @@
          ]
         },
         {
-         "id": "3f71972",
+         "id": "bc1b00d",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -6564,7 +6376,7 @@
          },
          "elements": [
           {
-           "id": "96e6bc4",
+           "id": "20b6a84",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -6598,7 +6410,7 @@
            },
            "elements": [
             {
-             "id": "62b4720",
+             "id": "4174e75",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -6615,7 +6427,7 @@
            ]
           },
           {
-           "id": "fd70bdd",
+           "id": "2838e76",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -6631,7 +6443,7 @@
            },
            "elements": [
             {
-             "id": "0b0c995",
+             "id": "d037fe2",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -6654,7 +6466,7 @@
              "elements": []
             },
             {
-             "id": "cb4deee",
+             "id": "ef9b6bf",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -6677,7 +6489,7 @@
          ]
         },
         {
-         "id": "26c377c",
+         "id": "2f0981a",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -6702,7 +6514,7 @@
    ]
   },
   {
-   "id": "66dfe71",
+   "id": "4ef25c0",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -6752,7 +6564,7 @@
    },
    "elements": [
     {
-     "id": "c173133",
+     "id": "07e3386",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -6786,7 +6598,7 @@
      },
      "elements": [
       {
-       "id": "4391b6e",
+       "id": "7d1f715",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -6813,7 +6625,7 @@
        },
        "elements": [
         {
-         "id": "e6eacb0",
+         "id": "5653a45",
          "elType": "widget",
          "widgetType": "image",
          "isInner": false,
@@ -6844,7 +6656,7 @@
        ]
       },
       {
-       "id": "0bb7be7",
+       "id": "49390aa",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -6870,7 +6682,7 @@
        },
        "elements": [
         {
-         "id": "72daf0a",
+         "id": "9d8055a",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -6893,7 +6705,7 @@
          "elements": []
         },
         {
-         "id": "8d2f527",
+         "id": "a0b4a29",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -6908,7 +6720,7 @@
          "elements": []
         },
         {
-         "id": "c4169b1",
+         "id": "be11d56",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -6935,7 +6747,7 @@
          "elements": []
         },
         {
-         "id": "9aeb7fa",
+         "id": "bf67da1",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -6958,7 +6770,7 @@
          "elements": []
         },
         {
-         "id": "bd6d250",
+         "id": "1cf5192",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -6977,7 +6789,7 @@
          "elements": []
         },
         {
-         "id": "4ef25c0",
+         "id": "f03f2d7",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -7051,7 +6863,7 @@
          },
          "elements": [
           {
-           "id": "49390aa",
+           "id": "f8877ac",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -7067,7 +6879,7 @@
            },
            "elements": [
             {
-             "id": "bf67da1",
+             "id": "3f71972",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -7090,7 +6902,7 @@
              "elements": []
             },
             {
-             "id": "1cf5192",
+             "id": "26c377c",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -7111,7 +6923,7 @@
            ]
           },
           {
-           "id": "07e3386",
+           "id": "581d8e8",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -7127,7 +6939,7 @@
            },
            "elements": [
             {
-             "id": "5653a45",
+             "id": "0948ecc",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -7150,7 +6962,7 @@
              "elements": []
             },
             {
-             "id": "7d1f715",
+             "id": "0112ff0",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -7179,7 +6991,7 @@
    ]
   },
   {
-   "id": "975b54a",
+   "id": "ef232a3",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -7230,7 +7042,7 @@
    },
    "elements": [
     {
-     "id": "fe9934a",
+     "id": "188b104",
      "elType": "widget",
      "widgetType": "heading",
      "isInner": false,
@@ -7253,7 +7065,7 @@
      "elements": []
     },
     {
-     "id": "3f2bb31",
+     "id": "74115c8",
      "elType": "widget",
      "widgetType": "heading",
      "isInner": false,
@@ -7276,7 +7088,7 @@
      "elements": []
     },
     {
-     "id": "3b8367d",
+     "id": "a294523",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -7325,7 +7137,7 @@
      },
      "elements": [
       {
-       "id": "d6a179f",
+       "id": "9f20dbb",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -7380,7 +7192,7 @@
        },
        "elements": [
         {
-         "id": "790813e",
+         "id": "bd6d250",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -7403,7 +7215,7 @@
          "elements": []
         },
         {
-         "id": "aff9261",
+         "id": "66dfe71",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -7421,7 +7233,7 @@
          },
          "elements": [
           {
-           "id": "f572df0",
+           "id": "0bb7be7",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -7436,7 +7248,7 @@
            "elements": []
           },
           {
-           "id": "a92c0e6",
+           "id": "c173133",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -7457,7 +7269,7 @@
            },
            "elements": [
             {
-             "id": "39bc2cc",
+             "id": "e6eacb0",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -7473,7 +7285,7 @@
              "elements": []
             },
             {
-             "id": "17ec940",
+             "id": "4391b6e",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -7505,7 +7317,7 @@
          ]
         },
         {
-         "id": "50f96cd",
+         "id": "dcc93f0",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -7539,7 +7351,7 @@
          },
          "elements": [
           {
-           "id": "2748dd1",
+           "id": "9aeb7fa",
            "elType": "widget",
            "widgetType": "icon-list",
            "isInner": false,
@@ -7551,7 +7363,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "dcc93f0"
+              "_id": "72daf0a"
              },
              {
               "text": "High-level opportunity identification",
@@ -7559,7 +7371,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "9f20dbb"
+              "_id": "8d2f527"
              },
              {
               "text": "Executive scorecard showing what needs attention and where to focus first",
@@ -7567,14 +7379,10 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "b4917fc"
+              "_id": "c4169b1"
              }
             ],
-            "space_between": {
-             "unit": "px",
-             "size": 12,
-             "sizes": []
-            },
+            "_css_classes": "dg-tier-list",
             "icon_size": {
              "unit": "px",
              "size": 5,
@@ -7604,7 +7412,7 @@
        ]
       },
       {
-       "id": "83ca1c1",
+       "id": "72a4740",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -7659,7 +7467,7 @@
        },
        "elements": [
         {
-         "id": "f2b64df",
+         "id": "17ec940",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -7682,7 +7490,7 @@
          "elements": []
         },
         {
-         "id": "649889c",
+         "id": "1a1fe3f",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -7700,7 +7508,7 @@
          },
          "elements": [
           {
-           "id": "20a63ac",
+           "id": "a92c0e6",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -7715,7 +7523,7 @@
            "elements": []
           },
           {
-           "id": "c7f3860",
+           "id": "d6a179f",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -7736,7 +7544,7 @@
            },
            "elements": [
             {
-             "id": "84ae65e",
+             "id": "aff9261",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -7752,7 +7560,7 @@
              "elements": []
             },
             {
-             "id": "95bfa81",
+             "id": "50f96cd",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -7784,7 +7592,7 @@
          ]
         },
         {
-         "id": "7ca6e70",
+         "id": "063238d",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -7818,7 +7626,7 @@
          },
          "elements": [
           {
-           "id": "dff0787",
+           "id": "39bc2cc",
            "elType": "widget",
            "widgetType": "icon-list",
            "isInner": false,
@@ -7830,7 +7638,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "1a1fe3f"
+              "_id": "b4917fc"
              },
              {
               "text": "Supplier review and contract discussion",
@@ -7838,7 +7646,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "063238d"
+              "_id": "2748dd1"
              },
              {
               "text": "Strategic decision support",
@@ -7846,7 +7654,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "72a4740"
+              "_id": "790813e"
              },
              {
               "text": "Recommended 4-hour minimum",
@@ -7854,14 +7662,10 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "c9d531a"
+              "_id": "f572df0"
              }
             ],
-            "space_between": {
-             "unit": "px",
-             "size": 12,
-             "sizes": []
-            },
+            "_css_classes": "dg-tier-list",
             "icon_size": {
              "unit": "px",
              "size": 5,
@@ -7891,7 +7695,7 @@
        ]
       },
       {
-       "id": "b310b73",
+       "id": "dfdb839",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -7946,7 +7750,7 @@
        },
        "elements": [
         {
-         "id": "425424a",
+         "id": "95bfa81",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -7969,7 +7773,7 @@
          "elements": []
         },
         {
-         "id": "a73fa0b",
+         "id": "53f53d6",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -7987,7 +7791,7 @@
          },
          "elements": [
           {
-           "id": "4307c68",
+           "id": "c7f3860",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -8002,7 +7806,7 @@
            "elements": []
           },
           {
-           "id": "6b75196",
+           "id": "83ca1c1",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -8023,7 +7827,7 @@
            },
            "elements": [
             {
-             "id": "9b27ec7",
+             "id": "649889c",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -8039,7 +7843,7 @@
              "elements": []
             },
             {
-             "id": "f87eb8a",
+             "id": "7ca6e70",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -8071,7 +7875,7 @@
          ]
         },
         {
-         "id": "049dd33",
+         "id": "24d201e",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -8105,7 +7909,7 @@
          },
          "elements": [
           {
-           "id": "574f1ee",
+           "id": "84ae65e",
            "elType": "widget",
            "widgetType": "icon-list",
            "isInner": false,
@@ -8117,7 +7921,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "53f53d6"
+              "_id": "c9d531a"
              },
              {
               "text": "Current, Aging, and Future-Ready lifecycle classification",
@@ -8125,7 +7929,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "24d201e"
+              "_id": "dff0787"
              },
              {
               "text": "Good, Better, Best recommendations",
@@ -8133,7 +7937,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "dfdb839"
+              "_id": "f2b64df"
              },
              {
               "text": "90-day executive roadmap",
@@ -8141,14 +7945,10 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "f5b0f16"
+              "_id": "20a63ac"
              }
             ],
-            "space_between": {
-             "unit": "px",
-             "size": 12,
-             "sizes": []
-            },
+            "_css_classes": "dg-tier-list",
             "icon_size": {
              "unit": "px",
              "size": 5,
@@ -8178,7 +7978,7 @@
        ]
       },
       {
-       "id": "a294523",
+       "id": "23fc5ad",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -8233,7 +8033,7 @@
        },
        "elements": [
         {
-         "id": "40c270b",
+         "id": "f87eb8a",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -8256,7 +8056,7 @@
          "elements": []
         },
         {
-         "id": "188b104",
+         "id": "8ed5d1b",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -8274,7 +8074,7 @@
          },
          "elements": [
           {
-           "id": "0897246",
+           "id": "6b75196",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -8289,7 +8089,7 @@
            "elements": []
           },
           {
-           "id": "2bb3b36",
+           "id": "b310b73",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -8310,7 +8110,7 @@
            },
            "elements": [
             {
-             "id": "21b7379",
+             "id": "a73fa0b",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -8326,7 +8126,7 @@
              "elements": []
             },
             {
-             "id": "29421c4",
+             "id": "049dd33",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -8358,7 +8158,7 @@
          ]
         },
         {
-         "id": "74115c8",
+         "id": "f581057",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -8392,7 +8192,7 @@
          },
          "elements": [
           {
-           "id": "0e89330",
+           "id": "9b27ec7",
            "elType": "widget",
            "widgetType": "icon-list",
            "isInner": false,
@@ -8404,7 +8204,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "8ed5d1b"
+              "_id": "f5b0f16"
              },
              {
               "text": "Lifecycle management and recurring review",
@@ -8412,7 +8212,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "f581057"
+              "_id": "574f1ee"
              },
              {
               "text": "Executive guidance",
@@ -8420,7 +8220,7 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "23fc5ad"
+              "_id": "425424a"
              },
              {
               "text": "Infrastructure accountability",
@@ -8428,14 +8228,10 @@
                "value": "fas fa-circle",
                "library": "fa-solid"
               },
-              "_id": "aba9e7b"
+              "_id": "4307c68"
              }
             ],
-            "space_between": {
-             "unit": "px",
-             "size": 12,
-             "sizes": []
-            },
+            "_css_classes": "dg-tier-list",
             "icon_size": {
              "unit": "px",
              "size": 5,
@@ -8467,7 +8263,7 @@
      ]
     },
     {
-     "id": "b6c004c",
+     "id": "3b4dbf2",
      "elType": "widget",
      "widgetType": "text-editor",
      "isInner": false,
@@ -8494,7 +8290,7 @@
      "elements": []
     },
     {
-     "id": "71d7b14",
+     "id": "821d460",
      "elType": "widget",
      "widgetType": "text-editor",
      "isInner": false,
@@ -8521,7 +8317,7 @@
      "elements": []
     },
     {
-     "id": "0809eae",
+     "id": "2bb3b36",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -8586,7 +8382,7 @@
      },
      "elements": [
       {
-       "id": "ea990e9",
+       "id": "40c270b",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -8602,7 +8398,7 @@
        },
        "elements": [
         {
-         "id": "3b4dbf2",
+         "id": "aba9e7b",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -8617,7 +8413,7 @@
          "elements": []
         },
         {
-         "id": "821d460",
+         "id": "0e89330",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -8638,7 +8434,7 @@
        ]
       },
       {
-       "id": "ef232a3",
+       "id": "29421c4",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -8654,7 +8450,7 @@
        },
        "elements": [
         {
-         "id": "fbc46f1",
+         "id": "0897246",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -8669,7 +8465,7 @@
          "elements": []
         },
         {
-         "id": "b5459d8",
+         "id": "21b7379",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -8692,7 +8488,7 @@
      ]
     },
     {
-     "id": "1497024",
+     "id": "b5459d8",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -8720,7 +8516,7 @@
      },
      "elements": [
       {
-       "id": "12d4050",
+       "id": "ea990e9",
        "elType": "widget",
        "widgetType": "text-editor",
        "isInner": false,
@@ -8739,7 +8535,7 @@
        "elements": []
       },
       {
-       "id": "40332b0",
+       "id": "fbc46f1",
        "elType": "widget",
        "widgetType": "button",
        "isInner": false,
@@ -8786,7 +8582,7 @@
    ]
   },
   {
-   "id": "b948f82",
+   "id": "86b4625",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -8836,7 +8632,7 @@
    },
    "elements": [
     {
-     "id": "8317cba",
+     "id": "475b510",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -8869,7 +8665,7 @@
      },
      "elements": [
       {
-       "id": "caa538a",
+       "id": "3f2bb31",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -8895,7 +8691,7 @@
        },
        "elements": [
         {
-         "id": "3a6b86a",
+         "id": "0809eae",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -8918,7 +8714,7 @@
          "elements": []
         },
         {
-         "id": "9fc9370",
+         "id": "fe9934a",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -8935,7 +8731,7 @@
        ]
       },
       {
-       "id": "1c75f67",
+       "id": "6c4ad65",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -8961,7 +8757,7 @@
        },
        "elements": [
         {
-         "id": "290535d",
+         "id": "af3f5d7",
          "elType": "widget",
          "widgetType": "nested-accordion",
          "isInner": false,
@@ -8969,25 +8765,26 @@
           "items": [
            {
             "item_title": "What happens in the first conversation?",
-            "_id": "ccda655"
+            "_id": "3b8367d"
            },
            {
             "item_title": "What will leadership receive?",
-            "_id": "9fb8883"
+            "_id": "b6c004c"
            },
            {
             "item_title": "Is discovery a paid engagement?",
-            "_id": "b5a1ae5"
+            "_id": "71d7b14"
            },
            {
             "item_title": "Can we begin with one company?",
-            "_id": "5c1dc12"
+            "_id": "12d4050"
            },
            {
             "item_title": "How is our information protected?",
-            "_id": "41b1256"
+            "_id": "40332b0"
            }
           ],
+          "_css_classes": "dg-acc",
           "title_tag": "div",
           "default_state": "all_collapsed",
           "max_items_expended": "one",
@@ -8995,12 +8792,12 @@
           "accordion_item_title_position_horizontal": "stretch",
           "accordion_item_title_icon_position": "end",
           "accordion_item_title_icon": {
-           "value": "fas fa-plus",
-           "library": "fa-solid"
+           "value": "",
+           "library": ""
           },
           "accordion_item_title_icon_active": {
-           "value": "fas fa-minus",
-           "library": "fa-solid"
+           "value": "",
+           "library": ""
           },
           "accordion_item_title_space_between": {
            "unit": "px",
@@ -9089,7 +8886,7 @@
          },
          "elements": [
           {
-           "id": "6c4ad65",
+           "id": "975b54a",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9103,11 +8900,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "af3f5d7",
+             "id": "1497024",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9128,7 +8926,7 @@
            ]
           },
           {
-           "id": "86b4625",
+           "id": "9fc9370",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9142,11 +8940,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "475b510",
+             "id": "3a6b86a",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9167,7 +8966,7 @@
            ]
           },
           {
-           "id": "013c327",
+           "id": "ccda655",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9181,11 +8980,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "c02c6b9",
+             "id": "caa538a",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9206,7 +9006,7 @@
            ]
           },
           {
-           "id": "09167d4",
+           "id": "b5a1ae5",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9220,11 +9020,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "26af809",
+             "id": "9fb8883",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9245,7 +9046,7 @@
            ]
           },
           {
-           "id": "68a24b7",
+           "id": "41b1256",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9259,11 +9060,12 @@
              "left": "0",
              "isLinked": true
             },
+            "border_border": "none",
             "content_width": "full"
            },
            "elements": [
             {
-             "id": "627f285",
+             "id": "5c1dc12",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9292,7 +9094,7 @@
    ]
   },
   {
-   "id": "35cbc4d",
+   "id": "7430051",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -9343,7 +9145,7 @@
    },
    "elements": [
     {
-     "id": "f68ed03",
+     "id": "76e31f5",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -9376,7 +9178,7 @@
      },
      "elements": [
       {
-       "id": "a44a4d4",
+       "id": "3b45402",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -9402,7 +9204,7 @@
        },
        "elements": [
         {
-         "id": "0511bae",
+         "id": "627f285",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -9425,11 +9227,12 @@
          "elements": []
         },
         {
-         "id": "2e87d41",
+         "id": "68a24b7",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
          "settings": {
+          "_css_classes": "dg-request-title",
           "title": "Let’s make your<br>next decision clearer.",
           "header_size": "h2",
           "__globals__": {
@@ -9440,7 +9243,7 @@
          "elements": []
         },
         {
-         "id": "c02659f",
+         "id": "290535d",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -9467,7 +9270,7 @@
          "elements": []
         },
         {
-         "id": "8918b68",
+         "id": "c02659f",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -9491,7 +9294,7 @@
          },
          "elements": [
           {
-           "id": "37a47ce",
+           "id": "b948f82",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9508,7 +9311,7 @@
            },
            "elements": [
             {
-             "id": "3b45402",
+             "id": "1c75f67",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -9530,7 +9333,7 @@
              "elements": []
             },
             {
-             "id": "1aeffaf",
+             "id": "8317cba",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9551,7 +9354,7 @@
            ]
           },
           {
-           "id": "ab63ad0",
+           "id": "1a16daf",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9568,7 +9371,7 @@
            },
            "elements": [
             {
-             "id": "0641b4f",
+             "id": "167b75d",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -9590,7 +9393,7 @@
              "elements": []
             },
             {
-             "id": "854efa6",
+             "id": "3da95cd",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9611,7 +9414,7 @@
            ]
           },
           {
-           "id": "4f4a353",
+           "id": "2e87d41",
            "elType": "container",
            "isInner": true,
            "settings": {
@@ -9628,7 +9431,7 @@
            },
            "elements": [
             {
-             "id": "76e31f5",
+             "id": "198abab",
              "elType": "widget",
              "widgetType": "heading",
              "isInner": false,
@@ -9650,7 +9453,7 @@
              "elements": []
             },
             {
-             "id": "7430051",
+             "id": "0511bae",
              "elType": "widget",
              "widgetType": "text-editor",
              "isInner": false,
@@ -9673,7 +9476,7 @@
          ]
         },
         {
-         "id": "198abab",
+         "id": "09167d4",
          "elType": "container",
          "isInner": true,
          "settings": {
@@ -9716,7 +9519,7 @@
          },
          "elements": [
           {
-           "id": "167b75d",
+           "id": "c02c6b9",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -9731,7 +9534,7 @@
            "elements": []
           },
           {
-           "id": "3da95cd",
+           "id": "013c327",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -9760,7 +9563,7 @@
            "elements": []
           },
           {
-           "id": "1a16daf",
+           "id": "26af809",
            "elType": "widget",
            "widgetType": "heading",
            "isInner": false,
@@ -9793,7 +9596,7 @@
        ]
       },
       {
-       "id": "c2b1c26",
+       "id": "ab63ad0",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -9866,7 +9669,7 @@
        },
        "elements": [
         {
-         "id": "6147db9",
+         "id": "1aeffaf",
          "elType": "widget",
          "widgetType": "heading",
          "isInner": false,
@@ -9881,7 +9684,7 @@
          "elements": []
         },
         {
-         "id": "36631b3",
+         "id": "37a47ce",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -9908,7 +9711,7 @@
          "elements": []
         },
         {
-         "id": "af479f2",
+         "id": "0641b4f",
          "elType": "widget",
          "widgetType": "shortcode",
          "isInner": false,
@@ -9919,7 +9722,7 @@
          "elements": []
         },
         {
-         "id": "e8147dc",
+         "id": "854efa6",
          "elType": "widget",
          "widgetType": "text-editor",
          "isInner": false,
@@ -9950,288 +9753,10 @@
      ]
     }
    ]
-  },
-  {
-   "id": "e1a5dbb",
-   "elType": "container",
-   "isInner": false,
-   "settings": {
-    "_title": "Footer",
-    "content_width": "boxed",
-    "boxed_width": {
-     "unit": "px",
-     "size": 1220,
-     "sizes": []
-    },
-    "flex_direction": "column",
-    "flex_gap": {
-     "column": "0",
-     "row": "0",
-     "isLinked": true,
-     "unit": "px",
-     "size": 0
-    },
-    "padding": {
-     "unit": "px",
-     "top": "44",
-     "right": "40",
-     "bottom": "44",
-     "left": "40",
-     "isLinked": false
-    },
-    "padding_tablet": {
-     "unit": "px",
-     "top": "44",
-     "right": "24",
-     "bottom": "44",
-     "left": "24",
-     "isLinked": false
-    },
-    "padding_mobile": {
-     "unit": "px",
-     "top": "44",
-     "right": "18",
-     "bottom": "44",
-     "left": "18",
-     "isLinked": false
-    },
-    "background_background": "classic",
-    "__globals__": {
-     "background_color": "globals/colors?id=dgdeep"
-    }
-   },
-   "elements": [
-    {
-     "id": "0d1db84",
-     "elType": "container",
-     "isInner": true,
-     "settings": {
-      "flex_direction": "row",
-      "flex_gap": {
-       "column": "40",
-       "row": "40",
-       "isLinked": true,
-       "unit": "px",
-       "size": 40
-      },
-      "flex_align_items": "flex-start",
-      "flex_justify_content": "space-between",
-      "flex_direction_mobile": "column",
-      "flex_align_items_mobile": "stretch",
-      "content_width": "full"
-     },
-     "elements": [
-      {
-       "id": "6cf40d8",
-       "elType": "container",
-       "isInner": true,
-       "settings": {
-        "flex_direction": "column",
-        "flex_gap": {
-         "column": "0",
-         "row": "0",
-         "isLinked": true,
-         "unit": "px",
-         "size": 0
-        },
-        "content_width": "full"
-       },
-       "elements": [
-        {
-         "id": "ba9b398",
-         "elType": "widget",
-         "widgetType": "heading",
-         "isInner": false,
-         "settings": {
-          "title": "TheDIGF<span style=\"color:#DFBD7A\">.com</span>",
-          "header_size": "div",
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgbrand",
-           "title_color": "globals/colors?id=dgwhite"
-          },
-          "link": {
-           "url": "#main",
-           "is_external": "",
-           "nofollow": "",
-           "custom_attributes": ""
-          }
-         },
-         "elements": []
-        },
-        {
-         "id": "ce5b3e7",
-         "elType": "widget",
-         "widgetType": "text-editor",
-         "isInner": false,
-         "settings": {
-          "_margin": {
-           "unit": "px",
-           "top": "14",
-           "right": "0",
-           "bottom": "0",
-           "left": "0",
-           "isLinked": false
-          },
-          "editor": "<p>TeleTech Solutions™ | The Digital Infrastructure Governance Firm</p>",
-          "paragraph_spacing": {
-           "unit": "px",
-           "size": 0,
-           "sizes": []
-          },
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgxs",
-           "text_color": "globals/colors?id=dgondark"
-          }
-         },
-         "elements": []
-        },
-        {
-         "id": "6f092ec",
-         "elType": "widget",
-         "widgetType": "text-editor",
-         "isInner": false,
-         "settings": {
-          "_margin": {
-           "unit": "px",
-           "top": "6",
-           "right": "0",
-           "bottom": "0",
-           "left": "0",
-           "isLinked": false
-          },
-          "editor": "<p>We navigate the complex architecture and make it simple.</p>",
-          "paragraph_spacing": {
-           "unit": "px",
-           "size": 0,
-           "sizes": []
-          },
-          "__globals__": {
-           "typography_typography": "globals/typography?id=dgxs",
-           "text_color": "globals/colors?id=dgondark"
-          }
-         },
-         "elements": []
-        }
-       ]
-      },
-      {
-       "id": "82f1c08",
-       "elType": "widget",
-       "widgetType": "text-editor",
-       "isInner": false,
-       "settings": {
-        "align": "right",
-        "align_mobile": "left",
-        "__globals__": {
-         "typography_typography": "globals/typography?id=dgxs",
-         "text_color": "globals/colors?id=dgondark",
-         "link_color": "globals/colors?id=dgondark",
-         "link_hover_color": "globals/colors?id=dggoldlt"
-        },
-        "editor": "<p>5 Cowboys Way, Suite 300<br>Frisco, Texas 75034<br><a href=\"tel:+19452628477\">945.262.8477</a><br><a href=\"mailto:Reggie@TeleTechTX.com\">Reggie@TeleTechTX.com</a><br><a href=\"https://www.linkedin.com/in/reggie-hilliard/\" target=\"_blank\" rel=\"noopener noreferrer\">LinkedIn</a></p>",
-        "paragraph_spacing": {
-         "unit": "px",
-         "size": 0,
-         "sizes": []
-        }
-       },
-       "elements": []
-      }
-     ]
-    },
-    {
-     "id": "97623f4",
-     "elType": "container",
-     "isInner": true,
-     "settings": {
-      "margin": {
-       "unit": "px",
-       "top": "30",
-       "right": "0",
-       "bottom": "0",
-       "left": "0",
-       "isLinked": false
-      },
-      "padding": {
-       "unit": "px",
-       "top": "20",
-       "right": "0",
-       "bottom": "0",
-       "left": "0",
-       "isLinked": false
-      },
-      "border_border": "solid",
-      "border_width": {
-       "unit": "px",
-       "top": "1",
-       "right": "0",
-       "bottom": "0",
-       "left": "0",
-       "isLinked": false
-      },
-      "border_color": "rgba(255,255,255,0.125)",
-      "flex_direction": "row",
-      "flex_gap": {
-       "column": "20",
-       "row": "20",
-       "isLinked": true,
-       "unit": "px",
-       "size": 20
-      },
-      "flex_align_items": "center",
-      "flex_justify_content": "space-between",
-      "flex_direction_mobile": "column",
-      "flex_align_items_mobile": "stretch",
-      "content_width": "full"
-     },
-     "elements": [
-      {
-       "id": "0575665",
-       "elType": "widget",
-       "widgetType": "text-editor",
-       "isInner": false,
-       "settings": {
-        "__globals__": {
-         "typography_typography": "globals/typography?id=dgxs",
-         "text_color": "globals/colors?id=dgondark",
-         "link_color": "globals/colors?id=dgondark",
-         "link_hover_color": "globals/colors?id=dggoldlt"
-        },
-        "editor": "<p>© 2026 TeleTech Solutions™ · <a href=\"/privacy/\">Privacy</a></p>",
-        "paragraph_spacing": {
-         "unit": "px",
-         "size": 0,
-         "sizes": []
-        }
-       },
-       "elements": []
-      },
-      {
-       "id": "94c16aa",
-       "elType": "widget",
-       "widgetType": "text-editor",
-       "isInner": false,
-       "settings": {
-        "editor": "<p>One advisor. Every stage. Every location.</p>",
-        "paragraph_spacing": {
-         "unit": "px",
-         "size": 0,
-         "sizes": []
-        },
-        "__globals__": {
-         "typography_typography": "globals/typography?id=dgxs",
-         "text_color": "globals/colors?id=dgondark"
-        }
-       },
-       "elements": []
-      }
-     ]
-    }
-   ]
   }
  ],
  "page_settings": {
-  "template": "elementor_canvas",
+  "template": "elementor_header_footer",
   "hide_title": "yes"
  },
  "version": "0.4",

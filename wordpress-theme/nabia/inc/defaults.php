@@ -257,6 +257,13 @@ function nabia_services() {
 				'text'  => __( 'Website maintenance services: updates, backups, security and small edits every month, so you can focus on your business.', 'nabia' ),
 				'tags'  => array( 'Updates', 'Backups', 'Security' ),
 			),
+			array(
+				'icon'  => 'church',
+				'slug'  => 'church-websites',
+				'title' => __( 'Church & Nonprofit Websites', 'nabia' ),
+				'text'  => __( 'Church website design and nonprofit websites that welcome first-time visitors, make giving simple and are easy for volunteers to update.', 'nabia' ),
+				'tags'  => array( 'Churches', 'Nonprofits', 'Online giving' ),
+			),
 		)
 	);
 }

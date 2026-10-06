@@ -307,6 +307,7 @@ function nabia_autolink_keywords() {
 	return apply_filters(
 		'nabia_autolink_keywords',
 		array(
+			'church-websites'         => array( 'church website design', 'church websites', 'church website', 'nonprofit website design', 'nonprofit websites' ),
 			'website-maintenance'     => array( 'website maintenance services', 'website maintenance', 'WordPress maintenance', 'maintenance plan', 'care plan' ),
 			'shopify-woocommerce'     => array( 'Shopify vs WooCommerce', 'Shopify developer', 'WooCommerce developer', 'Shopify', 'WooCommerce', 'online store', 'ecommerce', 'e-commerce' ),
 			'wix-webflow-squarespace' => array( 'Wix website design', 'Squarespace website design', 'Webflow', 'Squarespace', 'Wix' ),

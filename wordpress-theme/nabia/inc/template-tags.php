@@ -19,6 +19,7 @@ function nabia_get_icon( $name ) {
 	$paths = array(
 		'arrow'     => '<path d="M5 12h14M13 6l6 6-6 6"/>',
 		'arrow-up'  => '<path d="M7 17 17 7M8 7h9v9"/>',
+		'church'    => '<path d="M12 2v5M10 4h4"/><path d="M5 22V12l7-5 7 5v10"/><path d="M10 22v-5a2 2 0 0 1 4 0v5"/><path d="M3 22h18"/>',
 		'layout'    => '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/>',
 		'code'      => '<path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/>',
 		'cart'      => '<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6"/>',

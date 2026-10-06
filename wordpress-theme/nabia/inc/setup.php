@@ -228,6 +228,9 @@ function nabia_setup_screen() {
 		if ( 'pages' === $action || 'all' === $action ) {
 			$log = array_merge( $log, nabia_setup_create_pages() );
 		}
+		if ( in_array( $action, array( 'pages', 'all', 'seo' ), true ) ) {
+			$log[] = nabia_setup_fill_seo();
+		}
 		if ( ( 'shots' === $action || 'shots_force' === $action ) && current_user_can( 'upload_files' ) ) {
 			$log[] = nabia_shots_enabled() ? nabia_shots_run_all( 'shots_force' === $action ) : __( 'Automatic screenshots are off. Turn them on in Customize → Nabia Theme → Portfolio → Project thumbnails.', 'nabia' );
 		}
@@ -302,6 +305,7 @@ function nabia_setup_screen() {
 			<button class="button button-hero" name="nabia_setup_action" value="pages"><?php esc_html_e( 'Create pages only', 'nabia' ); ?></button>
 			<button class="button button-hero" name="nabia_setup_action" value="posts"><?php esc_html_e( 'Import blog articles only', 'nabia' ); ?></button>
 			<button class="button button-hero" name="nabia_setup_action" value="menu"><?php esc_html_e( 'Rebuild main menu only', 'nabia' ); ?></button>
+			<button class="button button-hero" name="nabia_setup_action" value="seo"><?php esc_html_e( 'Fill in missing SEO titles & descriptions', 'nabia' ); ?></button>
 		</form>
 		<p class="description" style="margin-top:12px"><?php esc_html_e( 'The menu adds: Services (with every service in a dropdown), Work, Pricing, Blog, About, Free audit and Contact. You can change it any time in Appearance → Menus.', 'nabia' ); ?></p>
 
@@ -338,3 +342,93 @@ function nabia_setup_screen() {
 	</div>
 	<?php
 }
+
+/**
+ * Search titles, meta descriptions and focus keywords for the pages the setup creates,
+ * written around the search terms people use most for each service.
+ *
+ * @return array role => array( title, description, keyword )
+ */
+function nabia_setup_seo() {
+	$seo = array(
+		'services'                        => array( __( 'Web Design & Development Services', 'nabia' ), __( 'Web design and development services for small businesses: WordPress, Shopify, WooCommerce, custom code, logos, SEO and monthly website maintenance.', 'nabia' ), 'web design services' ),
+		'pricing'                         => array( __( 'Website Design Pricing & Maintenance Plans', 'nabia' ), __( 'Fixed website design prices and monthly maintenance plans, with nothing hidden. See exactly what each package includes and what it costs.', 'nabia' ), 'website design pricing' ),
+		'audit'                           => array( __( 'Free Website Audit: SEO & Speed Score', 'nabia' ), __( 'Get a free website audit in about 60 seconds: scores for design, SEO, content and speed, plus a PDF report with clear, practical fixes.', 'nabia' ), 'free website audit' ),
+		'service-web-design'              => array( __( 'Small Business Website Design Services', 'nabia' ), __( 'Custom small business website design that looks professional, works on every phone and turns visitors into enquiries. Fixed prices, clickable prototype first.', 'nabia' ), 'small business website design' ),
+		'service-wordpress-development'   => array( __( 'Hire a WordPress Developer and Expert', 'nabia' ), __( 'Freelance WordPress developer and expert: custom themes, Elementor builds, plugin setup, fixes and speed. Fast, secure sites you can edit yourself.', 'nabia' ), 'wordpress developer' ),
+		'service-shopify-woocommerce'     => array( __( 'Shopify & WooCommerce Development', 'nabia' ), __( 'Shopify and WooCommerce development for online stores that sell: store setup, custom features, payments, shipping, speed and secure checkout.', 'nabia' ), 'shopify development' ),
+		'service-wix-webflow-squarespace' => array( __( 'Wix, Squarespace & Webflow Website Design', 'nabia' ), __( 'Wix, Squarespace and Webflow website design that looks custom, not like a template, set up so you can edit everything yourself.', 'nabia' ), 'wix website design' ),
+		'service-custom-websites'         => array( __( 'Custom Website Development', 'nabia' ), __( 'Custom website development in HTML, CSS, JavaScript and PHP when you need unique features, top speed or a design no template can deliver.', 'nabia' ), 'custom website development' ),
+		'service-ai-website-solutions'    => array( __( 'AI Chatbot for Your Website & AI Solutions', 'nabia' ), __( 'Add an AI chatbot to your website, trained on your own content, plus smart forms and automations that answer customers and save hours every week.', 'nabia' ), 'ai chatbot for website' ),
+		'service-branding-graphic-design' => array( __( 'Logo Design Services & Brand Identity', 'nabia' ), __( 'Logo design services and brand identity design: original logos, colours, fonts and social media kits that look consistent everywhere.', 'nabia' ), 'logo design services' ),
+		'service-speed-seo'               => array( __( 'WordPress Speed Optimization & SEO', 'nabia' ), __( 'WordPress speed optimization and technical SEO for small businesses: faster pages, better Core Web Vitals and a before and after report.', 'nabia' ), 'wordpress speed optimization' ),
+		'service-website-maintenance'     => array( __( 'Website Maintenance & WordPress Care Plans', 'nabia' ), __( 'Website maintenance and WordPress care plans: updates, backups, security, speed checks and small edits every month. No long contract.', 'nabia' ), 'website maintenance' ),
+		'service-church-websites'         => array( __( 'Church Website Design & Nonprofit Websites', 'nabia' ), __( 'Church website design and nonprofit websites that welcome first-time visitors, make giving simple and are easy for volunteers to update.', 'nabia' ), 'church website design' ),
+	);
+	return apply_filters( 'nabia_setup_seo', $seo );
+}
+
+/**
+ * Fill in SEO title, description and focus keyword for setup pages where they are empty.
+ * Works with Rank Math and Yoast; your own text is never replaced.
+ *
+ * @return string Log line.
+ */
+function nabia_setup_fill_seo() {
+	$filled = 0;
+	foreach ( nabia_setup_seo() as $role => $meta ) {
+		$page = nabia_setup_find( $role );
+		if ( ! $page ) {
+			continue;
+		}
+		list( $title, $desc, $keyword ) = $meta;
+		$fields = array(
+			'rank_math_title'         => $title . ' %sep% %sitename%',
+			'rank_math_description'   => $desc,
+			'rank_math_focus_keyword' => $keyword,
+			'_yoast_wpseo_title'      => $title . ' %%sep%% %%sitename%%',
+			'_yoast_wpseo_metadesc'   => $desc,
+			'_yoast_wpseo_focuskw'    => $keyword,
+		);
+		$changed = false;
+		foreach ( $fields as $key => $value ) {
+			if ( '' === trim( (string) get_post_meta( $page->ID, $key, true ) ) ) {
+				update_post_meta( $page->ID, $key, $value );
+				$changed = true;
+			}
+		}
+		$filled += $changed ? 1 : 0;
+	}
+	/* translators: %d: number of pages */
+	return sprintf( _n( 'SEO title, description and focus keyword filled in on %d page (only where they were empty).', 'SEO title, description and focus keyword filled in on %d pages (only where they were empty).', $filled, 'nabia' ), $filled );
+}
+
+/**
+ * One-time fix for articles imported before the Church & Nonprofit service existed:
+ * connect them to that service so its page shows them as related articles.
+ */
+function nabia_retag_church_articles() {
+	if ( get_option( 'nabia_church_retag' ) ) {
+		return;
+	}
+	$slugs = array( 'church-website-design', 'church-websites', 'what-should-a-church-website-include', 'how-to-make-a-church-website', 'nonprofit-website-design' );
+	foreach ( $slugs as $slug ) {
+		foreach ( array( '_nbi_article', '_nabia_article' ) as $key ) {
+			$posts = get_posts(
+				array(
+					'post_type'      => 'post',
+					'post_status'    => array( 'publish', 'future', 'draft' ),
+					'posts_per_page' => 5,
+					'meta_key'       => $key, // phpcs:ignore WordPress.DB.SlowDBQuery
+					'meta_value'     => $slug, // phpcs:ignore WordPress.DB.SlowDBQuery
+					'fields'         => 'ids',
+				)
+			);
+			foreach ( $posts as $id ) {
+				update_post_meta( $id, '_nabia_service', 'church-websites' );
+			}
+		}
+	}
+	update_option( 'nabia_church_retag', 1, false );
+}
+add_action( 'admin_init', 'nabia_retag_church_articles' );

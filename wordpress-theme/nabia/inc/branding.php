@@ -376,6 +376,7 @@ function nabia_service_title_tags() {
 			'branding-graphic-design' => __( 'Logo Design Services & Brand Identity', 'nabia' ),
 			'speed-seo'               => __( 'Website Speed Optimization & SEO', 'nabia' ),
 			'website-maintenance'     => __( 'Website Maintenance Services & WordPress Care', 'nabia' ),
+			'church-websites'         => __( 'Church Website Design & Nonprofit Websites', 'nabia' ),
 		)
 	);
 }

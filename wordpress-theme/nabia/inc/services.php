@@ -231,6 +231,35 @@ function nabia_service_details() {
 				array( __( 'Do you maintain sites you did not build?', 'nabia' ), __( 'Yes. I start with a quick check-up, then take over the care of your site.', 'nabia' ) ),
 			),
 		),
+		'church-websites'         => array(
+			'headline' => __( 'Church website design and nonprofit websites that welcome people in', 'nabia' ),
+			'intro'    => __( 'Most people visit your website before they ever visit your church or charity. I design church and nonprofit websites that answer first-time visitor questions in seconds, make giving and volunteering simple, and are easy for staff and volunteers to keep up to date.', 'nabia' ),
+			'features' => array(
+				array( __( 'Plan your visit', 'nabia' ), __( 'Service times, location, parking, kids and what to expect, right where first-time visitors look.', 'nabia' ) ),
+				array( __( 'Sermons and media', 'nabia' ), __( 'A sermon library by series, speaker and topic, with video or audio and the newest message first.', 'nabia' ) ),
+				array( __( 'Online giving and donations', 'nabia' ), __( 'A trusted giving platform with one clear button on every page, suggested amounts and monthly giving.', 'nabia' ) ),
+				array( __( 'Events, groups and volunteers', 'nabia' ), __( 'A simple calendar, small groups and serving opportunities with sign-up forms that reach the right person.', 'nabia' ) ),
+				array( __( 'Easy for volunteers', 'nabia' ), __( 'Add a sermon, event or news post in minutes without breaking the design, with a video guide for your team.', 'nabia' ) ),
+				array( __( 'Found on Google', 'nabia' ), __( 'Clear page titles, Google Business Profile tips and fast mobile pages, so people searching nearby can find you.', 'nabia' ) ),
+			),
+			'get'      => array( __( 'Church or nonprofit website, mobile-first', 'nabia' ), __( 'Plan your visit and about pages', 'nabia' ), __( 'Sermons, events or programmes set up', 'nabia' ), __( 'Online giving or donation page connected', 'nabia' ), __( 'Video guide for staff and volunteers', 'nabia' ), __( 'One month of free support', 'nabia' ) ),
+			'for'      => array( __( 'Churches and ministries of every size', 'nabia' ), __( 'Charities and community nonprofits', 'nabia' ), __( 'Church plants that need a first website', 'nabia' ) ),
+			'plans'    => 'web',
+			'faq'      => array(
+				array( __( 'What should a church website include?', 'nabia' ), __( 'Service times and location, a Plan your visit page, kids and youth information, beliefs, staff, sermons, events, online giving and an easy way to contact you, all working well on phones.', 'nabia' ) ),
+				array(
+					__( 'How much does a church or nonprofit website cost?', 'nabia' ),
+					sprintf(
+						/* translators: 1-2: prices */
+						__( 'My website packages start at %1$s, and most church and nonprofit sites fit the %2$s business package. You get a fixed price before work starts.', 'nabia' ),
+						nabia_price( 'plan_web_1' ),
+						nabia_price( 'plan_web_2' )
+					),
+				),
+				array( __( 'Can our volunteers update the website?', 'nabia' ), __( 'Yes. The site is built so volunteers can add sermons, events and news in minutes, and everyone gets a short video guide.', 'nabia' ) ),
+				array( __( 'Can you set up online giving?', 'nabia' ), __( 'Yes. I connect a trusted giving or donation platform and add a clear Give button on every page, with suggested amounts and monthly giving.', 'nabia' ) ),
+			),
+		),
 	);
 	return apply_filters( 'nabia_service_details', $details );
 }

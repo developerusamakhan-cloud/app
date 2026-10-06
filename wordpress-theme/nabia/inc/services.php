@@ -297,6 +297,49 @@ function nabia_current_service() {
 }
 
 /**
+ * Other addresses a service page may have on your site (for pages you made yourself).
+ *
+ * @return array slug => alternative slugs.
+ */
+function nabia_service_aliases() {
+	return apply_filters(
+		'nabia_service_aliases',
+		array(
+			'website-maintenance'   => array( 'monthly-website-maintenance', 'care-maintenance', 'care-and-maintenance', 'website-care', 'maintenance' ),
+			'speed-seo'             => array( 'speed-and-seo', 'speed-seo-optimization', 'seo' ),
+			'shopify-woocommerce'   => array( 'shopify-and-woocommerce', 'shopify-woocommerce-stores', 'ecommerce' ),
+			'wix-webflow-squarespace' => array( 'wix-webflow-and-squarespace' ),
+			'custom-websites'       => array( 'custom-coded-websites', 'custom-website-development' ),
+			'church-websites'       => array( 'church-website-design', 'church-and-nonprofit-websites', 'church-nonprofit-websites' ),
+			'branding-graphic-design' => array( 'branding-and-graphic-design', 'branding' ),
+			'ai-website-solutions'  => array( 'ai-solutions' ),
+			'wordpress-development' => array( 'wordpress-developer' ),
+			'web-design'            => array( 'website-design' ),
+		)
+	);
+}
+
+/**
+ * Your own published page for a service, found by its address (services/slug, slug or an alias).
+ *
+ * @param string $slug Service slug.
+ * @return WP_Post|null
+ */
+function nabia_service_page_by_path( $slug ) {
+	$aliases = nabia_service_aliases();
+	$names   = array_merge( array( $slug ), isset( $aliases[ $slug ] ) ? $aliases[ $slug ] : array() );
+	foreach ( $names as $name ) {
+		foreach ( array( 'services/' . $name, $name ) as $path ) {
+			$page = get_page_by_path( $path );
+			if ( $page && 'publish' === $page->post_status ) {
+				return $page;
+			}
+		}
+	}
+	return null;
+}
+
+/**
  * Permalink of the page that shows a service, if it has been created.
  *
  * @param string $slug Service slug.
@@ -337,7 +380,12 @@ function nabia_service_url( $slug ) {
 			}
 		}
 	}
-	return isset( $map[ $slug ] ) ? $map[ $slug ] : '';
+	if ( ! isset( $map[ $slug ] ) ) {
+		// A page you made yourself at the usual address or a common alternative.
+		$page         = nabia_service_page_by_path( $slug );
+		$map[ $slug ] = $page ? get_permalink( $page ) : '';
+	}
+	return $map[ $slug ];
 }
 
 /**

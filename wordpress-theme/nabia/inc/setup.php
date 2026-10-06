@@ -77,6 +77,34 @@ function nabia_setup_find( $role ) {
 }
 
 /**
+ * A setup page that already exists: made by the setup, or your own page at the usual address.
+ *
+ * @param array $page Page from nabia_setup_pages().
+ * @return WP_Post|null
+ */
+function nabia_setup_locate( $page ) {
+	$found = nabia_setup_find( $page['role'] );
+	if ( $found ) {
+		return $found;
+	}
+	if ( ! empty( $page['service'] ) ) {
+		return nabia_service_page_by_path( $page['service'] );
+	}
+	$paths = array(
+		'services' => array( 'services' ),
+		'pricing'  => array( 'pricing', 'prices' ),
+		'audit'    => array( 'free-website-audit', 'website-audit', 'audit' ),
+	);
+	foreach ( isset( $paths[ $page['role'] ] ) ? $paths[ $page['role'] ] : array( $page['slug'] ) as $path ) {
+		$own = get_page_by_path( $path );
+		if ( $own && 'trash' !== $own->post_status ) {
+			return $own;
+		}
+	}
+	return null;
+}
+
+/**
  * Create missing pages.
  *
  * @return array Log lines.
@@ -86,11 +114,11 @@ function nabia_setup_create_pages() {
 	$ids = array();
 
 	foreach ( nabia_setup_pages() as $page ) {
-		$existing = nabia_setup_find( $page['role'] );
+		$existing = nabia_setup_locate( $page );
 		if ( $existing ) {
 			$ids[ $page['role'] ] = $existing->ID;
-			/* translators: %s: page title */
-			$log[] = sprintf( __( 'Already there: %s', 'nabia' ), $page['title'] );
+			/* translators: 1: page title, 2: address */
+			$log[] = sprintf( __( 'Already there: %1$s (/%2$s/)', 'nabia' ), $page['title'], get_page_uri( $existing ) );
 			continue;
 		}
 
@@ -258,7 +286,7 @@ function nabia_setup_screen() {
 			<thead><tr><th><?php esc_html_e( 'Page', 'nabia' ); ?></th><th><?php esc_html_e( 'Status', 'nabia' ); ?></th></tr></thead>
 			<tbody>
 				<?php foreach ( nabia_setup_pages() as $page ) : ?>
-					<?php $existing = nabia_setup_find( $page['role'] ); ?>
+					<?php $existing = nabia_setup_locate( $page ); ?>
 					<tr>
 						<td><?php echo ! empty( $page['parent'] ) ? '&nbsp;&nbsp;&nbsp;&#8627; ' : ''; ?><?php echo esc_html( $page['title'] ); ?></td>
 						<td>
@@ -376,8 +404,12 @@ function nabia_setup_seo() {
  */
 function nabia_setup_fill_seo() {
 	$filled = 0;
+	$pages  = array();
+	foreach ( nabia_setup_pages() as $setup_page ) {
+		$pages[ $setup_page['role'] ] = $setup_page;
+	}
 	foreach ( nabia_setup_seo() as $role => $meta ) {
-		$page = nabia_setup_find( $role );
+		$page = isset( $pages[ $role ] ) ? nabia_setup_locate( $pages[ $role ] ) : null;
 		if ( ! $page ) {
 			continue;
 		}

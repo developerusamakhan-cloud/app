@@ -65,6 +65,11 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.23.1
+
+- **Nabia Setup recognises pages you made yourself**, including common alternative addresses such as /services/monthly-website-maintenance/. It no longer creates duplicates, new service pages are placed under your existing Services page, and "Fill in missing SEO titles & descriptions" works on your own pages too.
+- Theme links to service pages also find these alternative addresses.
+
 ## What's new in 2.23
 
 - **New service: Church & Nonprofit Websites**, with its own full service page (features, what you get, pricing, FAQ, schema) built around "church website design", the lowest-competition keyword in the October advisory. Create it in Appearance, Nabia Setup ("Create pages only"), or make a page with the "Service: Church & Nonprofit Websites" template. It appears in the services grid (as a wide card on desktop), the menu and the footer.

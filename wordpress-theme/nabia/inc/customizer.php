@@ -147,6 +147,7 @@ function nabia_customize_register( $wp_customize ) {
 		'audit_points'       => array( 'nabia_audit', 'textarea', __( 'What you check (comma separated)', 'nabia' ) ),
 		'audit_shortcode'    => array( 'nabia_audit', 'text', __( 'Use my own form instead (shortcode, optional)', 'nabia' ) ),
 		'enable_popup'       => array( 'nabia_audit', 'checkbox', __( 'Show the free audit popup (once every 24 hours per visitor)', 'nabia' ) ),
+		'lock_share'         => array( 'nabia_general', 'checkbox', __( 'Lock social sharing: always share the page’s featured image (or the share image below) with its SEO title and meta description, ignoring older social images and descriptions saved in Rank Math or Yoast', 'nabia' ) ),
 		'share_image'        => array( 'nabia_general', 'image', __( 'Social share image (1200 x 630). Shown when a page is shared on WhatsApp, Facebook, LinkedIn or X and has no featured image. Empty = the built in brand image.', 'nabia' ) ),
 		'enable_cookies'     => array( 'nabia_general', 'checkbox', __( 'Show the cookie consent popup (the choice is saved for 6 months)', 'nabia' ) ),
 		'cookie_title'       => array( 'nabia_general', 'text', __( 'Cookie popup: title', 'nabia' ) ),

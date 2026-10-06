@@ -65,6 +65,10 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.22
+
+- **Lock social sharing (on by default).** WhatsApp, Facebook, LinkedIn and X now always show the page's featured image (or the brand share image) with the page's SEO title and meta description. Older custom social images and descriptions saved in Rank Math or Yoast (the Social tab, homepage settings or the default OpenGraph image) no longer override what you set in the editor. Only one share image is output per page. Turn it off in Customize, Nabia Theme, General if you ever want different social text.
+
 ## What's new in 2.21.3
 
 - **Sharp featured images on project cards.** When a project has no screenshot yet (or its website blocks screenshot tools), the card now uses the full featured image instead of WordPress's "large" size, which squeezed long full-page images into a narrow, blurry strip.

@@ -187,6 +187,136 @@ add_filter( 'rank_math/opengraph/facebook/image', 'nabia_rankmath_share_image' )
 add_filter( 'rank_math/opengraph/twitter/image', 'nabia_rankmath_share_image' );
 
 /**
+ * "Lock social sharing" (Customize > Nabia Theme > General, on by default): when a link is
+ * shared on WhatsApp, Facebook, LinkedIn or X, always show the page's featured image (or the
+ * brand share image) and the page's SEO title and meta description. Older custom social
+ * images and descriptions saved in Rank Math or Yoast (Social tab, homepage settings,
+ * default OpenGraph image) are ignored, so every share matches what you see in the editor.
+ *
+ * @return bool
+ */
+function nabia_share_locked() {
+	return nabia_seo_plugin_active() && (bool) nabia_mod( 'lock_share' ) && ! is_admin();
+}
+
+/**
+ * Rank Math: always add our image, even when Rank Math found none.
+ *
+ * @param object $images Rank Math image collection.
+ */
+function nabia_rankmath_lock_add_image( $images ) {
+	if ( nabia_share_locked() && is_object( $images ) && method_exists( $images, 'has_images' ) && ! $images->has_images() && method_exists( $images, 'add_image' ) ) {
+		$images->add_image( array( 'url' => nabia_share_image()['url'] ) );
+	}
+}
+add_action( 'rank_math/opengraph/facebook/add_additional_images', 'nabia_rankmath_lock_add_image' );
+add_action( 'rank_math/opengraph/twitter/add_additional_images', 'nabia_rankmath_lock_add_image' );
+
+/**
+ * Rank Math: replace whatever image it picked with ours, and output it only once.
+ *
+ * @param array  $attachment Image data.
+ * @param string $network    facebook or twitter.
+ * @return array
+ */
+function nabia_rankmath_lock_image( $attachment, $network ) {
+	static $done = array();
+	if ( ! nabia_share_locked() ) {
+		return $attachment;
+	}
+	if ( ! empty( $done[ $network ] ) ) {
+		return array(); // Only one image: no older images after ours.
+	}
+	$done[ $network ] = true;
+	$image            = nabia_share_image();
+	return array_filter(
+		array(
+			'url'    => $image['url'],
+			'width'  => $image['width'],
+			'height' => $image['height'],
+			'alt'    => $image['alt'],
+		)
+	);
+}
+add_filter(
+	'rank_math/opengraph/facebook/image_array',
+	function ( $attachment ) {
+		return nabia_rankmath_lock_image( $attachment, 'facebook' );
+	}
+);
+add_filter(
+	'rank_math/opengraph/twitter/image_array',
+	function ( $attachment ) {
+		return nabia_rankmath_lock_image( $attachment, 'twitter' );
+	}
+);
+
+/**
+ * The SEO plugin's own meta description and title for this page.
+ *
+ * @param string $field description or title.
+ * @return string
+ */
+function nabia_seo_plugin_meta( $field ) {
+	$value = '';
+	if ( class_exists( '\RankMath\Paper\Paper' ) ) {
+		$paper = \RankMath\Paper\Paper::get();
+		$value = 'title' === $field ? $paper->get_title() : $paper->get_description();
+	} elseif ( function_exists( 'YoastSEO' ) ) {
+		$meta  = YoastSEO()->meta->for_current_page();
+		$value = $meta ? ( 'title' === $field ? $meta->title : $meta->description ) : '';
+	}
+	$value = trim( wp_strip_all_tags( html_entity_decode( (string) $value, ENT_QUOTES ) ) );
+	return '' !== $value ? $value : ( 'title' === $field ? '' : nabia_share_description() );
+}
+
+/**
+ * Use the SEO description for shares (locked mode).
+ *
+ * @param string $text Description the plugin picked.
+ * @return string
+ */
+function nabia_lock_share_description( $text ) {
+	return nabia_share_locked() ? nabia_seo_plugin_meta( 'description' ) : $text;
+}
+
+/**
+ * Use the SEO title for shares (locked mode).
+ *
+ * @param string $text Title the plugin picked.
+ * @return string
+ */
+function nabia_lock_share_title( $text ) {
+	if ( ! nabia_share_locked() ) {
+		return $text;
+	}
+	$title = nabia_seo_plugin_meta( 'title' );
+	return $title ? $title : $text;
+}
+add_filter( 'rank_math/opengraph/facebook/og_description', 'nabia_lock_share_description' );
+add_filter( 'rank_math/opengraph/twitter/twitter_description', 'nabia_lock_share_description' );
+add_filter( 'rank_math/opengraph/facebook/og_title', 'nabia_lock_share_title' );
+add_filter( 'rank_math/opengraph/twitter/twitter_title', 'nabia_lock_share_title' );
+
+// Yoast SEO.
+add_filter( 'wpseo_opengraph_desc', 'nabia_lock_share_description' );
+add_filter( 'wpseo_twitter_description', 'nabia_lock_share_description' );
+add_filter( 'wpseo_opengraph_title', 'nabia_lock_share_title' );
+add_filter( 'wpseo_twitter_title', 'nabia_lock_share_title' );
+
+/**
+ * Yoast: always our image (locked mode).
+ *
+ * @param string $url Image URL.
+ * @return string
+ */
+function nabia_yoast_lock_image( $url ) {
+	return nabia_share_locked() ? nabia_share_image()['url'] : $url;
+}
+add_filter( 'wpseo_opengraph_image', 'nabia_yoast_lock_image' );
+add_filter( 'wpseo_twitter_image', 'nabia_yoast_lock_image' );
+
+/**
  * The service shown on the page being viewed (service pages only).
  *
  * @return array|null

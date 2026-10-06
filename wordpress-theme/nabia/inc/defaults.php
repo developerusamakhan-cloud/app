@@ -111,6 +111,7 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 		'enable_popup'       => true,
 		'enable_cookies'     => true,
 		'share_image'        => '',
+		'lock_share'         => true,
 		'cookie_title'       => 'A few cookies, if that is okay?',
 		'cookie_text'        => 'I use cookies to keep this site running smoothly and, with your okay, to see which pages help people most. You choose what is on.',
 		'popup_delay'        => '15',

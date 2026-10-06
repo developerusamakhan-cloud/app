@@ -1,0 +1,70 @@
+<!--
+{
+  "title": "WordPress Backup: How to Back Up Your Site Properly (and Restore It)",
+  "slug": "wordpress-backup",
+  "seo_title": "WordPress Backup: How to Back Up and Restore Properly",
+  "meta_description": "How to back up a WordPress site the right way: what to include, how often, where to store it, the 3-2-1 rule and how to test a restore before you need it.",
+  "excerpt": "Do you have a WordPress backup you could restore today? Here is how to set up backups properly: what to include, how often, where to keep them and how to test a restore.",
+  "keyword": "wordpress backup",
+  "category": "Website Care",
+  "tags": ["wordpress backup", "website backup", "wordpress maintenance"],
+  "service": "website-maintenance",
+  "cover_alt": "WordPress backup and restore guide",
+  "graphic": {
+    "file": "wordpress-backup-3-2-1-rule.jpg",
+    "style": "stat",
+    "title": "The 3-2-1 backup rule",
+    "items": ["3 copies of your site", "2 different storage places", "1 copy off your server, in the cloud", "Test a restore every 3 months"]
+  },
+  "faq": [
+    ["How often should I back up my WordPress site?", "Daily for online stores and sites that change often, weekly for simple sites. Always take an extra backup right before updates or big changes."],
+    ["Is my web host's backup enough?", "It is a good extra layer, but not enough on its own. Host backups can be kept for a short time, may cost money to restore and disappear if the hosting account has a problem. Keep your own off-site copy too."],
+    ["What should a WordPress backup include?", "Both the database (posts, pages, settings, orders) and the files (uploads, themes, plugins and configuration). A backup missing either part cannot fully restore your site."]
+  ]
+}
+-->
+<p><strong>Quick answer:</strong> a proper WordPress backup includes <strong>both the database and all files</strong>, runs <strong>automatically</strong> (daily for stores, weekly for simple sites), is stored <strong>off your server</strong> and is <strong>tested</strong> by actually restoring it now and then. Follow the 3-2-1 rule: three copies, two places, one off-site.</p>
+
+<p>"Do you have a backup?" is the first question I ask when someone calls with a broken or hacked site. The answer is often "I think the host does that". Sometimes they do. Sometimes the latest copy is three weeks old, or includes the malware, or costs $150 to restore. Let's make sure that is not you.</p>
+
+<figure><img src="{{img:wordpress-backup-3-2-1-rule.jpg}}" alt="The 3-2-1 backup rule for WordPress websites"><figcaption>Simple rule, huge peace of mind.</figcaption></figure>
+
+<h2>What a WordPress backup must include</h2>
+<ul>
+<li><strong>The database:</strong> posts, pages, settings, users, comments, form entries and WooCommerce orders.</li>
+<li><strong>The files:</strong> the uploads folder with your images, themes, plugins and configuration files.</li>
+</ul>
+<p>A backup with only one of these is not a real backup.</p>
+
+<h2>How often</h2>
+<ul>
+<li><strong>Online stores and membership sites:</strong> daily, or in real time for orders</li>
+<li><strong>Business sites updated weekly:</strong> daily or weekly</li>
+<li><strong>Simple sites that rarely change:</strong> weekly</li>
+<li><strong>Always:</strong> right before updates and big changes</li>
+</ul>
+
+<h2>Where to store backups</h2>
+<p>Never only on the same server as the website. If the server fails or the account gets hacked, the backups go with it. Use cloud storage such as Google Drive, Dropbox or Amazon S3, which most backup plugins support.</p>
+
+<h2>Three ways to back up WordPress</h2>
+
+<h3>1. Your host's backups</h3>
+<p>Convenient and often automatic. Check how long copies are kept and whether restores are free.</p>
+
+<h3>2. A backup plugin</h3>
+<p>Schedules backups and sends them to cloud storage. Choose a reputable, actively maintained plugin, and do not run two at once.</p>
+
+<h3>3. A maintenance plan</h3>
+<p>Someone else handles backups, stores them off-site and restores them when needed. That is part of every <a href="{{service:website-maintenance}}">maintenance plan I offer</a>.</p>
+
+<h2>Test your restore</h2>
+<p>Every three months, restore a backup to a staging site and click around. It is the only way to know your backups actually work. Many people discover their backups were incomplete only when they need them.</p>
+
+<h2>How long to keep backups</h2>
+<p>Keep at least 30 days of history. Malware can sit unnoticed for weeks, so the most recent backup may already be infected. Older clean copies give you a way back.</p>
+
+<h2>Backups are part of a bigger routine</h2>
+<p>Backups work best alongside updates and security. Read <a href="{{post:wordpress-security}}">WordPress security: 15 steps</a> and <a href="{{post:wordpress-maintenance}}">the complete WordPress maintenance guide</a>.</p>
+
+<p>Not sure whether your site is backed up properly? <a href="{{contact}}">Ask me</a> and I will check, or see <a href="{{page:pricing}}">care plan prices</a> to have it handled every month.</p>

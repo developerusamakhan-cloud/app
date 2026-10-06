@@ -85,7 +85,28 @@ function nbi_target_url( $target ) {
 	switch ( $type ) {
 		case 'service':
 			$url = function_exists( 'nabia_service_url' ) ? nabia_service_url( $key ) : '';
-			return $url ? $url : $page( array( 'services/' . $key, $key ) );
+			if ( $url ) {
+				return $url;
+			}
+			// Other names the same service page may have.
+			$aliases = apply_filters(
+				'nbi_service_aliases',
+				array(
+					'website-maintenance'   => array( 'monthly-website-maintenance', 'care-maintenance', 'care-and-maintenance', 'website-care', 'maintenance' ),
+					'speed-seo'             => array( 'speed-and-seo', 'speed-seo-optimization', 'seo' ),
+					'church-websites'       => array( 'church-website-design', 'church-websites-design', 'churches', 'church-and-nonprofit-websites', 'nonprofit-websites' ),
+					'nonprofit-websites'    => array( 'nonprofit-website-design', 'church-and-nonprofit-websites', 'church-websites' ),
+					'shopify-woocommerce'   => array( 'shopify-and-woocommerce', 'ecommerce', 'online-stores' ),
+					'wordpress-development' => array( 'wordpress-developer', 'wordpress' ),
+					'web-design'            => array( 'website-design' ),
+				)
+			);
+			$paths = array( 'services/' . $key, $key );
+			foreach ( isset( $aliases[ $key ] ) ? $aliases[ $key ] : array() as $alias ) {
+				$paths[] = 'services/' . $alias;
+				$paths[] = $alias;
+			}
+			return $page( $paths );
 		case 'page':
 			$url = function_exists( 'nabia_page_url' ) ? nabia_page_url( $key ) : '';
 			$alt = array(
@@ -143,7 +164,7 @@ function nbi_build_content( $source ) {
 	);
 
 	// One block per paragraph, heading and list, so everything is editable in the block editor.
-	preg_match_all( '#<(p|h2|h3|h4|ul|ol|blockquote)\b[^>]*>.*?</\1>#is', $html, $found, PREG_SET_ORDER );
+	preg_match_all( '#<(p|h2|h3|h4|ul|ol|blockquote|figure)\b[^>]*>.*?</\1>#is', $html, $found, PREG_SET_ORDER );
 	$out = array();
 	foreach ( $found as $el ) {
 		$tag   = strtolower( $el[1] );
@@ -154,6 +175,9 @@ function nbi_build_content( $source ) {
 			$level = (int) substr( $tag, 1 );
 			$block = preg_replace( '#^<(h[234])>#i', '<$1 class="wp-block-heading">', $block );
 			$out[] = ( 2 === $level ? '<!-- wp:heading -->' : '<!-- wp:heading {"level":' . $level . '} -->' ) . "\n" . $block . "\n<!-- /wp:heading -->";
+		} elseif ( 'figure' === $tag ) {
+			$id    = preg_match( '/wp-image-(\d+)/', $block, $im ) ? (int) $im[1] : 0;
+			$out[] = '<!-- wp:image {"id":' . $id . ',"sizeSlug":"large","linkDestination":"none"} -->' . "\n" . $block . "\n<!-- /wp:image -->";
 		} elseif ( 'blockquote' === $tag ) {
 			$out[] = "<!-- wp:html -->\n" . $block . "\n<!-- /wp:html -->";
 		} else {
@@ -215,31 +239,81 @@ function nbi_terms( $names, $taxonomy ) {
  * @param string $file    Cover file in the pack.
  * @param string $title   Article title (alt text).
  */
-function nbi_add_cover( $post_id, $file, $title ) {
+function nbi_add_cover( $post_id, $file, $title, $alt = '' ) {
 	if ( ! $file || ! file_exists( $file ) || has_post_thumbnail( $post_id ) ) {
 		return;
 	}
+	$attachment = nbi_upload_image( $file, $post_id, $title, $alt ? $alt : $title );
+	if ( $attachment ) {
+		set_post_thumbnail( $post_id, $attachment );
+	}
+}
+
+/**
+ * Copy an image from a pack into the Media Library with its title, alt text and caption.
+ * The file keeps its descriptive name (good for image search).
+ *
+ * @param string $file    Image in the pack.
+ * @param int    $post_id Post it belongs to.
+ * @param string $title   Title.
+ * @param string $alt     Alt text.
+ * @param string $caption Caption.
+ * @return int Attachment ID or 0.
+ */
+function nbi_upload_image( $file, $post_id, $title, $alt, $caption = '' ) {
 	$upload = wp_upload_bits( wp_basename( $file ), null, file_get_contents( $file ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 	if ( ! empty( $upload['error'] ) ) {
-		return;
+		return 0;
 	}
 	$type       = wp_check_filetype( $upload['file'] );
 	$attachment = wp_insert_attachment(
 		array(
 			'post_mime_type' => $type['type'],
-			'post_title'     => $title,
+			'post_title'     => wp_strip_all_tags( $title ),
+			'post_excerpt'   => wp_strip_all_tags( $caption ),
+			'post_content'   => wp_strip_all_tags( $alt ),
 			'post_status'    => 'inherit',
 		),
 		$upload['file'],
 		$post_id
 	);
 	if ( ! $attachment || is_wp_error( $attachment ) ) {
-		return;
+		return 0;
 	}
 	require_once ABSPATH . 'wp-admin/includes/image.php';
 	wp_update_attachment_metadata( $attachment, wp_generate_attachment_metadata( $attachment, $upload['file'] ) );
-	update_post_meta( $attachment, '_wp_attachment_image_alt', wp_strip_all_tags( $title ) );
-	set_post_thumbnail( $post_id, $attachment );
+	update_post_meta( $attachment, '_wp_attachment_image_alt', wp_strip_all_tags( $alt ) );
+	return (int) $attachment;
+}
+
+/**
+ * Upload the images used inside an article and put their real addresses in its HTML.
+ * Written in a pack as:
+ *   <figure><img src="{{img:file.jpg}}" alt="..."><figcaption>...</figcaption></figure>
+ *
+ * @param string $source  Article HTML.
+ * @param string $pack_id Pack ID.
+ * @param int    $post_id Post ID.
+ * @param string $title   Article title.
+ * @return string
+ */
+function nbi_prepare_images( $source, $pack_id, $post_id, $title ) {
+	return preg_replace_callback(
+		'#<figure>\s*<img src="\{\{img:([^}"]+)\}\}" alt="([^"]*)"\s*/?>\s*(?:<figcaption>(.*?)</figcaption>)?\s*</figure>#is',
+		function ( $m ) use ( $pack_id, $post_id, $title ) {
+			$file = nbi_pack_image( $pack_id, $m[1] );
+			$alt  = html_entity_decode( $m[2], ENT_QUOTES );
+			$cap  = isset( $m[3] ) ? $m[3] : '';
+			$id   = $file ? nbi_upload_image( $file, $post_id, $alt ? $alt : $title, $alt, wp_strip_all_tags( $cap ) ) : 0;
+			if ( ! $id ) {
+				return '';
+			}
+			$src = wp_get_attachment_image_url( $id, 'large' );
+			return '<figure class="wp-block-image size-large"><img src="' . esc_url( $src ) . '" alt="' . esc_attr( $alt ) . '" class="wp-image-' . $id . '"/>'
+				. ( '' !== trim( $cap ) ? '<figcaption class="wp-element-caption">' . $cap . '</figcaption>' : '' ) . '</figure>';
+		},
+		$source
+	);
 }
 
 /**
@@ -310,7 +384,9 @@ function nbi_import( $pack_id, $o ) {
 			$postarr['post_status'] = 'draft';
 		}
 
-		$id = wp_insert_post( wp_slash( $postarr ), true );
+		// Placeholder images are uploaded after the post exists; insert without them first.
+		$postarr['post_content'] = nbi_build_content( preg_replace( '#<figure>\s*<img src="\{\{img:.*?</figure>#is', '', $source ) );
+		$id                      = wp_insert_post( wp_slash( $postarr ), true );
 		if ( is_wp_error( $id ) ) {
 			$report[] = array(
 				'title'  => $item['title'],
@@ -323,6 +399,17 @@ function nbi_import( $pack_id, $o ) {
 			continue;
 		}
 
+		if ( false !== strpos( $source, '{{img:' ) ) {
+			$source = nbi_prepare_images( $source, $pack_id, $id, $item['title'] );
+			wp_update_post(
+				wp_slash(
+					array(
+						'ID'           => $id,
+						'post_content' => nbi_build_content( $source ),
+					)
+				)
+			);
+		}
 		update_post_meta( $id, '_nbi_article', $item['slug'] );
 		update_post_meta( $id, '_nbi_pack', $pack_id );
 		update_post_meta( $id, '_nbi_source', wp_slash( $source ) );
@@ -338,13 +425,23 @@ function nbi_import( $pack_id, $o ) {
 				update_post_meta( $id, '_yoast_wpseo_focuskw', $item['keyword'] );
 				update_post_meta( $id, 'rank_math_focus_keyword', $item['keyword'] );
 			}
-			if ( $item['excerpt'] ) {
-				update_post_meta( $id, '_yoast_wpseo_metadesc', $item['excerpt'] );
-				update_post_meta( $id, 'rank_math_description', $item['excerpt'] );
+			$description = $item['meta_description'] ? $item['meta_description'] : $item['excerpt'];
+			if ( $description ) {
+				update_post_meta( $id, '_yoast_wpseo_metadesc', $description );
+				update_post_meta( $id, 'rank_math_description', $description );
+			}
+			if ( $item['seo_title'] ) {
+				// Rank Math and Yoast add your site name with their own separator variables.
+				update_post_meta( $id, 'rank_math_title', $item['seo_title'] . ' %sep% %sitename%' );
+				update_post_meta( $id, '_yoast_wpseo_title', $item['seo_title'] . ' %%sep%% %%sitename%%' );
+				update_post_meta( $id, '_nbi_seo_title', $item['seo_title'] );
+			}
+			if ( $description ) {
+				update_post_meta( $id, '_nbi_description', $description );
 			}
 		}
 		if ( ! empty( $o['cover'] ) ) {
-			nbi_add_cover( $id, $item['cover'], $item['title'] );
+			nbi_add_cover( $id, $item['cover'], $item['title'], $item['cover_alt'] );
 		}
 
 		$post     = get_post( $id );
@@ -355,6 +452,7 @@ function nbi_import( $pack_id, $o ) {
 			'status' => $post->post_status,
 			'date'   => $post->post_date,
 			'note'   => '',
+			'checks' => nbi_checks( $id, $item, $source ),
 		);
 	}
 
@@ -384,15 +482,11 @@ function nbi_refresh_links() {
 		if ( $content === $post->post_content ) {
 			continue;
 		}
-		remove_action( 'transition_post_status', 'nbi_on_publish', 10 );
-		wp_update_post(
-			array(
-				'ID'           => $post->ID,
-				'post_content' => wp_slash( $content ),
-			)
-		);
-		add_action( 'transition_post_status', 'nbi_on_publish', 10, 3 );
-		update_post_meta( $post->ID, '_nbi_hash', md5( get_post_field( 'post_content', $post->ID, 'raw' ) ) );
+		// Only the content changes: status, dates and author stay exactly as they are.
+		global $wpdb;
+		$wpdb->update( $wpdb->posts, array( 'post_content' => $content ), array( 'ID' => $post->ID ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		clean_post_cache( $post->ID );
+		update_post_meta( $post->ID, '_nbi_hash', md5( $content ) );
 	}
 }
 
@@ -476,3 +570,59 @@ function nbi_faq_schema() {
 	}
 }
 add_action( 'wp_head', 'nbi_faq_schema', 5 );
+
+/**
+ * Without Yoast or Rank Math, use the article's SEO title as the page title.
+ *
+ * @param array $parts Title parts.
+ * @return array
+ */
+function nbi_document_title( $parts ) {
+	if ( defined( 'WPSEO_VERSION' ) || class_exists( 'RankMath' ) || ! is_singular( 'post' ) ) {
+		return $parts;
+	}
+	$title = get_post_meta( get_queried_object_id(), '_nbi_seo_title', true );
+	if ( $title ) {
+		$parts['title'] = $title;
+	}
+	return $parts;
+}
+add_filter( 'document_title_parts', 'nbi_document_title' );
+
+/**
+ * What was set on an imported article, for the result table.
+ *
+ * @param int    $id     Post ID.
+ * @param array  $item   Article.
+ * @param string $source Article HTML.
+ * @return string[]
+ */
+function nbi_checks( $id, $item, $source ) {
+	$content = get_post_field( 'post_content', $id, 'raw' );
+	$links   = preg_match_all( '#\{\{[a-z]+(:[a-z0-9_-]+)?\}\}#i', $source );
+	$live    = preg_match_all( '#<a href="#', $content );
+	$checks  = array();
+	if ( get_post_meta( $id, '_nbi_seo_title', true ) ) {
+		$checks[] = __( 'SEO title', 'nabia-blog-importer' );
+	}
+	if ( get_post_meta( $id, '_nbi_description', true ) ) {
+		$checks[] = __( 'meta description', 'nabia-blog-importer' );
+	}
+	if ( get_post_meta( $id, '_nabia_keyword', true ) ) {
+		$checks[] = __( 'focus keyword', 'nabia-blog-importer' );
+	}
+	if ( has_post_thumbnail( $id ) ) {
+		$checks[] = __( 'cover image', 'nabia-blog-importer' );
+	}
+	$images = substr_count( $content, 'wp-block-image' );
+	if ( $images ) {
+		/* translators: %d: number of images */
+		$checks[] = sprintf( _n( '%d image in article', '%d images in article', $images, 'nabia-blog-importer' ), $images );
+	}
+	if ( ! empty( $item['faq'] ) ) {
+		$checks[] = __( 'FAQ + schema', 'nabia-blog-importer' );
+	}
+	/* translators: 1: live links, 2: all links */
+	$checks[] = sprintf( __( '%1$d of %2$d links live (the rest appear when their pages go live)', 'nabia-blog-importer' ), $live, $links );
+	return $checks;
+}

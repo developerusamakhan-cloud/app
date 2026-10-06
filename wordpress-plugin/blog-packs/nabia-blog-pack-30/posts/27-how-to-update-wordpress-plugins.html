@@ -1,0 +1,71 @@
+<!--
+{
+  "title": "How to Update WordPress Plugins Without Breaking Your Site",
+  "slug": "how-to-update-wordpress-plugins",
+  "seo_title": "How to Update WordPress Plugins Without Breaking Things",
+  "meta_description": "A safe, step-by-step way to update WordPress plugins, themes and core: backups, staging, update order, what to check afterwards and how to roll back.",
+  "excerpt": "Plugin updates fix security holes, but they can also break your site. Here is the safe routine I use: backup, staging, the right order, checks afterwards and how to roll back if something goes wrong.",
+  "keyword": "how to update wordpress plugins",
+  "category": "Website Care",
+  "tags": ["wordpress updates", "update plugins", "wordpress maintenance"],
+  "service": "website-maintenance",
+  "cover_alt": "How to update WordPress plugins safely",
+  "graphic": {
+    "file": "safe-wordpress-update-routine.jpg",
+    "style": "steps",
+    "title": "Safe WordPress update routine",
+    "items": ["Take a fresh backup", "Read the changelogs", "Update on staging first", "One plugin at a time", "Check key pages, forms, checkout", "Roll back if anything breaks"]
+  },
+  "faq": [
+    ["How often should I update WordPress plugins?", "Check for updates weekly. Apply security updates as soon as possible, and other updates within a week or two after testing."],
+    ["Should I enable automatic plugin updates?", "On simple sites with good backups, automatic updates are usually fine. On online stores and complex sites, test updates first so a bad update cannot break checkout."],
+    ["What do I do if a plugin update breaks my site?", "Restore your latest backup or roll the plugin back to the previous version, then contact the plugin developer or a WordPress developer before trying again."]
+  ]
+}
+-->
+<p><strong>Quick answer:</strong> to update WordPress plugins safely, <strong>take a fresh backup</strong>, <strong>read the changelogs</strong>, update on a <strong>staging copy</strong> first if your site is important, update <strong>one plugin at a time</strong>, then <strong>check key pages, forms and checkout</strong>. If anything breaks, <strong>roll back</strong> from the backup or to the previous plugin version.</p>
+
+<p>Skipping updates leaves security holes open. Clicking "update all" on a live store on a Friday afternoon is how weekends get ruined. Here is the middle path I use for client sites.</p>
+
+<figure><img src="{{img:safe-wordpress-update-routine.jpg}}" alt="Six-step safe WordPress update routine"><figcaption>Ten minutes of routine prevents hours of emergency repairs.</figcaption></figure>
+
+<h2>Step 1: Take a fresh backup</h2>
+<p>Even if you have automatic backups, take one right before updating. Files and database. See <a href="{{post:wordpress-backup}}">WordPress backup done properly</a>.</p>
+
+<h2>Step 2: Read the changelogs</h2>
+<p>A quick look tells you whether an update is a small fix or a major new version. Major versions of page builders, WooCommerce and form plugins deserve extra care.</p>
+
+<h2>Step 3: Use staging for important sites</h2>
+<p>Many hosts offer a one-click staging copy. Update there first, check everything, then update the live site. For online stores this step is not optional.</p>
+
+<h2>Step 4: Update in the right order, one at a time</h2>
+<ol>
+<li>Plugins, one by one, checking the site after each</li>
+<li>The theme</li>
+<li>WordPress core</li>
+</ol>
+<p>One at a time means that if something breaks, you know exactly which update caused it.</p>
+
+<h2>Step 5: Check what matters</h2>
+<ul>
+<li>Homepage and a few key pages on desktop and phone</li>
+<li>Contact forms: submit one</li>
+<li>Checkout: place a test order on stores</li>
+<li>Logins and member areas</li>
+</ul>
+
+<h2>Step 6: Roll back if needed</h2>
+<p>Restore the backup, or use a rollback tool to return the plugin to its previous version. Then report the issue to the plugin developer and wait for a fix.</p>
+
+<h2>What about automatic updates?</h2>
+<p>Minor WordPress core updates are safe to automate. Automatic plugin updates suit simple sites with daily backups. Stores and complex sites should keep updates manual and tested.</p>
+
+<h2>Signs a plugin is a risk</h2>
+<ul>
+<li>Not updated for over a year</li>
+<li>Few active installs and poor support replies</li>
+<li>Warnings in WordPress about compatibility</li>
+</ul>
+<p>Replace risky plugins before they become a security problem; see <a href="{{post:wordpress-security}}">WordPress security: 15 steps</a>.</p>
+
+<p>Updates are the heart of every <a href="{{service:website-maintenance}}">website maintenance plan</a> I run: backups first, tested updates, checks afterwards and a report. See <a href="{{page:pricing}}">care plan prices</a> or read <a href="{{post:wordpress-maintenance}}">the complete WordPress maintenance guide</a>.</p>

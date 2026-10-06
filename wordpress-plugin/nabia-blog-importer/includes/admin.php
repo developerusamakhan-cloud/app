@@ -82,6 +82,16 @@ function nbi_admin_screen() {
 			$notice = sprintf( __( 'Pack "%1$s" added with %2$d articles. Choose how to publish them below.', 'nabia-blog-importer' ), $packs[ $result ]['name'], $packs[ $result ]['count'] );
 			$_GET['pack'] = $result; // Show the import form straight away.
 		}
+	} elseif ( 'incoming' === $action && isset( $_POST['file'] ) ) {
+		$result = nbi_add_incoming( sanitize_file_name( wp_unslash( $_POST['file'] ) ) );
+		if ( is_wp_error( $result ) ) {
+			$error = $result->get_error_message();
+		} else {
+			$packs = nbi_get_packs();
+			/* translators: 1: pack name, 2: number of articles */
+			$notice       = sprintf( __( 'Pack "%1$s" added with %2$d articles. Choose how to publish them below.', 'nabia-blog-importer' ), $packs[ $result ]['name'], $packs[ $result ]['count'] );
+			$_GET['pack'] = $result;
+		}
 	} elseif ( 'delete' === $action && isset( $_POST['pack'] ) ) {
 		nbi_delete_pack( sanitize_text_field( wp_unslash( $_POST['pack'] ) ) );
 		$notice = __( 'Pack deleted. Articles already imported from it stay on your site.', 'nabia-blog-importer' );
@@ -157,6 +167,9 @@ function nbi_admin_screen() {
 									<?php if ( $row['note'] ) : ?>
 										<br><small class="nbi-muted"><?php echo esc_html( $row['note'] ); ?></small>
 									<?php endif; ?>
+									<?php if ( ! empty( $row['checks'] ) ) : ?>
+										<br><small style="color:#166534">&#10003; <?php echo esc_html( implode( ' · ', $row['checks'] ) ); ?></small>
+									<?php endif; ?>
 								</td>
 								<td><?php if ( $row['status'] ) : ?><span class="nbi-pill <?php echo esc_attr( $row['status'] ); ?>"><?php echo esc_html( nbi_status_label( $row['status'] ) ); ?></span><?php endif; ?></td>
 								<td><?php echo $row['date'] && 'draft' !== $row['status'] ? esc_html( wp_date( get_option( 'date_format' ) . ', ' . get_option( 'time_format' ), strtotime( get_gmt_from_date( $row['date'] ) ) ) ) : ''; ?></td>
@@ -177,7 +190,26 @@ function nbi_admin_screen() {
 					<input type="file" name="nbi_pack" accept=".zip,application/zip" required>
 					<button class="button button-primary"><?php esc_html_e( 'Upload pack', 'nabia-blog-importer' ); ?></button>
 				</form>
-				<p class="nbi-muted"><?php esc_html_e( 'Upload the .zip file exactly as you received it. Do not unzip it first.', 'nabia-blog-importer' ); ?></p>
+				<p class="nbi-muted"><?php echo esc_html( sprintf( /* translators: %s: size */ __( 'Upload the .zip file exactly as you received it. Do not unzip it first. Maximum upload size on your server: %s.', 'nabia-blog-importer' ), size_format( wp_max_upload_size() ) ) ); ?></p>
+
+				<details style="margin-top:14px">
+					<summary style="cursor:pointer;font-weight:600"><?php esc_html_e( 'Zip too big? Add a pack from your server', 'nabia-blog-importer' ); ?></summary>
+					<?php wp_mkdir_p( nbi_incoming_dir() ); ?>
+					<p><?php esc_html_e( 'Upload the zip with FTP or your hosting File Manager into this folder, then reload this page:', 'nabia-blog-importer' ); ?><br><code><?php echo esc_html( str_replace( wp_normalize_path( ABSPATH ), '/', wp_normalize_path( nbi_incoming_dir() ) ) ); ?>/</code></p>
+					<?php $nbi_incoming = nbi_incoming_files(); ?>
+					<?php if ( $nbi_incoming ) : ?>
+						<?php foreach ( $nbi_incoming as $nbi_file ) : ?>
+							<form method="post" style="margin:6px 0">
+								<?php wp_nonce_field( 'nbi_incoming' ); ?>
+								<input type="hidden" name="nbi_action" value="incoming">
+								<input type="hidden" name="file" value="<?php echo esc_attr( $nbi_file ); ?>">
+								<code><?php echo esc_html( $nbi_file ); ?></code> <button class="button button-primary"><?php esc_html_e( 'Add', 'nabia-blog-importer' ); ?></button>
+							</form>
+						<?php endforeach; ?>
+					<?php else : ?>
+						<p class="nbi-muted"><?php esc_html_e( 'No zip files in the folder yet.', 'nabia-blog-importer' ); ?></p>
+					<?php endif; ?>
+				</details>
 			</div>
 
 			<?php if ( $packs ) : ?>
@@ -221,7 +253,17 @@ function nbi_admin_screen() {
  */
 function nbi_import_form( $id, $pack ) {
 	$articles = nbi_pack_articles( $id );
-	$start    = new DateTimeImmutable( 'tomorrow 09:00', wp_timezone() );
+	// The pack can suggest a schedule (for example every 2 days, any weekday, 9 am).
+	$sched    = wp_parse_args(
+		isset( $pack['schedule'] ) ? (array) $pack['schedule'] : array(),
+		array(
+			'every'    => 2,
+			'unit'     => 'days',
+			'weekdays' => array( 1, 2, 3, 4, 5 ),
+			'time'     => '09:00',
+		)
+	);
+	$start    = new DateTimeImmutable( 'tomorrow ' . $sched['time'], wp_timezone() );
 	$days     = array(
 		1 => __( 'Mon', 'nabia-blog-importer' ),
 		2 => __( 'Tue', 'nabia-blog-importer' ),
@@ -285,13 +327,13 @@ function nbi_import_form( $id, $pack ) {
 				</div>
 				<div>
 					<label for="nbi-every"><?php esc_html_e( 'Then one article every', 'nabia-blog-importer' ); ?></label>
-					<input id="nbi-every" type="number" name="every" min="1" max="60" value="2" style="width:70px">
-					<select name="unit"><option value="days"><?php esc_html_e( 'days', 'nabia-blog-importer' ); ?></option><option value="weeks"><?php esc_html_e( 'weeks', 'nabia-blog-importer' ); ?></option></select>
+					<input id="nbi-every" type="number" name="every" min="1" max="60" value="<?php echo (int) $sched['every']; ?>" style="width:70px">
+					<select name="unit"><option value="days"><?php esc_html_e( 'days', 'nabia-blog-importer' ); ?></option><option value="weeks" <?php selected( $sched['unit'], 'weeks' ); ?>><?php esc_html_e( 'weeks', 'nabia-blog-importer' ); ?></option></select>
 				</div>
 				<div class="nbi-days">
 					<label><?php esc_html_e( 'Only on these days', 'nabia-blog-importer' ); ?></label>
 					<?php foreach ( $days as $num => $label ) : ?>
-						<label><input type="checkbox" name="weekdays[]" value="<?php echo (int) $num; ?>" <?php checked( $num <= 5 ); ?>> <?php echo esc_html( $label ); ?></label>
+						<label><input type="checkbox" name="weekdays[]" value="<?php echo (int) $num; ?>" <?php checked( in_array( $num, array_map( 'intval', (array) $sched['weekdays'] ), true ) ); ?>> <?php echo esc_html( $label ); ?></label>
 					<?php endforeach; ?>
 				</div>
 				<div>

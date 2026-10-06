@@ -6,6 +6,7 @@
  *   pack.json            optional: { "name": "...", "description": "..." }
  *   posts/*.html         one article per file (JSON details in a comment at the top)
  *   covers/<slug>.jpg    optional cover image per article (jpg, png or webp)
+ *   images/*.jpg         optional images used inside articles: <img src="{{img:file.jpg}}">
  *
  * Only .html, .json and image files are kept; everything else in the zip is ignored.
  * Packs are stored in wp-content/uploads/nabia-blog-packs/<pack-id>/.
@@ -44,9 +45,73 @@ function nbi_get_packs() {
  * @return string|WP_Error Pack ID.
  */
 function nbi_add_pack( $file ) {
-	if ( empty( $file['tmp_name'] ) || ! is_uploaded_file( $file['tmp_name'] ) ) {
-		return new WP_Error( 'nbi_upload', __( 'No file was uploaded.', 'nabia-blog-importer' ) );
+	$error = isset( $file['error'] ) ? (int) $file['error'] : UPLOAD_ERR_NO_FILE;
+	if ( UPLOAD_ERR_INI_SIZE === $error || UPLOAD_ERR_FORM_SIZE === $error ) {
+		return new WP_Error(
+			'nbi_size',
+			sprintf(
+				/* translators: %s: maximum upload size */
+				__( 'This zip is bigger than your server allows for uploads (%s). Use "Add a pack from your server" below instead: upload the zip with FTP or your hosting File Manager, then click Add.', 'nabia-blog-importer' ),
+				size_format( wp_max_upload_size() )
+			)
+		);
 	}
+	if ( UPLOAD_ERR_OK !== $error || empty( $file['tmp_name'] ) || ! is_uploaded_file( $file['tmp_name'] ) ) {
+		return new WP_Error( 'nbi_upload', __( 'No file was uploaded. Please choose the blog pack .zip and try again.', 'nabia-blog-importer' ) );
+	}
+	return nbi_add_pack_from_file( $file['tmp_name'], (string) $file['name'] );
+}
+
+/**
+ * Folder where a pack can be placed by FTP when it is too big to upload in the browser.
+ *
+ * @return string
+ */
+function nbi_incoming_dir() {
+	return nbi_packs_dir() . '/incoming';
+}
+
+/**
+ * Zip files waiting in the incoming folder.
+ *
+ * @return string[] File names.
+ */
+function nbi_incoming_files() {
+	$files = glob( nbi_incoming_dir() . '/*.zip' );
+	return $files ? array_map( 'wp_basename', $files ) : array();
+}
+
+/**
+ * Add a pack from the incoming folder (and remove the zip from there).
+ *
+ * @param string $name File name.
+ * @return string|WP_Error Pack ID.
+ */
+function nbi_add_incoming( $name ) {
+	$name = wp_basename( $name );
+	$path = nbi_incoming_dir() . '/' . $name;
+	if ( ! preg_match( '/\.zip$/i', $name ) || ! file_exists( $path ) ) {
+		return new WP_Error( 'nbi_missing', __( 'That file is no longer in the folder.', 'nabia-blog-importer' ) );
+	}
+	$result = nbi_add_pack_from_file( $path, $name );
+	if ( ! is_wp_error( $result ) ) {
+		wp_delete_file( $path );
+	}
+	return $result;
+}
+
+/**
+ * Store a .zip file as a pack.
+ *
+ * @param string $zip  Path to the zip.
+ * @param string $name Original file name.
+ * @return string|WP_Error Pack ID.
+ */
+function nbi_add_pack_from_file( $zip, $name ) {
+	$file = array(
+		'tmp_name' => $zip,
+		'name'     => $name,
+	);
 	if ( ! preg_match( '/\.zip$/i', (string) $file['name'] ) ) {
 		return new WP_Error( 'nbi_type', __( 'Please upload the blog pack as a .zip file.', 'nabia-blog-importer' ) );
 	}
@@ -101,11 +166,22 @@ function nbi_add_pack( $file ) {
 	}
 
 	$packs        = nbi_get_packs();
+	$schedule = array();
+	if ( ! empty( $meta['schedule'] ) && is_array( $meta['schedule'] ) ) {
+		$sched    = $meta['schedule'];
+		$schedule = array(
+			'every'    => isset( $sched['every'] ) ? max( 1, min( 60, absint( $sched['every'] ) ) ) : 2,
+			'unit'     => isset( $sched['unit'] ) && 'weeks' === $sched['unit'] ? 'weeks' : 'days',
+			'weekdays' => isset( $sched['weekdays'] ) ? array_values( array_intersect( array_map( 'absint', (array) $sched['weekdays'] ), range( 1, 7 ) ) ) : range( 1, 7 ),
+			'time'     => isset( $sched['time'] ) && preg_match( '/^\d{2}:\d{2}$/', $sched['time'] ) ? $sched['time'] : '09:00',
+		);
+	}
 	$packs[ $id ] = array(
 		'name'        => ! empty( $meta['name'] ) ? sanitize_text_field( $meta['name'] ) : sanitize_text_field( preg_replace( '/\.zip$/i', '', $file['name'] ) ),
 		'description' => ! empty( $meta['description'] ) ? sanitize_text_field( $meta['description'] ) : '',
 		'uploaded'    => time(),
 		'count'       => $count,
+		'schedule'    => $schedule,
 	);
 	update_option( 'nbi_packs', $packs, false );
 	return $id;
@@ -160,7 +236,10 @@ function nbi_parse_article( $raw ) {
 	}
 	return array_merge(
 		array(
-			'excerpt'  => '',
+			'excerpt'          => '',
+			'seo_title'        => '',
+			'meta_description' => '',
+			'cover_alt'        => '',
 			'keyword'  => '',
 			'category' => '',
 			'tags'     => array(),
@@ -204,4 +283,16 @@ function nbi_pack_articles( $id ) {
 		$items[ $item['slug'] ] = $item;
 	}
 	return $items;
+}
+
+/**
+ * Path of an image in a pack (covers and article images are stored together).
+ *
+ * @param string $id   Pack ID.
+ * @param string $name File name.
+ * @return string Path or ''.
+ */
+function nbi_pack_image( $id, $name ) {
+	$path = nbi_packs_dir() . '/' . sanitize_file_name( $id ) . '/covers/' . strtolower( sanitize_file_name( wp_basename( $name ) ) );
+	return file_exists( $path ) ? $path : '';
 }

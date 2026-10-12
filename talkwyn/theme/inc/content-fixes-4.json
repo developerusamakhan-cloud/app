@@ -1,0 +1,415 @@
+{
+ "/sitemap/": {
+  "create": {
+   "path": "/sitemap/",
+   "title": "Sitemap",
+   "excerpt": "Every page on talkwyn.com in one place.",
+   "content": "<!-- wp:group {\"tagName\":\"section\",\"align\":\"full\",\"className\":\"tw-phero tw-phero--solo tw-blush tw-inset\",\"layout\":{\"type\":\"default\"}} -->\n<section class=\"wp-block-group alignfull tw-phero tw-phero--solo tw-blush tw-inset\"><!-- wp:html -->\n<div class=\"tw-phero__grid tw-phero__grid--solo\"><div class=\"tw-phero__text\"><div class=\"tw-phero__crumbs\">[tw_breadcrumbs]</div><div class=\"tw-phero__pills\"><p class=\"tw-eyebrow\"><span class=\"tw-dot\" aria-hidden=\"true\"></span>Sitemap</p></div><h1 class=\"wp-block-heading\">Talkwyn sitemap</h1><p class=\"tw-lede\">Every page on talkwyn.com in one place: product, pricing, integrations, industries, languages, comparisons, docs and the blog.</p></div></div>\n<!-- /wp:html --></section>\n<!-- /wp:group -->\n\n<!-- wp:group {\"tagName\":\"section\",\"align\":\"full\",\"className\":\"tw-section tw-section--tight tw-sitemap-section\",\"layout\":{\"type\":\"constrained\"}} -->\n<section class=\"wp-block-group alignfull tw-section tw-section--tight tw-sitemap-section\"><!-- wp:shortcode -->\n[rank_math_html_sitemap]\n<!-- /wp:shortcode --></section>\n<!-- /wp:group -->",
+   "template": "page-landing",
+   "seo_title": "Talkwyn Sitemap: Every Page on talkwyn.com in One Place",
+   "seo_desc": "Find any Talkwyn page fast: features, pricing, integrations, industries, languages, comparisons, setup docs and every blog guide, listed in one place.",
+   "noindex": false,
+   "post_type": "page",
+   "order": 0,
+   "doc_cat": "",
+   "category": "",
+   "meta": {},
+   "date": "",
+   "image": ""
+  },
+  "post_type": "page",
+  "focus_keywords": "talkwyn sitemap,html sitemap,site map,talkwyn pages,talkwyn site index"
+ },
+ "/": {
+  "focus_keywords": "ai chatbot for your website,website chatbot in every language,ai chatbot that answers visitors,talkwyn ai chatbot,ai website assistant",
+  "post_type": "page",
+  "previous": "ai chatbot for website,multilingual chatbot,wordpress chatbot plugin,ai chatbot for small business,lead generation chatbot"
+ },
+ "/pricing/": {
+  "focus_keywords": "talkwyn pricing,chatbot pricing,ai chatbot free plan,wordpress chatbot pro,chatbot free trial",
+  "post_type": "page"
+ },
+ "/partners/": {
+  "focus_keywords": "chatbot affiliate program,talkwyn partners,saas affiliate program,wordpress plugin affiliate,ai chatbot referral program",
+  "post_type": "page"
+ },
+ "/compare/": {
+  "focus_keywords": "ai chatbot comparison,chatbot alternatives,best ai chatbot for website,compare chatbot tools,live chat alternatives",
+  "post_type": "page"
+ },
+ "/compare/tidio-alternative/": {
+  "focus_keywords": "tidio alternative,tidio alternative wordpress,free tidio alternative,tidio vs talkwyn,tidio competitors",
+  "post_type": "page"
+ },
+ "/compare/chatbase-alternative/": {
+  "focus_keywords": "chatbase alternative,chatbase alternative wordpress,free chatbase alternative,chatbase vs talkwyn,chatbase competitors",
+  "post_type": "page"
+ },
+ "/compare/intercom-alternative/": {
+  "focus_keywords": "intercom alternative,intercom alternative for small business,cheap intercom alternative,intercom vs talkwyn,intercom competitors",
+  "post_type": "page"
+ },
+ "/download/": {
+  "focus_keywords": "free wordpress chatbot,free wordpress chatbot plugin,download chatbot plugin,free ai chatbot plugin,install talkwyn",
+  "post_type": "page",
+  "previous": "free wordpress chatbot plugin,download chatbot plugin,free ai chatbot plugin,install talkwyn,wordpress chatbot free"
+ },
+ "/about/": {
+  "focus_keywords": "about talkwyn,talkwyn ai chatbot,multilingual ai chatbot,talkwyn team,wordpress chatbot company",
+  "post_type": "page"
+ },
+ "/contact/": {
+  "focus_keywords": "contact talkwyn,talkwyn support,chatbot license help,talkwyn setup help,talkwyn sales",
+  "post_type": "page"
+ },
+ "/privacy/": {
+  "focus_keywords": "talkwyn privacy policy,chatbot privacy policy,talkwyn data,plugin privacy,gdpr chatbot",
+  "post_type": "page"
+ },
+ "/terms/": {
+  "focus_keywords": "talkwyn terms of service,chatbot license terms,talkwyn renewals,plugin license agreement,talkwyn terms",
+  "post_type": "page"
+ },
+ "/refund-policy/": {
+  "focus_keywords": "talkwyn refund policy,chatbot plugin refund,pro license refund,talkwyn money back,wordpress plugin refund policy",
+  "post_type": "page"
+ },
+ "/changelog/": {
+  "focus_keywords": "talkwyn changelog,chatbot plugin updates,talkwyn release notes,wordpress chatbot new features,talkwyn version history",
+  "post_type": "page"
+ },
+ "/integrations/": {
+  "focus_keywords": "chatbot integrations,wordpress chatbot integration,shopify chatbot,wix chatbot,website chatbot integrations",
+  "post_type": "page"
+ },
+ "/integrations/wordpress/": {
+  "focus_keywords": "wordpress chatbot,wordpress chatbot plugin,wordpress ai chatbot,chatbot for wordpress,multilingual wordpress chatbot",
+  "post_type": "page",
+  "previous": "wordpress chatbot plugin,wordpress ai chatbot,chatbot for wordpress,multilingual wordpress chatbot,free wordpress chatbot"
+ },
+ "/integrations/woocommerce/": {
+  "focus_keywords": "woocommerce chatbot,woocommerce ai chatbot,woocommerce product chatbot,woocommerce order lookup chatbot,chatbot for woocommerce store",
+  "post_type": "page"
+ },
+ "/integrations/elementor/": {
+  "focus_keywords": "elementor chatbot,elementor ai chatbot,chatbot for elementor website,elementor chat widget,page builder chatbot",
+  "post_type": "page"
+ },
+ "/integrations/shopify/": {
+  "focus_keywords": "ai chatbot for shopify,shopify chatbot,shopify chatbot app,shopify ai assistant,multilingual shopify chatbot",
+  "post_type": "page"
+ },
+ "/integrations/website-embed/": {
+  "focus_keywords": "chatbot for any website,embed chatbot on website,website chatbot code,ai chatbot widget,chatbot script for website",
+  "post_type": "page"
+ },
+ "/integrations/whatsapp/": {
+  "focus_keywords": "whatsapp lead alerts,whatsapp chatbot leads,website chatbot whatsapp,whatsapp notifications for leads,chatbot to whatsapp",
+  "post_type": "page"
+ },
+ "/industries/ecommerce/": {
+  "focus_keywords": "ecommerce chatbot,chatbot for ecommerce,ai chatbot for online store,product question chatbot,shopping assistant chatbot",
+  "post_type": "page",
+  "previous": "chatbot for ecommerce,ecommerce chatbot,ai chatbot for online store,product question chatbot,shopping assistant chatbot"
+ },
+ "/industries/real-estate/": {
+  "focus_keywords": "real estate chatbot,real estate ai chatbot,chatbot for real estate agents,property chatbot,real estate lead chatbot",
+  "post_type": "page"
+ },
+ "/industries/healthcare/": {
+  "focus_keywords": "chatbot for healthcare,healthcare chatbot,clinic chatbot,medical practice chatbot,patient questions chatbot",
+  "post_type": "page",
+  "previous": "healthcare chatbot,clinic chatbot,medical practice chatbot,chatbot for doctors,patient questions chatbot"
+ },
+ "/industries/education/": {
+  "focus_keywords": "chatbot for schools,education chatbot,admissions chatbot,school website chatbot,university chatbot",
+  "post_type": "page"
+ },
+ "/industries/small-business/": {
+  "focus_keywords": "ai chatbot for small business,small business chatbot,free chatbot for small business,chatbot for local business,website chatbot small business",
+  "post_type": "page"
+ },
+ "/agencies/": {
+  "focus_keywords": "white label chatbot,white label ai chatbot,chatbot for agencies,agency chatbot unlimited sites,white label wordpress chatbot",
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/": {
+  "focus_keywords": "multilingual chatbot,multilingual chatbot for website,multi language chatbot,ai chatbot any language,translation chatbot",
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/arabic/": {
+  "focus_keywords": "arabic chatbot,arabic chatbot for website,arabic ai chatbot,right to left chatbot,rtl chatbot",
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/spanish/": {
+  "focus_keywords": "spanish chatbot,spanish chatbot for website,spanish ai chatbot,chatbot en espanol,spanish language chatbot",
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/french/": {
+  "focus_keywords": "french chatbot,french chatbot for website,french ai chatbot,chatbot en francais,french language chatbot",
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/german/": {
+  "focus_keywords": "german chatbot,german chatbot for website,german ai chatbot,chatbot auf deutsch,german language chatbot",
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/portuguese/": {
+  "focus_keywords": "portuguese chatbot,portuguese chatbot for website,portuguese ai chatbot,chatbot em portugues,brazilian portuguese chatbot",
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/hindi/": {
+  "focus_keywords": "hindi chatbot,hindi chatbot for website,hindi ai chatbot,devanagari chatbot,hindi language chatbot",
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/italian/": {
+  "focus_keywords": "italian chatbot,italian chatbot for website,italian ai chatbot,chatbot in italiano,italian language chatbot",
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/chinese/": {
+  "focus_keywords": "chinese chatbot,chinese chatbot for website,chinese ai chatbot,mandarin chatbot,chinese language chatbot",
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/japanese/": {
+  "focus_keywords": "japanese chatbot,japanese chatbot for website,japanese ai chatbot,polite japanese chatbot,japanese language chatbot",
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/korean/": {
+  "focus_keywords": "korean chatbot,korean chatbot for website,korean ai chatbot,hangul chatbot,korean language chatbot",
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/turkish/": {
+  "focus_keywords": "turkish chatbot,turkish chatbot for website,turkish ai chatbot,turkce chatbot,turkish language chatbot",
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/english/": {
+  "focus_keywords": "english chatbot,english chatbot for website,english ai chatbot,plain english chatbot,website chatbot english",
+  "post_type": "page"
+ },
+ "/features/": {
+  "focus_keywords": "ai chatbot features,ai chatbot for website,website chatbot features,chatbot that answers questions,multilingual chatbot features",
+  "post_type": "page",
+  "previous": "ai chatbot for website,ai chatbot features,website chatbot features,chatbot that answers questions,multilingual chatbot features"
+ },
+ "/features/knowledge-base/": {
+  "focus_keywords": "chatbot trained on your website,ai chatbot knowledge base,chatbot with sources,website content chatbot,train chatbot on website",
+  "post_type": "page"
+ },
+ "/features/lead-generation/": {
+  "focus_keywords": "lead generation chatbot,lead capture chatbot,chatbot for leads,ai lead generation,website lead chatbot",
+  "post_type": "page"
+ },
+ "/features/analytics/": {
+  "focus_keywords": "chatbot analytics,chatbot inbox,chatbot conversation analytics,chatbot reports,website chat analytics",
+  "post_type": "page"
+ },
+ "/blog/free-ai-api-keys/": {
+  "focus_keywords": "groq api key,free groq api key,free ai api keys,openrouter free api key,cloudflare workers ai free",
+  "post_type": "post"
+ },
+ "/blog/add-free-chatbot-to-wordpress/": {
+  "focus_keywords": "chatbot for website free,ai chatbot for website free,add chatbot to wordpress free,free wordpress chatbot setup,free ai chatbot",
+  "post_type": "post",
+  "previous": "ai chatbot for website free,chatbot for website free,add chatbot to wordpress,free wordpress chatbot,free ai chatbot"
+ },
+ "/blog/real-estate-chatbot-template/": {
+  "focus_keywords": "real estate chatbot template,real estate chatbot questions,real estate lead flow,real estate chatbot script,property chatbot template",
+  "post_type": "post"
+ },
+ "/blog/best-wordpress-chatbot-plugins/": {
+  "focus_keywords": "best wordpress chatbot plugin,wordpress chatbot plugins,best ai chatbot for wordpress,wordpress chatbot review,free wordpress chatbot plugin",
+  "post_type": "post"
+ },
+ "/docs/getting-started/": {
+  "focus_keywords": "how to add a chatbot to wordpress,talkwyn setup guide,add a chatbot to wordpress,wordpress chatbot installation,install chatbot plugin",
+  "post_type": "doc",
+  "previous": "add chatbot to wordpress,talkwyn setup guide,how to add a chatbot to wordpress,wordpress chatbot setup,install chatbot plugin"
+ },
+ "/docs/ai-providers/": {
+  "focus_keywords": "ai provider settings,talkwyn ai providers,groq settings,gemini api settings,openrouter settings",
+  "post_type": "doc",
+  "previous": "talkwyn ai providers,groq settings,gemini api settings,openrouter settings,cloudflare workers ai settings"
+ },
+ "/industries/": {
+  "focus_keywords": "ai chatbot for your industry,industry chatbot,chatbot for business,chatbot use cases,chatbot by industry",
+  "post_type": "page"
+ },
+ "/blog/": {
+  "focus_keywords": "talkwyn blog,chatbot blog,website chatbot guides,ai chatbot tips,wordpress chatbot guides",
+  "post_type": "page",
+  "previous": "chatbot blog,website chatbot guides,ai chatbot tips,chatbot lead generation guide,wordpress chatbot guides"
+ },
+ "/industries/hotels/": {
+  "focus_keywords": "hotel chatbot,hotel ai chatbot,chatbot for hotels,hotel guest questions chatbot,multilingual hotel chatbot",
+  "post_type": "page"
+ },
+ "/industries/restaurants/": {
+  "focus_keywords": "restaurant chatbot,restaurant ai chatbot,chatbot for restaurants,restaurant reservation chatbot,menu chatbot",
+  "post_type": "page"
+ },
+ "/industries/law-firms/": {
+  "focus_keywords": "chatbot for law firms,law firm chatbot,legal chatbot,attorney website chatbot,lawyer chatbot",
+  "post_type": "page"
+ },
+ "/industries/home-services/": {
+  "focus_keywords": "chatbot for home services,home services chatbot,plumber chatbot,electrician chatbot,contractor chatbot",
+  "post_type": "page"
+ },
+ "/industries/fitness/": {
+  "focus_keywords": "gym chatbot,fitness chatbot,chatbot for gyms,personal trainer chatbot,fitness studio chatbot",
+  "post_type": "page"
+ },
+ "/industries/automotive/": {
+  "focus_keywords": "chatbot for car dealers,car dealership chatbot,automotive chatbot,auto repair chatbot,car dealer ai chatbot",
+  "post_type": "page"
+ },
+ "/industries/beauty-salons/": {
+  "focus_keywords": "salon chatbot,beauty salon chatbot,spa chatbot,hair salon chatbot,salon booking chatbot",
+  "post_type": "page"
+ },
+ "/compare/crisp-alternative/": {
+  "focus_keywords": "crisp alternative,crisp alternative wordpress,free crisp alternative,crisp vs talkwyn,crisp chat competitors",
+  "post_type": "page"
+ },
+ "/compare/tawk-to-alternative/": {
+  "focus_keywords": "tawk.to alternative,tawk to alternative,ai alternative to tawk.to,tawk.to vs talkwyn,tawk.to competitors",
+  "post_type": "page"
+ },
+ "/compare/livechat-alternative/": {
+  "focus_keywords": "livechat alternative,livechat alternative for small business,cheap livechat alternative,livechat vs talkwyn,livechat competitors",
+  "post_type": "page"
+ },
+ "/compare/zendesk-alternative/": {
+  "focus_keywords": "zendesk alternative,zendesk alternative for small business,cheap zendesk alternative,zendesk vs talkwyn,zendesk chat competitors",
+  "post_type": "page"
+ },
+ "/compare/freshchat-alternative/": {
+  "focus_keywords": "freshchat alternative,freshchat alternative wordpress,free freshchat alternative,freshchat vs talkwyn,freshchat competitors",
+  "post_type": "page"
+ },
+ "/compare/hubspot-chatbot-alternative/": {
+  "focus_keywords": "hubspot chatbot alternative,hubspot chat alternative,hubspot chatbot wordpress,hubspot vs talkwyn,hubspot chatbot competitors",
+  "post_type": "page"
+ },
+ "/compare/botpress-alternative/": {
+  "focus_keywords": "botpress alternative,botpress alternative wordpress,no code botpress alternative,botpress vs talkwyn,botpress competitors",
+  "post_type": "page"
+ },
+ "/compare/manychat-alternative/": {
+  "focus_keywords": "manychat alternative,manychat alternative for website,website chatbot instead of manychat,manychat vs talkwyn,manychat competitors",
+  "post_type": "page"
+ },
+ "/compare/olark-alternative/": {
+  "focus_keywords": "olark alternative,olark alternative ai,free olark alternative,olark vs talkwyn,olark competitors",
+  "post_type": "page"
+ },
+ "/blog/multilingual-website-chatbot-guide/": {
+  "focus_keywords": "multilingual website chatbot,multilingual chatbot guide,chatbot for multilingual website,website chatbot languages,multi language website support",
+  "post_type": "post"
+ },
+ "/blog/chatbot-vs-contact-form/": {
+  "focus_keywords": "chatbot vs contact form,contact form or chatbot,chatbot instead of contact form,website contact form alternative,chatbot lead form",
+  "post_type": "post"
+ },
+ "/blog/write-pages-your-chatbot-can-answer/": {
+  "focus_keywords": "chatbot faq page,write faq for chatbot,chatbot friendly pages,faq page writing,chatbot content tips",
+  "post_type": "post"
+ },
+ "/blog/woocommerce-chatbot-questions/": {
+  "focus_keywords": "woocommerce chatbot questions,woocommerce chatbot,shopper questions before buying,woocommerce customer questions,product questions chatbot",
+  "post_type": "post"
+ },
+ "/blog/test-your-chatbot-before-launch/": {
+  "focus_keywords": "test your chatbot before launch,chatbot testing,chatbot launch checklist,how to test a chatbot,chatbot qa",
+  "post_type": "post",
+  "previous": "test chatbot before launch,chatbot testing,chatbot launch checklist,how to test a chatbot,chatbot qa"
+ },
+ "/blog/arabic-right-to-left-chatbot/": {
+  "focus_keywords": "arabic chatbot checklist,right to left chatbot,rtl chatbot,arabic chatbot fonts,arabic website chatbot",
+  "post_type": "post"
+ },
+ "/blog/website-chatbot-privacy-checklist/": {
+  "focus_keywords": "website chatbot privacy,chatbot privacy checklist,chatbot gdpr,chatbot data privacy,small business chatbot privacy",
+  "post_type": "post"
+ },
+ "/blog/lead-capture-chatbot-tips/": {
+  "focus_keywords": "lead capture chatbot,lead capture chatbot tips,chatbot lead generation tips,capture leads with chatbot,chatbot lead form",
+  "post_type": "post"
+ },
+ "/blog/chatbot-for-dental-clinics/": {
+  "focus_keywords": "chatbot for dental clinics,dental chatbot,dentist chatbot,dental clinic website chatbot,dental booking chatbot",
+  "post_type": "post"
+ },
+ "/blog/faq-page-or-chatbot/": {
+  "focus_keywords": "faq chatbot,faq page or chatbot,faq page vs chatbot,chatbot for faq,website faq page",
+  "post_type": "post"
+ },
+ "/blog/spanish-website-chatbot-tips/": {
+  "focus_keywords": "spanish website chatbot,spanish chatbot tips,spanish speaking customers website,spanish chatbot for english site,bilingual website chatbot",
+  "post_type": "post"
+ },
+ "/blog/real-estate-lead-follow-up/": {
+  "focus_keywords": "real estate lead follow up,real estate chat leads,follow up real estate leads fast,real estate lead response time,real estate lead tips",
+  "post_type": "post"
+ },
+ "/blog/reduce-repeat-customer-questions/": {
+  "focus_keywords": "reduce repeat customer questions,repetitive customer questions,reduce support questions,customer questions website,answer customer questions automatically",
+  "post_type": "post"
+ },
+ "/blog/chatbot-welcome-message-examples/": {
+  "focus_keywords": "chatbot welcome message examples,chatbot greeting message,chatbot welcome message,chatbot opening message,chatbot greeting examples",
+  "post_type": "post"
+ },
+ "/blog/hindi-chatbot-for-businesses/": {
+  "focus_keywords": "hindi chatbot for business,hindi chatbot,answer customers in hindi,hindi ai chatbot,hindi website chatbot",
+  "post_type": "post"
+ },
+ "/blog/woocommerce-shipping-returns-pages/": {
+  "focus_keywords": "woocommerce shipping page,woocommerce returns page,shipping and returns policy,woocommerce shipping policy,woocommerce chatbot pages",
+  "post_type": "post"
+ },
+ "/blog/after-hours-website-leads/": {
+  "focus_keywords": "after hours leads,after hours website leads,capture leads after hours,24/7 website chatbot,after hours chatbot",
+  "post_type": "post"
+ },
+ "/blog/hotel-chatbot-guest-questions/": {
+  "focus_keywords": "hotel chatbot guest questions,hotel guest questions,hotel website questions,hotel faq chatbot,hotel chatbot guide",
+  "post_type": "post",
+  "previous": "hotel chatbot,hotel guest questions,hotel website questions,hotel chatbot questions,hotel faq chatbot"
+ },
+ "/blog/wordpress-chatbot-setup-mistakes/": {
+  "focus_keywords": "wordpress chatbot setup,chatbot setup mistakes,wordpress chatbot mistakes,chatbot common mistakes,chatbot setup tips",
+  "post_type": "post"
+ },
+ "/blog/measure-website-chatbot-results/": {
+  "focus_keywords": "website chatbot results,measure chatbot results,chatbot metrics,chatbot kpis,chatbot performance",
+  "post_type": "post"
+ },
+ "/blog/best-chatbot-for-customer-service/": {
+  "focus_keywords": "best chatbot for customer service,customer service chatbot,ai customer service chatbot,customer support chatbot,chatbot tools compared",
+  "post_type": "post"
+ },
+ "/blog/gemini-api-key-free/": {
+  "focus_keywords": "gemini api key free,free gemini api key,gemini api limits,google gemini api key,gemini api free tier",
+  "post_type": "post"
+ },
+ "/blog/self-hosted-chatbot/": {
+  "focus_keywords": "self hosted chatbot,self hosted ai chatbot,wordpress self hosted chatbot,chatbot data ownership,private chatbot",
+  "post_type": "post"
+ },
+ "/blog/best-chatbot-for-ecommerce/": {
+  "focus_keywords": "best chatbot for ecommerce,ecommerce chatbot,ai chatbot for online store,shopping chatbot,ecommerce customer service chatbot",
+  "post_type": "post"
+ },
+ "/blog/real-estate-chatbot-examples/": {
+  "focus_keywords": "real estate chatbot example,real estate chatbot examples,real estate chat leads,property chatbot examples,real estate ai chatbot",
+  "post_type": "post"
+ },
+ "/blog/healthcare-chatbot-use-cases/": {
+  "focus_keywords": "healthcare chatbot use cases,healthcare chatbot,clinic chatbot use cases,medical chatbot examples,patient chatbot",
+  "post_type": "post"
+ },
+ "/blog/resell-white-label-ai-chatbot/": {
+  "focus_keywords": "white label chatbot reseller,resell ai chatbot,white label ai chatbot,sell chatbots to clients,chatbot reseller program",
+  "post_type": "post"
+ }
+}

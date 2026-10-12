@@ -1,0 +1,16 @@
+{
+ "/home/": {
+  "seo_desc": [
+   "Talkwyn learns your website in one click, answers visitors in their own language, and turns chats into leads. Live on WordPress. Start a free 15-day trial.",
+   "Talkwyn is an AI chatbot for your website: it learns your site in one click, answers visitors in their own language and turns chats into leads. Try it free."
+  ],
+  "post_type": "page"
+ },
+ "/docs/ai-providers/": {
+  "seo_title": [
+   "AI Provider Settings in Talkwyn: Groq, Gemini, OpenRouter, Cloudflare",
+   "AI Provider Settings: Groq, Gemini, OpenRouter, Cloudflare"
+  ],
+  "post_type": "doc"
+ }
+}

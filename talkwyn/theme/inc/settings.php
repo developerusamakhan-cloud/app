@@ -1,0 +1,894 @@
+<?php
+/**
+ * Talkwyn Site Settings: one place for prices, counts, links and analytics.
+ *
+ * Every {{...}} placeholder in the site copy resolves through talkwyn_value(),
+ * exposed as [tw_value key="..."] and as the "talkwyn/value" block binding.
+ *
+ * @package Talkwyn
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+const TALKWYN_SETTINGS = 'talkwyn_site_settings';
+
+/**
+ * Default settings.
+ *
+ * @return array<string, mixed>
+ */
+function talkwyn_settings_defaults(): array {
+	return array(
+		'price_source'        => 'woocommerce',
+		'product_personal'    => 0,
+		'product_business'    => 0,
+		'product_agency'      => 0,
+		'product_lifetime'    => 0,
+		'price_personal'      => '$49',
+		'price_business'      => '$109',
+		'price_agency'        => '$239',
+		'price_lifetime'      => '',
+		'regular_personal'    => '$79',
+		'regular_business'    => '$179',
+		'regular_agency'      => '$399',
+		'regular_lifetime'    => '',
+		'hosted_3yr_range'    => '$1,000 to $2,800',
+		'legal_company'       => '',
+		'legal_address'       => '',
+		'legal_email'         => '',
+		'legal_jurisdiction'  => '',
+		'legal_updated'       => '',
+		'legal_payment'       => '',
+		'legal_hosting'       => '',
+		'legal_email_service' => '',
+		'legal_min_age'       => 16,
+		'legal_reply_time'    => '',
+		'legal_reviewed'      => 0,
+		'cookie_banner'       => 'auto',
+		'cookie_text'         => '',
+		'trial_popup'         => 1,
+		'trial_popup_scroll'  => 50,
+		'trial_popup_days'    => 7,
+		'show_lifetime'       => 0,
+		'founding_enabled'    => 1,
+		'founding_seats'      => 100,
+		'founding_remaining'  => 100,
+		'refund_days'         => 14,
+		'wporg_url'           => '',
+		'free_zip_url'        => '',
+		'waitlist_action'     => '',
+		'contact_email'       => '',
+		'turnstile_site_key'  => '',
+		'turnstile_secret'    => '',
+		'captcha_contact'     => 1,
+		'captcha_waitlist'    => 1,
+		'captcha_trial'       => 1,
+		'captcha_account'     => 1,
+		'social_x'            => '',
+		'social_linkedin'     => '',
+		'social_facebook'     => '',
+		'social_youtube'      => '',
+		'social_instagram'    => '',
+		'social_github'       => '',
+		'analytics'           => 'none',
+		'ga4_id'              => '',
+		'plausible_domain'    => '',
+		'plausible_src'       => 'https://plausible.io/js/script.js',
+		'demo_shortcode'      => '',
+		'tidio_checked_on'    => '',
+		'tidio_price_note'    => '',
+		'chatbase_checked_on' => '',
+		'chatbase_price_note' => '',
+		'intercom_checked_on' => '',
+		'intercom_price_note' => '',
+		'crisp_checked_on' => '',
+		'crisp_price_note' => '',
+		'tawkto_checked_on' => '',
+		'tawkto_price_note' => '',
+		'livechat_checked_on' => '',
+		'livechat_price_note' => '',
+		'zendesk_checked_on' => '',
+		'zendesk_price_note' => '',
+		'freshchat_checked_on' => '',
+		'freshchat_price_note' => '',
+		'hubspot_checked_on' => '',
+		'hubspot_price_note' => '',
+		'botpress_checked_on' => '',
+		'botpress_price_note' => '',
+		'manychat_checked_on' => '',
+		'manychat_price_note' => '',
+		'olark_checked_on' => '',
+		'olark_price_note' => '',
+		'trial_days'          => 15,
+		'trial_card_policy'   => 'none',
+		'hub_url'             => '',
+		'partner_rate'        => 20,
+		'partner_cookie_days' => 60,
+		'partner_threshold'   => 50,
+		'partner_methods'     => 'PayPal, Wise, bank transfer, Payoneer',
+		'waitlist_show_count' => 0,
+	) + talkwyn_integration_status_defaults();
+}
+
+/**
+ * Integrations with their default status (Available, In development, Planned).
+ *
+ * @return array<string, array{name: string, url: string, status: string}>
+ */
+function talkwyn_integrations(): array {
+	$list = array(
+		'wordpress'     => array( 'WordPress', '/integrations/wordpress/', 'available' ),
+		'woocommerce'   => array( 'WooCommerce', '/integrations/woocommerce/', 'available' ),
+		'elementor'     => array( 'Elementor', '/integrations/elementor/', 'available' ),
+		'shopify'       => array( 'Shopify', '/integrations/shopify/', 'in_development' ),
+		'website_embed' => array( 'Any website', '/integrations/website-embed/', 'in_development' ),
+		'whatsapp'      => array( 'WhatsApp lead alerts', '/integrations/whatsapp/', 'in_development' ),
+		'wix'           => array( 'Wix', '/integrations/#wix', 'planned' ),
+		'webflow'       => array( 'Webflow', '/integrations/#webflow', 'planned' ),
+		'squarespace'   => array( 'Squarespace', '/integrations/#squarespace', 'planned' ),
+		'hubspot'       => array( 'HubSpot', '/integrations/#hubspot', 'planned' ),
+		'zapier'        => array( 'Zapier', '/integrations/#zapier', 'planned' ),
+	);
+	$out  = array();
+	foreach ( $list as $slug => $row ) {
+		$stored       = function_exists( 'talkwyn_settings' ) ? (string) ( talkwyn_settings()[ 'status_' . $slug ] ?? '' ) : '';
+		$out[ $slug ] = array(
+			'name'   => $row[0],
+			'url'    => $row[1],
+			'status' => in_array( $stored, array( 'available', 'in_development', 'planned' ), true ) ? $stored : $row[2],
+		);
+	}
+	return $out;
+}
+
+/**
+ * Default integration statuses as settings.
+ *
+ * @return array<string, string>
+ */
+function talkwyn_integration_status_defaults(): array {
+	return array(
+		'status_wordpress'     => 'available',
+		'status_woocommerce'   => 'available',
+		'status_elementor'     => 'available',
+		'status_shopify'       => 'in_development',
+		'status_website_embed' => 'in_development',
+		'status_whatsapp'      => 'in_development',
+		'status_wix'           => 'planned',
+		'status_webflow'       => 'planned',
+		'status_squarespace'   => 'planned',
+		'status_hubspot'       => 'planned',
+		'status_zapier'        => 'planned',
+	);
+}
+
+/**
+ * Status label.
+ *
+ * @param string $status available|in_development|planned.
+ */
+function talkwyn_status_label( string $status ): string {
+	$labels = array(
+		'available'      => __( 'Available', 'talkwyn' ),
+		'in_development' => __( 'In development', 'talkwyn' ),
+		'planned'        => __( 'Planned', 'talkwyn' ),
+	);
+	return $labels[ $status ] ?? $labels['planned'];
+}
+
+/**
+ * Trial facts: from Talkwyn Hub when it runs on this site, otherwise from Site Settings.
+ *
+ * @return array{days: int, card: bool, policy: string}
+ */
+function talkwyn_trial(): array {
+	if ( class_exists( '\\TWH\\Trial\\Trial' ) ) {
+		$card = 'card' === \TWH\Trial\Trial::card_mode() && \TWH\Trial\Trial::card_mode_ready();
+		return array(
+			'days'   => \TWH\Trial\Trial::days(),
+			'card'   => $card,
+			'policy' => \TWH\Trial\Trial::card_policy_text(),
+		);
+	}
+	$days = max( 1, (int) talkwyn_setting( 'trial_days' ) );
+	$card = 'card' === talkwyn_setting( 'trial_card_policy' );
+	return array(
+		'days'   => $days,
+		'card'   => $card,
+		/* translators: %d: trial days */
+		'policy' => $card ? sprintf( __( 'Cancel anytime before day %d and you won\'t be charged.', 'talkwyn' ), $days ) : __( 'No credit card needed.', 'talkwyn' ),
+	);
+}
+
+/**
+ * Partner program terms: Talkwyn Hub on this site, the Hub's public endpoint, or Site Settings.
+ *
+ * @return array{rate: float, renewal_rate: float, cookie_days: int, threshold: float, currency: string, methods: string, approval_days: int}
+ */
+function talkwyn_partner_terms(): array {
+	$terms = null;
+	if ( class_exists( '\\TWH\\Partners\\Program' ) ) {
+		$terms = \TWH\Partners\Program::terms();
+	} elseif ( '' !== (string) talkwyn_setting( 'hub_url' ) ) {
+		$terms = get_transient( 'talkwyn_partner_terms' );
+		if ( ! is_array( $terms ) ) {
+			$res   = wp_remote_get( trailingslashit( (string) talkwyn_setting( 'hub_url' ) ) . 'wp-json/talkwyn-hub/v1/partners/terms', array( 'timeout' => 5 ) );
+			$terms = ! is_wp_error( $res ) && 200 === wp_remote_retrieve_response_code( $res ) ? json_decode( wp_remote_retrieve_body( $res ), true ) : null;
+			set_transient( 'talkwyn_partner_terms', is_array( $terms ) ? $terms : array(), is_array( $terms ) ? 12 * HOUR_IN_SECONDS : 15 * MINUTE_IN_SECONDS );
+		}
+		$terms = is_array( $terms ) && $terms ? $terms : null;
+	}
+	if ( $terms ) {
+		return array(
+			'rate'          => (float) $terms['commission_rate'],
+			'renewal_rate'  => (float) $terms['renewal_rate'],
+			'cookie_days'   => (int) $terms['cookie_days'],
+			'threshold'     => (float) $terms['payout_threshold'],
+			'currency'      => (string) $terms['currency'],
+			'methods'       => implode( ', ', (array) $terms['payout_methods'] ),
+			'approval_days' => (int) $terms['approval_days'],
+		);
+	}
+	return array(
+		'rate'          => (float) talkwyn_setting( 'partner_rate' ),
+		'renewal_rate'  => 0.0,
+		'cookie_days'   => (int) talkwyn_setting( 'partner_cookie_days' ),
+		'threshold'     => (float) talkwyn_setting( 'partner_threshold' ),
+		'currency'      => function_exists( 'get_woocommerce_currency' ) ? get_woocommerce_currency() : 'USD',
+		'methods'       => (string) talkwyn_setting( 'partner_methods' ),
+		'approval_days' => 30,
+	);
+}
+
+/**
+ * Money in the store currency.
+ *
+ * @param float  $amount   Amount.
+ * @param string $currency Currency code.
+ */
+function talkwyn_money( float $amount, string $currency = '' ): string {
+	if ( function_exists( 'wc_price' ) ) {
+		$args = array( 'decimals' => floor( $amount ) === $amount ? 0 : 2 );
+		if ( '' !== $currency ) {
+			$args['currency'] = $currency;
+		}
+		return trim( wp_strip_all_tags( html_entity_decode( wc_price( $amount, $args ) ) ) );
+	}
+	return ( 'USD' === $currency || '' === $currency ? '$' : $currency . ' ' ) . number_format_i18n( $amount, floor( $amount ) === $amount ? 0 : 2 );
+}
+
+/**
+ * All settings.
+ *
+ * @return array<string, mixed>
+ */
+function talkwyn_settings(): array {
+	static $cache = null;
+	if ( null === $cache ) {
+		$stored   = get_option( TALKWYN_SETTINGS, array() );
+		$defaults = talkwyn_settings_defaults();
+		$cache    = array_merge( $defaults, is_array( $stored ) ? $stored : array() );
+		// A field saved empty before it had a default (prices, ranges) uses the default.
+		foreach ( $cache as $key => $value ) {
+			if ( '' === $value && isset( $defaults[ $key ] ) && '' !== $defaults[ $key ] ) {
+				$cache[ $key ] = $defaults[ $key ];
+			}
+		}
+	}
+	return $cache;
+}
+
+/**
+ * One setting.
+ *
+ * @param string $key Key.
+ * @return mixed
+ */
+function talkwyn_setting( string $key ) {
+	$all = talkwyn_settings();
+	return $all[ $key ] ?? null;
+}
+
+/**
+ * Plan price as plain text (e.g. "$99"), from WooCommerce when configured.
+ *
+ * @param string $plan personal|business|agency|lifetime.
+ */
+function talkwyn_plan_price( string $plan ): string {
+	$product_id = (int) talkwyn_setting( 'product_' . $plan );
+	if ( 'woocommerce' === talkwyn_setting( 'price_source' ) && $product_id && function_exists( 'wc_get_product' ) ) {
+		$product = wc_get_product( $product_id );
+		if ( $product ) {
+			$price = (float) $product->get_price();
+			$text  = wp_strip_all_tags( html_entity_decode( wc_price( $price, array( 'decimals' => floor( $price ) === $price ? 0 : 2 ) ) ) );
+			return trim( $text );
+		}
+	}
+	return (string) talkwyn_setting( 'price_' . $plan );
+}
+
+/**
+ * Direct ZIP of the free plugin: the Site Settings URL, else the latest stable release
+ * uploaded to Talkwyn Hub on this site.
+ */
+function talkwyn_free_zip_url(): string {
+	$zip = (string) talkwyn_setting( 'free_zip_url' );
+	if ( '' === $zip && class_exists( '\TWH\Account\App' ) && method_exists( '\TWH\Account\App', 'has_free_release' ) && \TWH\Account\App::has_free_release() ) {
+		$zip = \TWH\Account\App::public_free_download_url();
+	}
+	return $zip;
+}
+
+/**
+ * What an empty field falls back to, shown as its placeholder in Site Settings.
+ *
+ * @param string $key Setting.
+ */
+function talkwyn_settings_placeholder( string $key ): string {
+	switch ( $key ) {
+		case 'contact_email':
+			return (string) get_option( 'admin_email' );
+		case 'legal_email':
+			return talkwyn_value( 'contact_email' );
+		case 'legal_payment':
+			$v = talkwyn_value( 'legal_payment' );
+			return '[payment]' === $v ? '' : $v;
+		case 'free_zip_url':
+			return talkwyn_free_zip_url();
+		case 'hub_url':
+			return class_exists( '\TWH\Support\Settings' ) ? __( 'Talkwyn Hub runs on this site', 'talkwyn' ) : '';
+		case 'legal_updated':
+			return __( 'the page\'s last edit', 'talkwyn' );
+	}
+	$d = talkwyn_settings_defaults()[ $key ] ?? '';
+	return is_scalar( $d ) ? (string) $d : '';
+}
+
+/**
+ * URL that "Install free" buttons point to.
+ */
+function talkwyn_install_url(): string {
+	$wporg = (string) talkwyn_setting( 'wporg_url' );
+	return '' !== $wporg ? $wporg : home_url( '/download/' );
+}
+
+/**
+ * Add-to-cart URL that lands on checkout.
+ *
+ * @param string $plan Plan.
+ */
+function talkwyn_plan_checkout_url( string $plan ): string {
+	$id = (int) talkwyn_setting( 'product_' . $plan );
+	if ( ! $id || ! function_exists( 'wc_get_product' ) || ! function_exists( 'wc_get_checkout_url' ) ) {
+		return home_url( '/pricing/' );
+	}
+	$product = wc_get_product( $id );
+	if ( ! $product ) {
+		return home_url( '/pricing/' );
+	}
+	$args = array( 'add-to-cart' => $product->get_parent_id() ? $product->get_parent_id() : $id );
+	if ( $product->get_parent_id() ) {
+		$args['variation_id'] = $id;
+		foreach ( $product->get_variation_attributes() as $name => $value ) {
+			$args[ $name ] = $value;
+		}
+	}
+	return add_query_arg( array_map( 'rawurlencode', $args ), wc_get_checkout_url() );
+}
+
+/**
+ * Resolve a placeholder key to a display value.
+ *
+ * @param string $key Key.
+ */
+function talkwyn_value( string $key ): string {
+	switch ( $key ) {
+		case 'price_personal':
+		case 'price_business':
+		case 'price_agency':
+		case 'price_lifetime':
+			$price = talkwyn_plan_price( substr( $key, 6 ) );
+			return '' !== $price ? $price : __( 'See pricing', 'talkwyn' );
+		case 'founding_seats':
+		case 'founding_remaining':
+		case 'refund_days':
+			return number_format_i18n( (int) talkwyn_setting( $key ) );
+		case 'install_url':
+			return talkwyn_install_url();
+		case 'year':
+			return gmdate( 'Y' );
+		case 'contact_email':
+			$email = (string) talkwyn_setting( 'contact_email' );
+			return '' !== $email ? $email : (string) get_option( 'admin_email' );
+		case 'trial_days':
+			return number_format_i18n( talkwyn_trial()['days'] );
+		case 'trial_card_policy':
+			return talkwyn_trial()['policy'];
+		case 'partner_rate':
+			return rtrim( rtrim( number_format( talkwyn_partner_terms()['rate'], 2, '.', '' ), '0' ), '.' ) . '%';
+		case 'partner_cookie_days':
+			return number_format_i18n( talkwyn_partner_terms()['cookie_days'] );
+		case 'partner_threshold':
+			$t = talkwyn_partner_terms();
+			return talkwyn_money( $t['threshold'], $t['currency'] );
+		case 'partner_methods':
+			return talkwyn_partner_terms()['methods'];
+		case 'partner_approval_days':
+			return number_format_i18n( talkwyn_partner_terms()['approval_days'] );
+		case 'legal_company':
+		case 'legal_address':
+		case 'legal_jurisdiction':
+		case 'legal_hosting':
+		case 'legal_email_service':
+		case 'legal_reply_time':
+			$v = trim( (string) talkwyn_setting( $key ) );
+			return '' !== $v ? $v : '[' . str_replace( '_', ' ', substr( $key, 6 ) ) . ']';
+		case 'legal_payment':
+			$v = trim( (string) talkwyn_setting( 'legal_payment' ) );
+			if ( '' === $v && function_exists( 'WC' ) && WC()->payment_gateways() ) {
+				$names = array();
+				foreach ( WC()->payment_gateways()->get_available_payment_gateways() as $gateway ) {
+					$names[] = wp_strip_all_tags( (string) $gateway->get_method_title() );
+				}
+				$v = implode( ', ', array_unique( array_filter( $names ) ) );
+			}
+			return '' !== $v ? $v : '[payment]';
+		case 'legal_email':
+			$v = trim( (string) talkwyn_setting( 'legal_email' ) );
+			return '' !== $v ? $v : talkwyn_value( 'contact_email' );
+		case 'legal_min_age':
+			return number_format_i18n( max( 13, (int) talkwyn_setting( 'legal_min_age' ) ) );
+		case 'legal_analytics':
+			$a = (string) talkwyn_setting( 'analytics' );
+			return 'ga4' === $a ? 'Google Analytics' : ( 'plausible' === $a ? 'Plausible' : __( 'no analytics tool at the moment', 'talkwyn' ) );
+		case 'legal_updated':
+			$date = (string) talkwyn_setting( 'legal_updated' );
+			if ( '' !== $date ) {
+				return date_i18n( get_option( 'date_format' ), (int) strtotime( $date ) );
+			}
+			return (string) get_the_modified_date();
+		case 'tidio_checked_on':
+		case 'chatbase_checked_on':
+		case 'intercom_checked_on':
+			$date = (string) talkwyn_setting( $key );
+			return '' !== $date ? date_i18n( get_option( 'date_format' ), (int) strtotime( $date ) ) : __( 'not yet checked', 'talkwyn' );
+	}
+	if ( 0 === strpos( $key, 'status_' ) ) {
+		$all  = talkwyn_integrations();
+		$slug = substr( $key, 7 );
+		return isset( $all[ $slug ] ) ? talkwyn_status_label( $all[ $slug ]['status'] ) : '';
+	}
+	return '';
+}
+
+/**
+ * [tw_value key="price_business"].
+ *
+ * @param array<string, string>|string $atts Attributes.
+ */
+function talkwyn_value_shortcode( $atts ): string {
+	$atts = shortcode_atts(
+		array(
+			'key'      => '',
+			'suffix'   => '',
+			'fallback' => '',
+		),
+		$atts,
+		'tw_value'
+	);
+	$key  = sanitize_key( $atts['key'] );
+	// An unset price reads naturally instead of "See pricing per year".
+	if ( 0 === strpos( $key, 'price_' ) && '' === talkwyn_plan_price( substr( $key, 6 ) ) && '' !== $atts['fallback'] ) {
+		return esc_html( $atts['fallback'] );
+	}
+	return esc_html( talkwyn_value( $key ) . $atts['suffix'] );
+}
+add_shortcode( 'tw_value', 'talkwyn_value_shortcode' );
+
+/**
+ * Block binding source "talkwyn/value" (WP 6.5+): {"key":"price_business"}.
+ */
+add_action(
+	'init',
+	static function () {
+		if ( function_exists( 'register_block_bindings_source' ) ) {
+			register_block_bindings_source(
+				'talkwyn/value',
+				array(
+					'label'              => __( 'Talkwyn Site Settings', 'talkwyn' ),
+					'get_value_callback' => static function ( array $args ) {
+						return talkwyn_value( sanitize_key( (string) ( $args['key'] ?? '' ) ) );
+					},
+				)
+			);
+		}
+	}
+);
+
+/**
+ * Settings screen.
+ */
+add_action(
+	'admin_menu',
+	static function () {
+		add_theme_page( __( 'Talkwyn Site Settings', 'talkwyn' ), __( 'Talkwyn Site Settings', 'talkwyn' ), 'edit_theme_options', 'talkwyn-site-settings', 'talkwyn_settings_render' );
+	}
+);
+
+/**
+ * Field definitions for the settings form.
+ *
+ * @return array<string, array<int, array<string, mixed>>>
+ */
+function talkwyn_settings_fields(): array {
+	return array(
+		__( 'Prices', 'talkwyn' )             => array(
+			array(
+				'price_source',
+				__( 'Price source', 'talkwyn' ),
+				'select',
+				array(
+					'woocommerce' => __( 'WooCommerce products (recommended)', 'talkwyn' ),
+					'manual'      => __( 'Manual prices below', 'talkwyn' ),
+				),
+			),
+			array( 'product_personal', __( 'Personal product or variation ID', 'talkwyn' ), 'number' ),
+			array( 'product_business', __( 'Business product or variation ID', 'talkwyn' ), 'number' ),
+			array( 'product_agency', __( 'Agency product or variation ID', 'talkwyn' ), 'number' ),
+			array( 'product_lifetime', __( 'Lifetime product or variation ID', 'talkwyn' ), 'number' ),
+			array( 'price_personal', __( 'Manual price, Personal (e.g. $49)', 'talkwyn' ), 'text' ),
+			array( 'price_business', __( 'Manual price, Business', 'talkwyn' ), 'text' ),
+			array( 'price_agency', __( 'Manual price, Agency', 'talkwyn' ), 'text' ),
+			array( 'price_lifetime', __( 'Manual price, Lifetime', 'talkwyn' ), 'text' ),
+			array( 'regular_personal', __( 'Manual regular price, Personal (struck through when higher than the price, e.g. $79)', 'talkwyn' ), 'text' ),
+			array( 'regular_business', __( 'Manual regular price, Business', 'talkwyn' ), 'text' ),
+			array( 'regular_agency', __( 'Manual regular price, Agency', 'talkwyn' ), 'text' ),
+			array( 'regular_lifetime', __( 'Manual regular price, Lifetime', 'talkwyn' ), 'text' ),
+			array( 'hosted_3yr_range', __( '3-year cost of a typical hosted AI chat plan, for the cost chart (e.g. $1,000 to $2,800)', 'talkwyn' ), 'text' ),
+			array( 'show_lifetime', __( 'Show the Lifetime plan', 'talkwyn' ), 'checkbox' ),
+		),
+		__( 'Founding customers', 'talkwyn' ) => array(
+			array( 'founding_enabled', __( 'Show founding customer sections', 'talkwyn' ), 'checkbox' ),
+			array( 'founding_seats', __( 'Founding seats total', 'talkwyn' ), 'number' ),
+			array( 'founding_remaining', __( 'Founding seats remaining', 'talkwyn' ), 'number' ),
+		),
+		__( 'Policies and links', 'talkwyn' ) => array(
+			array( 'refund_days', __( 'Refund window (days)', 'talkwyn' ), 'number' ),
+			array( 'wporg_url', __( 'WordPress.org plugin URL (empty until the listing is live)', 'talkwyn' ), 'url' ),
+			array( 'free_zip_url', __( 'Direct ZIP download of the free plugin', 'talkwyn' ), 'url' ),
+			array( 'waitlist_action', __( 'Shopify waitlist form target URL (empty = store sign-ups here and email you)', 'talkwyn' ), 'url' ),
+			array( 'contact_email', __( 'Contact form recipient (empty = site admin email)', 'talkwyn' ), 'email' ),
+			array( 'waitlist_show_count', __( 'Show the live waitlist count on integration pages', 'talkwyn' ), 'checkbox' ),
+			array( 'demo_shortcode', __( 'Live demo on the home page (when the Talkwyn plugin runs on this site): [talkwyn_chat mode="inline"]. It answers from this website. Empty = the scripted sample clinic preview.', 'talkwyn' ), 'text' ),
+		),
+		__( 'Legal pages', 'talkwyn' )        => array(
+			array( 'legal_company', __( 'Registered business name', 'talkwyn' ), 'text' ),
+			array( 'legal_address', __( 'Business address', 'talkwyn' ), 'text' ),
+			array( 'legal_email', __( 'Privacy email (empty = contact email)', 'talkwyn' ), 'email' ),
+			array( 'legal_jurisdiction', __( 'Governing law: the country where the business is registered', 'talkwyn' ), 'text' ),
+			array( 'legal_payment', __( 'Payment processor (e.g. Stripe, PayPal)', 'talkwyn' ), 'text' ),
+			array( 'legal_hosting', __( 'Hosting provider', 'talkwyn' ), 'text' ),
+			array( 'legal_email_service', __( 'Email delivery service', 'talkwyn' ), 'text' ),
+			array( 'legal_min_age', __( 'Minimum age for using talkwyn.com', 'talkwyn' ), 'number' ),
+			array( 'legal_reply_time', __( 'Support reply time you can keep (e.g. within 2 business days)', 'talkwyn' ), 'text' ),
+			array( 'legal_updated', __( '"Last updated" date (empty = the page\'s last edit)', 'talkwyn' ), 'date' ),
+			array( 'legal_reviewed', __( 'A lawyer has reviewed the legal pages (hides the draft notice)', 'talkwyn' ), 'checkbox' ),
+		),
+		__( 'Spam protection', 'talkwyn' )    => talkwyn_captcha_settings_fields(),
+		__( 'Cookies and popups', 'talkwyn' ) => array(
+			array(
+				'cookie_banner',
+				__( 'Cookie banner', 'talkwyn' ),
+				'select',
+				array(
+					'auto'   => __( 'Automatic: only when Google Analytics or the partner cookie is on', 'talkwyn' ),
+					'always' => __( 'Always show', 'talkwyn' ),
+					'off'    => __( 'Off', 'talkwyn' ),
+				),
+			),
+			array( 'cookie_text', __( 'Cookie banner text (empty = written for you from the cookies this site uses)', 'talkwyn' ), 'text' ),
+			array( 'trial_popup', __( 'Homepage: show the free trial popup after the visitor scrolls', 'talkwyn' ), 'checkbox' ),
+			array( 'trial_popup_scroll', __( 'Show it after this much of the page is scrolled (percent)', 'talkwyn' ), 'number' ),
+			array( 'trial_popup_days', __( 'Then not again for this many days', 'talkwyn' ), 'number' ),
+		),
+		__( 'Free trial', 'talkwyn' )         => array(
+			array( 'trial_days', __( 'Trial length in days (Talkwyn Hub on this site overrides this)', 'talkwyn' ), 'number' ),
+			array(
+				'trial_card_policy',
+				__( 'Card policy', 'talkwyn' ),
+				'select',
+				array(
+					'none' => __( 'No credit card needed', 'talkwyn' ),
+					'card' => __( 'Card on file, cancel before the trial ends', 'talkwyn' ),
+				),
+			),
+		),
+		__( 'Partners', 'talkwyn' )           => array(
+			array( 'hub_url', __( 'Talkwyn Hub site URL, if the Hub runs on another site (terms are read from its /partners/terms endpoint)', 'talkwyn' ), 'url' ),
+			array( 'partner_rate', __( 'Fallback commission percent (used only without the Hub)', 'talkwyn' ), 'number' ),
+			array( 'partner_cookie_days', __( 'Fallback cookie days', 'talkwyn' ), 'number' ),
+			array( 'partner_threshold', __( 'Fallback minimum payout', 'talkwyn' ), 'number' ),
+			array( 'partner_methods', __( 'Fallback payout methods', 'talkwyn' ), 'text' ),
+		),
+		__( 'Integrations', 'talkwyn' )       => talkwyn_integration_fields(),
+		__( 'Comparisons', 'talkwyn' )        => array(
+			array( 'tidio_price_note', __( 'Tidio pricing summary from tidio.com/pricing', 'talkwyn' ), 'text' ),
+			array( 'tidio_checked_on', __( 'Tidio pricing checked on (date)', 'talkwyn' ), 'date' ),
+			array( 'chatbase_price_note', __( 'Chatbase pricing summary from chatbase.co/pricing', 'talkwyn' ), 'text' ),
+			array( 'chatbase_checked_on', __( 'Chatbase pricing checked on (date)', 'talkwyn' ), 'date' ),
+			array( 'intercom_price_note', __( 'Intercom pricing summary from intercom.com/pricing', 'talkwyn' ), 'text' ),
+			array( 'intercom_checked_on', __( 'Intercom pricing checked on (date)', 'talkwyn' ), 'date' ),
+			array( 'crisp_price_note', __( 'Crisp pricing summary from crisp.chat', 'talkwyn' ), 'text' ),
+			array( 'crisp_checked_on', __( 'Crisp pricing checked on (date)', 'talkwyn' ), 'date' ),
+			array( 'tawkto_price_note', __( 'tawk.to pricing summary from tawk.to', 'talkwyn' ), 'text' ),
+			array( 'tawkto_checked_on', __( 'tawk.to pricing checked on (date)', 'talkwyn' ), 'date' ),
+			array( 'livechat_price_note', __( 'LiveChat pricing summary from livechat.com', 'talkwyn' ), 'text' ),
+			array( 'livechat_checked_on', __( 'LiveChat pricing checked on (date)', 'talkwyn' ), 'date' ),
+			array( 'zendesk_price_note', __( 'Zendesk pricing summary from zendesk.com', 'talkwyn' ), 'text' ),
+			array( 'zendesk_checked_on', __( 'Zendesk pricing checked on (date)', 'talkwyn' ), 'date' ),
+			array( 'freshchat_price_note', __( 'Freshchat pricing summary from freshworks.com', 'talkwyn' ), 'text' ),
+			array( 'freshchat_checked_on', __( 'Freshchat pricing checked on (date)', 'talkwyn' ), 'date' ),
+			array( 'hubspot_price_note', __( 'HubSpot pricing summary from hubspot.com', 'talkwyn' ), 'text' ),
+			array( 'hubspot_checked_on', __( 'HubSpot pricing checked on (date)', 'talkwyn' ), 'date' ),
+			array( 'botpress_price_note', __( 'Botpress pricing summary from botpress.com', 'talkwyn' ), 'text' ),
+			array( 'botpress_checked_on', __( 'Botpress pricing checked on (date)', 'talkwyn' ), 'date' ),
+			array( 'manychat_price_note', __( 'ManyChat pricing summary from manychat.com', 'talkwyn' ), 'text' ),
+			array( 'manychat_checked_on', __( 'ManyChat pricing checked on (date)', 'talkwyn' ), 'date' ),
+			array( 'olark_price_note', __( 'Olark pricing summary from olark.com', 'talkwyn' ), 'text' ),
+			array( 'olark_checked_on', __( 'Olark pricing checked on (date)', 'talkwyn' ), 'date' ),
+		),
+		__( 'Social profiles', 'talkwyn' )    => array(
+			array( 'social_x', 'X (Twitter)', 'url' ),
+			array( 'social_linkedin', 'LinkedIn', 'url' ),
+			array( 'social_facebook', 'Facebook', 'url' ),
+			array( 'social_youtube', 'YouTube', 'url' ),
+			array( 'social_instagram', 'Instagram', 'url' ),
+			array( 'social_github', 'GitHub', 'url' ),
+		),
+		__( 'Analytics', 'talkwyn' )          => array(
+			array(
+				'analytics',
+				__( 'Provider', 'talkwyn' ),
+				'select',
+				array(
+					'none'      => __( 'None', 'talkwyn' ),
+					'ga4'       => 'Google Analytics 4',
+					'plausible' => 'Plausible',
+				),
+			),
+			array( 'ga4_id', __( 'GA4 measurement ID (G-XXXXXXX)', 'talkwyn' ), 'text' ),
+			array( 'plausible_domain', __( 'Plausible domain (e.g. talkwyn.com)', 'talkwyn' ), 'text' ),
+			array( 'plausible_src', __( 'Plausible script URL', 'talkwyn' ), 'url' ),
+		),
+	);
+}
+
+/**
+ * Spam check fields: Cloudflare Turnstile keys, then one switch per form.
+ *
+ * @return array<int, array<int, mixed>>
+ */
+function talkwyn_captcha_settings_fields(): array {
+	$fields = array(
+		array( 'turnstile_site_key', __( 'Cloudflare Turnstile site key (free at dash.cloudflare.com, Turnstile, Add widget). Empty = no spam check.', 'talkwyn' ), 'text' ),
+		array( 'turnstile_secret', __( 'Cloudflare Turnstile secret key', 'talkwyn' ), 'password' ),
+	);
+	foreach ( talkwyn_captcha_forms() as $key => $label ) {
+		/* translators: %s: form name */
+		$fields[] = array( $key, sprintf( __( 'Spam check on: %s', 'talkwyn' ), $label ), 'checkbox' );
+	}
+	return $fields;
+}
+
+/**
+ * One status select per integration.
+ *
+ * @return array<int, array<int, mixed>>
+ */
+function talkwyn_integration_fields(): array {
+	$options = array(
+		'available'      => __( 'Available', 'talkwyn' ),
+		'in_development' => __( 'In development', 'talkwyn' ),
+		'planned'        => __( 'Planned', 'talkwyn' ),
+	);
+	$fields  = array();
+	foreach ( talkwyn_integrations() as $slug => $row ) {
+		$fields[] = array( 'status_' . $slug, $row['name'], 'select', $options );
+	}
+	return $fields;
+}
+
+/**
+ * Render the settings page.
+ */
+function talkwyn_settings_render(): void {
+	if ( ! current_user_can( 'edit_theme_options' ) ) {
+		return;
+	}
+	$values = talkwyn_settings();
+	?>
+	<div class="wrap">
+		<h1><?php esc_html_e( 'Talkwyn Site Settings', 'talkwyn' ); ?></h1>
+		<p><?php esc_html_e( 'These values fill every placeholder on the site. Use [tw_value key="price_business"] in any text, or bind a paragraph or heading to the "Talkwyn Site Settings" source.', 'talkwyn' ); ?></p>
+		<?php if ( isset( $_GET['updated'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display only. ?>
+			<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'Settings saved.', 'talkwyn' ); ?></p></div>
+		<?php endif; ?>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+			<input type="hidden" name="action" value="talkwyn_save_settings">
+			<?php wp_nonce_field( 'talkwyn_save_settings' ); ?>
+			<?php $twi = 0; ?>
+			<?php foreach ( talkwyn_settings_fields() as $section => $fields ) : ?>
+				<section class="tw-set-panel" id="tw-set-<?php echo (int) $twi; ?>" data-title="<?php echo esc_attr( $section ); ?>">
+				<h2><?php echo esc_html( $section ); ?></h2>
+				<table class="form-table" role="presentation">
+				<?php foreach ( $fields as $field ) : ?>
+					<?php list( $key, $label, $type ) = $field; ?>
+					<tr>
+						<th scope="row"><label for="tw-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $label ); ?></label></th>
+						<td>
+						<?php if ( 'select' === $type ) : ?>
+							<select id="tw-<?php echo esc_attr( $key ); ?>" name="tw[<?php echo esc_attr( $key ); ?>]">
+								<?php foreach ( $field[3] as $opt => $opt_label ) : ?>
+									<option value="<?php echo esc_attr( $opt ); ?>" <?php selected( $values[ $key ], $opt ); ?>><?php echo esc_html( $opt_label ); ?></option>
+								<?php endforeach; ?>
+							</select>
+						<?php elseif ( 'checkbox' === $type ) : ?>
+							<input id="tw-<?php echo esc_attr( $key ); ?>" type="checkbox" name="tw[<?php echo esc_attr( $key ); ?>]" value="1" <?php checked( (int) $values[ $key ], 1 ); ?>>
+						<?php else : ?>
+							<input id="tw-<?php echo esc_attr( $key ); ?>" class="regular-text" type="<?php echo esc_attr( $type ); ?>" name="tw[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( (string) $values[ $key ] ); ?>" placeholder="<?php echo esc_attr( talkwyn_settings_placeholder( $key ) ); ?>">
+							<?php if ( 0 === strpos( $key, 'product_' ) && (int) $values[ $key ] ) : ?>
+								<span class="description"><?php echo esc_html( talkwyn_plan_price( substr( $key, 8 ) ) ); ?></span>
+							<?php endif; ?>
+						<?php endif; ?>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+				</table>
+				</section>
+				<?php ++$twi; ?>
+			<?php endforeach; ?>
+			<?php submit_button(); ?>
+		</form>
+		<section class="tw-set-panel" id="tw-set-pages" data-title="<?php esc_attr_e( 'Site pages', 'talkwyn' ); ?>">
+			<?php do_action( 'talkwyn_settings_after_form' ); ?>
+		</section>
+		<style>
+			.tw-set-tabs { display: flex; flex-wrap: wrap; gap: 4px; margin: 16px 0 0; border-bottom: 1px solid #c3c4c7; }
+			.tw-set-tabs button { border: 1px solid transparent; border-bottom: 0; background: none; padding: 8px 14px; margin-bottom: -1px; font-size: 14px; font-weight: 600; color: #50575e; cursor: pointer; border-radius: 4px 4px 0 0; }
+			.tw-set-tabs button[aria-selected="true"] { background: #fff; border-color: #c3c4c7; color: #1A0F12; box-shadow: inset 0 3px 0 #D7263D; }
+			.tw-set-js .tw-set-panel[hidden] { display: none; }
+			.tw-set-js .tw-set-panel > h2:first-child { display: none; }
+			.tw-set-panel { background: #fff; border: 1px solid #c3c4c7; border-top: 0; padding: 4px 20px 12px; max-width: 980px; }
+			.tw-set-panel .form-table th { width: 300px; }
+			.tw-set-panel hr { display: none; }
+		</style>
+		<script>
+		( function () {
+			var wrap = document.currentScript.parentNode;
+			var panels = wrap.querySelectorAll( '.tw-set-panel' );
+			if ( ! panels.length ) { return; }
+			wrap.classList.add( 'tw-set-js' );
+			var nav = document.createElement( 'div' );
+			nav.className = 'tw-set-tabs';
+			nav.setAttribute( 'role', 'tablist' );
+			var form = wrap.querySelector( 'form' );
+			form.parentNode.insertBefore( nav, form );
+			var saved = '';
+			try { saved = sessionStorage.getItem( 'tw-set-tab' ) || ''; } catch ( e ) {}
+			function show( id ) {
+				panels.forEach( function ( p ) { p.hidden = p.id !== id; } );
+				nav.querySelectorAll( 'button' ).forEach( function ( b ) { b.setAttribute( 'aria-selected', b.dataset.target === id ? 'true' : 'false' ); } );
+				var submit = form.querySelector( '.submit' );
+				if ( submit ) { submit.hidden = 'tw-set-pages' === id; }
+				try { sessionStorage.setItem( 'tw-set-tab', id ); } catch ( e ) {}
+			}
+			panels.forEach( function ( p ) {
+				var b = document.createElement( 'button' );
+				b.type = 'button';
+				b.setAttribute( 'role', 'tab' );
+				b.dataset.target = p.id;
+				b.textContent = p.dataset.title;
+				b.addEventListener( 'click', function () { show( p.id ); } );
+				nav.appendChild( b );
+			} );
+			show( document.getElementById( saved ) ? saved : panels[0].id );
+		}() );
+		</script>
+	</div>
+	<?php
+}
+
+/**
+ * Save handler.
+ */
+add_action(
+	'admin_post_talkwyn_save_settings',
+	static function () {
+		if ( ! current_user_can( 'edit_theme_options' ) ) {
+			wp_die( esc_html__( 'You are not allowed to do this.', 'talkwyn' ), '', array( 'response' => 403 ) );
+		}
+		check_admin_referer( 'talkwyn_save_settings' );
+		$raw   = isset( $_POST['tw'] ) && is_array( $_POST['tw'] ) ? wp_unslash( $_POST['tw'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized per field below.
+		$clean = array();
+		foreach ( talkwyn_settings_fields() as $fields ) {
+			foreach ( $fields as $field ) {
+				list( $key, , $type ) = $field;
+				$value                = $raw[ $key ] ?? '';
+				switch ( $type ) {
+					case 'checkbox':
+						$clean[ $key ] = empty( $value ) ? 0 : 1;
+						break;
+					case 'number':
+						$clean[ $key ] = absint( $value );
+						break;
+					case 'url':
+						$clean[ $key ] = esc_url_raw( (string) $value );
+						break;
+					case 'email':
+						$clean[ $key ] = sanitize_email( (string) $value );
+						break;
+					case 'select':
+						$clean[ $key ] = array_key_exists( (string) $value, $field[3] ) ? (string) $value : (string) array_key_first( $field[3] );
+						break;
+					default:
+						$clean[ $key ] = sanitize_text_field( (string) $value );
+				}
+			}
+		}
+		update_option( TALKWYN_SETTINGS, $clean );
+		wp_safe_redirect( admin_url( 'themes.php?page=talkwyn-site-settings&updated=1' ) );
+		exit;
+	}
+);
+
+/**
+ * [tw_price_note vendor="tidio" name="Tidio"] A competitor price note that reads naturally when
+ * the note or the checked-on date has not been filled in yet.
+ */
+add_shortcode(
+	'tw_price_note',
+	static function ( $atts ) {
+		$atts   = shortcode_atts(
+			array(
+				'vendor' => '',
+				'name'   => '',
+			),
+			$atts,
+			'tw_price_note'
+		);
+		$vendor = sanitize_key( $atts['vendor'] );
+		$name   = (string) $atts['name'];
+		$note   = trim( (string) talkwyn_setting( $vendor . '_price_note' ) );
+		$date   = trim( (string) talkwyn_setting( $vendor . '_checked_on' ) );
+		if ( '' === $note ) {
+			/* translators: %s: competitor name */
+			return esc_html( sprintf( __( 'We have not recorded %s pricing on this page yet.', 'talkwyn' ), $name ) );
+		}
+		if ( '' === $date ) {
+			/* translators: 1: competitor name, 2: price note */
+			return esc_html( sprintf( __( '%1$s pricing, as we last saw it: %2$s.', 'talkwyn' ), $name, $note ) );
+		}
+		/* translators: 1: competitor name, 2: price note, 3: date */
+		return esc_html( sprintf( __( '%1$s pricing, as we last saw it: %2$s (checked on %3$s).', 'talkwyn' ), $name, $note, date_i18n( get_option( 'date_format' ), (int) strtotime( $date ) ) ) );
+	}
+);
+
+/**
+ * [tw_legal_draft] The "draft" notice on the legal pages. It stays until the business
+ * details are filled in under Site Settings, Legal pages, and a lawyer's review is ticked.
+ */
+add_shortcode(
+	'tw_legal_draft',
+	static function () {
+		$missing = array();
+		foreach ( array( 'legal_company', 'legal_address', 'legal_jurisdiction', 'legal_payment', 'legal_hosting', 'legal_email_service' ) as $key ) {
+			if ( '' === trim( (string) talkwyn_setting( $key ) ) && ( 'legal_payment' !== $key || '[payment]' === talkwyn_value( 'legal_payment' ) ) ) {
+				$missing[] = $key;
+			}
+		}
+		if ( ! $missing && talkwyn_setting( 'legal_reviewed' ) ) {
+			return '';
+		}
+		return '<div class="tw-callout"><strong>' . esc_html__( 'Draft, review with a lawyer before launch.', 'talkwyn' ) . '</strong> ' . esc_html__( 'Details in square brackets are still being completed.', 'talkwyn' ) . '</div>';
+	}
+);

@@ -1,0 +1,140 @@
+<?php
+/**
+ * Shared components exposed as shortcodes (usable in templates, patterns and posts).
+ *
+ * @package Talkwyn
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * [tw_logo_link] Home link with the inline logo.
+ */
+add_shortcode(
+	'tw_logo_link',
+	static function () {
+		return '<a class="tw-logo-link" href="' . esc_url( home_url( '/' ) ) . '" rel="home">' . talkwyn_logo_svg( 'full', __( 'Talkwyn home', 'talkwyn' ) ) . '</a>';
+	}
+);
+
+/**
+ * [tw_social] Social profile links from Site Settings (hidden when empty).
+ */
+add_shortcode(
+	'tw_social',
+	static function () {
+		$profiles = array(
+			'social_x'         => array( 'brand-x', 'X' ),
+			'social_linkedin'  => array( 'brand-linkedin', 'LinkedIn' ),
+			'social_facebook'  => array( 'brand-facebook', 'Facebook' ),
+			'social_youtube'   => array( 'brand-youtube', 'YouTube' ),
+			'social_instagram' => array( 'brand-instagram', 'Instagram' ),
+			'social_github'    => array( 'brand-github', 'GitHub' ),
+		);
+		$items    = '';
+		foreach ( $profiles as $key => $meta ) {
+			$url = (string) talkwyn_setting( $key );
+			if ( '' !== $url ) {
+				/* translators: %s: social network name */
+				$label  = sprintf( __( 'Talkwyn on %s', 'talkwyn' ), $meta[1] );
+				$items .= '<li><a href="' . esc_url( $url ) . '" rel="me noopener" target="_blank">' . talkwyn_icon( $meta[0], 20, $label ) . '</a></li>';
+			}
+		}
+		return '' === $items ? '' : '<ul class="tw-social">' . $items . '</ul>';
+	}
+);
+
+/**
+ * [tw_icon name="stethoscope" size="24"].
+ *
+ * @param array<string, string>|string $atts Attributes.
+ */
+add_shortcode(
+	'tw_icon',
+	static function ( $atts ) {
+		$atts = shortcode_atts(
+			array(
+				'name' => '',
+				'size' => 24,
+			),
+			$atts,
+			'tw_icon'
+		);
+		return talkwyn_icon( sanitize_key( $atts['name'] ), absint( $atts['size'] ) );
+	}
+);
+
+/**
+ * [tw_badge]Coming soon[/tw_badge] Inline badge; type="soon|pro|new".
+ *
+ * @param array<string, string>|string $atts    Attributes.
+ * @param string|null                   $content Label.
+ */
+add_shortcode(
+	'tw_badge',
+	static function ( $atts, $content = null ) {
+		$atts  = shortcode_atts( array( 'type' => 'soon' ), $atts, 'tw_badge' );
+		$label = null !== $content && '' !== $content ? $content : __( 'Coming soon', 'talkwyn' );
+		return '<span class="tw-badge tw-badge--' . esc_attr( sanitize_key( $atts['type'] ) ) . '">' . esc_html( $label ) . '</span>';
+	}
+);
+
+// "Install free" buttons and menu items (class tw-install) follow the WordPress.org URL once it is set.
+foreach ( array( 'render_block_core/button', 'render_block_core/navigation-link' ) as $talkwyn_install_hook ) {
+	add_filter( $talkwyn_install_hook, 'talkwyn_install_href', 10, 2 );
+}
+
+/**
+ * Point a block with the tw-install class at the current install URL
+ * (the /download/ page until a WordPress.org URL is set in Site Settings).
+ *
+ * @param string               $html  Block HTML.
+ * @param array<string, mixed> $block Block.
+ */
+function talkwyn_install_href( $html, $block ) {
+	$class = (string) ( $block['attrs']['className'] ?? '' );
+	if ( false === strpos( $class, 'tw-install' ) ) {
+		return $html;
+	}
+	$url = talkwyn_install_url();
+	$out = preg_replace( '/href="[^"]*"/', 'href="' . esc_url( $url ) . '"', (string) $html, 1 );
+	if ( '' !== (string) talkwyn_setting( 'wporg_url' ) ) {
+		$out = str_replace( '<a ', '<a rel="noopener" ', (string) $out );
+	}
+	return (string) $out;
+}
+
+/**
+ * Raw "Install free" links in patterns point at /download/ until a WordPress.org URL is set.
+ *
+ * @param string $html Content.
+ */
+function talkwyn_install_links( $html ) {
+	$url = talkwyn_install_url();
+	if ( false === strpos( (string) $html, 'data-tw-event="install_click"' ) || home_url( '/download/' ) === $url ) {
+		return $html;
+	}
+	return (string) preg_replace( '#href="(?:' . preg_quote( home_url( '/download/' ), '#' ) . '|/download/)"(\s+data-tw-event="install_click")#', 'href="' . esc_url( $url ) . '" rel="noopener"$1', (string) $html );
+}
+add_filter( 'the_content', 'talkwyn_install_links', 20 );
+
+/**
+ * [tw_when_live path="/blog/slug/"]Text with a link.[/tw_when_live]
+ * Shows its content only once that post or page is published, so links to scheduled
+ * posts appear on the day they go live (launch playbook 6.3).
+ */
+add_shortcode(
+	'tw_when_live',
+	static function ( $atts, $content = '' ) {
+		$atts = shortcode_atts( array( 'path' => '' ), $atts, 'tw_when_live' );
+		$path = trim( (string) $atts['path'], '/' );
+		if ( '' === $path ) {
+			return '';
+		}
+		$parts = explode( '/', $path );
+		$type  = 'blog' === $parts[0] ? 'post' : ( 'docs' === $parts[0] ? 'doc' : 'page' );
+		$slug  = 'page' === $type ? $path : (string) end( $parts );
+		$post  = get_page_by_path( $slug, OBJECT, $type );
+		return $post && 'publish' === $post->post_status ? do_shortcode( (string) $content ) : '';
+	}
+);

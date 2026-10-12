@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Talkwyn WordPress plugins and theme (PHP projects, not part of the Next.js app).
+    "talkwyn/**",
   ]),
 ]);
 

@@ -308,13 +308,24 @@ function talkwyn_plan_price( string $plan ): string {
 }
 
 /**
- * Direct ZIP of the free plugin: the Site Settings URL, else the latest stable release
- * uploaded to Talkwyn Hub on this site.
+ * Direct ZIP of the free plugin: the live release in Talkwyn Hub on this site when the
+ * Hub can serve it, else the Site Settings URL. A Site Settings URL that points at a page
+ * of this site (for example /download/ itself) is ignored, because it would only reload
+ * the page instead of downloading a file.
  */
 function talkwyn_free_zip_url(): string {
-	$zip = (string) talkwyn_setting( 'free_zip_url' );
-	if ( '' === $zip && class_exists( '\TWH\Account\App' ) && method_exists( '\TWH\Account\App', 'has_free_release' ) && \TWH\Account\App::has_free_release() ) {
-		$zip = \TWH\Account\App::public_free_download_url();
+	if ( class_exists( '\TWH\Account\App' ) && method_exists( '\TWH\Account\App', 'has_free_release' ) && \TWH\Account\App::has_free_release() ) {
+		return \TWH\Account\App::public_free_download_url();
+	}
+	$zip = trim( (string) talkwyn_setting( 'free_zip_url' ) );
+	if ( '' === $zip ) {
+		return '';
+	}
+	$host = wp_parse_url( $zip, PHP_URL_HOST );
+	$path = (string) wp_parse_url( $zip, PHP_URL_PATH );
+	$same = ! $host || strtolower( (string) $host ) === strtolower( (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
+	if ( $same && ! preg_match( '/\.zip$/i', $path ) ) {
+		return '';
 	}
 	return $zip;
 }
@@ -555,7 +566,7 @@ function talkwyn_settings_fields(): array {
 		__( 'Policies and links', 'talkwyn' ) => array(
 			array( 'refund_days', __( 'Refund window (days)', 'talkwyn' ), 'number' ),
 			array( 'wporg_url', __( 'WordPress.org plugin URL (empty until the listing is live)', 'talkwyn' ), 'url' ),
-			array( 'free_zip_url', __( 'Direct ZIP download of the free plugin', 'talkwyn' ), 'url' ),
+			array( 'free_zip_url', __( 'Direct ZIP download of the free plugin (leave empty: Talkwyn Hub serves the live release. Only for a .zip file hosted elsewhere)', 'talkwyn' ), 'url' ),
 			array( 'waitlist_action', __( 'Shopify waitlist form target URL (empty = store sign-ups here and email you)', 'talkwyn' ), 'url' ),
 			array( 'contact_email', __( 'Contact form recipient (empty = site admin email)', 'talkwyn' ), 'email' ),
 			array( 'waitlist_show_count', __( 'Show the live waitlist count on integration pages', 'talkwyn' ), 'checkbox' ),

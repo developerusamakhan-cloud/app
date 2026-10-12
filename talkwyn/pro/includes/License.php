@@ -103,6 +103,9 @@ final class License {
 		return '' !== (string) get_option( 'talkwyn_license_key', '' )
 			&& 'expired' === ( $state['status'] ?? '' )
 			&& empty( $state['trial_ended'] )
-			&& empty( $state['is_trial'] );
+			&& empty( $state['is_trial'] )
+			// Not on a site that was freed from the account before the license expired.
+			// Older saved states have no flag and keep their Pro features.
+			&& ! empty( $state['was_site_active'] ?? true );
 	}
 }

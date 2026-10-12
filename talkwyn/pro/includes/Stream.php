@@ -137,6 +137,11 @@ final class Stream {
 		$errors  = array();
 		$started = microtime( true );
 		foreach ( $order as $id ) {
+			// Same overall budget as the free plugin, so a slow provider cannot hold the reply.
+			if ( ( microtime( true ) - $started ) > \Talkwyn_Providers::TIME_LIMIT ) {
+				$errors[] = 'Time limit reached before trying ' . $id . '.';
+				break;
+			}
 			$acc  = '';
 			$sent = 0.0;
 			try {
@@ -159,6 +164,9 @@ final class Stream {
 				$errors[] = $id . ': ' . wp_specialchars_decode( $e->getMessage(), ENT_QUOTES );
 				$text     = trim( self::visible( $acc ) );
 				if ( '' === $text ) {
+					if ( $last === $id ) {
+						delete_transient( \Talkwyn_Providers::LAST_GOOD );
+					}
 					continue;
 				}
 			}
@@ -172,6 +180,9 @@ final class Stream {
 				);
 			}
 			$errors[] = $id . ': empty reply';
+			if ( $last === $id ) {
+				delete_transient( \Talkwyn_Providers::LAST_GOOD );
+			}
 		}
 		return array(
 			'text'     => '',
@@ -304,7 +315,7 @@ final class Stream {
 				CURLOPT_POSTFIELDS     => wp_json_encode( $spec['body'] ),
 				CURLOPT_HTTPHEADER     => $headers,
 				CURLOPT_CONNECTTIMEOUT => 8,
-				CURLOPT_TIMEOUT        => 45,
+				CURLOPT_TIMEOUT        => 25,
 				CURLOPT_SSL_VERIFYPEER => true,
 				CURLOPT_WRITEFUNCTION  => static function ( $ch, $chunk ) use ( &$buffer, &$raw, $on, $spec ) {
 					$raw    .= strlen( $raw ) < 4000 ? $chunk : '';

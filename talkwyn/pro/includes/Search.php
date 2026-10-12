@@ -211,10 +211,13 @@ final class Search {
 			);
 			++$count;
 		}
+		// Chunks the API returned no vector for are picked again by the next batch: stop
+		// when a batch makes no progress, instead of calling the paid API forever.
+		$stuck = $rows && 0 === $count;
 		return array(
 			'embedded' => $count,
-			'done'     => count( $rows ) < self::BATCH,
-			'error'    => '',
+			'done'     => count( $rows ) < self::BATCH || $stuck,
+			'error'    => $stuck ? __( 'Some chunks could not be turned into vectors. Keyword search still covers them.', 'talkwyn-pro' ) : '',
 		);
 	}
 

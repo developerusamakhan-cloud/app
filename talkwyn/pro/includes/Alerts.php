@@ -66,14 +66,17 @@ final class Alerts {
 					'timeout'  => 8,
 					'blocking' => true,
 					'headers'  => array( 'Content-Type' => 'application/json' ),
-					'body'     => wp_json_encode( array( 'text' => $text ) ),
+					// Slack reads <!channel>, <@user> and <url|label> in text: escape what visitors typed.
+					'body'     => wp_json_encode( array( 'text' => str_replace( array( '&', '<', '>' ), array( '&amp;', '&lt;', '&gt;' ), $text ) ) ),
 				)
 			);
 			$result['slack'] = ! is_wp_error( $res ) && 200 === (int) wp_remote_retrieve_response_code( $res ) ? true : ( is_wp_error( $res ) ? $res->get_error_message() : 'HTTP ' . wp_remote_retrieve_response_code( $res ) );
 		}
-		if ( ! empty( $s['pro_telegram_token'] ) && ! empty( $s['pro_telegram_chat'] ) ) {
+		if ( ! empty( $s['pro_telegram_token'] ) && ! empty( $s['pro_telegram_chat'] ) && ! preg_match( '/^\d+:[A-Za-z0-9_-]+$/', (string) $s['pro_telegram_token'] ) ) {
+			$result['telegram'] = __( 'The Telegram bot token looks wrong. It should look like 123456:ABC-xyz.', 'talkwyn-pro' );
+		} elseif ( ! empty( $s['pro_telegram_token'] ) && ! empty( $s['pro_telegram_chat'] ) ) {
 			$res                = wp_remote_post(
-				'https://api.telegram.org/bot' . rawurlencode( (string) $s['pro_telegram_token'] ) . '/sendMessage',
+				'https://api.telegram.org/bot' . (string) $s['pro_telegram_token'] . '/sendMessage',
 				array(
 					'timeout' => 8,
 					'body'    => array(

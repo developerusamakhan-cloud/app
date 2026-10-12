@@ -96,8 +96,11 @@
 				}
 			};
 			return streamOnce( payload, wrapped, false ).catch( function ( err ) {
-				// Server errors are final; a broken stream before any text falls back to the normal endpoint.
-				if ( err && err.status ) {
+				// Talkwyn errors (rate limit, session) are final. A missing stream route (a cached
+				// page after Pro was turned off) or a broken stream before any text falls back to
+				// the normal endpoint.
+				var code = err && err.data && err.data.code ? String( err.data.code ) : '';
+				if ( err && err.status && 0 === code.indexOf( 'talkwyn_' ) ) {
 					throw err;
 				}
 				if ( started ) {

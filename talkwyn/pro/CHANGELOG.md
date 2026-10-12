@@ -1,5 +1,27 @@
 # Talkwyn Pro changelog
 
+## 1.2.8
+
+QA fixes from an end to end test of the license flow and a review of every Pro module.
+
+License:
+- A paid license no longer switches Pro off for up to a day when it reaches its saved expiry date. The license may already be renewed on talkwyn.com, so the site checks at once (next admin page) and keeps Pro on. Only a trial ends at its date.
+- WP-Cron that never runs no longer turns Pro off silently after 7 days. An overdue check runs from the admin (at most hourly) and, three days overdue, after a front end page is sent (at most every 6 hours).
+- A site freed from My Account does not get Pro back when the license later expires (`was_site_active`). Saved states from older versions keep their features.
+- After a site move, reactivation is retried on every check until talkwyn.com gives a clear answer, instead of leaving the site without an activation after one failed try.
+- Success or failure and the error code are read only from the signed data.
+- "View details" no longer opens an empty popup after a failed update check, and a failed download says the license server could not be reached instead of "Your license does not allow this update".
+
+Features:
+- Order lookup: tries are limited per visitor address and per email (5 an hour each). The session id was part of the key and could be changed to guess order numbers.
+- Order lookup starts only for status questions or a marked order number (#1234, order no. 1234). "I want to order 20 shirts" no longer asks for an order number, and the bot stops waiting for order details when the visitor talks about something else.
+- Slack alerts escape what visitors typed, so a lead cannot ping @channel or add a disguised link. The Telegram token is checked and used as is.
+- Streaming: a provider that fails is no longer tried first for 6 hours, the reply has the same 22 second budget as the free plugin, and each stream times out after 25 seconds (was 45).
+- The widget falls back to the normal chat request when the stream route is missing (for example a cached page after Pro was turned off).
+- Smart search: building vectors stops when a batch makes no progress, instead of calling the embedding API again and again.
+- DOCX and PDF reading refuses content that unpacks to more than 20 MB.
+- Uninstall removes custom answers and PDF, document and web page sources from the knowledge index, and, with "Delete all data" on, the Pro API keys and alert settings. Tables are dropped with `%i`.
+
 ## 1.2.7
 
 - Proactive messages: the settings sanitizer keeps at most 5 rules, matching the 5 rows in the admin (it accepted 10 before).

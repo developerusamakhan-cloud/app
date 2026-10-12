@@ -3,7 +3,7 @@ Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.0
 Requires Plugins: talkwyn
-Stable tag: 1.2.7
+Stable tag: 1.2.8
 License: GPLv2 or later
 
 Pro add-on for the free Talkwyn plugin. Sold and delivered from talkwyn.com with a free 15-day trial.
@@ -41,6 +41,13 @@ Before building a release, put the active Hub public key in `includes/hub-keys.p
 * Pages you add by URL or sitemap are fetched from their sites.
 
 == Changelog ==
+
+= 1.2.8 =
+* Fixed: a renewed or expired paid license no longer turns Pro off for a day at its old expiry date.
+* Fixed: Pro stays on when WP-Cron does not run; overdue license checks run from the admin.
+* Security: order lookup limits per visitor address and email; Slack alerts escape visitor text.
+* Fixed: streaming forgets a failing provider and keeps the same time budget as the free plugin.
+* Fixed: uninstall removes Pro knowledge from the index.
 
 = 1.2.7 =
 * Proactive messages: up to 5 rules are saved, the same 5 rows the settings show.

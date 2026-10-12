@@ -69,6 +69,12 @@ final class Extract {
 		if ( true !== $zip->open( $path ) ) {
 			throw new \Exception( 'Could not open the DOCX file.' );
 		}
+		// A small DOCX can unpack to gigabytes: refuse a document body over 20 MB.
+		$stat = $zip->statName( 'word/document.xml' );
+		if ( is_array( $stat ) && (int) $stat['size'] > 20 * MB_IN_BYTES ) {
+			$zip->close();
+			throw new \Exception( 'The DOCX file is too large to read.' );
+		}
 		$xml = (string) $zip->getFromName( 'word/document.xml' );
 		$zip->close();
 		if ( '' === $xml ) {
@@ -105,9 +111,10 @@ final class Extract {
 					continue;
 				}
 				if ( false !== strpos( $dict, '/FlateDecode' ) ) {
-					$decoded = @gzuncompress( $data ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
+					// Cap each stream at 20 MB so a crafted PDF cannot exhaust memory.
+					$decoded = @gzuncompress( $data, 20 * MB_IN_BYTES ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
 					if ( false === $decoded ) {
-						$decoded = @gzinflate( substr( $data, 2 ) ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
+						$decoded = @gzinflate( substr( $data, 2 ), 20 * MB_IN_BYTES ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
 					}
 					if ( false === $decoded ) {
 						continue;

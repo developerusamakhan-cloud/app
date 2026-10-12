@@ -92,6 +92,8 @@ if ( ! class_exists( 'Talkwyn_License_Client' ) ) :
 			add_action( 'admin_post_' . $p . '_action', array( $this, 'handle_form' ) );
 			add_action( 'upgrader_process_complete', array( $this, 'flush_update_cache' ), 10, 0 );
 			add_action( 'load-update-core.php', array( $this, 'maybe_force_check' ) );
+			add_action( 'admin_init', array( $this, 'maybe_catch_up' ) );
+			add_action( 'shutdown', array( $this, 'maybe_catch_up_late' ) );
 			if ( '' !== $this->cfg['plugin_file'] ) {
 				register_deactivation_hook( (string) $this->cfg['plugin_file'], array( $this, 'on_plugin_deactivate' ) );
 			}
@@ -109,7 +111,9 @@ if ( ! class_exists( 'Talkwyn_License_Client' ) ) :
 			if ( 'active' !== ( $state['status'] ?? '' ) || empty( $state['site_active'] ) || '' === $this->get_key() ) {
 				return false;
 			}
-			if ( ! empty( $state['expires_at'] ) ) {
+			// A trial ends at its date. A paid license may already be renewed on the hub, so its
+			// local date is not trusted: the next check (see maybe_catch_up) returns the real status.
+			if ( ! empty( $state['is_trial'] ) && ! empty( $state['expires_at'] ) ) {
 				$exp = strtotime( (string) $state['expires_at'] );
 				if ( false !== $exp && $exp + self::MAX_CLOCK_SKEW < time() ) {
 					return false;
@@ -234,14 +238,21 @@ if ( ! class_exists( 'Talkwyn_License_Client' ) ) :
 			if ( '' === $key ) {
 				return;
 			}
-			// The site moved or was cloned: get a new instance id and activate it.
+			// The site moved or was cloned: get a new instance id and activate it. Retried on
+			// every check until the hub gives a definitive answer.
 			$instance = $this->instance();
-			if ( $instance['url'] !== $this->site_url() ) {
-				delete_option( $this->cfg['prefix'] . '_instance' );
+			$state    = $this->state();
+			if ( $instance['url'] !== $this->site_url() || ! empty( $state['pending_reactivation'] ) ) {
+				if ( empty( $state['pending_reactivation'] ) ) {
+					delete_option( $this->cfg['prefix'] . '_instance' );
+					$state['pending_reactivation'] = true;
+					$this->save_state( $state );
+				}
 				$result = $this->activate( $key );
 				if ( is_wp_error( $result ) && in_array( $result->get_error_code(), self::DEFINITIVE_ERRORS, true ) ) {
 					$state                = $this->state();
 					$state['site_active'] = false;
+					unset( $state['pending_reactivation'] );
 					$this->save_state( $state );
 				}
 				return;
@@ -261,6 +272,11 @@ if ( ! class_exists( 'Talkwyn_License_Client' ) ) :
 				return;
 			}
 			// A signed, definitive answer: invalid_key, revoked, suspended, expired, wrong_product.
+			// Remember whether this site held an activation, so an expired paid license keeps
+			// Pro only where it was really active (not on sites freed from the account).
+			if ( 'active' === ( $state['status'] ?? '' ) ) {
+				$state['was_site_active'] = ! empty( $state['site_active'] );
+			}
 			$state['status']      = $res['code'];
 			$state['site_active'] = false;
 			$state['last_error']  = $res['code'];
@@ -344,12 +360,12 @@ if ( ! class_exists( 'Talkwyn_License_Client' ) ) :
 				$network['message'] = __( 'Your server clock differs from the license server by more than 10 minutes. Please fix the server time.', 'talkwyn-pro' );
 				return $network;
 			}
-			if ( empty( $json['success'] ) ) {
-				$code = (string) ( $json['error']['code'] ?? ( $data['error_code'] ?? 'error' ) );
-				// Only trust the code inside the signed data.
-				if ( isset( $data['error_code'] ) && $data['error_code'] !== $code ) {
+			if ( isset( $data['error_code'] ) || empty( $json['success'] ) ) {
+				// Success or failure and the error code come from the signed data only.
+				if ( ! isset( $data['error_code'] ) ) {
 					return $network;
 				}
+				$code = (string) $data['error_code'];
 				if ( in_array( $code, array( 'rate_limited', 'server_error', 'bad_request' ), true ) ) {
 					$network['code']    = $code;
 					$network['message'] = (string) ( $json['error']['message'] ?? $network['message'] );
@@ -445,7 +461,7 @@ if ( ! class_exists( 'Talkwyn_License_Client' ) ) :
 			if ( ! $force ) {
 				$cached = get_transient( $cache_key );
 				if ( is_array( $cached ) ) {
-					return $cached;
+					return isset( $cached['error'] ) ? null : $cached;
 				}
 			}
 			$res = $this->request( 'update/check', $key, array( 'channel' => (string) $this->cfg['channel'] ) );
@@ -549,6 +565,9 @@ if ( ! class_exists( 'Talkwyn_License_Client' ) ) :
 				return $reply;
 			}
 			$info = $this->update_info( true );
+			if ( null === $info ) {
+				return new WP_Error( 'talkwyn_unreachable', __( 'The license server could not be reached, so the update could not be downloaded. Please try again later.', 'talkwyn-pro' ) );
+			}
 			if ( empty( $info['package'] ) ) {
 				return new WP_Error( 'talkwyn_no_package', __( 'Your license does not allow this update. Please check your license.', 'talkwyn-pro' ) );
 			}
@@ -592,6 +611,62 @@ if ( ! class_exists( 'Talkwyn_License_Client' ) ) :
 			if ( ! wp_next_scheduled( $hook ) ) {
 				wp_schedule_event( time() + wp_rand( 60, HOUR_IN_SECONDS ), 'daily', $hook );
 			}
+		}
+
+		/**
+		 * Whether a check is overdue: WP-Cron did not run for a day and a half, a paid
+		 * license reached its local expiry date (it may be renewed), or a reactivation
+		 * after a site move is still pending.
+		 */
+		private function check_due(): bool {
+			if ( '' === $this->get_key() ) {
+				return false;
+			}
+			$state = $this->state();
+			$last  = (int) ( $state['last_check'] ?? 0 );
+			if ( ! empty( $state['pending_reactivation'] ) || ( time() - $last ) > 36 * HOUR_IN_SECONDS ) {
+				return true;
+			}
+			$exp = empty( $state['expires_at'] ) ? false : strtotime( (string) $state['expires_at'] );
+			return 'active' === ( $state['status'] ?? '' ) && false !== $exp && $exp < time();
+		}
+
+		/**
+		 * Run an overdue check from the admin, at most once an hour.
+		 */
+		public function maybe_catch_up(): void {
+			if ( wp_doing_ajax() || ! $this->check_due() ) {
+				return;
+			}
+			$lock = $this->cfg['prefix'] . '_catch_up';
+			if ( get_transient( $lock ) ) {
+				return;
+			}
+			set_transient( $lock, 1, HOUR_IN_SECONDS );
+			$this->check();
+		}
+
+		/**
+		 * Front end fallback for sites where WP-Cron never runs and nobody opens the admin:
+		 * after the page is sent, run a check that is three days overdue (at most every 6 hours).
+		 */
+		public function maybe_catch_up_late(): void {
+			if ( is_admin() || wp_doing_ajax() || wp_doing_cron() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) || '' === $this->get_key() ) {
+				return;
+			}
+			$last = (int) ( $this->state()['last_check'] ?? 0 );
+			if ( ( time() - $last ) < 3 * DAY_IN_SECONDS ) {
+				return;
+			}
+			$lock = $this->cfg['prefix'] . '_catch_up_late';
+			if ( get_transient( $lock ) ) {
+				return;
+			}
+			set_transient( $lock, 1, 6 * HOUR_IN_SECONDS );
+			if ( function_exists( 'fastcgi_finish_request' ) ) {
+				fastcgi_finish_request();
+			}
+			$this->check();
 		}
 
 		/**

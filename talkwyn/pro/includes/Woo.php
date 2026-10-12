@@ -130,19 +130,22 @@ final class Woo {
 		$flags   = \Talkwyn_History::flags( $session );
 		$parsed  = self::parse_order_message( (string) $ctx['message'] );
 		$asked   = ! empty( $flags['order_ask'] );
-		if ( ! $parsed['intent'] && ! ( $asked && ( $parsed['number'] || $parsed['email'] ) ) ) {
+		if ( $asked && ! $parsed['number'] && '' === $parsed['email'] && ! $parsed['intent'] ) {
+			// The visitor moved on instead of answering: stop waiting for order details.
+			self::clear_flags( $session );
 			return $preset;
 		}
 		if ( ! $parsed['intent'] && ! $asked ) {
 			return $preset;
 		}
+		// "I want to order 20 shirts" is a purchase, not a status question: only start a lookup
+		// for a status word or a clearly marked order number (#1234, order no. 1234).
+		if ( ! $asked && ! self::is_status_question( (string) $ctx['message'] ) ) {
+			return $preset;
+		}
 		$number = $parsed['number'] ? $parsed['number'] : (int) ( $flags['order_number'] ?? 0 );
 		$email  = '' !== $parsed['email'] ? $parsed['email'] : (string) ( $flags['order_email'] ?? '' );
 		if ( ! $number || '' === $email ) {
-			// Only start the lookup for clear status questions.
-			if ( ! $asked && ! preg_match( '/\b(status|where|track|tracking|shipped|arrive|deliver|delivery)\b/iu', (string) $ctx['message'] ) && ! $parsed['number'] ) {
-				return $preset;
-			}
 			\Talkwyn_History::set_flag( $session, 'order_ask', 1 );
 			\Talkwyn_History::set_flag( $session, 'order_number', $number );
 			\Talkwyn_History::set_flag( $session, 'order_email', $email );
@@ -153,11 +156,13 @@ final class Woo {
 				'provider' => 'order-lookup',
 			);
 		}
-		\Talkwyn_History::set_flag( $session, 'order_ask', 0 );
-		\Talkwyn_History::set_flag( $session, 'order_number', 0 );
-		\Talkwyn_History::set_flag( $session, 'order_email', '' );
+		self::clear_flags( $session );
 		$s = \Talkwyn_Settings::all();
-		if ( ! \Talkwyn_Rate_Limiter::hit( 'order', $session . '@' . \Talkwyn_Rate_Limiter::client_ip( ! empty( $s['trusted_proxy'] ) ), 5 ) ) {
+		// Limit tries per visitor address and per email. The session id is chosen by the
+		// browser, so it is not part of the key (it could be rotated to guess order numbers).
+		$ip_ok   = \Talkwyn_Rate_Limiter::hit( 'order', \Talkwyn_Rate_Limiter::client_ip( ! empty( $s['trusted_proxy'] ) ), 5 );
+		$mail_ok = \Talkwyn_Rate_Limiter::hit( 'order-mail', md5( strtolower( $email ) ), 5 );
+		if ( ! $ip_ok || ! $mail_ok ) {
 			return array(
 				'text'     => __( 'Too many order lookups. Please try again in an hour or contact the team.', 'talkwyn-pro' ),
 				'provider' => 'order-lookup',
@@ -167,6 +172,27 @@ final class Woo {
 			'text'     => self::order_text( $number, $email ),
 			'provider' => 'order-lookup',
 		);
+	}
+
+	/**
+	 * Whether a message asks about an existing order: a status word, or an order number
+	 * marked with # or "number".
+	 *
+	 * @param string $message Message.
+	 */
+	public static function is_status_question( string $message ): bool {
+		return (bool) preg_match( '/\b(status|where|track|tracking|tracked|shipped|shipping|arrive|arrived|delivered|deliver|delivery|dispatched|package|parcel|estado|statut|stand|stato|durum|حالة|اسٹیٹس|स्थिति|状态|状況|상태|статус)\b|#\s*\d{2,10}|\b(?:order\s*)?(?:no\.?|number|nr\.?|n°|nº)\s*:?\s*\d{2,10}/iu', $message );
+	}
+
+	/**
+	 * Forget the order details the bot was waiting for.
+	 *
+	 * @param string $session Session id.
+	 */
+	private static function clear_flags( string $session ): void {
+		\Talkwyn_History::set_flag( $session, 'order_ask', 0 );
+		\Talkwyn_History::set_flag( $session, 'order_number', 0 );
+		\Talkwyn_History::set_flag( $session, 'order_email', '' );
 	}
 
 	/**

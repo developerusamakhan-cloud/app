@@ -493,6 +493,18 @@ function nabia_portfolio_noindex_header() {
 add_action( 'template_redirect', 'nabia_portfolio_noindex_header', 0 );
 
 /**
+ * Keep feeds and the author archive out of Google. They only repeat content that lives
+ * on the real posts, and Search Console lists them as "Crawled - currently not indexed".
+ * The links on them are still followed.
+ */
+function nabia_archive_noindex_header() {
+	if ( ( is_feed() || is_author() ) && ! headers_sent() ) {
+		header( 'X-Robots-Tag: noindex, follow', true );
+	}
+}
+add_action( 'template_redirect', 'nabia_archive_noindex_header', 0 );
+
+/**
  * Use the theme's portfolio templates for whichever post type is the portfolio.
  *
  * @param string[] $templates Candidate templates.

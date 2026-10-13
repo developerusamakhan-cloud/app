@@ -65,6 +65,11 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.23.2
+
+- Feeds and the author archive now send a "noindex, follow" header, so Google stops listing them under "Crawled - currently not indexed".
+- The form security endpoint (`/wp-json/nabia/v1/form-keys`) is marked noindex too.
+
 ## What's new in 2.23.1
 
 - **Nabia Setup recognises pages you made yourself**, including common alternative addresses such as /services/monthly-website-maintenance/. It no longer creates duplicates, new service pages are placed under your existing Services page, and "Fill in missing SEO titles & descriptions" works on your own pages too.

@@ -568,6 +568,7 @@ function nabia_form_keys_route() {
 					)
 				);
 				$response->header( 'Cache-Control', 'no-store, max-age=0' );
+				$response->header( 'X-Robots-Tag', 'noindex, nofollow' );
 				return $response;
 			},
 		)

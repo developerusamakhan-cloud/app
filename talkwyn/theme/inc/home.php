@@ -285,7 +285,7 @@ add_shortcode(
 			}
 			$html .= '</ul>';
 			if ( 'free' === $slug ) {
-				$html .= '<a class="tw-tier__cta" href="' . esc_url( talkwyn_install_url() ) . '" data-tw-event="install_click" data-tw-location="pricing_teaser">' . esc_html__( 'Install free', 'talkwyn' ) . talkwyn_icon( 'arrow-right', 16 ) . '</a>';
+				$html .= '<a class="tw-tier__cta" href="' . esc_url( talkwyn_install_url() ) . '"' . talkwyn_install_attrs() . ' data-tw-event="install_click" data-tw-location="pricing_teaser">' . esc_html__( 'Install free', 'talkwyn' ) . talkwyn_icon( 'arrow-right', 16 ) . '</a>';
 			} else {
 				/* translators: %s: plan name */
 				$html .= '<a class="tw-tier__cta" href="' . esc_url( home_url( '/pricing/#plans' ) ) . '">' . esc_html( sprintf( __( 'See %s', 'talkwyn' ), $plan['name'] ) ) . talkwyn_icon( 'arrow-right', 16 ) . '</a>';

@@ -217,7 +217,7 @@ add_action(
 		echo '</div><aside class="tw-acct-login__aside"><p class="tw-acct-login__kicker">' . esc_html__( 'Your Talkwyn account', 'talkwyn' ) . '</p><ul>' . $list . '</ul>' // phpcs:ignore WordPress.Security.EscapingOutput.OutputNotEscaped -- escaped above.
 			. '<div class="tw-acct-login__new"><p>' . esc_html__( 'New to Talkwyn?', 'talkwyn' ) . '</p>'
 			. '<a class="tw-pill tw-pill--red" href="' . esc_url( home_url( '/pricing/#trial' ) ) . '" data-tw-modal="trial" data-tw-event="trial_click" data-tw-location="account_login">' . esc_html__( 'Start free trial', 'talkwyn' ) . '</a>'
-			. '<a class="tw-arrow-link" href="' . esc_url( talkwyn_install_url() ) . '">' . esc_html__( 'Or install free', 'talkwyn' ) . talkwyn_icon( 'arrow-right', 16 ) . '</a></div></aside></div>';
+			. '<a class="tw-arrow-link" href="' . esc_url( talkwyn_install_url() ) . '"' . talkwyn_install_attrs() . '>' . esc_html__( 'Or install free', 'talkwyn' ) . talkwyn_icon( 'arrow-right', 16 ) . '</a></div></aside></div>';
 	}
 );
 

@@ -133,7 +133,7 @@ add_shortcode(
 			}
 			$html .= '</ul>';
 			if ( 'free' === $key ) {
-				$html .= '<a class="tw-btn tw-btn--secondary tw-btn--block" href="' . esc_url( talkwyn_install_url() ) . '" data-tw-event="install_click" data-tw-location="pricing_free">' . esc_html__( 'Install free', 'talkwyn' ) . '</a>';
+				$html .= '<a class="tw-btn tw-btn--secondary tw-btn--block" href="' . esc_url( talkwyn_install_url() ) . '"' . talkwyn_install_attrs() . ' data-tw-event="install_click" data-tw-location="pricing_free">' . esc_html__( 'Install free', 'talkwyn' ) . '</a>';
 			} else {
 				/* translators: %s: plan name */
 				$label = sprintf( __( 'Buy %s', 'talkwyn' ), $plan['name'] );
@@ -341,7 +341,7 @@ add_shortcode(
 		}
 		$html .= '<div class="tw-download-box is-style-panel"><div><p class="tw-eyebrow">' . esc_html__( 'Free plan forever', 'talkwyn' ) . '</p><p class="tw-download-box__title">' . esc_html__( 'Talkwyn for WordPress', 'talkwyn' ) . '</p><p>' . esc_html__( 'Works with free AI keys. No credit card.', 'talkwyn' ) . '</p></div><div class="tw-download-box__actions">';
 		if ( '' !== $wporg ) {
-			$html .= '<a class="tw-btn" href="' . esc_url( $wporg ) . '" rel="noopener" data-tw-event="install_click" data-tw-location="download_wporg">' . talkwyn_icon( 'download', 18 ) . esc_html__( 'Get it on WordPress.org', 'talkwyn' ) . '</a>';
+			$html .= '<a class="tw-btn" href="' . esc_url( $wporg ) . '" target="_blank" rel="noopener" data-tw-event="install_click" data-tw-location="download_wporg">' . talkwyn_icon( 'download', 18 ) . esc_html__( 'Get it on WordPress.org', 'talkwyn' ) . '</a>';
 		}
 		if ( '' !== $zip ) {
 			$html .= '<a class="tw-btn' . ( '' !== $wporg ? ' tw-btn--secondary' : '' ) . '" href="' . esc_url( $zip ) . '" data-tw-event="install_click" data-tw-location="download_zip">' . talkwyn_icon( 'download', 18 ) . esc_html__( 'Download the ZIP', 'talkwyn' ) . '</a>';

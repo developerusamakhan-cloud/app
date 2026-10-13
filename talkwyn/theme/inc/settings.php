@@ -364,6 +364,14 @@ function talkwyn_install_url(): string {
 }
 
 /**
+ * Extra attributes for "Install free" links: WordPress.org opens in a new tab,
+ * the on-site /download/ page in the same tab.
+ */
+function talkwyn_install_attrs(): string {
+	return '' !== (string) talkwyn_setting( 'wporg_url' ) ? ' target="_blank" rel="noopener"' : '';
+}
+
+/**
  * Add-to-cart URL that lands on checkout.
  *
  * @param string $plan Plan.

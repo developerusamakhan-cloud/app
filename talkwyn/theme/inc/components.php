@@ -97,9 +97,17 @@ function talkwyn_install_href( $html, $block ) {
 		return $html;
 	}
 	$url = talkwyn_install_url();
-	$out = preg_replace( '/href="[^"]*"/', 'href="' . esc_url( $url ) . '"', (string) $html, 1 );
-	if ( '' !== (string) talkwyn_setting( 'wporg_url' ) ) {
-		$out = str_replace( '<a ', '<a rel="noopener" ', (string) $out );
+	$out = (string) preg_replace( '/href="[^"]*"/', 'href="' . esc_url( $url ) . '"', (string) $html, 1 );
+	if ( '' !== talkwyn_install_attrs() ) {
+		// Only the first link (the button itself); drop any target or rel it had.
+		$out = preg_replace_callback(
+			'/<a\s[^>]*>/',
+			static function ( $m ) {
+				return '<a' . talkwyn_install_attrs() . ' ' . ltrim( (string) preg_replace( '/\s(?:target|rel)="[^"]*"/', '', substr( $m[0], 2 ) ) );
+			},
+			$out,
+			1
+		);
 	}
 	return (string) $out;
 }
@@ -114,7 +122,7 @@ function talkwyn_install_links( $html ) {
 	if ( false === strpos( (string) $html, 'data-tw-event="install_click"' ) || home_url( '/download/' ) === $url ) {
 		return $html;
 	}
-	return (string) preg_replace( '#href="(?:' . preg_quote( home_url( '/download/' ), '#' ) . '|/download/)"(\s+data-tw-event="install_click")#', 'href="' . esc_url( $url ) . '" rel="noopener"$1', (string) $html );
+	return (string) preg_replace( '#href="(?:' . preg_quote( home_url( '/download/' ), '#' ) . '|/download/)"(\s+data-tw-event="install_click")#', 'href="' . esc_url( $url ) . '"' . talkwyn_install_attrs() . '$1', (string) $html );
 }
 add_filter( 'the_content', 'talkwyn_install_links', 20 );
 

@@ -389,6 +389,53 @@ function nabia_service_url( $slug ) {
 }
 
 /**
+ * Old service addresses keep working. When a service page is deleted or moved (for example
+ * /web-design/ to /services/web-design/), visitors and Google are sent to the page that
+ * shows the service now. An article scheduled at that address keeps it.
+ */
+function nabia_redirect_old_service_address() {
+	if ( ! is_404() ) {
+		return;
+	}
+	$path = trim( (string) wp_parse_url( isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '', PHP_URL_PATH ), '/' ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$home = trim( (string) wp_parse_url( home_url(), PHP_URL_PATH ), '/' );
+	if ( '' !== $home && 0 === strpos( $path, $home . '/' ) ) {
+		$path = substr( $path, strlen( $home ) + 1 );
+	}
+	if ( '' === $path || false !== strpos( $path, '/' ) ) {
+		return;
+	}
+	$slug = sanitize_title( $path );
+
+	// A post waiting to be published here keeps the address: no redirect, not even WordPress's own guess.
+	$post = get_page_by_path( $slug, OBJECT, 'post' );
+	if ( $post && 'trash' !== $post->post_status ) {
+		add_filter( 'do_redirect_guess_404_permalink', '__return_false' );
+		return;
+	}
+
+	$key = null;
+	foreach ( nabia_service_aliases() as $service => $names ) {
+		if ( $service === $slug || in_array( $slug, $names, true ) ) {
+			$key = $service;
+			break;
+		}
+	}
+	if ( null === $key && array_key_exists( $slug, nabia_service_details() ) ) {
+		$key = $slug;
+	}
+	if ( null === $key ) {
+		return;
+	}
+	$url = nabia_service_url( $key );
+	if ( $url && untrailingslashit( $url ) !== untrailingslashit( home_url( $path ) ) ) {
+		wp_safe_redirect( $url, 301 );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'nabia_redirect_old_service_address', 1 );
+
+/**
  * Permalink of a page created by the setup screen (services, pricing, audit).
  *
  * @param string $role Page role.

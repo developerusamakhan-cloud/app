@@ -224,50 +224,12 @@
 	}
 
 	/* ------------------------------------------------------------------
-	 * Country (chosen automatically from the visitor's location)
+	 * Country (set on <html data-country> by the page itself)
 	 * ---------------------------------------------------------------- */
 
 	function currentCountry() {
 		var c = root.getAttribute('data-country');
 		return DATA.countries[c] ? c : CFG.defaultCountry || 'pk';
-	}
-
-	function setCountry(code) {
-		if (!DATA.countries[code] || code === currentCountry()) {
-			return;
-		}
-		root.setAttribute('data-country', code);
-		emit('pb:country', { country: code });
-		// Newly shown cards may still be waiting to reveal.
-		$$('.reveal:not(.is-in)').forEach(function (el) {
-			if (el.getBoundingClientRect().top < window.innerHeight) {
-				el.classList.add('is-in');
-			}
-		});
-	}
-
-	/**
-	 * First visit with no cookie: ask the server where the visitor is (this also
-	 * fixes pages served from a full-page cache), then remember it for 30 days.
-	 */
-	function confirmCountry() {
-		if (!window.pbGeoPending || !CFG.geoUrl || !window.fetch) {
-			return;
-		}
-		fetch(CFG.geoUrl, { credentials: 'same-origin', cache: 'no-store' })
-			.then(function (r) {
-				return r.ok ? r.json() : null;
-			})
-			.then(function (j) {
-				if (!j || !DATA.countries[j.country]) {
-					return;
-				}
-				document.cookie = 'pb_cc=' + j.country + ';path=/;max-age=2592000;SameSite=Lax';
-				setCountry(j.country);
-			})
-			.catch(function () {
-				/* Keep what the server rendered. */
-			});
 	}
 
 	/* ------------------------------------------------------------------
@@ -1377,5 +1339,4 @@
 	initAlertForms();
 	initConsent();
 	initLead();
-	confirmCountry();
 })();

@@ -21,7 +21,6 @@ function powerbachat_mod_defaults() {
 		'pb_hero_text_pk'    => 'Free bill calculators for LESCO, IESCO, MEPCO, FESCO, K-Electric and every other DISCO, plus honest unit rates and solar prices, checked every month. No sign-up. No app to install.',
 		'pb_hero_text_in'    => 'Free bill calculators for TNEB, KSEB, UPPCL, MSEDCL and more, plus rooftop solar prices with the PM Surya Ghar subsidy worked in. No sign-up. No app to install.',
 		'pb_hero_text_bd'    => 'Free bill calculators for DESCO, DPDC, BREB and every other distributor, plus solar panel and IPS prices, checked every month. No sign-up. No app to install.',
-		'pb_geo_lookup'      => true,
 		'pb_tariff_checked'  => 'October 2026',
 		'pb_price_updated'   => '3 October 2026',
 		'pb_price_rows'      => implode(
@@ -175,8 +174,8 @@ function powerbachat_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'pb_default_country',
 		array(
-			'label'       => __( 'Country for visitors outside Pakistan, India and Bangladesh', 'powerbachat' ),
-			'description' => __( 'Everyone else sees their own country automatically, based on their location. Pages under /pk/, /in/ and /bd/ always show that country.', 'powerbachat' ),
+			'label'       => __( 'Default country', 'powerbachat' ),
+			'description' => __( 'Shown on the home page and every page that does not belong to a country. Pages under /pk/, /in/ and /bd/, and guides in a country category, always show their own country. Visitor locations are not detected.', 'powerbachat' ),
 			'section'     => 'powerbachat_home',
 			'type'        => 'select',
 			'choices'     => array(
@@ -209,16 +208,6 @@ function powerbachat_customize_register( $wp_customize ) {
 		)
 	);
 
-	$wp_customize->add_setting( 'pb_geo_lookup', array( 'default' => true, 'sanitize_callback' => 'wp_validate_boolean' ) );
-	$wp_customize->add_control(
-		'pb_geo_lookup',
-		array(
-			'label'       => __( 'Look up visitor location online', 'powerbachat' ),
-			'description' => __( 'Used only when your host or Cloudflare does not already send the visitor\'s country. Sends the visitor IP to api.country.is; results are cached for a week.', 'powerbachat' ),
-			'section'     => 'powerbachat_home',
-			'type'        => 'checkbox',
-		)
-	);
 
 	// Rates and prices.
 	$wp_customize->add_section(

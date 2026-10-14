@@ -49,7 +49,6 @@ function powerbachat_enqueue_assets() {
 		'data'           => powerbachat_js_data(),
 		'defaultCountry' => powerbachat_mod( 'pb_default_country' ),
 		'tariffChecked'  => powerbachat_mod( 'pb_tariff_checked' ),
-		'geoUrl'         => esc_url_raw( rest_url( 'powerbachat/v1/country' ) ),
 		'subscribeUrl'   => esc_url_raw( rest_url( 'powerbachat/v1/subscribe' ) ),
 		'contactUrl'     => esc_url_raw( rest_url( 'powerbachat/v1/contact' ) ),
 		'leadUrl'        => esc_url_raw( rest_url( 'powerbachat/v1/lead' ) ),
@@ -74,18 +73,11 @@ function powerbachat_resource_hints( $urls, $relation_type ) {
 add_filter( 'wp_resource_hints', 'powerbachat_resource_hints', 10, 2 );
 
 /**
- * Pick the visitor's country before first paint.
- *
- * URL country (/pk/, /in/, /bd/) always wins. Otherwise ?pb_country= (testing),
- * then the pb_cc cookie, then what the server detected. With no cookie yet,
- * main.js confirms the country over REST, which keeps cached pages correct.
+ * Mark that JavaScript runs, before first paint. The page's country is already set
+ * on <html data-country> by the server (see inc/geo.php).
  */
 function powerbachat_country_bootstrap() {
-	$forced  = powerbachat_forced_country();
-	$current = powerbachat_current_country();
-	?>
-	<script>(function(){var d=document.documentElement,f=<?php echo wp_json_encode( $forced ); ?>,c='',q=/[?&]pb_country=(pk|in|bd)\b/.exec(location.search),m=/(?:^|;\s*)pb_cc=(pk|in|bd)/.exec(document.cookie);d.classList.add('js');if(q){document.cookie='pb_cc='+q[1]+';path=/;max-age=2592000;SameSite=Lax';m=q;}c=f||(m&&m[1])||d.getAttribute('data-country')||<?php echo wp_json_encode( $current ); ?>;d.setAttribute('data-country',c);window.pbGeoPending=!f&&!m;})();</script>
-	<?php
+	echo "<script>document.documentElement.classList.add('js');</script>\n";
 }
 add_action( 'wp_head', 'powerbachat_country_bootstrap', 1 );
 

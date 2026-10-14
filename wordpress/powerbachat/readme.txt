@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.8.1
+Stable tag: 1.9.1
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -285,6 +285,9 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.9.1 =
+* Restores automatic country detection from the visitor's location (undoes 1.9.0). Everything else is the same as 1.8.1.
 
 = 1.8.1 =
 * "Sitemap" link in the footer bottom bar: Rank Math or Yoast's sitemap_index.xml when active, otherwise WordPress's wp-sitemap.xml. robots.txt names the same sitemap if no plugin already does.

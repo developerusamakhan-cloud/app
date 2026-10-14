@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.9.0
+Stable tag: 1.8.1
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -37,21 +37,32 @@ Sections (in order): hero + live bill calculator, rate ticker, utility directory
 slab chart, solar sizing tool, price board, guides, method, FAQ, alerts sign-up.
 Reorder or remove them with the `powerbachat_home_sections` filter.
 
-== Country per page ==
+== Country by location ==
 
-The site does not detect where visitors are: no IP lookup, no country headers, no
-country cookie. Each page shows the country it belongs to:
+Each visitor sees only their own country (Pakistan, India or Bangladesh), picked
+automatically from their location. There is no switch on the site.
 
-1. Pages under /pk/, /in/ and /bd/ show Pakistan, India or Bangladesh.
-2. Guide posts and guide lists show the country of their category (pakistan, india
-   or bangladesh).
-3. Every other page (home, legal pages, search) shows the default country chosen in
-   Customize > PowerBachat > Home page.
+How the country is chosen (first match wins):
+1. The URL: pages under /pk/, /in/ and /bd/ always show that country, so Google and
+   shared links see the right content whatever their location.
+2. A remembered choice (the pb_cc cookie, kept for 30 days).
+3. The country header your host or CDN sends (Cloudflare CF-IPCountry, CloudFront,
+   server GeoIP). On Cloudflare, turn on "IP Geolocation" (Network settings);
+   this is the fastest and most accurate option.
+4. An online IP lookup (api.country.is), cached for a week per visitor IP. It can be
+   switched off in Customize → PowerBachat → Home page.
+5. Everyone outside the three countries gets the fallback country set in the
+   Customizer (Pakistan by default).
 
-Pages look the same for every visitor, so they cache perfectly.
+Works with page caching: the page carries all three versions and the browser shows
+the right one, confirming the country with /wp-json/powerbachat/v1/country on the
+first visit.
 
-Guides: put a post in a category with the slug pakistan, india or bangladesh to
-link it to that country. Posts without one of those categories show to everyone.
+Testing: add ?pb_country=in (or pk, bd) to any URL to preview another country. It is
+remembered for 30 days; use ?pb_country=pk to go back.
+
+Guides: put a post in a category with the slug pakistan, india or bangladesh to show
+it to that country only. Posts without one of those categories show to everyone.
 
 == Ready-written content (Appearance > PowerBachat content) ==
 
@@ -121,7 +132,7 @@ The footer lists every page for the country plus the company and legal pages fro
 /content/site/: About us, How we check rates (editorial policy),
 Contact us, Privacy policy, Terms of use, Disclaimer and Cookie policy. Legal pages
 are kept at their natural length rather than padded. They describe how the theme
-actually works (no location tracking, the pb_consent, pb_alert and pb_lead cookies, Google Fonts, alert
+actually works (country lookup, the pb_cc and pb_alert cookies, Google Fonts, alert
 emails, contact form retention); review them with your own adviser and update them
 if you add analytics, ads or other services.
 
@@ -274,10 +285,6 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
-
-= 1.9.0 =
-* Visitor location detection removed: no IP lookup, no country headers, no pb_cc cookie, no country check from the browser. Each page shows its own country (/pk/, /in/, /bd/ and country guides); everything else shows the default country from the Customizer.
-* About, privacy and cookie pages updated to say the site does not track location.
 
 = 1.8.1 =
 * "Sitemap" link in the footer bottom bar: Rank Math or Yoast's sitemap_index.xml when active, otherwise WordPress's wp-sitemap.xml. robots.txt names the same sitemap if no plugin already does.

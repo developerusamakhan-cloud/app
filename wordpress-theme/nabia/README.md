@@ -65,6 +65,10 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.23.6
+
+- SEO titles longer than 60 characters drop the " - Nabia Khan" ending automatically, so every article (including scheduled ones) stays within Google's title length.
+
 ## What's new in 2.23.5
 
 - SEO titles that still hold a default pattern (such as "About Me | Nabia Khan") are now replaced with the better title too; text you wrote yourself is still never touched.

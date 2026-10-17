@@ -155,3 +155,18 @@ function nabia_sitemap_xml_rule() {
 	}
 }
 add_action( 'init', 'nabia_sitemap_xml_rule', 2 );
+
+/**
+ * Keep SEO titles within 60 characters: when " - Site name" pushes a title over, drop it.
+ *
+ * @param string $title Title from the SEO plugin.
+ * @return string
+ */
+function nabia_trim_long_title( $title ) {
+	$suffix = ' - ' . get_bloginfo( 'name' );
+	if ( strlen( $title ) > 60 && substr( $title, -strlen( $suffix ) ) === $suffix ) {
+		return substr( $title, 0, -strlen( $suffix ) );
+	}
+	return $title;
+}
+add_filter( 'rank_math/frontend/title', 'nabia_trim_long_title', 20 );

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NABIA_VERSION', '2.23.3' );
+define( 'NABIA_VERSION', '2.23.4' );
 define( 'NABIA_DIR', get_template_directory() );
 define( 'NABIA_URI', get_template_directory_uri() );
 
@@ -23,6 +23,7 @@ require NABIA_DIR . '/inc/services.php';
 require NABIA_DIR . '/inc/pricing.php';
 require NABIA_DIR . '/inc/audit.php';
 require NABIA_DIR . '/inc/setup.php';
+require NABIA_DIR . '/inc/seo-fill.php';
 require NABIA_DIR . '/inc/blog-import.php';
 require NABIA_DIR . '/inc/layout.php';
 require NABIA_DIR . '/inc/interlinks.php';

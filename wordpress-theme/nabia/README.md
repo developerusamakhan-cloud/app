@@ -65,6 +65,11 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.23.4
+
+- **SEO titles and meta descriptions filled in automatically.** The first time you open the dashboard after the update, empty Rank Math (or Yoast) titles and descriptions are filled in on the main pages (Services, every service page, Pricing, Free Website Audit, About, Blog, Contact, Hire Me, My Works) and shorter titles are set on 17 long article titles. Text you wrote yourself is never replaced.
+- **/sitemap.xml now opens the sitemap directly** (Rank Math only redirected it), so SEO checkers such as Ubersuggest find it.
+
 ## What's new in 2.23.3
 
 - **Old service addresses redirect automatically.** When a service page is deleted or moved (for example a copy at /web-design/ when the real page is /services/web-design/), visitors and Google are sent to the page that shows the service now, with a permanent (301) redirect. No redirect plugin needed.

@@ -5,7 +5,7 @@ slug: insurers
 page_type: standard
 order: 5
 reviewed: 2026-09-28
-seo_title: How State Farm, GEICO and Progressive Handle Car Accident Claims
+seo_title: How State Farm, GEICO and Progressive Handle Claims
 focus_keyword: how insurance companies handle car accident claims
 summary: Plain-English overviews of how the largest US auto insurers handle car accident claims.
 excerpt: How the largest US auto insurers handle car accident claims: filing, repairs, injury claims, diminished value and tips for dealing with the adjuster. Independent and unaffiliated.

@@ -7,7 +7,7 @@ category: Fault and state rules
 category_slug: fault-and-states
 tool: settlement-estimator
 reviewed: 2026-09-28
-seo_title: Comparative vs Contributory Negligence: What It Means for Your Claim
+seo_title: Comparative vs Contributory Negligence, Explained
 focus_keyword: comparative negligence
 summary: How your state splits the blame decides how much you can recover. Here is each rule with real numbers.
 excerpt: Comparative and contributory negligence decide what happens when both drivers share the blame. See how each rule works, which states use it, and what it does to a real claim.

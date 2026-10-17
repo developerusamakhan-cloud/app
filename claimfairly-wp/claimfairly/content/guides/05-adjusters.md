@@ -7,7 +7,7 @@ category: Insurance claims
 category_slug: insurance-claims
 tool: settlement-estimator
 reviewed: 2026-09-28
-seo_title: How Insurance Companies Calculate Settlement Offers (and Why They Start Low)
+seo_title: How Insurance Companies Calculate Settlement Offers
 focus_keyword: how insurance calculates settlement
 summary: What goes into an adjuster's offer, why the first number is low, and how to respond.
 excerpt: How do insurance companies calculate a settlement offer? A look inside the adjuster's process: the damages they count, the software, the discounts, and how to respond to a low offer.

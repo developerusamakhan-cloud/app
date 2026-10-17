@@ -132,6 +132,20 @@ $claimfairly_featured = is_home() && ! is_paged() && have_posts();
 		</div>
 	<?php endif; ?>
 
+	<?php
+	// The Guides page's own text (how to use the guides), on the first page only.
+	if ( is_home() && ! is_paged() && $claimfairly_blog_id ) :
+		$claimfairly_about = get_post_field( 'post_content', $claimfairly_blog_id );
+		if ( '' !== trim( (string) $claimfairly_about ) ) :
+			?>
+			<section class="guides-about prose" aria-label="<?php esc_attr_e( 'About these guides', 'claimfairly' ); ?>">
+				<?php echo apply_filters( 'the_content', $claimfairly_about ); // phpcs:ignore WordPress.Security.EscapeOutput -- core content filter. ?>
+			</section>
+			<?php
+		endif;
+	endif;
+	?>
+
 	<div class="blog-cta">
 		<div>
 			<p class="blog-cta__title"><?php esc_html_e( 'Rather see your own numbers?', 'claimfairly' ); ?></p>

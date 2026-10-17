@@ -4,7 +4,7 @@ crumb: States
 slug: states
 page_type: standard
 order: 3
-seo_title: Car Accident Laws by State: Fault Rules and Deadlines (All 50)
+seo_title: "Car Accident Laws by State: Fault Rules and Deadlines"
 excerpt: Every state's fault rule, no-fault status and injury filing deadline in one table, with a detailed page for each state.
 focus_keyword: car accident laws by state
 hide_author: 1

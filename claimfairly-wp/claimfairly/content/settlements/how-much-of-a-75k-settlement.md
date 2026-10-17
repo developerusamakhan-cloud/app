@@ -6,7 +6,7 @@ page_type: guide
 tool: settlement-take-home
 order: 3
 reviewed: 2026-09-28
-seo_title: How Much of a $75,000 Settlement Will I Get? (Take-Home Calculator)
+seo_title: How Much of a $75,000 Settlement Will I Get?
 focus_keyword: how much of a 75k settlement will i get
 summary: What you actually keep from a $75,000 car accident settlement after fees, costs and liens.
 excerpt: See how much of a $75,000 settlement you actually take home after attorney fees, case costs and medical liens, with a worked example and a calculator preset to $75,000.

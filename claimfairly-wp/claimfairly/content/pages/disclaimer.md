@@ -1,6 +1,7 @@
 ---
 title: Disclaimer
 slug: disclaimer
+seo_title: "Disclaimer: Educational Estimates, Not Legal Advice"
 page_type: standard
 order: 13
 excerpt: ClaimFairly provides educational estimates, not legal advice. Read what that means before relying on any result.

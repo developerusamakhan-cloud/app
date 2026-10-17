@@ -7,7 +7,7 @@ category: Settlements
 category_slug: settlements
 tool: settlement-take-home
 reviewed: 2026-09-28
-seo_title: Attorney Fees and Medical Liens: How Much of Your Settlement You Keep
+seo_title: "Attorney Fees and Medical Liens: What You Keep"
 focus_keyword: attorney fees settlement
 summary: Why a $50,000 settlement can turn into $27,000 in your pocket, and what you can do about it.
 excerpt: Your settlement check is smaller than the settlement. Here is how attorney fees, case costs and medical liens come out, with real examples and ways to keep more.

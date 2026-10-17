@@ -1,6 +1,7 @@
 ---
 title: Privacy Policy
 slug: privacy-policy
+seo_title: "Privacy Policy: What ClaimFairly Collects and Why"
 page_type: standard
 order: 14
 excerpt: ClaimFairly does not store what you type into its calculators. Here is what little data the site collects and why.

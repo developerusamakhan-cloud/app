@@ -7,7 +7,7 @@ category: Settlements
 category_slug: settlements
 tool: settlement-take-home
 reviewed: 2026-09-28
-seo_title: Should You Accept the First Settlement Offer? 9 Questions to Ask
+seo_title: "First Settlement Offer: Should You Accept It? 9 Questions"
 focus_keyword: first settlement offer
 summary: Nine questions to ask before you accept an insurer's first offer, and how to counter without burning bridges.
 excerpt: Should you take the insurance company's first settlement offer? Nine questions to ask first, the warning signs of a lowball offer, and how to make a counteroffer.

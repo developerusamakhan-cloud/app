@@ -1100,3 +1100,77 @@ function claimfairly_moved_page_redirects() {
 	}
 }
 add_action( 'template_redirect', 'claimfairly_moved_page_redirects' );
+
+/**
+ * One-time fixes for sites set up with an older version of the theme. Runs
+ * once per theme version, on the first request after an update.
+ *
+ * 1. Early versions created the injury and insurer pages at the top level
+ *    before their hub pages existed. If an untouched top-level copy sits next
+ *    to the page under its hub, the copy is set to draft and its old address
+ *    redirects (301) to the right page, so there is no duplicate content.
+ * 2. Shorter SEO titles from the content files replace older imported ones,
+ *    in the theme and in Rank Math or Yoast. A title changed by hand is kept.
+ */
+function claimfairly_maybe_upgrade() {
+	if ( wp_installing() || CLAIMFAIRLY_VERSION === get_option( 'claimfairly_upgraded' ) ) {
+		return;
+	}
+	update_option( 'claimfairly_upgraded', CLAIMFAIRLY_VERSION );
+	if ( ! get_option( 'page_on_front' ) ) {
+		return; // Setup has not run yet; the importer will do everything.
+	}
+
+	$redirects = (array) get_option( 'claimfairly_redirects', array() );
+	foreach ( claimfairly_content_files() as $file ) {
+		$meta = claimfairly_parse_content_file( (string) file_get_contents( $file ) )['meta']; // phpcs:ignore WordPress.WP.AlternativeFunctions
+		if ( empty( $meta['slug'] ) ) {
+			continue;
+		}
+		$slug = sanitize_title( $meta['slug'] );
+		if ( isset( $meta['post_type'] ) && 'post' === $meta['post_type'] ) {
+			$post = get_page_by_path( $slug, OBJECT, 'post' );
+		} else {
+			$path = ( empty( $meta['parent'] ) ? '' : $meta['parent'] . '/' ) . $slug;
+			$post = get_page_by_path( $path );
+		}
+		if ( ! $post ) {
+			continue;
+		}
+
+		// 1. Old top-level copy of a page that now lives under a hub.
+		if ( ! empty( $meta['parent'] ) && 'publish' === $post->post_status ) {
+			$old = get_page_by_path( $slug );
+			if ( $old && (int) $old->ID !== (int) $post->ID && 0 === (int) $old->post_parent ) {
+				$hash      = (string) get_post_meta( $old->ID, '_cf_import_hash', true );
+				$untouched = '' !== $hash && md5( $old->post_content ) === $hash;
+				if ( 'publish' === $old->post_status && $untouched ) {
+					wp_update_post(
+						array(
+							'ID'          => $old->ID,
+							'post_status' => 'draft',
+						)
+					);
+				}
+				if ( 'publish' !== get_post_status( $old->ID ) ) {
+					$redirects[ $slug ] = $path;
+				}
+			}
+		}
+
+		// 2. Shorter SEO title, unless someone changed the title by hand.
+		if ( ! empty( $meta['seo_title'] ) ) {
+			$new    = $meta['seo_title'];
+			$stored = (string) get_post_meta( $post->ID, '_cf_seo_title', true );
+			$rank   = (string) get_post_meta( $post->ID, 'rank_math_title', true );
+			$yoast  = (string) get_post_meta( $post->ID, '_yoast_wpseo_title', true );
+			if ( $new !== $stored && ( '' === $rank || $rank === $stored ) && ( '' === $yoast || $yoast === $stored ) ) {
+				update_post_meta( $post->ID, '_cf_seo_title', $new );
+				update_post_meta( $post->ID, 'rank_math_title', $new );
+				update_post_meta( $post->ID, '_yoast_wpseo_title', $new );
+			}
+		}
+	}
+	update_option( 'claimfairly_redirects', $redirects );
+}
+add_action( 'init', 'claimfairly_maybe_upgrade', 30 );

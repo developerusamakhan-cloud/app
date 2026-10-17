@@ -1,6 +1,7 @@
 ---
 title: Contact
 slug: contact
+seo_title: "Contact ClaimFairly: Report an Error or Suggest a Tool"
 page_type: standard
 order: 15
 excerpt: Get in touch with ClaimFairly to report an error, suggest a calculator or ask about the site.

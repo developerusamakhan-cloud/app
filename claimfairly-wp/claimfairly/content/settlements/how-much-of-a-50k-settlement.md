@@ -6,7 +6,7 @@ page_type: guide
 tool: settlement-take-home
 order: 2
 reviewed: 2026-09-28
-seo_title: How Much of a $50,000 Settlement Will I Get? (Take-Home Calculator)
+seo_title: How Much of a $50,000 Settlement Will I Get?
 focus_keyword: how much of a 50k settlement will i get
 summary: What you actually keep from a $50,000 car accident settlement after fees, costs and liens.
 excerpt: See how much of a $50,000 settlement you actually take home after attorney fees, case costs and medical liens, with a worked example and a calculator preset to $50,000.

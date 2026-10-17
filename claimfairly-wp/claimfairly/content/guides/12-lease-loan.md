@@ -7,7 +7,7 @@ category: Diminished value
 category_slug: diminished-value
 tool: diminished-value
 reviewed: 2026-09-28
-seo_title: Diminished Value on a Leased or Financed Car: Who Gets the Money?
+seo_title: "Diminished Value on a Leased Car: Who Gets the Money?"
 focus_keyword: diminished value leased car
 summary: Who owns the loss on a leased or financed car, who can claim it, and how to protect yourself at turn-in or trade-in.
 excerpt: Can you claim diminished value on a leased or financed car? Who owns the loss, how lease turn-in charges work, and how to protect yourself when you trade in or sell.

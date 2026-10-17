@@ -7,7 +7,7 @@ category: Diminished value
 category_slug: diminished-value
 tool: diminished-value
 reviewed: 2026-09-28
-seo_title: What Is Diminished Value? How to Claim It After a Car Accident
+seo_title: "Diminished Value Claim: What It Is and How to File One"
 focus_keyword: diminished value claim
 summary: Your repaired car is worth less than before the crash. Here is how a diminished value claim gets that money back.
 excerpt: Diminished value is the resale value your car loses after an accident, even when the repair is perfect. Here is how to prove it and file a diminished value claim, step by step.

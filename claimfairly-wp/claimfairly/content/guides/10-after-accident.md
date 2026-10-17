@@ -7,7 +7,7 @@ category: After a crash
 category_slug: after-a-crash
 tool: settlement-estimator
 reviewed: 2026-09-28
-seo_title: "What to Do After a Car Accident: A Step by Step Claim Checklist"
+seo_title: "What to Do After a Car Accident: Claim Checklist"
 focus_keyword: what to do after a car accident
 summary: A calm, step by step checklist for the scene, the first week and the claim, so you protect your health and your money.
 excerpt: What to do after a car accident, step by step: at the scene, in the first 24 hours and during the insurance claim. A printable checklist that protects your health and your claim.

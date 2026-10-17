@@ -1,6 +1,7 @@
 ---
 title: Editorial Policy
 slug: editorial-policy
+seo_title: "Editorial Policy: How ClaimFairly Checks Its Facts"
 page_type: standard
 order: 11
 excerpt: How ClaimFairly researches, writes, reviews and corrects its calculators, guides and state pages.

@@ -7,7 +7,7 @@ category: Settlements
 category_slug: settlements
 tool: settlement-estimator
 reviewed: 2026-09-28
-seo_title: How Long Does a Car Accident Settlement Take? A Realistic Timeline
+seo_title: How Long Does a Car Accident Settlement Take?
 focus_keyword: how long car accident settlement
 summary: A realistic timeline from the crash to the check, and what speeds things up or slows them down.
 excerpt: How long does a car accident settlement take? A realistic timeline from weeks for property damage to a year or more for serious injuries, and what speeds it up.

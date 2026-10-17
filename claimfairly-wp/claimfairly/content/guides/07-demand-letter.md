@@ -7,7 +7,7 @@ category: Insurance claims
 category_slug: insurance-claims
 tool: demand-letter
 reviewed: 2026-09-28
-seo_title: How to Write a Car Accident Demand Letter (With Free Template)
+seo_title: How to Write a Car Accident Demand Letter (Free Template)
 focus_keyword: how to write a demand letter car accident
 summary: What to include, what to leave out, how much to ask for, and a free generator that formats it for you.
 excerpt: A step by step guide to writing a car accident demand letter: what to include, how much to ask for, what to attach, and the mistakes that weaken your claim. Free template included.

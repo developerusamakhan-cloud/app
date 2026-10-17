@@ -7,7 +7,7 @@ category: Settlements
 category_slug: settlements
 tool: pain-and-suffering
 reviewed: 2026-09-28
-seo_title: Pain and Suffering Multiplier vs Per Diem Method, With Examples
+seo_title: Pain and Suffering Multiplier vs Per Diem, With Examples
 focus_keyword: pain and suffering multiplier
 summary: The two common ways to put a number on pain, when each one fits, and how to defend your choice.
 excerpt: The multiplier method and the per diem method are the two common ways to value pain and suffering. See how each works, with examples, and which one fits your claim.

@@ -6,7 +6,7 @@ parent: insurers
 page_type: insurer
 order: 3
 reviewed: 2026-09-28
-seo_title: How Progressive Handles Car Accident Claims: Steps, Timeline and Tips
+seo_title: "How Progressive Handles Car Accident Claims: Steps and Tips"
 focus_keyword: progressive car accident claim
 summary: How a car accident claim with Progressive usually works, from filing to payment, and how to protect your side of it.
 excerpt: How to file a car accident claim with Progressive, what happens after you file, how repairs and injury claims are handled, and tips for dealing with the adjuster.

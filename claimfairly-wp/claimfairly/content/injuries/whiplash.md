@@ -7,7 +7,7 @@ page_type: injury
 tool: settlement-estimator
 order: 1
 reviewed: 2026-09-28
-seo_title: Whiplash Settlement Calculator: Average Value and What Changes It
+seo_title: "Whiplash Settlement Calculator: What Your Claim Is Worth"
 focus_keyword: whiplash settlement
 summary: Estimate a whiplash claim from your treatment, and learn why these claims are often undervalued.
 excerpt: What is a whiplash claim worth after a car accident? Estimate your whiplash settlement, learn how insurers view neck injuries, and see what raises or lowers the value.

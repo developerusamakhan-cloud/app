@@ -86,6 +86,16 @@ Even when the other driver was at fault, your own policy may help:
 - **Uninsured and underinsured motorist coverage** helps when the other driver has no insurance or too little.
 - **Rental reimbursement** covers a rental car if you bought it.
 
+## Is there a State Farm settlement calculator?
+
+State Farm's website lets you file and track a claim, but it does not publish a calculator that shows how its adjusters will value your injury or your car's lost value. You can still estimate the numbers the same way an adjuster starts, with free tools that show every step:
+
+- **State Farm injury settlement calculator:** our [car accident settlement calculator](/car-accident-settlement-calculator/) adds your medical bills, lost wages and an amount for pain and suffering, then adjusts for your state's fault rule.
+- **State Farm pain and suffering calculator:** the [pain and suffering calculator](/pain-and-suffering-calculator/) compares the multiplier and per diem methods so you can see a realistic range.
+- **State Farm diminished value or car value calculator:** the [diminished value calculator](/diminished-value-calculator/) runs the 17c formula many insurers start from, so you know the likely first offer before you call.
+
+These are estimates, not State Farm's own figures. Use them to check whether an offer is in a reasonable range, and send your documents and your number in writing.
+
 ## Tips for dealing with State Farm
 
 - **Get everything in writing:** the claim number, the adjuster's name and any offer.
@@ -109,6 +119,7 @@ Ask the adjuster to explain the decision in writing and point to the policy lang
 [cf_q q="How long does State Farm take to settle a car accident claim?"]Property damage claims often settle in days to weeks. Injury claims usually take months, because they wait for treatment to finish and records to arrive.[/cf_q]
 [cf_q q="Can I file a claim with State Farm if I am not their customer?"]Yes, if their policyholder caused the crash. That is called a third-party claim.[/cf_q]
 [cf_q q="Does State Farm pay diminished value?"]It depends on the state, the type of claim and the policy. Third-party diminished value claims against the at-fault driver's insurer are the most common route. Ask the adjuster and put your request in writing.[/cf_q]
+[cf_q q="Does State Farm have a pain and suffering calculator?"]Not one that the public can use. Adjusters use their own internal process. You can estimate a range yourself with a free pain and suffering calculator that shows the multiplier and per diem methods.[/cf_q]
 [cf_q q="Do I have to use a State Farm network repair shop?"]In most states you can choose your own shop. Network shops can make the process simpler, so ask about the trade-offs before deciding.[/cf_q]
 [cf_q q="Will State Farm pay for a rental car?"]If their driver was at fault, a rental is often part of the third-party claim. Under your own policy, it depends on whether you have rental coverage.[/cf_q]
 [cf_q q="What if State Farm says I was partly at fault?"]Ask for the decision and reasons in writing and respond with evidence. Your state's negligence rule decides how shared fault affects your claim.[/cf_q]

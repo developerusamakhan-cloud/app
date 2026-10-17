@@ -47,13 +47,41 @@ function nabia_extra_seo() {
 			'why-i-chose-wordpress-for-my-clients-and-why-you-should-too' => array( __( 'Why I Chose WordPress for My Clients', 'nabia' ), '' ),
 			'wix-vs-wordpress'                   => array( __( 'Wix vs WordPress: An Honest Comparison', 'nabia' ), '' ),
 			'woocommerce-development'            => array( __( 'WooCommerce Development: What Your Store Needs', 'nabia' ), '' ),
+			'shopify-development'                => array( __( 'Shopify Development: Themes, Apps and Custom Code', 'nabia' ), '' ),
 		),
 	);
 	return apply_filters( 'nabia_extra_seo', $seo );
 }
 
 /**
- * Save an SEO title and description on a page or article, only where the field is empty.
+ * Whether a saved SEO field is only a default pattern (not text someone wrote).
+ *
+ * @param int    $post_id Post ID.
+ * @param string $value   Saved value.
+ * @return bool
+ */
+function nabia_seo_field_is_default( $post_id, $value ) {
+	$value = trim( (string) $value );
+	$title = get_post_field( 'post_title', $post_id );
+	$name  = get_bloginfo( 'name' );
+	$defaults = array(
+		'',
+		'%title% %sep% %sitename%',
+		'%%title%% %%sep%% %%sitename%%',
+		'%title% | %sitename%',
+		'%title% - %sitename%',
+		$title,
+		$title . ' %sep% %sitename%',
+		$title . ' %%sep%% %%sitename%%',
+		$title . ' | ' . $name,
+		$title . ' - ' . $name,
+	);
+	return in_array( $value, $defaults, true );
+}
+
+/**
+ * Save an SEO title and description on a page or article, only where the field is empty
+ * or still holds a default pattern.
  *
  * @param int    $post_id     Post ID.
  * @param string $title       Title without the site name.
@@ -73,7 +101,7 @@ function nabia_fill_seo_fields( $post_id, $title, $description ) {
 	}
 	$changed = false;
 	foreach ( $fields as $key => $value ) {
-		if ( '' === trim( (string) get_post_meta( $post_id, $key, true ) ) ) {
+		if ( nabia_seo_field_is_default( $post_id, get_post_meta( $post_id, $key, true ) ) ) {
 			update_post_meta( $post_id, $key, $value );
 			$changed = true;
 		}

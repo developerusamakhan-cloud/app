@@ -65,6 +65,11 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.23.5
+
+- SEO titles that still hold a default pattern (such as "About Me | Nabia Khan") are now replaced with the better title too; text you wrote yourself is still never touched.
+- Shorter SEO title for the Shopify Development article.
+
 ## What's new in 2.23.4
 
 - **SEO titles and meta descriptions filled in automatically.** The first time you open the dashboard after the update, empty Rank Math (or Yoast) titles and descriptions are filled in on the main pages (Services, every service page, Pricing, Free Website Audit, About, Blog, Contact, Hire Me, My Works) and shorter titles are set on 17 long article titles. Text you wrote yourself is never replaced.

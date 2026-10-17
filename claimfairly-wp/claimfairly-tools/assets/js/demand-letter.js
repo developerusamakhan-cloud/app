@@ -158,9 +158,11 @@ ClaimFairly.tool('demand-letter', function (root, preset) {
 	root.querySelector('[data-act="copy"]').addEventListener('click', function (e) {
 		var btn = e.currentTarget;
 		CF.copy(letterBox.value).then(function () { CF.flash(btn, 'Copied'); }, function () { CF.flash(btn, 'Copy failed'); });
+		CF.track('letter_export', root, { method: 'copy' });
 	});
 
 	root.querySelector('[data-act="print"]').addEventListener('click', function () {
+		CF.track('letter_export', root, { method: 'print' });
 		var w = window.open('', '_blank');
 		if (!w) { window.print(); return; }
 		w.document.write('<!doctype html><html><head><title>Demand letter</title><style>body{font:12pt/1.5 Georgia,serif;margin:1in;white-space:pre-wrap}</style></head><body></body></html>');
@@ -171,6 +173,7 @@ ClaimFairly.tool('demand-letter', function (root, preset) {
 	});
 
 	root.querySelector('[data-act="pdf"]').addEventListener('click', function () {
+		CF.track('letter_export', root, { method: 'pdf' });
 		var blob = textToPdf(letterBox.value);
 		var a = document.createElement('a');
 		a.href = URL.createObjectURL(blob);

@@ -1,6 +1,8 @@
 /**
  * ClaimFairly core helpers shared by every tool.
- * Everything runs in the browser. Nothing is sent anywhere or stored.
+ * Everything runs in the browser. What a visitor types is never sent or stored.
+ * The only thing sent is a usage event (tool name and action, no values) to the
+ * site's own Google Analytics tag, when one is on the page.
  *
  * A tool script registers itself like this:
  *
@@ -121,12 +123,27 @@
 			return !first;
 		},
 
+		/**
+		 * Usage event for Google Analytics: which tool and what happened, never
+		 * the numbers or text a visitor entered. Does nothing without gtag.
+		 */
+		track: function (event, root, params) {
+			if (typeof window.gtag !== 'function') { return; }
+			var data = { tool: (root && root.getAttribute('data-cf-tool')) || '' };
+			Object.keys(params || {}).forEach(function (k) { data[k] = params[k]; });
+			try { window.gtag('event', event, data); } catch (e) { /* analytics must never break a tool */ }
+		},
+
 		onSubmit: function (form, callback) {
+			var root = form.closest('[data-cf-tool]');
 			form.setAttribute('novalidate', '');
 			form.addEventListener('submit', function (event) {
 				event.preventDefault();
 				if (CF.validate(form)) {
 					callback(CF.values(form), form);
+					CF.track('calculator_result', root);
+				} else {
+					CF.track('calculator_invalid', root);
 				}
 			});
 		},
@@ -215,6 +232,14 @@
 					try { preset = JSON.parse(root.dataset.cfPreset || '{}') || {}; } catch (e) { preset = {}; }
 					init(root, preset);
 					CF.wireActions(root);
+					// Links from a tool to another page, such as "turn this into a demand letter".
+					root.addEventListener('click', function (event) {
+						var a = event.target.closest && event.target.closest('a[href]');
+						if (!a || !root.contains(a)) { return; }
+						var path = '';
+						try { path = new URL(a.href, window.location.href).pathname; } catch (e) { return; }
+						CF.track('tool_link_click', root, { link_path: path });
+					});
 				});
 			}
 			if (document.readyState === 'loading') {

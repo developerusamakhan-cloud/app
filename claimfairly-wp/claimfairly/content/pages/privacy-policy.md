@@ -17,7 +17,11 @@ All calculators, including the demand letter generator, run entirely in your web
 
 ## Analytics
 
-We use privacy-friendly, cookie-free analytics (Cloudflare Web Analytics) to count page views and see which pages are useful. It does not use cookies, does not track you across sites and does not collect personal information.
+We use Google Analytics 4, added through Google's Site Kit plugin, to see which pages and tools people find useful. It uses first-party cookies and records things like the pages you visit, how you arrived, your approximate location (country or city), and your device and browser type. We do not send your name, email or anything you type into Google Analytics.
+
+When you use a calculator, we also record a simple usage event, such as "the diminished value calculator showed a result" or "a demand letter was downloaded as a PDF." These events contain only the tool name and the action. They never include the amounts, dates, names or other details you entered.
+
+You can learn how Google uses this data in [How Google uses information from sites that use its services](https://policies.google.com/technologies/partner-sites), and you can opt out with the [Google Analytics opt-out browser add-on](https://tools.google.com/dlpage/gaoptout).
 
 ## Server logs
 
@@ -49,7 +53,8 @@ Because the calculators do not send or store what you type, there is no calculat
 
 [cf_faq]
 [cf_q q="Do the calculators store my information?"]No. They run entirely in your browser, and nothing you type is sent to our server.[/cf_q]
-[cf_q q="Does ClaimFairly use cookies?"]Our analytics are cookie-free. If advertising is added later, ad partners may use cookies, and this page will be updated before that happens.[/cf_q]
+[cf_q q="Does ClaimFairly use cookies?"]Yes, Google Analytics sets first-party cookies so we can count visits and see which tools are used. You can block or delete them in your browser at any time. If advertising is added later, this page will be updated before that happens.[/cf_q]
+[cf_q q="Does Google Analytics see what I type into a calculator?"]No. We only record that a tool was used, for example that a result was shown. The numbers and details you enter are never sent.[/cf_q]
 [cf_q q="Is the demand letter PDF created on your server?"]No. The PDF is created on your own device.[/cf_q]
 [cf_q q="How do I contact you about privacy?"]Email {{email}}.[/cf_q]
 [/cf_faq]

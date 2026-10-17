@@ -5,10 +5,10 @@ page_type: tool
 tool: demand-letter
 order: 5
 reviewed: 2026-09-28
-seo_title: Free Car Accident Demand Letter Template + Generator (PDF)
+seo_title: Free Car Accident Demand Letter Template + PDF (2026)
 focus_keyword: car accident demand letter template
 summary: Fill in a short form and get a clear, professional demand letter as a PDF, for injury, property damage or diminished value.
-excerpt: Create a car accident demand letter for an injury, property damage or diminished value claim. Fill in the form, edit the letter, and download it as a PDF. Free, and nothing is saved.
+excerpt: Write a car accident demand letter in minutes: injury, property damage or diminished value versions. Edit it, then download a free PDF. Nothing is saved.
 related:
   - How to Write a Car Accident Demand Letter | /how-to-write-a-car-accident-demand-letter/
   - Car Accident Settlement Calculator | /car-accident-settlement-calculator/

@@ -5,10 +5,10 @@ page_type: tool
 tool: pain-and-suffering
 order: 3
 reviewed: 2026-09-28
-seo_title: Pain and Suffering Calculator for Car Accidents (2 Methods)
+seo_title: "Pain and Suffering Calculator: Free Car Accident Estimate"
 focus_keyword: pain and suffering calculator
 summary: Value your pain and suffering with the multiplier and per diem methods, side by side.
-excerpt: Estimate pain and suffering after a car accident with both methods insurers and lawyers use: the multiplier method and the per diem method, side by side.
+excerpt: Estimate pain and suffering after a car accident with the multiplier and per diem methods side by side. Free, instant, no sign-up, every step shown.
 sources:
   - Pain and suffering, Legal Information Institute, Cornell Law School | https://www.law.cornell.edu/wex/pain_and_suffering
   - Damages, Legal Information Institute, Cornell Law School | https://www.law.cornell.edu/wex/damages

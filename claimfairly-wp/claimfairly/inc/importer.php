@@ -1122,9 +1122,47 @@ function claimfairly_maybe_upgrade() {
 	}
 
 	$redirects = (array) get_option( 'claimfairly_redirects', array() );
+	$report    = array(
+		'created' => 0,
+		'updated' => 0,
+		'skipped' => 0,
+		'notes'   => array(),
+	);
 	foreach ( claimfairly_content_files() as $file ) {
-		$meta = claimfairly_parse_content_file( (string) file_get_contents( $file ) )['meta']; // phpcs:ignore WordPress.WP.AlternativeFunctions
-		if ( empty( $meta['slug'] ) ) {
+		$parsed = claimfairly_parse_content_file( (string) file_get_contents( $file ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+		$meta   = $parsed['meta'];
+		if ( empty( $meta['slug'] ) || empty( $meta['title'] ) ) {
+			continue;
+		}
+
+		// 0. New drafts added in a theme update are created as drafts, with all their SEO fields.
+		$is_draft = isset( $meta['status'] ) && 'draft' === $meta['status'];
+		if ( $is_draft ) {
+			$type     = ( isset( $meta['post_type'] ) && 'post' === $meta['post_type'] ) ? 'post' : 'page';
+			$existing = get_posts(
+				array(
+					'post_type'      => $type,
+					'post_status'    => 'any',
+					'name'           => sanitize_title( $meta['slug'] ),
+					'posts_per_page' => 1,
+					'fields'         => 'ids',
+				)
+			);
+			if ( ! $existing ) {
+				$admins = get_users(
+					array(
+						'role'   => 'administrator',
+						'number' => 1,
+						'fields' => 'ID',
+					)
+				);
+				$before = get_current_user_id();
+				if ( $admins ) {
+					wp_set_current_user( (int) $admins[0] );
+				}
+				claimfairly_upsert( $meta, claimfairly_md_to_blocks( $parsed['body'] ), false, $report );
+				wp_set_current_user( $before );
+			}
 			continue;
 		}
 		$slug = sanitize_title( $meta['slug'] );
@@ -1168,6 +1206,24 @@ function claimfairly_maybe_upgrade() {
 				update_post_meta( $post->ID, '_cf_seo_title', $new );
 				update_post_meta( $post->ID, 'rank_math_title', $new );
 				update_post_meta( $post->ID, '_yoast_wpseo_title', $new );
+			}
+		}
+
+		// 3. Newer meta description (the excerpt), unless someone changed it by hand.
+		if ( ! empty( $meta['excerpt'] ) && ! is_array( $meta['excerpt'] ) ) {
+			$new_desc = claimfairly_fill_placeholders( $meta['excerpt'] );
+			$excerpt  = (string) $post->post_excerpt;
+			$rank     = (string) get_post_meta( $post->ID, 'rank_math_description', true );
+			$yoast    = (string) get_post_meta( $post->ID, '_yoast_wpseo_metadesc', true );
+			if ( $new_desc !== $excerpt && ( '' === $rank || $rank === $excerpt ) && ( '' === $yoast || $yoast === $excerpt ) ) {
+				wp_update_post(
+					array(
+						'ID'           => $post->ID,
+						'post_excerpt' => $new_desc,
+					)
+				);
+				update_post_meta( $post->ID, 'rank_math_description', $new_desc );
+				update_post_meta( $post->ID, '_yoast_wpseo_metadesc', $new_desc );
 			}
 		}
 	}

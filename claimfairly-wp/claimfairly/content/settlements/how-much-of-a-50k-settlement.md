@@ -6,10 +6,10 @@ page_type: guide
 tool: settlement-take-home
 order: 2
 reviewed: 2026-09-28
-seo_title: How Much of a $50,000 Settlement Will I Get?
+seo_title: How Much of a $50,000 Settlement Will I Get? (See the Math)
 focus_keyword: how much of a 50k settlement will i get
 summary: What you actually keep from a $50,000 car accident settlement after fees, costs and liens.
-excerpt: See how much of a $50,000 settlement you actually take home after attorney fees, case costs and medical liens, with a worked example and a calculator preset to $50,000.
+excerpt: With a one third lawyer fee you keep about $33,335. After typical costs and liens it is closer to $26,835. See the breakdown and run your own numbers.
 sources:
   - Contingent fee, Legal Information Institute, Cornell Law School | https://www.law.cornell.edu/wex/contingent_fee
   - ABA Model Rule 1.5: Fees | https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_1_5_fees/

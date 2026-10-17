@@ -5,10 +5,10 @@ page_type: tool
 tool: diminished-value
 order: 2
 reviewed: 2026-09-28
-seo_title: Diminished Value Calculator: Free 17c Estimate + Guide
+seo_title: "Car Diminished Value Calculator: Free 17c Formula (2026)"
 focus_keyword: diminished value calculator
 summary: See what the insurer's 17c formula gives for your repaired car, and why it is often too low.
-excerpt: Find out how much value your car lost after an accident. This free diminished value calculator uses the insurer 17c formula and shows every step of the math.
+excerpt: How much value did your car lose after the crash? Get the insurer 17c number in 1 minute, see every step and learn how to claim more. Free.
 sources:
   - State Farm Mutual Automobile Insurance Co. v. Mabry, 274 Ga. 498 (2001), on CourtListener | https://www.courtlistener.com/?q=%22State+Farm%22+Mabry+%22274+Ga.+498%22
   - Kelley Blue Book: check your car's value | https://www.kbb.com/whats-my-car-worth/

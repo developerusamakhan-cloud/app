@@ -6,10 +6,10 @@ parent: insurers
 page_type: insurer
 order: 1
 reviewed: 2026-09-28
-seo_title: "How State Farm Handles Car Accident Claims: Steps and Tips"
+seo_title: How State Farm Handles Car Accident Claims (2026 Guide)
 focus_keyword: state farm car accident claim
 summary: How a car accident claim with State Farm usually works, from filing to payment, and how to protect your side of it.
-excerpt: How to file a car accident claim with State Farm, what happens after you file, how repairs and injury claims are handled, and tips for dealing with the adjuster.
+excerpt: How a State Farm car accident claim works: filing, repairs, rentals, injury claims and diminished value, plus tips for the adjuster. Independent guide.
 sources:
   - State Farm: file or track a claim (official site) | https://www.statefarm.com/claims
 related:

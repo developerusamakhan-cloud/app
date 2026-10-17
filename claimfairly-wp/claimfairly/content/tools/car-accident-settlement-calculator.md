@@ -5,10 +5,10 @@ page_type: tool
 tool: settlement-estimator
 order: 1
 reviewed: 2026-09-28
-seo_title: Car Accident Settlement Calculator: Free Estimate by State
+seo_title: "Car Accident Settlement Calculator (2026): Free, No Sign-Up"
 focus_keyword: car accident settlement calculator
 summary: Estimate what your injury claim may be worth, adjusted for your state's fault rule and the policy limit.
-excerpt: Estimate your car accident settlement from your medical bills, lost wages and injury severity, adjusted for your state's fault rule and the other driver's policy limit.
+excerpt: Estimate your car accident settlement from medical bills, lost wages and injury level, adjusted for your state's fault rule. Free, instant, math shown.
 sources:
   - Comparative negligence, Legal Information Institute, Cornell Law School | https://www.law.cornell.edu/wex/comparative_negligence
   - Contributory negligence, Legal Information Institute, Cornell Law School | https://www.law.cornell.edu/wex/contributory_negligence

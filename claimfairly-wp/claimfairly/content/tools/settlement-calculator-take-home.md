@@ -5,10 +5,10 @@ page_type: tool
 tool: settlement-take-home
 order: 4
 reviewed: 2026-09-28
-seo_title: Settlement Calculator: How Much Will I Actually Take Home?
+seo_title: "Settlement Calculator: How Much Will I Take Home? (2026)"
 focus_keyword: how much of a settlement will i get
 summary: See how much of your settlement you keep after attorney fees, case costs and medical liens.
-excerpt: How much of your settlement will you actually get? Enter the amount, your lawyer's fee, costs and medical liens to see your take-home number and where the rest goes.
+excerpt: See what you keep from a settlement after attorney fees, case costs and medical liens, with a chart of where every dollar goes. Free, no sign-up.
 sources:
   - Contingent fee, Legal Information Institute, Cornell Law School | https://www.law.cornell.edu/wex/contingent_fee
   - ABA Model Rule 1.5: Fees | https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_1_5_fees/

@@ -35,6 +35,8 @@ That origin matters. The formula was a way to process claims efficiently, not a 
 
 **Diminished value = market value x 10% x damage multiplier x mileage multiplier**
 
+Want the number without doing the math? Our free [17c formula calculator](/diminished-value-calculator/) runs every step below for your car in about a minute and shows each multiplier it used.
+
 ### Step 1: Market value
 
 The car's value right before the accident. Insurers often use J.D. Power (formerly NADA) values. Check that they used the right trim, options and condition. A wrong trim alone can shift the base by thousands of dollars.

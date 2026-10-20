@@ -2,7 +2,6 @@
 title: "CCC Valuation Report: How to Read It and Dispute a Low Total Loss Offer"
 slug: ccc-valuation-report
 post_type: post
-status: draft
 page_type: guide
 category: Insurance claims
 category_slug: insurance-claims

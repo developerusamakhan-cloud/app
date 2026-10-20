@@ -2,7 +2,6 @@
 title: How Much of a $30,000 Settlement Will I Get?
 crumb: $30k settlement
 slug: how-much-of-a-30k-settlement-will-i-get
-status: draft
 page_type: guide
 tool: settlement-take-home
 order: 2
@@ -97,25 +96,26 @@ This comparison assumes the same $30,000 gross settlement in all three cases, wh
 
 At this size, the biggest risk is that liens and bills quietly eat most of the check. Confirm every lien is paid through the settlement, so no provider comes back to you later.
 
-A few practical steps help at any settlement size:
+Before you sign a $30,000 release, four checks matter most:
 
-1. **Confirm every lien is paid** and get written confirmation that each account is closed.
-2. **Keep your settlement statement** and the release with your tax records.
-3. **Set aside money for any remaining care**, especially if your doctor expects future treatment.
-4. **Check the tax question** if any part of the settlement is for interest, punitive damages or non-physical injuries.
-5. **Watch for scams.** People who receive settlements are sometimes targeted with investment pitches. Take your time.
+1. **Confirm the other driver's bodily injury limit in writing.** In states with a $30,000 per person minimum, an offer of exactly $30,000 is often everything the policy pays.
+2. **Ask whether the driver has an umbrella policy** or was driving for work. Either one can add coverage above the basic limit.
+3. **Notify your own insurer** before accepting if you have underinsured motorist coverage, so you do not lose that claim.
+4. **Get every lien amount in writing**, including the final number from any health plan.
 
-## Words you will see on your settlement paperwork
+## Why $30,000 shows up so often in some states
 
-| Term | What it means |
-|---|---|
-| Gross settlement | The total amount the insurer agrees to pay, before anything is deducted |
-| Net to client | What you receive after the fee, costs and liens |
-| Contingency fee | The lawyer's percentage, paid only if you recover money |
-| Case costs | Expenses the lawyer paid to build your case |
-| Lien | A legal right to be repaid from your settlement, often by a health plan or hospital |
-| Subrogation | Your insurer's right to recover what it paid on your behalf |
-| Release | The document that ends your claim in exchange for payment |
+A $30,000 offer is common in states whose minimum bodily injury limit is $30,000 per person. According to our state rules data, that includes **California, Texas, Maryland and Minnesota** (30/60) and **Utah** (30/65). Check your [state's page](/states/) and your state insurance department for the current figure, because minimums do change.
+
+When the at-fault driver carries only the minimum, the settlement often stops at $30,000 no matter how large the bills are. Here is what that means in practice:
+
+| Your losses | Other driver's limit | Most you get from their policy | Where the rest may come from |
+|---|---|---|---|
+| $20,000 | $30,000 | $20,000 to $30,000 | Nowhere else needed |
+| $45,000 | $30,000 | $30,000 | Your UIM coverage, an umbrella policy, a second at-fault driver |
+| $80,000 | $30,000 | $30,000 | Same, plus a possible claim against an employer if the driver was working |
+
+If your losses are well above $30,000, ask your own insurer about underinsured motorist coverage and read [should you accept the first settlement offer](/should-you-accept-the-first-settlement-offer/) before you respond.
 
 ## Other settlement amounts
 
@@ -131,4 +131,6 @@ You can also see the numbers for [$50,000](/how-much-of-a-50k-settlement-will-i-
 [cf_q q="Does the attorney fee come out before medical liens?"]Usually the fee and costs are calculated first, then liens are paid from what remains, and you receive the rest. Your settlement statement shows the exact order.[/cf_q]
 [cf_q q="Can I negotiate the medical liens on a $30,000 settlement?"]Often, yes. Hospitals, health plans and some government programs accept reduced amounts, especially when the lawyer's fee helped create the recovery.[/cf_q]
 [cf_q q="Is a $30,000 car accident settlement taxable?"]Compensation for physical injuries is generally not taxable under federal law. Interest, punitive damages and some other parts can be. Ask a tax professional about your situation.[/cf_q]
+[cf_q q="Why did the insurer offer exactly $30,000?"]It is often the other driver's full per person limit. In states with a $30,000 minimum, such as California and Texas, many drivers carry only that amount. Ask the insurer to confirm the limit in writing.[/cf_q]
+[cf_q q="Can I get more than $30,000 if the policy limit is $30,000?"]Sometimes, from other coverage: your own underinsured motorist coverage, an umbrella policy, or another at-fault party. Collecting directly from the driver personally is possible but often impractical.[/cf_q]
 [/cf_faq]

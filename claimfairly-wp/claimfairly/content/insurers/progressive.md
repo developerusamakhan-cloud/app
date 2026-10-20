@@ -86,6 +86,36 @@ Even when the other driver was at fault, your own policy may help:
 - **Uninsured and underinsured motorist coverage** helps when the other driver has no insurance or too little.
 - **Rental reimbursement** covers a rental car if you bought it.
 
+## Is there a Progressive settlement calculator?
+
+Progressive's website lets you file and track a claim, but it does not publish a calculator that shows how its adjusters will value your injury or your car's lost value. You can still estimate the numbers the same way an adjuster starts, with free tools that show every step:
+
+- **Progressive injury settlement calculator:** our [car accident settlement calculator](/car-accident-settlement-calculator/) adds your medical bills, lost wages and an amount for pain and suffering, then adjusts for your state's fault rule.
+- **Progressive pain and suffering calculator:** the [pain and suffering calculator](/pain-and-suffering-calculator/) compares the multiplier and per diem methods so you can see a realistic range.
+- **Progressive diminished value calculator:** the [diminished value calculator](/diminished-value-calculator/) runs the 17c formula many insurers start from, so you know the likely first offer before you call.
+
+These are estimates, not Progressive's own figures. Use them to check whether an offer is in a reasonable range, and send your documents and your number in writing.
+
+## How to file a diminished value claim with Progressive
+
+Diminished value is the resale value your car loses because it now has an accident history, even after a good repair. Whether Progressive pays it depends mostly on two things:
+
+| Your situation | What usually happens |
+|---|---|
+| Progressive insures the driver who hit you (third-party claim) | This is the most common route. You claim the loss from the at-fault driver's policy, and many states allow it. |
+| You claim under your own Progressive policy (first-party claim) | Most policies do not cover it. Georgia is the best known exception, where courts have required insurers to consider it. |
+| Your car is leased or financed | You can usually still claim, but read our guide on [diminished value for leased cars](/diminished-value-leased-car/). |
+
+A simple way to build the claim:
+
+1. **Get the final repair invoice** and photos of the damage.
+2. **Run the 17c estimate** in our [diminished value calculator](/diminished-value-calculator/) so you know the number an adjuster is likely to start from.
+3. **Get an independent appraisal** if the car is newer, low mileage or the damage was structural. It usually supports a higher number than 17c.
+4. **Send a written demand** with the invoice, photos and appraisal. Our [demand letter generator](/demand-letter-generator/) has a diminished value version.
+5. **Answer a low offer in writing**, pointing to the specific numbers you disagree with.
+
+Read [what diminished value is and how to claim it](/what-is-diminished-value/) for the full background.
+
 ## Tips for dealing with Progressive
 
 - **Get everything in writing:** the claim number, the adjuster's name and any offer.
@@ -109,6 +139,8 @@ Ask the adjuster to explain the decision in writing and point to the policy lang
 [cf_q q="How long does Progressive take to settle a car accident claim?"]Property damage claims often settle in days to weeks. Injury claims usually take months, because they wait for treatment to finish and records to arrive.[/cf_q]
 [cf_q q="Can I file a claim with Progressive if I am not their customer?"]Yes, if their policyholder caused the crash. That is called a third-party claim.[/cf_q]
 [cf_q q="Does Progressive pay diminished value?"]It depends on the state, the type of claim and the policy. Third-party diminished value claims against the at-fault driver's insurer are the most common route. Ask the adjuster and put your request in writing.[/cf_q]
+[cf_q q="Does Progressive have a pain and suffering calculator?"]Not one that the public can use. Adjusters use their own internal process. You can estimate a range yourself with a free pain and suffering calculator that shows the multiplier and per diem methods.[/cf_q]
+[cf_q q="How do I file a diminished value claim with Progressive?"]If a Progressive driver caused the crash, file a third-party claim with the repair invoice, photos and a written estimate of the lost value. A 17c estimate and an independent appraisal help support the number.[/cf_q]
 [cf_q q="Do I have to use a Progressive network repair shop?"]In most states you can choose your own shop. Network shops can make the process simpler, so ask about the trade-offs before deciding.[/cf_q]
 [cf_q q="Will Progressive pay for a rental car?"]If their driver was at fault, a rental is often part of the third-party claim. Under your own policy, it depends on whether you have rental coverage.[/cf_q]
 [cf_q q="What if Progressive says I was partly at fault?"]Ask for the decision and reasons in writing and respond with evidence. Your state's negligence rule decides how shared fault affects your claim.[/cf_q]

@@ -23,6 +23,7 @@ Most car accident claims in the United States go through a handful of very large
 - [How State Farm handles car accident claims](/insurers/how-state-farm-handles-car-accident-claims/)
 - [How GEICO handles car accident claims](/insurers/how-geico-handles-car-accident-claims/)
 - [How Progressive handles car accident claims](/insurers/how-progressive-handles-car-accident-claims/)
+- [How Allstate handles car accident claims](/insurers/how-allstate-handles-car-accident-claims/)
 
 ## What is the same at every insurer
 

@@ -2,7 +2,6 @@
 title: How Long Do You Have to Report a Car Accident to Insurance?
 slug: how-long-to-report-car-accident-to-insurance
 post_type: post
-status: draft
 page_type: guide
 category: After a crash
 category_slug: after-a-crash

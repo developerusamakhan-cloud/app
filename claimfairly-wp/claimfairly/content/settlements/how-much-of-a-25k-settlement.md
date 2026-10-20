@@ -96,25 +96,26 @@ This comparison assumes the same $25,000 gross settlement in all three cases, wh
 
 At this size, the biggest risk is that liens and bills quietly eat most of the check. Confirm every lien is paid through the settlement, so no provider comes back to you later.
 
-A few practical steps help at any settlement size:
+Before you sign a $25,000 release, four checks matter most:
 
-1. **Confirm every lien is paid** and get written confirmation that each account is closed.
-2. **Keep your settlement statement** and the release with your tax records.
-3. **Set aside money for any remaining care**, especially if your doctor expects future treatment.
-4. **Check the tax question** if any part of the settlement is for interest, punitive damages or non-physical injuries.
-5. **Watch for scams.** People who receive settlements are sometimes targeted with investment pitches. Take your time.
+1. **Ask for the other driver's policy limit in writing.** If $25,000 is everything their policy pays, the offer is a limits offer, and the real question becomes whether other coverage exists.
+2. **Read your own policy for underinsured motorist (UIM) coverage** and tell your insurer about the offer before you accept it. Many policies require their consent first.
+3. **Ask every provider for an itemized balance.** At this size, an ER bill, an ambulance bill and a few months of therapy can take a big share of the check.
+4. **Keep the settlement statement and the release** with your tax records.
 
-## Words you will see on your settlement paperwork
+## Is a lawyer worth it on a $25,000 claim?
 
-| Term | What it means |
-|---|---|
-| Gross settlement | The total amount the insurer agrees to pay, before anything is deducted |
-| Net to client | What you receive after the fee, costs and liens |
-| Contingency fee | The lawyer's percentage, paid only if you recover money |
-| Case costs | Expenses the lawyer paid to build your case |
-| Lien | A legal right to be repaid from your settlement, often by a health plan or hospital |
-| Subrogation | Your insurer's right to recover what it paid on your behalf |
-| Release | The document that ends your claim in exchange for payment |
+This is the honest math, using the same example as the table above. Without a lawyer, if you pay the $4,000 lien in full, you keep **$21,000**. With a lawyer at one third, $500 in costs and the lien cut to $2,800, you keep **$13,368**.
+
+For the lawyer to leave you better off, the settlement would need to rise to about **$36,450**. At that amount a one third fee is $12,150, and after $500 in costs and the $2,800 lien you would keep about $21,000, the same as handling it yourself.
+
+That changes how to think about it:
+
+- **If $25,000 is the other driver's policy limit and there is no other coverage**, a lawyer usually cannot raise the amount. Their value is mostly in cutting liens, and you can ask providers for reductions yourself.
+- **If your injuries are worth more and other coverage exists**, such as your own UIM, a second at-fault driver or a business vehicle, a lawyer can often find money you would miss.
+- **Many lawyers will lower their percentage on a quick policy-limits case.** It is reasonable to ask.
+
+Our [take-home calculator](/settlement-calculator-take-home/) lets you test your own fee, costs and liens.
 
 ## Other settlement amounts
 
@@ -130,4 +131,6 @@ You can also see the numbers for [$75,000](/how-much-of-a-75k-settlement-will-i-
 [cf_q q="Does the attorney fee come out before medical liens?"]Usually the fee and costs are calculated first, then liens are paid from what remains, and you receive the rest. Your settlement statement shows the exact order.[/cf_q]
 [cf_q q="Can I negotiate the medical liens on a $25,000 settlement?"]Often, yes. Hospitals, health plans and some government programs accept reduced amounts, especially when the lawyer's fee helped create the recovery.[/cf_q]
 [cf_q q="Is a $25,000 car accident settlement taxable?"]Compensation for physical injuries is generally not taxable under federal law. Interest, punitive damages and some other parts can be. Ask a tax professional about your situation.[/cf_q]
+[cf_q q="How much more would a lawyer need to get me on a $25,000 claim?"]With a one third fee, $500 in costs and a $2,800 lien, the settlement would need to reach about $36,450 for you to keep more than the $21,000 you would keep by settling yourself and paying a $4,000 lien in full.[/cf_q]
+[cf_q q="Do I need a lawyer to accept a $25,000 policy limits offer?"]Not always. If the limit is clearly all the money available and your injuries are not worth much more, many people accept on their own. Check for your own underinsured motorist coverage and get your insurer's consent first.[/cf_q]
 [/cf_faq]

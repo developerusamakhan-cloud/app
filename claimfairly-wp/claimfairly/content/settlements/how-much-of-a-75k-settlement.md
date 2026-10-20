@@ -96,25 +96,27 @@ This comparison assumes the same $75,000 gross settlement in all three cases, wh
 
 With $75,000 or more, it is worth pausing before big purchases. Paying off high interest debt and rebuilding savings often does more good than it looks like on paper.
 
-A few practical steps help at any settlement size:
+Before you sign a $75,000 release, four checks matter most:
 
-1. **Confirm every lien is paid** and get written confirmation that each account is closed.
-2. **Keep your settlement statement** and the release with your tax records.
-3. **Set aside money for any remaining care**, especially if your doctor expects future treatment.
-4. **Check the tax question** if any part of the settlement is for interest, punitive damages or non-physical injuries.
-5. **Watch for scams.** People who receive settlements are sometimes targeted with investment pitches. Take your time.
+1. **Make sure every week of missed work is in the demand**, including paid time off you had to use.
+2. **Ask whether any lien is from Medicaid or Medicare.** Government liens follow their own rules and must be resolved before the money is paid out.
+3. **Keep the lost wage paperwork** with your settlement statement. It helps if anyone later asks what the money was for.
+4. **Ask your doctor about future care before you sign.** Once the release is signed, the claim cannot be reopened for treatment you need later.
 
-## Words you will see on your settlement paperwork
+## Lost wages: the part of a $75,000 claim people undercount
 
-| Term | What it means |
+Lost income is often the second biggest piece of a $75,000 claim, after medical bills. Insurers pay for what you can prove, so the paperwork matters.
+
+| If you are | What usually proves the loss |
 |---|---|
-| Gross settlement | The total amount the insurer agrees to pay, before anything is deducted |
-| Net to client | What you receive after the fee, costs and liens |
-| Contingency fee | The lawyer's percentage, paid only if you recover money |
-| Case costs | Expenses the lawyer paid to build your case |
-| Lien | A legal right to be repaid from your settlement, often by a health plan or hospital |
-| Subrogation | Your insurer's right to recover what it paid on your behalf |
-| Release | The document that ends your claim in exchange for payment |
+| An hourly or salaried employee | A letter from your employer with dates missed, pay rate and hours, plus recent pay stubs |
+| Someone who used sick days or PTO | The same employer letter, showing the paid leave you had to use |
+| Self-employed or a gig worker | Tax returns for the last two years, invoices, 1099s, bank deposits, and canceled jobs |
+| Someone who lost a promotion or overtime | Records of the overtime or raise you would have had, in writing if possible |
+
+**A simple example:** 12 weeks off work at $1,000 a week is **$12,000** in lost wages. Doctor's notes that say you could not work during those weeks connect the time off to the crash.
+
+**On taxes:** under federal law, money received because of a physical injury is generally not taxable, and that usually includes the lost wage part. Interest and punitive damages are exceptions. See our guide on [whether a settlement is taxable](/is-car-accident-settlement-taxable/).
 
 ## Other settlement amounts
 
@@ -130,4 +132,6 @@ You can also see the numbers for [$25,000](/how-much-of-a-25k-settlement-will-i-
 [cf_q q="Does the attorney fee come out before medical liens?"]Usually the fee and costs are calculated first, then liens are paid from what remains, and you receive the rest. Your settlement statement shows the exact order.[/cf_q]
 [cf_q q="Can I negotiate the medical liens on a $75,000 settlement?"]Often, yes. Hospitals, health plans and some government programs accept reduced amounts, especially when the lawyer's fee helped create the recovery.[/cf_q]
 [cf_q q="Is a $75,000 car accident settlement taxable?"]Compensation for physical injuries is generally not taxable under federal law. Interest, punitive damages and some other parts can be. Ask a tax professional about your situation.[/cf_q]
+[cf_q q="Does using sick days or PTO count as lost wages?"]Often, yes. In many states you can claim the paid leave you were forced to use, because you lost time you would otherwise have kept. Rules vary by state, so include it in your demand and keep the employer's letter.[/cf_q]
+[cf_q q="How do self-employed people prove lost income for a $75,000 claim?"]With tax returns for the last two years, invoices, 1099s, bank deposits and proof of jobs you had to cancel. A short letter from your accountant can tie the numbers together.[/cf_q]
 [/cf_faq]

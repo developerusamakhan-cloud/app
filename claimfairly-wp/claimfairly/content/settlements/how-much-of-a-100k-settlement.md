@@ -96,25 +96,30 @@ This comparison assumes the same $100,000 gross settlement in all three cases, w
 
 A six figure settlement can change your finances, but a large part of it is meant to replace wages and cover care. Consider speaking with a fee-only financial planner before spending it.
 
-A few practical steps help at any settlement size:
+Before you sign a $100,000 release, four checks matter most:
 
-1. **Confirm every lien is paid** and get written confirmation that each account is closed.
-2. **Keep your settlement statement** and the release with your tax records.
-3. **Set aside money for any remaining care**, especially if your doctor expects future treatment.
-4. **Check the tax question** if any part of the settlement is for interest, punitive damages or non-physical injuries.
-5. **Watch for scams.** People who receive settlements are sometimes targeted with investment pitches. Take your time.
+1. **Ask whether Medicare paid any of your bills.** If it did, Medicare must be repaid from the settlement, and you should get its final payment amount before the money is split.
+2. **Ask what kind of health plan you have.** A self-funded employer plan can be harder to reduce than a regular insured plan, so get the lien amount early.
+3. **Get the fee timing in writing.** At this size, before or after costs changes your share by thousands.
+4. **Ask whether any part of the payment is interest or punitive damages.** Those parts can be taxable, so the settlement statement should show them separately.
 
-## Words you will see on your settlement paperwork
+## Fee limits that can change a $100,000 settlement
 
-| Term | What it means |
-|---|---|
-| Gross settlement | The total amount the insurer agrees to pay, before anything is deducted |
-| Net to client | What you receive after the fee, costs and liens |
-| Contingency fee | The lawyer's percentage, paid only if you recover money |
-| Case costs | Expenses the lawyer paid to build your case |
-| Lien | A legal right to be repaid from your settlement, often by a health plan or hospital |
-| Subrogation | Your insurer's right to recover what it paid on your behalf |
-| Release | The document that ends your claim in exchange for payment |
+Most lawyer fees are set by agreement, but some rules cap them. Three examples:
+
+- **Claims against the federal government.** If a federal vehicle caused the crash, such as a postal truck, the claim falls under the Federal Tort Claims Act. Federal law caps the lawyer's fee at **20%** of a settlement reached in the administrative claim stage and **25%** after a lawsuit is filed (28 U.S.C. 2678).
+- **Michigan.** Michigan Court Rule 8.121 limits contingent fees in personal injury cases to **one third**.
+- **New Jersey and Florida.** New Jersey Court Rule 1:21-7 uses a sliding scale that starts at one third, and Florida Bar Rule 4-1.5 sets a maximum fee schedule for injury cases.
+
+Here is what the federal caps would mean for the example on this page:
+
+| Fee | Attorney fee | Costs and lien | You keep |
+|---|---|---|---|
+| 33.33% | $33,330 | $14,400 | $52,270 |
+| 25% (federal, after a lawsuit) | $25,000 | $14,400 | $60,600 |
+| 20% (federal, administrative stage) | $20,000 | $14,400 | $65,600 |
+
+Claims against the federal government also have strict filing steps, including a written administrative claim, usually within two years. Rules change, so confirm the current rule for your state with a licensed attorney.
 
 ## Other settlement amounts
 
@@ -130,4 +135,6 @@ You can also see the numbers for [$25,000](/how-much-of-a-25k-settlement-will-i-
 [cf_q q="Does the attorney fee come out before medical liens?"]Usually the fee and costs are calculated first, then liens are paid from what remains, and you receive the rest. Your settlement statement shows the exact order.[/cf_q]
 [cf_q q="Can I negotiate the medical liens on a $100,000 settlement?"]Often, yes. Hospitals, health plans and some government programs accept reduced amounts, especially when the lawyer's fee helped create the recovery.[/cf_q]
 [cf_q q="Is a $100,000 car accident settlement taxable?"]Compensation for physical injuries is generally not taxable under federal law. Interest, punitive damages and some other parts can be. Ask a tax professional about your situation.[/cf_q]
+[cf_q q="Is there a legal cap on lawyer fees for a $100,000 settlement?"]Sometimes. Federal law caps fees at 20% or 25% on claims against the federal government, Michigan limits injury fees to one third, and New Jersey and Florida have fee schedules. In most other cases the fee is set by your agreement.[/cf_q]
+[cf_q q="What happens if Medicare paid my car accident bills?"]Medicare must be repaid from the settlement. Ask for Medicare's final payment amount before the money is split, so you do not owe it later.[/cf_q]
 [/cf_faq]

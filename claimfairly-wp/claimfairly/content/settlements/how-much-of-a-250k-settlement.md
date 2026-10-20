@@ -99,25 +99,28 @@ This comparison assumes the same $250,000 gross settlement in all three cases, w
 
 At this level, planning matters. Future medical care, lost earning capacity and taxes on any taxable portions all deserve attention. A fee-only financial planner and a tax professional can help you make the money last.
 
-A few practical steps help at any settlement size:
+Before you sign a $250,000 release, four checks matter most:
 
-1. **Confirm every lien is paid** and get written confirmation that each account is closed.
-2. **Keep your settlement statement** and the release with your tax records.
-3. **Set aside money for any remaining care**, especially if your doctor expects future treatment.
-4. **Check the tax question** if any part of the settlement is for interest, punitive damages or non-physical injuries.
-5. **Watch for scams.** People who receive settlements are sometimes targeted with investment pitches. Take your time.
+1. **Decide on a structured settlement before you sign.** It cannot usually be added after the release.
+2. **Check public benefits.** If you receive SSI or Medicaid, a lump sum can affect eligibility. A special needs trust may protect it, but it must be set up correctly.
+3. **Ask for the final amount of every lien in writing**, including Medicare if it paid any bills.
+4. **List every policy that could pay** before you agree that $250,000 is the full amount: an umbrella policy, a commercial policy, and your own underinsured motorist coverage.
 
-## Words you will see on your settlement paperwork
+## Lump sum or structured settlement?
 
-| Term | What it means |
-|---|---|
-| Gross settlement | The total amount the insurer agrees to pay, before anything is deducted |
-| Net to client | What you receive after the fee, costs and liens |
-| Contingency fee | The lawyer's percentage, paid only if you recover money |
-| Case costs | Expenses the lawyer paid to build your case |
-| Lien | A legal right to be repaid from your settlement, often by a health plan or hospital |
-| Subrogation | Your insurer's right to recover what it paid on your behalf |
-| Release | The document that ends your claim in exchange for payment |
+At $250,000, you may be offered a choice: take the money at once, or receive part of it as a **structured settlement**, a series of payments funded by an annuity.
+
+| | Lump sum | Structured settlement |
+|---|---|---|
+| Access to money | All at once | On a fixed schedule |
+| Taxes on growth | Investment income is taxed as usual | Payments for a physical injury are generally tax free, including the growth, when set up as part of the settlement |
+| Flexibility | Full | Low. The schedule is hard to change |
+| Risk | You manage the money | Payments depend on the annuity company |
+| Fits best when | You have a clear plan and some savings | Future care costs are large and steady, or you want protection from spending it too fast |
+
+**Watch for buyers of payment rights.** Companies that buy structured settlement payments for cash usually pay far less than they are worth, and most states require a judge to approve the sale.
+
+**Public benefits.** Supplemental Security Income (SSI) has a strict resource limit, $2,000 for an individual according to the Social Security Administration. A lump sum can end eligibility for SSI and, in many states, Medicaid. A special needs trust, set up before the money arrives, can help. Ask an attorney who handles benefits planning.
 
 ## Other settlement amounts
 
@@ -133,4 +136,6 @@ You can also see the numbers for [$25,000](/how-much-of-a-25k-settlement-will-i-
 [cf_q q="Does the attorney fee come out before medical liens?"]Usually the fee and costs are calculated first, then liens are paid from what remains, and you receive the rest. Your settlement statement shows the exact order.[/cf_q]
 [cf_q q="Can I negotiate the medical liens on a $250,000 settlement?"]Often, yes. Hospitals, health plans and some government programs accept reduced amounts, especially when the lawyer's fee helped create the recovery.[/cf_q]
 [cf_q q="Is a $250,000 car accident settlement taxable?"]Compensation for physical injuries is generally not taxable under federal law. Interest, punitive damages and some other parts can be. Ask a tax professional about your situation.[/cf_q]
+[cf_q q="Can a $250,000 settlement affect Medicaid or SSI?"]Yes. SSI has a low resource limit, and a lump sum can end eligibility for SSI and, in many states, Medicaid. A properly set up special needs trust can help, so ask an attorney before you accept the money.[/cf_q]
+[cf_q q="Should I take a structured settlement?"]It can make sense when you have large future care costs or want steady income. The payments for a physical injury are generally tax free, but the schedule is hard to change. Decide before you sign the release.[/cf_q]
 [/cf_faq]

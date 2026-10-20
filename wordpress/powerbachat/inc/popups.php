@@ -203,141 +203,56 @@ function powerbachat_leads_cleanup() {
 add_action( 'powerbachat_daily', 'powerbachat_leads_cleanup' );
 
 /**
- * The studio link with campaign tags, so the studio can see where visitors came from.
- *
- * @param string $content utm_content value.
- * @return string
- */
-function powerbachat_lead_url( $content = 'popup' ) {
-	$url = powerbachat_mod( 'pb_lead_url' );
-	if ( ! $url ) {
-		return '';
-	}
-	return add_query_arg(
-		array(
-			'utm_source'   => 'powerbachat',
-			'utm_medium'   => 'referral',
-			'utm_campaign' => 'website_lead',
-			'utm_content'  => $content,
-		),
-		$url
-	);
-}
-
-/**
- * Popup markup, printed in the footer.
+ * Cookie consent bar, printed in the footer.
  */
 function powerbachat_popups() {
 	if ( is_admin() ) {
 		return;
 	}
-	if ( powerbachat_mod( 'pb_cookie_banner' ) ) :
-		?>
-		<div class="consent" id="pb-consent" role="dialog" aria-modal="false" aria-labelledby="pb-consent-title" aria-describedby="pb-consent-text" hidden>
-			<div class="consent__head">
-				<span class="consent__icon" aria-hidden="true">
-					<svg viewBox="0 0 48 48"><path d="M24 4a20 20 0 1 0 19.6 16.1 6 6 0 0 1-7.6-5.8 6 6 0 0 1-6.3-6.3A6 6 0 0 1 24 4Z" fill="#f5b82e"/><circle cx="17" cy="20" r="2.6" fill="#7a5410"/><circle cx="27" cy="30" r="2.6" fill="#7a5410"/><circle cx="16" cy="31" r="1.9" fill="#7a5410"/><circle cx="33" cy="22" r="1.7" fill="#7a5410"/></svg>
-				</span>
-				<div>
-					<p class="consent__title" id="pb-consent-title"><?php esc_html_e( 'A few cookies, if that is okay?', 'powerbachat' ); ?></p>
-					<p class="consent__text" id="pb-consent-text">
-						<?php esc_html_e( 'We use cookies to keep this site working and, with your okay, to see which pages help people most. You choose what is on.', 'powerbachat' ); ?>
-						<a href="<?php echo esc_url( home_url( '/cookie-policy/' ) ); ?>"><?php esc_html_e( 'Cookie policy', 'powerbachat' ); ?></a>
-					</p>
-				</div>
-			</div>
-			<div class="consent__options">
-				<div class="consent__row">
-					<div>
-						<p class="consent__name"><?php esc_html_e( 'Essential', 'powerbachat' ); ?></p>
-						<p class="consent__desc"><?php esc_html_e( 'Keeps the site, your country and your choices working.', 'powerbachat' ); ?></p>
-					</div>
-					<span class="consent__always"><?php esc_html_e( 'Always on', 'powerbachat' ); ?></span>
-				</div>
-				<label class="consent__row">
-					<span>
-						<span class="consent__name"><?php esc_html_e( 'Analytics', 'powerbachat' ); ?></span>
-						<span class="consent__desc"><?php esc_html_e( 'Anonymous stats that show which pages help people most.', 'powerbachat' ); ?></span>
-					</span>
-					<input class="consent__switch" type="checkbox" data-consent="analytics">
-				</label>
-				<label class="consent__row">
-					<span>
-						<span class="consent__name"><?php esc_html_e( 'Marketing', 'powerbachat' ); ?></span>
-						<span class="consent__desc"><?php esc_html_e( 'Measure ads and show more relevant offers.', 'powerbachat' ); ?></span>
-					</span>
-					<input class="consent__switch" type="checkbox" data-consent="marketing">
-				</label>
-			</div>
+	if ( ! powerbachat_mod( 'pb_cookie_banner' ) ) {
+		return;
+	}
+	?>
+	<div class="consent" id="pb-consent" role="dialog" aria-modal="false" aria-label="<?php esc_attr_e( 'Cookie choices', 'powerbachat' ); ?>" aria-describedby="pb-consent-text" hidden>
+		<div class="consent__bar">
+			<span class="consent__icon" aria-hidden="true">
+				<svg viewBox="0 0 48 48"><path d="M24 4a20 20 0 1 0 19.6 16.1 6 6 0 0 1-7.6-5.8 6 6 0 0 1-6.3-6.3A6 6 0 0 1 24 4Z" fill="#f5b82e"/><circle cx="17" cy="20" r="2.6" fill="#7a5410"/><circle cx="27" cy="30" r="2.6" fill="#7a5410"/><circle cx="16" cy="31" r="1.9" fill="#7a5410"/><circle cx="33" cy="22" r="1.7" fill="#7a5410"/></svg>
+			</span>
+			<p class="consent__text" id="pb-consent-text">
+				<?php esc_html_e( 'We use cookies to keep the site working and, with your okay, to see which pages help most.', 'powerbachat' ); ?>
+				<a href="<?php echo esc_url( home_url( '/cookie-policy/' ) ); ?>"><?php esc_html_e( 'Cookie policy', 'powerbachat' ); ?></a>
+			</p>
 			<div class="consent__actions">
-				<button type="button" class="btn btn--volt" data-consent-action="all"><?php esc_html_e( 'Accept all', 'powerbachat' ); ?></button>
+				<button type="button" class="consent__link" data-consent-toggle aria-expanded="false" aria-controls="pb-consent-options"><?php esc_html_e( 'Settings', 'powerbachat' ); ?></button>
 				<button type="button" class="btn consent__ghost" data-consent-action="essential"><?php esc_html_e( 'Essential only', 'powerbachat' ); ?></button>
-				<button type="button" class="btn consent__ghost" data-consent-action="save"><?php esc_html_e( 'Save choices', 'powerbachat' ); ?></button>
+				<button type="button" class="btn btn--volt" data-consent-action="all"><?php esc_html_e( 'Accept', 'powerbachat' ); ?></button>
 			</div>
 		</div>
-		<?php
-	endif;
-
-	$url = powerbachat_lead_url( 'popup' );
-	if ( powerbachat_mod( 'pb_lead_popup' ) && $url && ! is_page( 'contact-us' ) ) :
-		$studio = powerbachat_mod( 'pb_credit_name' ) ? powerbachat_mod( 'pb_credit_name' ) : 'Vyntic Studio';
-		?>
-		<div class="lead" id="pb-lead" role="dialog" aria-modal="true" aria-labelledby="pb-lead-title" hidden
-			data-delay="<?php echo esc_attr( max( 10, (int) powerbachat_mod( 'pb_lead_delay' ) ) ); ?>"
-			data-every="<?php echo esc_attr( max( 1, (int) powerbachat_mod( 'pb_lead_every' ) ) ); ?>"
-			data-url="<?php echo esc_url( $url ); ?>"
-			data-thanks="<?php esc_attr_e( 'Thank you. We have opened our website in a new tab and will be in touch within 24 hours.', 'powerbachat' ); ?>"
-			data-invalid="<?php esc_attr_e( 'Please enter an email address or a WhatsApp number.', 'powerbachat' ); ?>">
-			<div class="lead__backdrop" data-lead-close></div>
-			<div class="lead__box">
-				<button type="button" class="lead__close" data-lead-close aria-label="<?php esc_attr_e( 'Close', 'powerbachat' ); ?>"><?php echo powerbachat_icon( 'close' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></button>
-				<div class="lead__art" aria-hidden="true">
-					<div class="lead__browser">
-						<div class="lead__bar"><i></i><i></i><i></i><span>yourbusiness.com</span></div>
-						<div class="lead__page">
-							<span class="lead__line lead__line--title"></span>
-							<span class="lead__line"></span>
-							<span class="lead__line lead__line--short"></span>
-							<span class="lead__btn"></span>
-							<div class="lead__cards"><span></span><span></span><span></span></div>
-						</div>
-					</div>
-					<div class="lead__score">
-						<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" class="lead__ring-bg"/><circle cx="60" cy="60" r="50" class="lead__ring"/></svg>
-						<strong>98</strong><small>/100</small>
-					</div>
-					<ul class="lead__stats">
-						<li><span><?php esc_html_e( 'Speed', 'powerbachat' ); ?></span><b style="--w:96%"></b></li>
-						<li><span><?php esc_html_e( 'SEO', 'powerbachat' ); ?></span><b style="--w:92%"></b></li>
-						<li><span><?php esc_html_e( 'Mobile', 'powerbachat' ); ?></span><b style="--w:98%"></b></li>
-						<li><span><?php esc_html_e( 'Leads', 'powerbachat' ); ?></span><b style="--w:88%"></b></li>
-					</ul>
-					<p class="lead__chip"><?php echo powerbachat_icon( 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput ?> <?php esc_html_e( 'Built like this site', 'powerbachat' ); ?></p>
-				</div>
-				<div class="lead__body">
-					<p class="lead__pill"><?php echo powerbachat_icon( 'bolt' ); // phpcs:ignore WordPress.Security.EscapeOutput ?> <?php echo esc_html( sprintf( /* translators: %s: studio name */ __( 'Made by %s', 'powerbachat' ), $studio ) ); ?></p>
-					<h2 class="lead__title" id="pb-lead-title"><?php echo esc_html( powerbachat_mod( 'pb_lead_title' ) ); ?></h2>
-					<p class="lead__text"><?php echo esc_html( powerbachat_mod( 'pb_lead_text' ) ); ?></p>
-					<form class="lead__form" data-lead-form novalidate>
-						<label class="screen-reader-text" for="pb-lead-contact"><?php esc_html_e( 'Email or WhatsApp number', 'powerbachat' ); ?></label>
-						<div class="lead__field">
-							<?php echo powerbachat_icon( 'mail' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-							<input id="pb-lead-contact" name="contact" type="text" inputmode="email" autocomplete="email" placeholder="<?php esc_attr_e( 'Email or WhatsApp number', 'powerbachat' ); ?>" required>
-						</div>
-						<span class="contact-form__trap" aria-hidden="true"><input type="text" name="pb_hp" tabindex="-1" autocomplete="new-password" value=""></span>
-						<button type="submit" class="btn lead__cta"><?php esc_html_e( 'Get a free quote', 'powerbachat' ); ?> <?php echo powerbachat_icon( 'arrow-ne' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></button>
-						<p class="lead__status" data-lead-status role="status" aria-live="polite" hidden></p>
-					</form>
-					<ul class="lead__ticks">
-						<li><?php echo powerbachat_icon( 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput ?> <?php esc_html_e( 'Free consultation', 'powerbachat' ); ?></li>
-						<li><?php echo powerbachat_icon( 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput ?> <?php esc_html_e( 'Reply within 24 hours', 'powerbachat' ); ?></li>
-						<li><?php echo powerbachat_icon( 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput ?> <?php esc_html_e( 'No obligation', 'powerbachat' ); ?></li>
-					</ul>
-					<p class="lead__alt"><?php esc_html_e( 'Just looking?', 'powerbachat' ); ?> <a href="<?php echo esc_url( powerbachat_lead_url( 'popup_work' ) ); ?>" target="_blank" rel="noopener" data-lead-visit><?php esc_html_e( 'See our work', 'powerbachat' ); ?></a></p>
-				</div>
+		<div class="consent__options" id="pb-consent-options" hidden>
+			<div class="consent__row">
+				<span>
+					<span class="consent__name"><?php esc_html_e( 'Essential', 'powerbachat' ); ?></span>
+					<span class="consent__desc"><?php esc_html_e( 'Keeps the site, your country and your choices working.', 'powerbachat' ); ?></span>
+				</span>
+				<span class="consent__always"><?php esc_html_e( 'Always on', 'powerbachat' ); ?></span>
 			</div>
+			<label class="consent__row">
+				<span>
+					<span class="consent__name"><?php esc_html_e( 'Analytics', 'powerbachat' ); ?></span>
+					<span class="consent__desc"><?php esc_html_e( 'Anonymous stats that show which pages help people most.', 'powerbachat' ); ?></span>
+				</span>
+				<input class="consent__switch" type="checkbox" data-consent="analytics">
+			</label>
+			<label class="consent__row">
+				<span>
+					<span class="consent__name"><?php esc_html_e( 'Marketing', 'powerbachat' ); ?></span>
+					<span class="consent__desc"><?php esc_html_e( 'Measure ads and show more relevant offers.', 'powerbachat' ); ?></span>
+				</span>
+				<input class="consent__switch" type="checkbox" data-consent="marketing">
+			</label>
+			<button type="button" class="btn btn--volt consent__save" data-consent-action="save"><?php esc_html_e( 'Save choices', 'powerbachat' ); ?></button>
 		</div>
-		<?php
-	endif;
+	</div>
+	<?php
 }
 add_action( 'wp_footer', 'powerbachat_popups', 5 );

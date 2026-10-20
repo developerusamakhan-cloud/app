@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.9.1
+Stable tag: 1.10.0
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -285,6 +285,10 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.10.0 =
+* Removes the "website like this" promotion popup and its Customizer settings. Leads already saved stay under Leads in the admin.
+* Cookie consent is now a slim bar at the bottom of the screen: Accept, Essential only and Settings. Settings opens the analytics and marketing switches inside the bar, and the footer "Cookie settings" link opens it with the switches showing.
 
 = 1.9.1 =
 * Restores automatic country detection from the visitor's location (undoes 1.9.0). Everything else is the same as 1.8.1.

@@ -6,7 +6,7 @@ page_type: standard
 order: 2
 seo_title: Car Accident Claim Guides in Plain English | ClaimFairly
 focus_keyword: car accident claim guide
-excerpt: Plain-English guides to car accident claims: diminished value, fault rules, settlement offers, attorney fees and demand letters, written and checked by James.
+excerpt: Plain-English guides to car accident claims: diminished value, fault rules, settlement offers, attorney fees and demand letters, written and checked by the ClaimFairly editorial team.
 hide_author: 1
 ---
 ## How to use these guides
@@ -26,5 +26,5 @@ Reading tells you how a claim is valued. The calculators put your own numbers th
 
 ## Who writes them
 
-The guides are written and reviewed by James, the founder of ClaimFairly, following our [editorial policy](/editorial-policy/). We are not lawyers, and nothing here is legal advice. Each guide shows the date it was last reviewed, and if you spot an error, please [tell us](/contact/) so we can fix it.
+The guides are written and reviewed by the ClaimFairly editorial team, following our [editorial policy](/editorial-policy/). We are not lawyers, and nothing here is legal advice. Each guide shows the date it was last reviewed, and if you spot an error, please [tell us](/contact/) so we can fix it.
 

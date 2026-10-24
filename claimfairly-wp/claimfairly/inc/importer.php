@@ -93,7 +93,6 @@ function claimfairly_setup_page() {
 		<h2><?php esc_html_e( 'After importing', 'claimfairly' ); ?></h2>
 		<ol style="max-width:720px">
 			<li><?php esc_html_e( 'Users > Profile: set your real display name and a short bio. The author box and About page use them.', 'claimfairly' ); ?></li>
-			<li><?php esc_html_e( 'Appearance > Customize > ClaimFairly settings: add your photo for the homepage founder note.', 'claimfairly' ); ?></li>
 			<li><?php esc_html_e( 'Pages > States: open each draft, check the facts box against the official source, then publish. Start with the first 10.', 'claimfairly' ); ?></li>
 			<li><?php esc_html_e( 'Install Rank Math or Yoast (one only) for titles, meta descriptions and the sitemap. The SEO title and description for every page are already written in each page\'s excerpt.', 'claimfairly' ); ?></li>
 		</ol>

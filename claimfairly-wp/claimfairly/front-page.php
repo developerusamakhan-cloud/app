@@ -12,8 +12,6 @@ $claimfairly_estimator = claimfairly_tool_page_url( 'settlement-estimator' );
 $claimfairly_dv        = claimfairly_tool_page_url( 'diminished-value' );
 $claimfairly_states    = get_page_by_path( 'states' );
 $claimfairly_guides_id = (int) get_option( 'page_for_posts' );
-$claimfairly_founder   = claimfairly_founder_name();
-$claimfairly_photo     = (int) claimfairly_opt( 'cf_founder_photo' );
 ?>
 
 <section class="hero">
@@ -212,18 +210,13 @@ if ( $claimfairly_state_pages ) :
 	<div class="wrap">
 		<div class="founder">
 			<div class="founder__photo">
-				<?php if ( $claimfairly_photo ) : ?>
-					<?php echo wp_get_attachment_image( $claimfairly_photo, 'medium', false, array( 'alt' => $claimfairly_founder ) ); ?>
-				<?php else : ?>
-					<span class="founder__initials" aria-hidden="true"><?php echo esc_html( claimfairly_initials( $claimfairly_founder ? $claimfairly_founder : 'Claim Fairly' ) ); ?></span>
-				<?php endif; ?>
+				<span class="founder__initials" aria-hidden="true"><?php echo esc_html( claimfairly_author_initials() ); ?></span>
 			</div>
 			<div class="founder__body">
-				<p class="eyebrow"><?php esc_html_e( 'A note from the person who built this', 'claimfairly' ); ?></p>
-				<h2 id="founder-title" class="founder__title"><?php echo esc_html( $claimfairly_founder ? sprintf( /* translators: %s: name. */ __( 'Hi, I\'m %s.', 'claimfairly' ), strtok( $claimfairly_founder, ' ' ) ) : __( 'Hi there.', 'claimfairly' ) ); ?></h2>
-				<p><?php echo esc_html( claimfairly_opt( 'cf_founder_note' ) ); ?></p>
-				<p class="founder__sign"><?php echo esc_html( $claimfairly_founder ); ?><span><?php esc_html_e( 'Founder, ClaimFairly', 'claimfairly' ); ?></span></p>
-				<a class="text-link" href="<?php echo esc_url( claimfairly_about_url() ); ?>"><?php esc_html_e( 'More about me and the site', 'claimfairly' ); ?> <?php echo claimfairly_icon( 'arrow', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+				<p class="eyebrow"><?php esc_html_e( 'Why ClaimFairly exists', 'claimfairly' ); ?></p>
+				<h2 id="founder-title" class="founder__title"><?php esc_html_e( 'Built for drivers, not insurers.', 'claimfairly' ); ?></h2>
+				<p><?php esc_html_e( 'Search for help after a car accident and almost every result is a law firm asking for your phone number. We built something simpler: calculators that show the actual math insurers use, cite real sources and never ask who you are. We are not lawyers, and these tools do not replace one. They help you walk into that conversation knowing the numbers.', 'claimfairly' ); ?></p>
+				<a class="text-link" href="<?php echo esc_url( claimfairly_about_url() ); ?>"><?php esc_html_e( 'More about ClaimFairly', 'claimfairly' ); ?> <?php echo claimfairly_icon( 'arrow', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 			</div>
 		</div>
 	</div>

@@ -177,19 +177,14 @@ function claimfairly_read_minutes( $post_id ) {
  * @param int $post_id Post ID.
  */
 function claimfairly_meta_card( $post_id ) {
-	$name     = claimfairly_founder_name();
+	$name     = claimfairly_author_name();
 	$reviewed = claimfairly_last_reviewed_raw( $post_id );
 	$sources  = count( claimfairly_parse_link_lines( get_post_meta( $post_id, '_cf_sources', true ) ) );
 	$type     = claimfairly_get_page_type( $post_id );
-	$photo    = (int) claimfairly_opt( 'cf_founder_photo' );
 
 	echo '<div class="meta-card">';
 	echo '<a class="meta-card__author" href="' . esc_url( claimfairly_about_url() ) . '">';
-	if ( $photo ) {
-		echo wp_get_attachment_image( $photo, 'thumbnail', false, array( 'class' => 'meta-card__photo', 'alt' => '' ) );
-	} else {
-		echo '<span class="meta-card__avatar" aria-hidden="true">' . esc_html( claimfairly_initials( $name ) ) . '</span>';
-	}
+	echo '<span class="meta-card__avatar" aria-hidden="true">' . esc_html( claimfairly_author_initials() ) . '</span>';
 	echo '<span><span class="meta-card__label">' . esc_html( 'post' === get_post_type( $post_id ) ? __( 'Written by', 'claimfairly' ) : __( 'Written and checked by', 'claimfairly' ) ) . '</span><span class="meta-card__name">' . esc_html( $name ) . '</span></span></a>';
 	echo '<ul class="meta-card__list">';
 	if ( $reviewed ) {
@@ -286,15 +281,10 @@ function claimfairly_get_author_box( $post_id = null ) {
 	if ( get_post_meta( $post_id, '_cf_hide_author', true ) ) {
 		return '';
 	}
-	$name = claimfairly_founder_name();
-	$bio  = claimfairly_founder_bio();
-	$photo = (int) claimfairly_opt( 'cf_founder_photo' );
-	$html  = '<section class="author" aria-label="' . esc_attr__( 'About the author', 'claimfairly' ) . '">';
-	if ( $photo ) {
-		$html .= wp_get_attachment_image( $photo, 'thumbnail', false, array( 'class' => 'author__photo', 'alt' => '' ) );
-	} else {
-		$html .= '<div class="author__avatar" aria-hidden="true">' . esc_html( claimfairly_initials( $name ) ) . '</div>';
-	}
+	$name  = claimfairly_author_name();
+	$bio   = claimfairly_author_bio();
+	$html  = '<section class="author" aria-label="' . esc_attr__( 'About ClaimFairly', 'claimfairly' ) . '">';
+	$html .= '<div class="author__avatar" aria-hidden="true">' . esc_html( claimfairly_author_initials() ) . '</div>';
 	$html .= '<div><p class="author__label">' . esc_html__( 'Written and checked by', 'claimfairly' ) . '</p><p class="author__name">' . esc_html( $name ) . '</p>';
 	if ( $bio ) {
 		$html .= '<p class="author__bio">' . esc_html( $bio ) . '</p>';

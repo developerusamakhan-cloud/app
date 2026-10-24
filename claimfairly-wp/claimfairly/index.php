@@ -95,8 +95,8 @@ $claimfairly_featured = is_home() && ! is_paged() && have_posts();
 						<span class="featured-post__title"><?php the_title(); ?></span>
 						<span class="featured-post__text"><?php echo esc_html( claimfairly_card_summary( get_post() ) ); ?></span>
 						<span class="featured-post__meta">
-							<span class="meta-card__avatar" aria-hidden="true"><?php echo esc_html( claimfairly_initials( claimfairly_founder_name() ) ); ?></span>
-							<?php echo esc_html( claimfairly_founder_name() ); ?>
+							<span class="meta-card__avatar" aria-hidden="true"><?php echo esc_html( claimfairly_author_initials() ); ?></span>
+							<?php echo esc_html( claimfairly_author_name() ); ?>
 							<span class="dot" aria-hidden="true"></span>
 							<?php
 							/* translators: %d: minutes. */

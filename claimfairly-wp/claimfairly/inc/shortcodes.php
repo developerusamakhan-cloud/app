@@ -152,12 +152,12 @@ function claimfairly_editor_note_shortcode( $atts, $content = '' ) {
 add_shortcode( 'cf_editor_note', 'claimfairly_editor_note_shortcode' );
 
 /**
- * [cf_founder] The site owner's name (Customizer setting, default "James").
+ * [cf_founder] Kept for old content: prints the brand byline, "the ClaimFairly team".
  *
  * @return string
  */
 function claimfairly_founder_shortcode() {
-	return esc_html( claimfairly_founder_name() );
+	return esc_html__( 'the ClaimFairly team', 'claimfairly' );
 }
 add_shortcode( 'cf_founder', 'claimfairly_founder_shortcode' );
 

@@ -4,7 +4,7 @@
  * Twitter cards and one connected JSON-LD graph on every page.
  *
  * Graph nodes (linked by @id):
- *   Organization, WebSite, Person (founder)          every page
+ *   Organization, WebSite                            every page
  *   WebPage | AboutPage | ContactPage | CollectionPage  every page
  *   BreadcrumbList                                    inner pages
  *   Article                                           guides, state, injury, insurer, settlement pages
@@ -315,8 +315,6 @@ function claimfairly_schema_graph() {
 	$page_id = $url . '#webpage';
 	$graph   = array();
 	$img     = claimfairly_share_image();
-	$founder = claimfairly_founder_name();
-	$person  = $founder ? array( '@id' => $home . '#founder' ) : null;
 
 	if ( ! $plugin ) {
 		// Organization.
@@ -347,9 +345,6 @@ function claimfairly_schema_graph() {
 		if ( $same_as ) {
 			$org['sameAs'] = $same_as;
 		}
-		if ( $person ) {
-			$org['founder'] = $person;
-		}
 		$graph[] = $org;
 
 		// WebSite.
@@ -363,29 +358,6 @@ function claimfairly_schema_graph() {
 			'inLanguage'  => 'en-US',
 		);
 
-		// Founder.
-		if ( $person ) {
-			$p       = array(
-				'@type'    => 'Person',
-				'@id'      => $home . '#founder',
-				'name'     => $founder,
-				'url'      => claimfairly_about_url(),
-				'jobTitle' => 'Founder',
-				'worksFor' => array( '@id' => $org_id ),
-			);
-			$bio     = claimfairly_founder_bio();
-			if ( $bio ) {
-				$p['description'] = $bio;
-			}
-			$photo = (int) claimfairly_opt( 'cf_founder_photo' );
-			if ( $photo && wp_get_attachment_image_url( $photo, 'medium' ) ) {
-				$p['image'] = wp_get_attachment_image_url( $photo, 'medium' );
-			}
-			if ( $same_as ) {
-				$p['sameAs'] = $same_as;
-			}
-			$graph[] = $p;
-		}
 	}
 
 	$post_id = is_singular() ? get_queried_object_id() : ( is_front_page() ? (int) get_option( 'page_on_front' ) : 0 );
@@ -438,9 +410,6 @@ function claimfairly_schema_graph() {
 			$reviewed                 = claimfairly_last_reviewed_raw( $post_id );
 			if ( $reviewed ) {
 				$webpage['lastReviewed'] = $reviewed;
-				if ( $person ) {
-					$webpage['reviewedBy'] = $person;
-				}
 			}
 		}
 		if ( ! is_front_page() ) {
@@ -516,9 +485,7 @@ function claimfairly_schema_graph() {
 				'inLanguage'       => 'en-US',
 				'wordCount'        => str_word_count( wp_strip_all_tags( strip_shortcodes( $content ) ) ),
 			);
-			if ( $person ) {
-				$article['author'] = $person;
-			}
+			$article['author'] = array( '@id' => $org_id );
 			$cats = get_the_category( $post_id );
 			if ( $cats ) {
 				$article['articleSection'] = $cats[0]->name;

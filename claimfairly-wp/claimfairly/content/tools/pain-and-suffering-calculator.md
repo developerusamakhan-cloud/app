@@ -55,7 +55,7 @@ In practice, adjusters lean on the multiplier. If per diem gives you a much high
 
 ## A worked example
 
-James broke his wrist in a crash. His medical bills were **$10,000**, the injury is **serious**, he earns about **$60,000** a year and it took **120 days** to get back to normal.
+Sam broke his wrist in a crash. His medical bills were **$10,000**, the injury is **serious**, he earns about **$60,000** a year and it took **120 days** to get back to normal.
 
 - Multiplier: $10,000 x 3 to 4 = **$30,000 to $40,000**
 - Per diem: $231 a day x 120 days = **$27,720**

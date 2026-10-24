@@ -10,7 +10,7 @@ People use ClaimFairly when money and their health are on the line. That is a re
 
 ## Who writes and reviews
 
-Pages are written and checked by {{founder}}, who runs the site. We are not a law firm and do not give legal advice. When a topic needs a professional opinion, we say so on the page.
+Pages are written and checked by the ClaimFairly editorial team. We are not a law firm and do not give legal advice. When a topic needs a professional opinion, we say so on the page.
 
 ## How we choose sources
 

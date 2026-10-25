@@ -86,7 +86,7 @@ $chatbot_demo_faq = array(
 		</div>
 		<ol class="steps">
 			<li><h3><?php esc_html_e( 'Install the plugin', 'chatbot-demo' ); ?></h3><p><?php esc_html_e( 'Upload it in WordPress under Plugins, Add New, Upload Plugin, then activate it.', 'chatbot-demo' ); ?></p></li>
-			<li><h3><?php esc_html_e( 'Connect an AI service', 'chatbot-demo' ); ?></h3><p><?php esc_html_e( 'The setup wizard guides you. Several AI services have free tiers.', 'chatbot-demo' ); ?></p></li>
+			<li><h3><?php esc_html_e( 'Connect an AI service', 'chatbot-demo' ); ?></h3><p><?php esc_html_e( 'The setup wizard guides you through it step by step.', 'chatbot-demo' ); ?></p></li>
 			<li><h3><?php esc_html_e( 'Scan and go live', 'chatbot-demo' ); ?></h3><p><?php esc_html_e( 'One click reads your website. Turn the chat on and it starts answering.', 'chatbot-demo' ); ?></p></li>
 		</ol>
 	</div>

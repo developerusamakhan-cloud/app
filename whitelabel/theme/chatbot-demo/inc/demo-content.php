@@ -54,7 +54,7 @@ function chatbot_demo_pages() {
 			. $h( 'Shows the sources behind each answer' )
 			. $p( 'Under an answer the chat can list the pages it used, with links, so visitors can read more.' )
 			. $h( 'Lead capture' )
-			. $p( 'The chatbot answers first. After a few real questions, or sooner when a visitor asks about prices, a call or a quote, it offers to take their details. The form can ask for name, email, phone and a message, with a consent checkbox. Leads are saved in your WordPress database, emailed to you and can be exported as a CSV file. Spam is blocked with a hidden field, a rate limit and an optional Cloudflare Turnstile check.' )
+			. $p( 'The chatbot answers first. After a few real questions, or sooner when a visitor asks for a call back, it offers to take their details. The form can ask for name, email, phone and a message, with a consent checkbox. Leads are saved in your WordPress database, emailed to you and can be exported as a CSV file. Spam is blocked with a hidden field, a rate limit and an optional Cloudflare Turnstile check.' )
 			. $h( 'Conversation log' )
 			. $p( 'Every conversation is saved so you can read what visitors ask. It is the quickest way to find the questions your website does not answer yet.' )
 			. $h( 'Design that matches your brand' )
@@ -68,13 +68,13 @@ function chatbot_demo_pages() {
 				)
 			)
 			. $h( 'AI services' )
-			. $p( 'On WordPress 7.0 and later the chatbot can use the AI connection set up for the whole site under Settings, Connectors. It also works with its own keys for Groq, OpenRouter, Google Gemini and Cloudflare Workers AI, which all have free tiers, and with OpenAI, Anthropic Claude, Mistral and DeepSeek. You can add more than one; if one service fails or reaches its limit, the next one answers. If none answers, the chat replies with the most relevant parts of your pages.' )
+			. $p( 'On WordPress 7.0 and later the chatbot can use the AI connection set up for the whole site under Settings, Connectors. It also works with its own keys for Groq, OpenRouter, Google Gemini and Cloudflare Workers AI, and with OpenAI, Anthropic Claude, Mistral and DeepSeek. You can add more than one; if one service fails or reaches its limit, the next one answers. If none answers, the chat replies with the most relevant parts of your pages.' )
 			. $h( 'Extra knowledge and custom answers' )
 			. $p( 'Besides your pages, the chatbot can learn from PDF and DOCX files, other web pages and answers you write yourself for questions you get often.' )
 			. $h( 'Analytics and unanswered questions' )
 			. $p( 'See how many chats and leads you get, which questions come up most, and a list of questions the chat could not answer, so you can add the answer once.' )
 			. $h( 'WooCommerce shops' )
-			. $p( 'In a shop the chat can show product cards with price and an Add to cart button, and customers can check their order status with their order number and billing email.' )
+			. $p( 'In a shop the chat can show product cards with an Add to cart button, and customers can check their order status with their order number and billing email.' )
 			. $h( 'Lead alerts, greetings and business hours' )
 			. $p( 'New leads can also be sent to Slack or Telegram. The chat can greet visitors with a short message after a few seconds or when they scroll, and outside your business hours it shows an away status and collects contact details.' )
 			. $h( 'Placement' )
@@ -88,7 +88,7 @@ function chatbot_demo_pages() {
 			. $ol(
 				array(
 					'In WordPress, go to Plugins, Add New, Upload Plugin. Choose the plugin zip file, click Install Now, then Activate.',
-					'The setup wizard opens. Connect an AI service: on WordPress 7.0 and later use the connection under Settings, Connectors, or paste a free key from Groq, OpenRouter, Google Gemini or Cloudflare. Click Test to check it works.',
+					'The setup wizard opens. Connect an AI service: on WordPress 7.0 and later use the connection under Settings, Connectors, or paste a key from Groq, OpenRouter, Google Gemini or Cloudflare. Click Test to check it works.',
 					'Click Scan to let the chatbot read your website.',
 					'Choose your colour, welcome message and suggested questions.',
 					'Turn the chat on and open your website to try it.',
@@ -107,7 +107,7 @@ function chatbot_demo_pages() {
 			. $h3( 'Online shops' )
 			. $p( 'WooCommerce shops use it to answer questions about products, delivery and returns from their own product pages and policies.' )
 			. $h3( 'Real estate and travel' )
-			. $p( 'It answers questions about listings, packages and prices published on the website, and takes the visitor\'s details for a call back.' )
+			. $p( 'It answers questions about listings and packages published on the website, and takes the visitor\'s details for a call back.' )
 			. $h3( 'Websites with visitors from many countries' )
 			. $p( 'Visitors ask in their own language and get an answer in the same language, without a separate website for each language.' )
 			. $h3( 'Web designers and agencies' )
@@ -120,8 +120,6 @@ function chatbot_demo_pages() {
 			. $p( 'No. The chatbot answers from the content already on your website. You can add instructions, for example the tone to use, topics to avoid, or a message to show when it does not know.' )
 			. $h3( 'What happens when it does not know the answer?' )
 			. $p( 'It says it does not know instead of guessing, and can offer to take the visitor\'s details so you can reply.' )
-			. $h3( 'What does it cost to run?' )
-			. $p( 'The AI service you connect charges for its answers. Groq, OpenRouter, Google Gemini and Cloudflare Workers AI have free tiers that suit many small websites. Check each service\'s current limits.' )
 			. $h3( 'Does it work with WooCommerce and Elementor?' )
 			. $p( 'Yes. It reads WooCommerce products and pages built with Elementor or the block editor.' )
 			. $h3( 'Will it slow down my website?' )

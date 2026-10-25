@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-25T14:13:58+00:00\n"
+"POT-Creation-Date: 2026-10-25T17:52:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: chatbot-demo\n"
@@ -225,7 +225,7 @@ msgid "Connect an AI service"
 msgstr ""
 
 #: front-page.php:89
-msgid "The setup wizard guides you. Several AI services have free tiers."
+msgid "The setup wizard guides you through it step by step."
 msgstr ""
 
 #: front-page.php:90
@@ -305,56 +305,56 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: inc/demo-content.php:200
+#: inc/demo-content.php:198
 msgid "Demo menu"
 msgstr ""
 
-#: inc/demo-content.php:257
-#: inc/demo-content.php:270
+#: inc/demo-content.php:255
+#: inc/demo-content.php:268
 msgid "Demo content"
 msgstr ""
 
 #. translators: %d: number of pages
-#: inc/demo-content.php:273
+#: inc/demo-content.php:271
 #, php-format
 msgid "%d page created."
 msgid_plural "%d pages created."
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/demo-content.php:275
+#: inc/demo-content.php:273
 msgid "The theme adds these pages so the chatbot has a website to learn from. Pages that already exist are left as they are."
 msgstr ""
 
-#: inc/demo-content.php:278
+#: inc/demo-content.php:276
 msgid "exists"
 msgstr ""
 
-#: inc/demo-content.php:278
+#: inc/demo-content.php:276
 msgid "missing"
 msgstr ""
 
-#: inc/demo-content.php:283
+#: inc/demo-content.php:281
 msgid "Create missing pages"
 msgstr ""
 
-#: inc/demo-content.php:284
+#: inc/demo-content.php:282
 msgid "After creating pages, open the chatbot plugin and run the website scan again so it learns them."
 msgstr ""
 
-#: inc/demo-content.php:285
+#: inc/demo-content.php:283
 msgid "Front page texts, accent colour and contact details: Appearance, Customize, Chatbot demo."
 msgstr ""
 
-#: inc/demo-content.php:295
+#: inc/demo-content.php:293
 msgid "You are not allowed to do this."
 msgstr ""
 
-#: inc/demo-content.php:314
+#: inc/demo-content.php:312
 msgid "Email:"
 msgstr ""
 
-#: inc/demo-content.php:317
+#: inc/demo-content.php:315
 msgid "Phone or WhatsApp:"
 msgstr ""
 

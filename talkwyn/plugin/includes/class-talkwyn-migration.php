@@ -15,12 +15,26 @@ class Talkwyn_Migration {
 	const DONE_OPTION = 'talkwyn_migrated_from_nabia';
 
 	/**
+	 * Nabia AI Chatbot default texts. A setting still holding one of these was never changed
+	 * by the owner, so it moves to the Talkwyn default instead of being copied.
+	 */
+	const OLD_DEFAULTS = array(
+		'welcome_message'     => 'Hi! How can I help you today?',
+		'placeholder'         => 'Type your message...',
+		'suggested_questions' => "What services do you offer?\nHow can I contact you?\nCan you tell me more?",
+		'fallback_message'    => 'I could not find that clearly in the website information. I can keep helping, or if you want, the team can follow up with you.',
+		'lead_prompt'         => 'Would you like our team to contact you about this?',
+		'privacy_notice'      => 'By chatting, you agree that your messages may be stored to improve support.',
+	);
+
+	/**
 	 * Hooks.
 	 *
 	 * @return void
 	 */
 	public static function init() {
 		add_action( 'admin_init', array( __CLASS__, 'maybe_run' ) );
+		add_action( 'admin_init', array( __CLASS__, 'refresh_old_defaults' ) );
 		add_action( 'admin_notices', array( __CLASS__, 'notice' ) );
 		add_action( 'admin_post_talkwyn_delete_nabia', array( __CLASS__, 'delete_old' ) );
 		add_action( 'admin_post_talkwyn_dismiss_nabia', array( __CLASS__, 'dismiss' ) );
@@ -107,12 +121,55 @@ class Talkwyn_Migration {
 		if ( isset( $old['typing_label'] ) && 'AI is typing' === $old['typing_label'] ) {
 			unset( $out['typing_label'] );
 		}
+		foreach ( self::OLD_DEFAULTS as $key => $text ) {
+			if ( isset( $out[ $key ] ) && self::same_text( $out[ $key ], $text ) ) {
+				unset( $out[ $key ] );
+			}
+		}
 		// Public custom fields are opt-in now, with an allow list.
 		$out['index_custom_fields'] = 0;
 		if ( isset( $out['retention_days'] ) ) {
 			$out['retention_days'] = max( 1, absint( $out['retention_days'] ) );
 		}
 		return $out;
+	}
+
+	/**
+	 * Whether a saved text equals an old default (ignoring line ending and outer spaces).
+	 *
+	 * @param mixed  $value Saved value.
+	 * @param string $text  Old default.
+	 * @return bool
+	 */
+	private static function same_text( $value, $text ) {
+		return is_string( $value ) && trim( str_replace( "\r\n", "\n", $value ) ) === $text;
+	}
+
+	/**
+	 * One time, for sites that moved from Nabia before 2.3.14: texts that still hold a Nabia
+	 * default switch to the Talkwyn default. Texts the owner wrote are left alone.
+	 *
+	 * @return void
+	 */
+	public static function refresh_old_defaults() {
+		if ( ! get_option( self::DONE_OPTION ) || get_option( 'talkwyn_nabia_defaults_fixed' ) ) {
+			return;
+		}
+		$saved = get_option( Talkwyn_Settings::OPTION, array() );
+		if ( is_array( $saved ) ) {
+			$changed = false;
+			foreach ( self::OLD_DEFAULTS as $key => $text ) {
+				if ( isset( $saved[ $key ] ) && self::same_text( $saved[ $key ], $text ) ) {
+					unset( $saved[ $key ] );
+					$changed = true;
+				}
+			}
+			if ( $changed ) {
+				update_option( Talkwyn_Settings::OPTION, $saved, false );
+				Talkwyn_Settings::flush();
+			}
+		}
+		update_option( 'talkwyn_nabia_defaults_fixed', 1, false );
 	}
 
 	/**

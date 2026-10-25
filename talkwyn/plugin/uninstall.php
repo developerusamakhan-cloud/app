@@ -18,7 +18,7 @@ global $wpdb;
 foreach ( array( 'talkwyn_chunks', 'talkwyn_leads', 'talkwyn_logs' ) as $talkwyn_table ) {
 	$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %i', $wpdb->prefix . $talkwyn_table ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.DirectDatabaseQuery.SchemaChange -- removing the plugin's own tables on uninstall.
 }
-foreach ( array( 'talkwyn_settings', 'talkwyn_db_version', 'talkwyn_fulltext', 'talkwyn_migrated_from_nabia', 'talkwyn_nabia_notice', 'talkwyn_onboarding_done', 'talkwyn_do_onboarding', 'talkwyn_installed_at', 'talkwyn_review_done', 'talkwyn_review_snooze', 'talkwyn_subscribed' ) as $talkwyn_option ) {
+foreach ( array( 'talkwyn_settings', 'talkwyn_db_version', 'talkwyn_fulltext', 'talkwyn_migrated_from_nabia', 'talkwyn_nabia_notice', 'talkwyn_onboarding_done', 'talkwyn_do_onboarding', 'talkwyn_installed_at', 'talkwyn_review_done', 'talkwyn_review_snooze', 'talkwyn_review_asks', 'talkwyn_nabia_defaults_fixed', 'talkwyn_subscribed' ) as $talkwyn_option ) {
 	delete_option( $talkwyn_option );
 }
 delete_metadata( 'user', 0, 'talkwyn_dismissed', '', true );

@@ -1,5 +1,19 @@
 # Talkwyn changelog
 
+## 2.3.14
+
+### Fixed
+- Lead form time trap (`Talkwyn_Leads::MIN_FILL_MS`) dropped real leads: a form sent within 2.5 s got a fake success and was not stored. `MIN_FILL_MS` is now 1200, and a form sent faster than that returns a validation error ("press send again") instead of a silent spam result. A filled honeypot or a missing `elapsed` value is still treated as spam.
+
+### Added
+- `Talkwyn_Review` (`includes/admin/class-talkwyn-review.php`): "Rate Talkwyn" and "Support" row meta on the Plugins screen, review line in `admin_footer_text` on Talkwyn screens, "Write a review" button in the Talkwyn header.
+- Review reminder on the Dashboard and Plugins screens (`admin_notices`, `assets/js/review.js`) and at the top of Talkwyn screens. Schedule `Talkwyn_Review::STEPS` = 7 days after install, then 15, 30 and 60 days after each "Maybe later" (`talkwyn_review_asks`, `talkwyn_review_snooze`), then never. Needs `manage_options` and at least 3 conversations (`talkwyn_review_min_chats` filter; count cached in the `talkwyn_chat_count` transient). Hidden when the admin menu is renamed by white label (`talkwyn_review_allowed` filter).
+- `Talkwyn_Migration::OLD_DEFAULTS` and `refresh_old_defaults()`: Nabia default texts are not copied on migration, and on sites already migrated they are replaced once by the Talkwyn defaults (`talkwyn_nabia_defaults_fixed`).
+
+### Changed
+- Admin menu icon is `assets/img/menu-icon.svg` in brand colours, shown at full opacity (`talkwyn-menu` inline style). White-labelled admins keep the neutral icon. New filter `talkwyn_admin_menu_icon`.
+- Uninstall removes `talkwyn_review_asks` and `talkwyn_nabia_defaults_fixed`.
+
 ## 2.3.13
 
 WordPress.org review fixes.

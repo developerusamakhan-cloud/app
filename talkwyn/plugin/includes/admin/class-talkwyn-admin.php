@@ -15,7 +15,7 @@ class Talkwyn_Admin {
 	const SLUG        = 'talkwyn';
 	const TRIAL_URL   = 'https://talkwyn.com/pricing/#trial';
 	const PRICING_URL = 'https://talkwyn.com/pricing/';
-	const REVIEW_URL  = 'https://wordpress.org/support/plugin/talkwyn/reviews/#new-post';
+	const REVIEW_URL  = Talkwyn_Review::URL;
 
 	/**
 	 * Checkbox keys printed on the current form.
@@ -48,6 +48,19 @@ class Talkwyn_Admin {
 		add_action( 'wp_ajax_talkwyn_models', array( __CLASS__, 'ajax_models' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( TALKWYN_FILE ), array( __CLASS__, 'action_links' ) );
 		add_filter( 'admin_body_class', array( __CLASS__, 'body_class' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'menu_icon_style' ) );
+	}
+
+	/**
+	 * Show the brand-coloured menu icon at full opacity and size on every admin screen
+	 * (WordPress dims image menu icons by default).
+	 *
+	 * @return void
+	 */
+	public static function menu_icon_style() {
+		wp_register_style( 'talkwyn-menu', false, array(), TALKWYN_VERSION );
+		wp_enqueue_style( 'talkwyn-menu' );
+		wp_add_inline_style( 'talkwyn-menu', '#adminmenu .toplevel_page_talkwyn .wp-menu-image img{width:20px;height:20px;padding:7px 0 0;opacity:1}' );
 	}
 
 	/**
@@ -91,7 +104,14 @@ class Talkwyn_Admin {
 	 */
 	public static function menu() {
 		$title = (string) apply_filters( 'talkwyn_admin_menu_title', 'Talkwyn' );
-		$icon  = 'data:image/svg+xml;base64,' . base64_encode( '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="black" d="M8 3h16a6 6 0 0 1 6 6v11a6 6 0 0 1-6 6H14l-7 5v-5.2A6 6 0 0 1 2 20V9a6 6 0 0 1 6-6Zm2.2 13.6a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm5.8-3.3a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm5.8-3.8a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8Z"/></svg>' ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+		$mono  = 'data:image/svg+xml;base64,' . base64_encode( '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="black" d="M8 3h16a6 6 0 0 1 6 6v11a6 6 0 0 1-6 6H14l-7 5v-5.2A6 6 0 0 1 2 20V9a6 6 0 0 1 6-6Zm2.2 13.6a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm5.8-3.3a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm5.8-3.8a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8Z"/></svg>' ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+		/**
+		 * Filters the admin menu icon. The brand-coloured icon is used unless the admin is
+		 * white-labelled, where a neutral icon in the admin colour scheme is used.
+		 *
+		 * @param string $icon Icon URL, data URI or Dashicons class.
+		 */
+		$icon = (string) apply_filters( 'talkwyn_admin_menu_icon', 'Talkwyn' === $title ? TALKWYN_URL . 'assets/img/menu-icon.svg' : $mono );
 		add_menu_page( $title, $title, 'manage_options', self::SLUG, array( __CLASS__, 'page' ), $icon, 58 );
 		foreach ( self::tabs() as $key => $label ) {
 			add_submenu_page( self::SLUG, $label, $label, 'manage_options', 'dashboard' === $key ? self::SLUG : self::SLUG . '&tab=' . $key, '__return_null' );
@@ -266,6 +286,9 @@ class Talkwyn_Admin {
 	 */
 	private static function hero_actions() {
 		$html = '<a class="twa-btn twa-btn--light" href="' . esc_url( admin_url( 'admin.php?page=talkwyn-setup' ) ) . '">' . self::icon( 'rocket' ) . esc_html__( 'Setup wizard', 'talkwyn' ) . '</a>';
+		if ( Talkwyn_Review::allowed() ) {
+			$html .= '<a class="twa-btn twa-btn--light" href="' . esc_url( Talkwyn_Review::URL ) . '" target="_blank" rel="noopener">' . self::icon( 'star' ) . esc_html__( 'Write a review', 'talkwyn' ) . '</a>';
+		}
 		if ( ! self::pro_active() ) {
 			$html .= '<a class="twa-btn twa-btn--red" href="' . esc_url( self::TRIAL_URL ) . '" target="_blank" rel="noopener">' . self::icon( 'profeatures' ) . esc_html__( 'Start free trial', 'talkwyn' ) . '</a>';
 			$html .= '<a class="twa-btn twa-btn--ink" href="' . esc_url( self::PRICING_URL ) . '" target="_blank" rel="noopener">' . self::icon( 'star' ) . esc_html__( 'Upgrade to Pro', 'talkwyn' ) . '</a>';
@@ -581,33 +604,15 @@ class Talkwyn_Admin {
 	}
 
 	/**
-	 * Review request after 14 days of use and 20 chats.
+	 * Review reminder at the top of Talkwyn screens (schedule in Talkwyn_Review).
 	 *
 	 * @return void
 	 */
 	private static function review_request() {
-		if ( get_option( 'talkwyn_review_done' ) ) {
-			return;
+		$box = Talkwyn_Review::box( self::icon( 'star' ) );
+		if ( '' !== $box ) {
+			echo wp_kses( $box, Talkwyn_Kses::html() );
 		}
-		$snooze = (int) get_option( 'talkwyn_review_snooze', 0 );
-		$since  = (int) get_option( 'talkwyn_installed_at', time() );
-		if ( time() < $snooze || ( time() - $since ) < 14 * DAY_IN_SECONDS || self::chat_count() < 20 ) {
-			return;
-		}
-		$done  = wp_nonce_url( admin_url( 'admin-post.php?action=talkwyn_dismiss&id=review_done' ), 'talkwyn_dismiss' );
-		$later = wp_nonce_url( admin_url( 'admin-post.php?action=talkwyn_dismiss&id=review_later' ), 'talkwyn_dismiss' );
-		echo wp_kses( '<aside class="twa-review"><span class="twa-chip-icon">' . self::icon( 'star' ) . '</span><div><strong>' . esc_html__( 'Is Talkwyn helping your visitors?', 'talkwyn' ) . '</strong><p>' . esc_html__( 'A short review on WordPress.org helps other site owners find it. It takes a minute.', 'talkwyn' ) . '</p></div><div class="twa-review__actions"><a class="twa-btn twa-btn--ink twa-btn--sm" href="' . esc_url( self::REVIEW_URL ) . '" target="_blank" rel="noopener" data-twa-review="done" data-twa-href="' . esc_url( $done ) . '">' . esc_html__( 'Leave a review', 'talkwyn' ) . '</a><a class="twa-btn twa-btn--light twa-btn--sm" href="' . esc_url( $later ) . '">' . esc_html__( 'Maybe later', 'talkwyn' ) . '</a><a class="twa-link" href="' . esc_url( $done ) . '">' . esc_html__( 'Do not ask again', 'talkwyn' ) . '</a></div></aside>', Talkwyn_Kses::html() );
-	}
-
-	/**
-	 * Number of conversations ever logged.
-	 *
-	 * @return int
-	 */
-	private static function chat_count() {
-		global $wpdb;
-		$t = Talkwyn_DB::tables();
-		return (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(DISTINCT session_id) FROM %i", $t['logs'] ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	}
 
 	/**
@@ -622,9 +627,9 @@ class Talkwyn_Admin {
 		check_admin_referer( 'talkwyn_dismiss' );
 		$id = isset( $_GET['id'] ) ? sanitize_key( wp_unslash( $_GET['id'] ) ) : '';
 		if ( 'review_done' === $id ) {
-			update_option( 'talkwyn_review_done', time(), false );
+			Talkwyn_Review::done();
 		} elseif ( 'review_later' === $id ) {
-			update_option( 'talkwyn_review_snooze', time() + 30 * DAY_IN_SECONDS, false );
+			Talkwyn_Review::later();
 		} elseif ( 0 === strpos( $id, 'pro_' ) ) {
 			$list   = self::dismissed();
 			$list[] = $id;

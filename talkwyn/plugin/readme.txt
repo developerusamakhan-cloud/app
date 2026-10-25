@@ -4,7 +4,7 @@ Tags: chatbot, ai chatbot, live chat, multilingual, lead generation
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.3.13
+Stable tag: 2.3.14
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -121,6 +121,13 @@ In your WordPress database. Chats, leads and knowledge stay on your site. Messag
 6. Leads and conversations.
 
 == Changelog ==
+
+= 2.3.14 =
+* Fixed: A visitor who filled the lead form very quickly (for example with browser autofill) saw "Lead saved" but the lead was not stored. Talkwyn now waits a shorter time and, if the form is still sent too fast, asks the visitor to press send again instead of dropping the lead.
+* New: "Write a review" button in the Talkwyn header, a "Rate Talkwyn" link on the Plugins screen and a review line in the footer of Talkwyn screens.
+* New: A review reminder on the Dashboard and Plugins screen after 7 days, once the chat has had a few conversations. "Maybe later" brings it back after 15, then 30, then 60 days, and then it stops. "I already did" stops it at once. It is never shown on white-labelled sites.
+* Changed: The Talkwyn menu icon shows in its own colours.
+* Changed: Sites that moved from Nabia AI Chatbot get the Talkwyn default texts (welcome message, suggestions, privacy note) where the old Nabia defaults were never changed. Texts you wrote yourself are kept.
 
 = 2.3.13 =
 * New: On WordPress 7.0 and later, Talkwyn answers through the WordPress AI Client by default, using the AI connection set up in Settings > Connectors. Direct keys for Groq, OpenRouter, Gemini and Cloudflare stay available as an option and as a fallback.

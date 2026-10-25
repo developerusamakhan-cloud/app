@@ -13,25 +13,36 @@ defined( 'ABSPATH' ) || exit;
 class Talkwyn_Leads {
 
 	/**
-	 * Minimum time between showing and sending a form, in milliseconds.
+	 * Minimum time between showing and sending a form, in milliseconds. Browser autofill
+	 * and one click can be quicker than typing, so this is kept short.
 	 */
-	const MIN_FILL_MS = 2500;
+	const MIN_FILL_MS = 1200;
 
 	/**
 	 * Validate submitted lead fields. Pure function, unit tested.
+	 *
+	 * A filled honeypot or a missing timer is treated as a bot: the request looks successful
+	 * and nothing is stored. A form sent faster than MIN_FILL_MS gets a "send again" message
+	 * instead, so a quick real visitor can still get through on the second press.
 	 *
 	 * @param array $in Fields: name, email, phone, consent, website (honeypot), elapsed (ms the form was open).
 	 * @param array $s  Settings.
 	 * @return array{ok:bool,error:string,spam:bool}
 	 */
 	public static function validate( array $in, array $s ) {
-		// Honeypot filled, or the form was sent faster than a person can type (time trap).
 		$elapsed = isset( $in['elapsed'] ) ? (int) $in['elapsed'] : -1;
-		if ( '' !== trim( (string) ( $in['website'] ?? '' ) ) || $elapsed < self::MIN_FILL_MS ) {
+		if ( '' !== trim( (string) ( $in['website'] ?? '' ) ) || $elapsed < 0 ) {
 			return array(
 				'ok'    => false,
 				'error' => 'spam',
 				'spam'  => true,
+			);
+		}
+		if ( $elapsed < self::MIN_FILL_MS ) {
+			return array(
+				'ok'    => false,
+				'error' => __( 'Please check your details and press send again.', 'talkwyn' ),
+				'spam'  => false,
 			);
 		}
 		$checks = array(

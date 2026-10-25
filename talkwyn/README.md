@@ -4,7 +4,7 @@ Source of the Talkwyn WordPress products. Each folder is the plugin or theme fol
 
 | Folder | Product | Version | Where it runs |
 |---|---|---|---|
-| `plugin/` | Talkwyn (free plugin, slug `talkwyn`) | 2.3.13 | WordPress.org and customer sites |
+| `plugin/` | Talkwyn (free plugin, slug `talkwyn`) | 2.3.14 | WordPress.org and customer sites |
 | `pro/` | Talkwyn Pro (add-on) | 1.2.8 | Customer sites with a license |
 | `hub/` | Talkwyn Hub (licenses, releases, trials, partners) | 1.7.3 | talkwyn.com |
 | `theme/` | Talkwyn theme (block theme for talkwyn.com) | 2.17.5 | talkwyn.com |
@@ -14,7 +14,7 @@ Source of the Talkwyn WordPress products. Each folder is the plugin or theme fol
 Zip the folder under the name WordPress expects:
 
 ```
-cd talkwyn && cp -r plugin /tmp/talkwyn && (cd /tmp && zip -r talkwyn-2.3.13.zip talkwyn)
+cd talkwyn && cp -r plugin /tmp/talkwyn && (cd /tmp && zip -r talkwyn-2.3.14.zip talkwyn)
 cd talkwyn && cp -r hub /tmp/talkwyn-hub && (cd /tmp && zip -r talkwyn-hub-1.7.3.zip talkwyn-hub)
 cd talkwyn && cp -r pro /tmp/talkwyn-pro && (cd /tmp && zip -r talkwyn-pro-1.2.8.zip talkwyn-pro)
 cd talkwyn && cp -r theme /tmp/talkwyn && (cd /tmp && zip -r talkwyn-theme-2.17.5.zip talkwyn)
@@ -22,6 +22,7 @@ cd talkwyn && cp -r theme /tmp/talkwyn && (cd /tmp && zip -r talkwyn-theme-2.17.
 
 ## Recent changes
 
+- **Plugin 2.3.14:** "Write a review" button, Rate link on the Plugins screen, a review reminder after 7 days (then 15, 30, 60 days on "Maybe later"), the menu icon in brand colours, the lead form no longer drops quick real visitors, and old Nabia default texts move to the Talkwyn defaults.
 - **Plugin 2.3.13:** WordPress.org review fixes. Escaped output, the pop-out styles are enqueued, and the WordPress AI Client (WordPress 7.0+) is the default AI provider.
 - **Pro 1.2.8:** QA fixes for licensing (renewal, cron, freed sites, domain moves) and features (order lookup, Slack alerts, streaming, uninstall). See `QA-REPORT.md`.
 - **Hub 1.7.3:**

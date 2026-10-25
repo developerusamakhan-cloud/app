@@ -31,6 +31,15 @@ Everything shown to the site owner can carry your own brand. Open the plugin, go
 * **Conversation log.** Read what visitors ask.
 * **Design.** Colour, position, launcher icon, avatar, welcome message and suggested questions, with a live preview.
 * **Privacy tools.** Data export and erase, and automatic deletion of old conversations.
+* **More AI providers.** OpenAI, Anthropic Claude, Mistral and DeepSeek, next to the free ones.
+* **Smart search.** Finds answers by meaning, not only matching words.
+* **Extra knowledge.** Add PDF and DOCX files, web pages and your own custom answers.
+* **Streaming replies.** Answers appear word by word.
+* **Analytics and unanswered questions.** See what visitors ask and answer the questions the chat could not.
+* **WooCommerce.** Product cards with price and Add to cart, and order status lookup.
+* **Lead alerts.** Slack and Telegram, next to email.
+* **Proactive messages and business hours.** Greet visitors after a few seconds or on scroll, and show an away status outside your hours.
+* **Settings export and import.** Move a setup from one site to another.
 * **Shortcode and block.** `[aisa_chat]` or the AI Chat block to place the chat inside a page.
 
 = Outside services =
@@ -41,6 +50,7 @@ The plugin sends data to an outside service only when you configure it.
 
 **Direct AI providers (optional).** Only used if you add your own key. When a visitor sends a message, the message, the recent conversation, the relevant text from your website and your instructions are sent to the providers you added a key for.
 
+* OpenAI, Anthropic, Mistral and DeepSeek: only if you add a key for them. Their own terms and privacy policies apply.
 * Groq: [Terms](https://groq.com/terms-of-use/), [Privacy](https://groq.com/privacy-policy/)
 * OpenRouter: [Terms](https://openrouter.ai/terms), [Privacy](https://openrouter.ai/privacy)
 * Google Gemini: [Terms](https://ai.google.dev/gemini-api/terms), [Privacy](https://policies.google.com/privacy)
@@ -48,7 +58,9 @@ The plugin sends data to an outside service only when you configure it.
 
 **Cloudflare Turnstile (optional spam check).** If you add Turnstile keys, the lead form loads the Turnstile script and sends the visitor's check token and IP address to Cloudflare. [Privacy](https://www.cloudflare.com/turnstile-privacy-policy/)
 
-The plugin does not check for updates online and contacts no other service.
+**Slack and Telegram (optional lead alerts).** If you add a webhook or bot token, new leads are sent there.
+
+The plugin does not check for updates online, needs no license, and contacts no other service.
 
 == Installation ==
 

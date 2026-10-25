@@ -20,9 +20,9 @@ $chatbot_demo_features = array(
 	array( 'user', __( 'Captures leads', 'chatbot-demo' ), __( 'When a visitor is interested, the chat asks for their name, email and phone. Leads are saved on your own website and emailed to you.', 'chatbot-demo' ) ),
 	array( 'clock', __( 'Answers day and night', 'chatbot-demo' ), __( 'Visitors get an answer at any hour, even when nobody is at the desk.', 'chatbot-demo' ) ),
 	array( 'palette', __( 'Matches your brand', 'chatbot-demo' ), __( 'Set the colour, position, icon, avatar, welcome message and suggested questions, and see the result in a live preview.', 'chatbot-demo' ) ),
-	array( 'list', __( 'Keeps a conversation log', 'chatbot-demo' ), __( 'Read what visitors ask, find the questions your website does not answer yet, and improve your pages.', 'chatbot-demo' ) ),
+	array( 'list', __( 'Keeps a conversation log', 'chatbot-demo' ), __( 'Analytics, the most asked questions and a list of questions it could not answer, so you can add the answer once.', 'chatbot-demo' ) ),
 	array( 'shield', __( 'Respects privacy', 'chatbot-demo' ), __( 'Data stays in your WordPress database. Export and erase tools and automatic deletion of old conversations are built in.', 'chatbot-demo' ) ),
-	array( 'chat', __( 'Works on any WordPress site', 'chatbot-demo' ), __( 'Floating chat on every page, or place it inside a page with a shortcode or a block. Works with WooCommerce and Elementor.', 'chatbot-demo' ) ),
+	array( 'chat', __( 'Works on any WordPress site', 'chatbot-demo' ), __( 'Works with Elementor. In WooCommerce shops it shows product cards with Add to cart and looks up order status.', 'chatbot-demo' ) ),
 );
 
 $chatbot_demo_questions = array(

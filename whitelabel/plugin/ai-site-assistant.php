@@ -44,12 +44,25 @@ require_once AISA_DIR . 'includes/class-aisa-privacy.php';
 require_once AISA_DIR . 'includes/class-aisa-frontend.php';
 require_once AISA_DIR . 'includes/class-aisa-block.php';
 
+spl_autoload_register(
+	static function ( string $class_name ): void {
+		if ( 0 !== strpos( $class_name, 'AisaPro\\' ) ) {
+			return;
+		}
+		$file = AISA_DIR . 'includes/pro/' . substr( $class_name, strlen( 'AisaPro\\' ) ) . '.php';
+		if ( is_readable( $file ) ) {
+			require_once $file;
+		}
+	}
+);
+
 if ( is_admin() ) {
 	require_once AISA_DIR . 'includes/admin/class-aisa-admin.php';
 	require_once AISA_DIR . 'includes/admin/class-aisa-onboarding.php';
 }
 
 register_activation_hook( __FILE__, array( 'Aisa_DB', 'activate' ) );
+register_activation_hook( __FILE__, array( 'AisaPro\\Installer', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'Aisa_DB', 'deactivate' ) );
 
 add_action(
@@ -67,6 +80,7 @@ add_action(
 			Aisa_Admin::init();
 			Aisa_Onboarding::init();
 		}
+		AisaPro\Plugin::boot();
 
 		/**
 		 * Fires after the plugin has loaded. Add-ons hook in here.

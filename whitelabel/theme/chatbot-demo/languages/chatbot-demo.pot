@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-25T14:06:16+00:00\n"
+"POT-Creation-Date: 2026-10-25T14:13:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: chatbot-demo\n"
@@ -97,7 +97,7 @@ msgid "Keeps a conversation log"
 msgstr ""
 
 #: front-page.php:23
-msgid "Read what visitors ask, find the questions your website does not answer yet, and improve your pages."
+msgid "Analytics, the most asked questions and a list of questions it could not answer, so you can add the answer once."
 msgstr ""
 
 #: front-page.php:24
@@ -113,7 +113,7 @@ msgid "Works on any WordPress site"
 msgstr ""
 
 #: front-page.php:25
-msgid "Floating chat on every page, or place it inside a page with a shortcode or a block. Works with WooCommerce and Elementor."
+msgid "Works with Elementor. In WooCommerce shops it shows product cards with Add to cart and looks up order status."
 msgstr ""
 
 #: front-page.php:29
@@ -305,56 +305,56 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: inc/demo-content.php:192
+#: inc/demo-content.php:200
 msgid "Demo menu"
 msgstr ""
 
-#: inc/demo-content.php:249
-#: inc/demo-content.php:262
+#: inc/demo-content.php:257
+#: inc/demo-content.php:270
 msgid "Demo content"
 msgstr ""
 
 #. translators: %d: number of pages
-#: inc/demo-content.php:265
+#: inc/demo-content.php:273
 #, php-format
 msgid "%d page created."
 msgid_plural "%d pages created."
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/demo-content.php:267
+#: inc/demo-content.php:275
 msgid "The theme adds these pages so the chatbot has a website to learn from. Pages that already exist are left as they are."
 msgstr ""
 
-#: inc/demo-content.php:270
+#: inc/demo-content.php:278
 msgid "exists"
 msgstr ""
 
-#: inc/demo-content.php:270
+#: inc/demo-content.php:278
 msgid "missing"
 msgstr ""
 
-#: inc/demo-content.php:275
+#: inc/demo-content.php:283
 msgid "Create missing pages"
 msgstr ""
 
-#: inc/demo-content.php:276
+#: inc/demo-content.php:284
 msgid "After creating pages, open the chatbot plugin and run the website scan again so it learns them."
 msgstr ""
 
-#: inc/demo-content.php:277
+#: inc/demo-content.php:285
 msgid "Front page texts, accent colour and contact details: Appearance, Customize, Chatbot demo."
 msgstr ""
 
-#: inc/demo-content.php:287
+#: inc/demo-content.php:295
 msgid "You are not allowed to do this."
 msgstr ""
 
-#: inc/demo-content.php:306
+#: inc/demo-content.php:314
 msgid "Email:"
 msgstr ""
 
-#: inc/demo-content.php:309
+#: inc/demo-content.php:317
 msgid "Phone or WhatsApp:"
 msgstr ""
 

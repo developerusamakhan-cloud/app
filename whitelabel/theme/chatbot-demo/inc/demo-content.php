@@ -68,7 +68,15 @@ function chatbot_demo_pages() {
 				)
 			)
 			. $h( 'AI services' )
-			. $p( 'On WordPress 7.0 and later the chatbot can use the AI connection set up for the whole site under Settings, Connectors. It also works with its own keys for Groq, OpenRouter, Google Gemini and Cloudflare Workers AI, which all have free tiers. You can add more than one; if one service fails or reaches its limit, the next one answers. If none answers, the chat replies with the most relevant parts of your pages.' )
+			. $p( 'On WordPress 7.0 and later the chatbot can use the AI connection set up for the whole site under Settings, Connectors. It also works with its own keys for Groq, OpenRouter, Google Gemini and Cloudflare Workers AI, which all have free tiers, and with OpenAI, Anthropic Claude, Mistral and DeepSeek. You can add more than one; if one service fails or reaches its limit, the next one answers. If none answers, the chat replies with the most relevant parts of your pages.' )
+			. $h( 'Extra knowledge and custom answers' )
+			. $p( 'Besides your pages, the chatbot can learn from PDF and DOCX files, other web pages and answers you write yourself for questions you get often.' )
+			. $h( 'Analytics and unanswered questions' )
+			. $p( 'See how many chats and leads you get, which questions come up most, and a list of questions the chat could not answer, so you can add the answer once.' )
+			. $h( 'WooCommerce shops' )
+			. $p( 'In a shop the chat can show product cards with price and an Add to cart button, and customers can check their order status with their order number and billing email.' )
+			. $h( 'Lead alerts, greetings and business hours' )
+			. $p( 'New leads can also be sent to Slack or Telegram. The chat can greet visitors with a short message after a few seconds or when they scroll, and outside your business hours it shows an away status and collects contact details.' )
 			. $h( 'Placement' )
 			. $p( 'The chat floats in the corner of every page by default. You can also place it inside a page with the [aisa_chat] shortcode or the AI Chat block, and choose the pages where it shows.' ),
 		),

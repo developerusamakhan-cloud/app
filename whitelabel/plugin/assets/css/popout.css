@@ -1,0 +1,21 @@
+/* Pop-out window (?aisa_popout=1): the chat fills its own page. */
+html,
+body.aisa-popout {
+	margin: 0;
+	height: 100%;
+	background: #F7F3F3;
+}
+
+body.aisa-popout .twc--inline {
+	max-width: 760px;
+	height: 100%;
+	margin: 0 auto;
+}
+
+body.aisa-popout .twc--inline .twc-panel {
+	height: 100vh;
+	height: 100dvh;
+	border-radius: 0;
+	border-top: 0;
+	border-bottom: 0;
+}

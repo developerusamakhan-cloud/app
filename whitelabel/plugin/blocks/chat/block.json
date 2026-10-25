@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "aisa/chat",
+	"title": "AI Chat",
+	"category": "widgets",
+	"icon": "format-chat",
+	"description": "Shows the AI chat inside the page.",
+	"keywords": [ "chat", "chatbot", "ai", "aisa" ],
+	"textdomain": "ai-site-assistant",
+	"attributes": {
+		"height": {
+			"type": "number",
+			"default": 600
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": { "margin": true }
+	},
+	"editorScript": "aisa-block-editor"
+}

@@ -92,6 +92,33 @@ $chatbot_demo_faq = array(
 	</div>
 </section>
 
+<section class="section">
+	<div class="wrap">
+		<div class="section__head">
+			<h2><?php esc_html_e( 'What it does not do', 'chatbot-demo' ); ?></h2>
+			<p><?php esc_html_e( 'So you know exactly what to expect.', 'chatbot-demo' ); ?></p>
+		</div>
+		<ul class="limits">
+			<?php
+			foreach ( array(
+				__( 'It does not search the internet. It answers only from your website and the files you add.', 'chatbot-demo' ),
+				__( 'It does not take payments or complete orders.', 'chatbot-demo' ),
+				__( 'It does not book appointments into a calendar. It collects details so you can confirm.', 'chatbot-demo' ),
+				__( 'It is not a live chat. A "Talk to a person" button can send visitors to WhatsApp or your contact page.', 'chatbot-demo' ),
+				__( 'It does not read scanned PDFs or text inside images.', 'chatbot-demo' ),
+				__( 'It works on your WordPress website, not inside WhatsApp or Messenger.', 'chatbot-demo' ),
+			) as $chatbot_demo_limit ) :
+				?>
+				<li><?php echo esc_html( $chatbot_demo_limit ); ?></li>
+			<?php endforeach; ?>
+		</ul>
+		<?php $chatbot_demo_limits_page = get_page_by_path( 'limits' ); ?>
+		<?php if ( $chatbot_demo_limits_page ) : ?>
+			<p class="limits__more"><a href="<?php echo esc_url( get_permalink( $chatbot_demo_limits_page ) ); ?>"><?php esc_html_e( 'See the full list', 'chatbot-demo' ); ?></a></p>
+		<?php endif; ?>
+	</div>
+</section>
+
 <section id="try" class="section section--alt">
 	<div class="wrap try">
 		<div>

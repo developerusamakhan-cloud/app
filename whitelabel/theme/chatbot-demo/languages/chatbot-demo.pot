@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-25T17:52:19+00:00\n"
+"POT-Creation-Date: 2026-10-26T08:01:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: chatbot-demo\n"
@@ -237,30 +237,66 @@ msgid "One click reads your website. Turn the chat on and it starts answering."
 msgstr ""
 
 #: front-page.php:98
-msgid "Try it now"
+msgid "What it does not do"
 msgstr ""
 
 #: front-page.php:99
+msgid "So you know exactly what to expect."
+msgstr ""
+
+#: front-page.php:104
+msgid "It does not search the internet. It answers only from your website and the files you add."
+msgstr ""
+
+#: front-page.php:105
+msgid "It does not take payments or complete orders."
+msgstr ""
+
+#: front-page.php:106
+msgid "It does not book appointments into a calendar. It collects details so you can confirm."
+msgstr ""
+
+#: front-page.php:107
+msgid "It is not a live chat. A \"Talk to a person\" button can send visitors to WhatsApp or your contact page."
+msgstr ""
+
+#: front-page.php:108
+msgid "It does not read scanned PDFs or text inside images."
+msgstr ""
+
+#: front-page.php:109
+msgid "It works on your WordPress website, not inside WhatsApp or Messenger."
+msgstr ""
+
+#: front-page.php:117
+msgid "See the full list"
+msgstr ""
+
+#: front-page.php:125
+msgid "Try it now"
+msgstr ""
+
+#: front-page.php:126
 msgid "The chat has read every page of this website. Copy one of these questions, or ask your own:"
 msgstr ""
 
-#: front-page.php:110
+#: front-page.php:137
 msgid "Activate the chatbot plugin to see the chat here."
 msgstr ""
 
-#: front-page.php:119
+#: front-page.php:146
 msgid "Common questions"
 msgstr ""
 
-#: front-page.php:135
+#: front-page.php:162
 msgid "Want this chatbot on your website?"
 msgstr ""
 
-#: front-page.php:136
+#: front-page.php:163
 msgid "Tell us about your website and we will set it up for you."
 msgstr ""
 
-#: front-page.php:141
+#: front-page.php:168
 msgid "Contact us"
 msgstr ""
 
@@ -305,56 +341,56 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: inc/demo-content.php:198
+#: inc/demo-content.php:228
 msgid "Demo menu"
 msgstr ""
 
-#: inc/demo-content.php:255
-#: inc/demo-content.php:268
+#: inc/demo-content.php:285
+#: inc/demo-content.php:298
 msgid "Demo content"
 msgstr ""
 
 #. translators: %d: number of pages
-#: inc/demo-content.php:271
+#: inc/demo-content.php:301
 #, php-format
 msgid "%d page created."
 msgid_plural "%d pages created."
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/demo-content.php:273
+#: inc/demo-content.php:303
 msgid "The theme adds these pages so the chatbot has a website to learn from. Pages that already exist are left as they are."
 msgstr ""
 
-#: inc/demo-content.php:276
+#: inc/demo-content.php:306
 msgid "exists"
 msgstr ""
 
-#: inc/demo-content.php:276
+#: inc/demo-content.php:306
 msgid "missing"
 msgstr ""
 
-#: inc/demo-content.php:281
+#: inc/demo-content.php:311
 msgid "Create missing pages"
 msgstr ""
 
-#: inc/demo-content.php:282
+#: inc/demo-content.php:312
 msgid "After creating pages, open the chatbot plugin and run the website scan again so it learns them."
 msgstr ""
 
-#: inc/demo-content.php:283
+#: inc/demo-content.php:313
 msgid "Front page texts, accent colour and contact details: Appearance, Customize, Chatbot demo."
 msgstr ""
 
-#: inc/demo-content.php:293
+#: inc/demo-content.php:323
 msgid "You are not allowed to do this."
 msgstr ""
 
-#: inc/demo-content.php:312
+#: inc/demo-content.php:342
 msgid "Email:"
 msgstr ""
 
-#: inc/demo-content.php:315
+#: inc/demo-content.php:345
 msgid "Phone or WhatsApp:"
 msgstr ""
 

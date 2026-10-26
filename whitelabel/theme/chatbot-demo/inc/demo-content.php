@@ -113,6 +113,36 @@ function chatbot_demo_pages() {
 			. $h3( 'Web designers and agencies' )
 			. $p( 'Agencies add the chatbot to client websites under their own name, logo and colours.' ),
 		),
+		'limits'           => array(
+			'What it can and cannot do',
+			'An honest list, so you know what to expect before you add it to your website.',
+			$h( 'What it can do' )
+			. $ul(
+				array(
+					'Answer visitor questions from your published pages, posts, products, and the files and custom answers you add.',
+					'Reply in the visitor\'s language and show the pages behind each answer.',
+					'Collect leads (name, email, phone, message) and send them to your email, Slack or Telegram.',
+					'Show WooCommerce product cards with an Add to cart button and look up order status.',
+					'Greet visitors with a short message, and show an away status outside business hours.',
+					'Show a "Talk to a person" button that opens a link you choose, such as WhatsApp or your contact page.',
+				)
+			)
+			. $h( 'What it cannot do' )
+			. $ul(
+				array(
+					'It does not search the internet. It only knows your website and the files and answers you give it.',
+					'It does not read password protected, private or draft pages.',
+					'It does not read text inside images, videos or scanned PDF files. PDF and DOCX files need real text.',
+					'It does not take payments or complete orders. Visitors finish checkout themselves.',
+					'It does not book appointments into a calendar. It collects the visitor\'s details so you can confirm.',
+					'It is not a live chat. A person cannot type into the conversation; the "Talk to a person" button sends the visitor to your link instead.',
+					'It does not run on WhatsApp, Facebook Messenger or Instagram. It works on your WordPress website.',
+					'It needs a connected AI service to write answers. Without one, it replies with the most relevant parts of your pages.',
+				)
+			)
+			. $h( 'Good to know' )
+			. $p( 'Like every AI tool, it can sometimes get an answer wrong, especially when your website does not cover the topic. It shows its sources so visitors can check, and the list of unanswered questions shows you what to add.' ),
+		),
 		'faq'              => array(
 			'FAQ',
 			'Answers to common questions about the chatbot.',
@@ -199,7 +229,7 @@ function chatbot_demo_install() {
 		$menu      = wp_get_nav_menu_object( $menu_name );
 		$menu_id   = $menu ? (int) $menu->term_id : wp_create_nav_menu( $menu_name );
 		if ( ! is_wp_error( $menu_id ) && ! $menu ) {
-			foreach ( array( 'features', 'how-it-works', 'use-cases', 'faq', 'contact' ) as $slug ) {
+			foreach ( array( 'features', 'how-it-works', 'limits', 'faq', 'contact' ) as $slug ) {
 				if ( empty( $ids[ $slug ] ) ) {
 					continue;
 				}

@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CHATBOT_DEMO_VERSION', '1.1.0' );
+define( 'CHATBOT_DEMO_VERSION', '1.2.0' );
 
 require_once get_template_directory() . '/inc/content.php';
 

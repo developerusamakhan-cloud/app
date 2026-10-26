@@ -20,7 +20,7 @@ $chatbot_demo_svg = chatbot_demo_svg_kses();
 			<h1><?php echo esc_html( chatbot_demo_mod( 'chatbot_demo_hero_title', $chatbot_demo_c['title'] ) ); ?></h1>
 			<p class="hero__lead"><?php echo esc_html( chatbot_demo_mod( 'chatbot_demo_hero_text', $chatbot_demo_c['intro'] ) ); ?></p>
 			<div class="hero__actions">
-				<a class="btn" href="#try"><?php esc_html_e( 'Try the chat', 'chatbot-demo' ); ?></a>
+				<button type="button" class="btn" data-open-chat><?php esc_html_e( 'Try the chat', 'chatbot-demo' ); ?></button>
 				<a class="btn btn--ghost" href="#features"><?php esc_html_e( 'See what it can do', 'chatbot-demo' ); ?></a>
 			</div>
 		</div>
@@ -92,21 +92,18 @@ $chatbot_demo_svg = chatbot_demo_svg_kses();
 </section>
 
 <section id="try" class="section">
-	<div class="wrap try">
-		<div>
+	<div class="wrap">
+		<div class="try">
 			<h2><?php esc_html_e( 'Try it now', 'chatbot-demo' ); ?></h2>
-			<p><?php esc_html_e( 'The chat has read this page. Ask one of these questions, or your own, in any language:', 'chatbot-demo' ); ?></p>
-			<ul class="try__list">
+			<p><?php esc_html_e( 'The chat in the corner has read this page. Click a question to ask it, or open the chat and ask your own in any language.', 'chatbot-demo' ); ?></p>
+			<div class="try__chips">
 				<?php foreach ( $chatbot_demo_c['questions'] as $chatbot_demo_q ) : ?>
-					<li><?php echo esc_html( $chatbot_demo_q ); ?></li>
+					<button type="button" class="chip" data-ask="<?php echo esc_attr( $chatbot_demo_q ); ?>"><?php echo esc_html( $chatbot_demo_q ); ?></button>
 				<?php endforeach; ?>
-			</ul>
-		</div>
-		<div class="try__chat">
-			<?php if ( chatbot_demo_has_chat() ) : ?>
-				<?php echo do_shortcode( '[aisa_chat mode="inline" height="480"]' ); ?>
-			<?php else : ?>
-				<p class="try__note"><?php esc_html_e( 'Activate the chatbot plugin to see the chat here.', 'chatbot-demo' ); ?></p>
+			</div>
+			<button type="button" class="btn" data-open-chat><?php esc_html_e( 'Open the chat', 'chatbot-demo' ); ?></button>
+			<?php if ( ! chatbot_demo_has_chat() ) : ?>
+				<p class="try__note"><?php esc_html_e( 'Activate the chatbot plugin to use the chat.', 'chatbot-demo' ); ?></p>
 			<?php endif; ?>
 		</div>
 	</div>

@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Chatbot Demo 1.1.0\n"
+"Project-Id-Version: Chatbot Demo 1.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/chatbot-demo\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T08:06:00+00:00\n"
+"POT-Creation-Date: 2026-10-26T08:35:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: chatbot-demo\n"
@@ -34,6 +34,18 @@ msgstr ""
 
 #: 404.php:16
 msgid "Front page"
+msgstr ""
+
+#: footer.php:18
+msgid "An AI chatbot for WordPress websites that answers visitors from your own content, in their language."
+msgstr ""
+
+#: footer.php:20
+msgid "Footer"
+msgstr ""
+
+#: footer.php:26
+msgid "Ask the chat"
 msgstr ""
 
 #: front-page.php:19
@@ -102,14 +114,18 @@ msgid "Try it now"
 msgstr ""
 
 #: front-page.php:98
-msgid "The chat has read this page. Ask one of these questions, or your own, in any language:"
+msgid "The chat in the corner has read this page. Click a question to ask it, or open the chat and ask your own in any language."
 msgstr ""
 
-#: front-page.php:109
-msgid "Activate the chatbot plugin to see the chat here."
+#: front-page.php:104
+msgid "Open the chat"
 msgstr ""
 
-#: front-page.php:118
+#: front-page.php:106
+msgid "Activate the chatbot plugin to use the chat."
+msgstr ""
+
+#: front-page.php:115
 #: inc/content.php:106
 msgid "Common questions"
 msgstr ""

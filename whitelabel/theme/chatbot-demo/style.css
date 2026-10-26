@@ -1,7 +1,7 @@
 /*
 Theme Name: Chatbot Demo
 Description: A simple, light one-page theme that explains what the AI chatbot can and cannot do, with a live demo. Pair it with the AI Site Assistant plugin.
-Version: 1.1.0
+Version: 1.2.0
 Requires at least: 6.4
 Requires PHP: 8.0
 License: GPLv2 or later
@@ -536,41 +536,48 @@ p {
 
 /* Try it */
 .try {
-	display: grid;
-	grid-template-columns: .9fr 1.1fr;
-	gap: 40px;
-	align-items: start;
+	max-width: 760px;
+	margin: 0 auto;
+	text-align: center;
 }
 
-.try__list {
-	margin: 0;
-	padding: 0;
-	list-style: none;
+.try p {
+	color: var(--muted);
 }
 
-.try__list li {
-	margin-bottom: 10px;
-	padding: 10px 14px;
+.try__chips {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px;
+	margin: 24px 0 28px;
+}
+
+.chip {
+	padding: 10px 16px;
 	border: 1px solid var(--line);
-	border-radius: 10px;
-	background: var(--bg-alt);
-	font-size: .97rem;
+	border-radius: 999px;
+	background: var(--bg);
+	color: var(--ink);
+	font: inherit;
+	font-size: .95rem;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.chip:hover {
+	border-color: var(--accent);
+	background: var(--accent-soft);
+	color: var(--accent-dark);
+}
+
+.try__note {
+	margin-top: 16px;
+	font-size: .93rem;
 }
 
 .section[id] {
 	scroll-margin-top: 80px;
-}
-
-.try__chat {
-	min-height: 200px;
-}
-
-.try__note {
-	padding: 24px;
-	border: 1px dashed var(--line);
-	border-radius: var(--radius);
-	background: var(--bg);
-	color: var(--muted);
 }
 
 /* FAQ */
@@ -667,24 +674,33 @@ p {
 
 /* Footer */
 .site-footer {
-	padding: 40px 0;
+	padding: 56px 0 96px;
 	border-top: 1px solid var(--line);
+	background: var(--bg-alt);
 	color: var(--muted);
 	font-size: .93rem;
 }
 
-.site-footer .wrap {
+.site-footer__top {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: center;
 	justify-content: space-between;
-	gap: 16px;
+	gap: 32px;
+	padding-bottom: 32px;
 }
 
-.site-footer ul {
+.site-footer__brand {
+	max-width: 380px;
+}
+
+.site-footer__brand p {
+	margin: 12px 0 0;
+}
+
+.site-footer__nav ul {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 16px;
+	gap: 8px 24px;
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -699,10 +715,37 @@ p {
 	color: var(--accent-dark);
 }
 
+.site-footer__bottom {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding-top: 20px;
+	border-top: 1px solid var(--line);
+}
+
+.site-footer__bottom p {
+	margin: 0;
+}
+
+.site-footer__chat {
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--accent);
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.site-footer__chat:hover {
+	color: var(--accent-dark);
+}
+
 /* Small screens */
 @media (max-width: 900px) {
-	.hero .wrap,
-	.try {
+	.hero .wrap {
 		grid-template-columns: 1fr;
 	}
 

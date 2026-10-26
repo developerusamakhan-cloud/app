@@ -1,5 +1,5 @@
 /**
- * Mobile menu toggle.
+ * Mobile menu toggle and chat buttons.
  *
  * @package Chatbot_Demo
  */
@@ -17,3 +17,21 @@
 		}
 	);
 }() );
+
+// Buttons that open the chat popup, or open it and ask a question.
+document.addEventListener(
+	'click',
+	function ( e ) {
+		var el = e.target.closest ? e.target.closest( '[data-open-chat], [data-ask]' ) : null;
+		if ( ! el || ! window.AisaChat ) {
+			return;
+		}
+		e.preventDefault();
+		var question = el.getAttribute( 'data-ask' );
+		if ( question ) {
+			window.AisaChat.send( question );
+		} else {
+			window.AisaChat.open();
+		}
+	}
+);

@@ -1,13 +1,53 @@
 /*
 Theme Name: Chatbot Demo
-Description: A simple, light theme that explains what the AI chatbot can do and gives it demo pages to learn from. Pair it with the AI Site Assistant plugin.
-Version: 1.0.0
+Description: A simple, light one-page theme that explains what the AI chatbot can and cannot do, with a live demo. Pair it with the AI Site Assistant plugin.
+Version: 1.1.0
 Requires at least: 6.4
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: chatbot-demo
 */
+
+@font-face {
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("assets/fonts/inter-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Plus Jakarta Sans";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("assets/fonts/plus-jakarta-sans-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Plus Jakarta Sans";
+	font-style: normal;
+	font-weight: 800;
+	font-display: swap;
+	src: url("assets/fonts/plus-jakarta-sans-latin-800-normal.woff2") format("woff2");
+}
 
 :root {
 	--accent: #4F46E5;
@@ -20,7 +60,8 @@ Text Domain: chatbot-demo
 	--bg-alt: #F9FAFB;
 	--radius: 14px;
 	--wrap: 1120px;
-	--font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	--font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+	--display: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
 }
 
 *,
@@ -39,7 +80,7 @@ body {
 	color: var(--ink);
 	font-family: var(--font);
 	font-size: 17px;
-	line-height: 1.65;
+	line-height: 1.7;
 	-webkit-font-smoothing: antialiased;
 }
 
@@ -64,13 +105,17 @@ a:hover {
 h1,
 h2,
 h3 {
-	line-height: 1.2;
-	letter-spacing: -0.01em;
+	font-family: var(--display);
+	font-weight: 700;
+	line-height: 1.15;
+	letter-spacing: -0.02em;
 	margin: 0 0 .5em;
 }
 
 h1 {
-	font-size: clamp(2rem, 4.5vw, 3.1rem);
+	font-size: clamp(2.1rem, 4.8vw, 3.4rem);
+	font-weight: 800;
+	letter-spacing: -0.03em;
 }
 
 h2 {
@@ -137,6 +182,7 @@ p {
 }
 
 .brand {
+	font-family: var(--display);
 	display: flex;
 	align-items: center;
 	gap: 10px;
@@ -428,41 +474,64 @@ p {
 	font-size: .97rem;
 }
 
-/* Limits */
-.limits {
+/* Can and cannot */
+.compare {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 12px 20px;
-	max-width: 900px;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px;
+	max-width: 980px;
 	margin: 0 auto;
+}
+
+.compare__col {
+	padding: 28px;
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
+	background: var(--bg);
+}
+
+.compare__col ul {
+	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
-.limits li {
+.compare__col li {
 	position: relative;
-	padding: 14px 16px 14px 44px;
-	border: 1px solid var(--line);
-	border-radius: var(--radius);
-	background: var(--bg);
+	padding: 10px 0 10px 34px;
+	border-top: 1px solid var(--line);
 	color: var(--muted);
 	font-size: .97rem;
 }
 
-.limits li::before {
-	content: "";
-	position: absolute;
-	top: 24px;
-	left: 16px;
-	width: 14px;
-	height: 2px;
-	border-radius: 2px;
-	background: #9CA3AF;
+.compare__col li:first-child {
+	border-top: 0;
 }
 
-.limits__more {
-	margin-top: 20px;
-	text-align: center;
+.compare__col li::before {
+	position: absolute;
+	top: 11px;
+	left: 0;
+	display: grid;
+	place-items: center;
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.compare__col--yes li::before {
+	content: "\2713";
+	background: #DCFCE7;
+	color: #15803D;
+}
+
+.compare__col--no li::before {
+	content: "\2715";
+	background: #F3F4F6;
+	color: #6B7280;
 }
 
 /* Try it */
@@ -473,13 +542,23 @@ p {
 	align-items: start;
 }
 
-.try ul {
-	padding-left: 1.2em;
-	color: var(--muted);
+.try__list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
-.try li {
-	margin-bottom: 6px;
+.try__list li {
+	margin-bottom: 10px;
+	padding: 10px 14px;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: var(--bg-alt);
+	font-size: .97rem;
+}
+
+.section[id] {
+	scroll-margin-top: 80px;
 }
 
 .try__chat {
@@ -665,7 +744,7 @@ p {
 
 	.grid,
 	.steps,
-	.limits {
+	.compare {
 		grid-template-columns: 1fr;
 	}
 

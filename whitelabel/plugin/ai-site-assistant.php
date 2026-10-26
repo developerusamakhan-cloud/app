@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       AI Site Assistant
  * Description:       AI chatbot that learns your website in one click, answers visitors in their language, and captures leads.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 6.4
  * Requires PHP:      8.0
  * Author:            AI Site Assistant
@@ -17,7 +17,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'AISA_VERSION', '1.0.0' );
+define( 'AISA_VERSION', '1.0.1' );
 define( 'AISA_FILE', __FILE__ );
 define( 'AISA_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AISA_URL', plugin_dir_url( __FILE__ ) );

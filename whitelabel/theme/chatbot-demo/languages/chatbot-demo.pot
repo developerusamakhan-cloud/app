@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Chatbot Demo 1.0.0\n"
+"Project-Id-Version: Chatbot Demo 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/chatbot-demo\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T08:01:50+00:00\n"
+"POT-Creation-Date: 2026-10-26T08:06:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: chatbot-demo\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #. Description of the theme
 #: style.css:3
-msgid "A simple, light theme that explains what the AI chatbot can do and gives it demo pages to learn from. Pair it with the AI Site Assistant plugin."
+msgid "A simple, light one-page theme that explains what the AI chatbot can and cannot do, with a live demo. Pair it with the AI Site Assistant plugin."
 msgstr ""
 
 #: 404.php:14
@@ -36,301 +36,118 @@ msgstr ""
 msgid "Front page"
 msgstr ""
 
-#: front-page.php:13
-msgid "An AI chatbot that knows your website"
-msgstr ""
-
-#: front-page.php:14
-msgid "It reads your pages, posts and products, answers visitors in their own language, shows where each answer comes from, and turns interested visitors into leads. This website is a live demo: ask the chat anything about it."
-msgstr ""
-
-#: front-page.php:17
-msgid "Learns your website in one click"
-msgstr ""
-
-#: front-page.php:17
-msgid "It scans your published pages, posts, products and page builder content, and updates itself when you edit them."
-msgstr ""
-
-#: front-page.php:18
-msgid "Speaks your visitor's language"
-msgstr ""
-
-#: front-page.php:18
-msgid "A visitor can ask in English, Urdu, Arabic, Spanish or many other languages and get the answer in the same language."
-msgstr ""
-
 #: front-page.php:19
-msgid "Shows its sources"
-msgstr ""
-
-#: front-page.php:19
-msgid "Each answer can list the pages it came from, so visitors can read more and trust what they see."
-msgstr ""
-
-#: front-page.php:20
-msgid "Captures leads"
-msgstr ""
-
-#: front-page.php:20
-msgid "When a visitor is interested, the chat asks for their name, email and phone. Leads are saved on your own website and emailed to you."
-msgstr ""
-
-#: front-page.php:21
-msgid "Answers day and night"
-msgstr ""
-
-#: front-page.php:21
-msgid "Visitors get an answer at any hour, even when nobody is at the desk."
-msgstr ""
-
-#: front-page.php:22
-msgid "Matches your brand"
-msgstr ""
-
-#: front-page.php:22
-msgid "Set the colour, position, icon, avatar, welcome message and suggested questions, and see the result in a live preview."
-msgstr ""
-
-#: front-page.php:23
-msgid "Keeps a conversation log"
-msgstr ""
-
-#: front-page.php:23
-msgid "Analytics, the most asked questions and a list of questions it could not answer, so you can add the answer once."
-msgstr ""
-
-#: front-page.php:24
-msgid "Respects privacy"
-msgstr ""
-
-#: front-page.php:24
-msgid "Data stays in your WordPress database. Export and erase tools and automatic deletion of old conversations are built in."
-msgstr ""
-
-#: front-page.php:25
-msgid "Works on any WordPress site"
-msgstr ""
-
-#: front-page.php:25
-msgid "Works with Elementor. In WooCommerce shops it shows product cards with Add to cart and looks up order status."
-msgstr ""
-
-#: front-page.php:29
-msgid "What can this chatbot do?"
-msgstr ""
-
-#: front-page.php:30
-msgid "How do I add it to my website?"
-msgstr ""
-
-#: front-page.php:31
-msgid "Which languages does it speak?"
-msgstr ""
-
-#: front-page.php:32
-msgid "How does lead capture work?"
-msgstr ""
-
-#: front-page.php:33
-msgid "Is my data safe?"
-msgstr ""
-
-#: front-page.php:37
-msgid "Do I need to write the answers myself?"
-msgstr ""
-
-#: front-page.php:37
-msgid "No. The chatbot reads the content already on your website and answers from it. You can add instructions, such as the tone to use or topics to avoid."
-msgstr ""
-
-#: front-page.php:38
-msgid "What if it does not know the answer?"
-msgstr ""
-
-#: front-page.php:38
-msgid "It says so instead of making something up, and can offer to take the visitor's details so you can follow up."
-msgstr ""
-
-#: front-page.php:39
-msgid "Will it slow down my website?"
-msgstr ""
-
-#: front-page.php:39
-msgid "The chat loads after the page and only talks to the AI service when a visitor sends a message."
-msgstr ""
-
-#: front-page.php:40
-msgid "Can it use my logo and colours?"
-msgstr ""
-
-#: front-page.php:40
-msgid "Yes. The colour, icon, avatar, name and messages can all be changed to match your brand."
-msgstr ""
-
-#: front-page.php:47
 msgid "Live demo"
 msgstr ""
 
-#: front-page.php:51
-msgid "Ask the chat now"
+#: front-page.php:23
+msgid "Try the chat"
 msgstr ""
 
-#: front-page.php:52
+#: front-page.php:24
 msgid "See what it can do"
 msgstr ""
 
-#: front-page.php:56
+#: front-page.php:28
 msgid "Website assistant"
 msgstr ""
 
-#: front-page.php:57
+#: front-page.php:29
 msgid "Hi! Ask me anything about this website."
 msgstr ""
 
-#: front-page.php:58
-msgid "Can it answer in Urdu?"
+#: front-page.php:30
+msgid "Can it answer in Spanish?"
 msgstr ""
 
-#: front-page.php:59
+#: front-page.php:31
 msgid "Yes. Visitors can ask in their own language and I reply in the same language, using the content of this website."
 msgstr ""
 
-#: front-page.php:59
-msgid "Source: Features"
+#: front-page.php:31
+msgid "Source: Home"
 msgstr ""
 
-#: front-page.php:67
+#: front-page.php:39
+#: inc/content.php:96
 msgid "What the chatbot can do"
 msgstr ""
 
-#: front-page.php:68
+#: front-page.php:40
 msgid "Everything below is switched on for this demo. Try any of it in the chat."
 msgstr ""
 
-#: front-page.php:85
+#: front-page.php:57
 msgid "Live on your website in three steps"
 msgstr ""
 
-#: front-page.php:88
-msgid "Install the plugin"
+#: front-page.php:70
+msgid "What it can and cannot do"
 msgstr ""
 
-#: front-page.php:88
-msgid "Upload it in WordPress under Plugins, Add New, Upload Plugin, then activate it."
+#: front-page.php:71
+msgid "An honest list, so you know exactly what to expect."
 msgstr ""
 
-#: front-page.php:89
-msgid "Connect an AI service"
+#: front-page.php:75
+msgid "It can"
 msgstr ""
 
-#: front-page.php:89
-msgid "The setup wizard guides you through it step by step."
+#: front-page.php:83
+msgid "It cannot"
 msgstr ""
 
-#: front-page.php:90
-msgid "Scan and go live"
-msgstr ""
-
-#: front-page.php:90
-msgid "One click reads your website. Turn the chat on and it starts answering."
-msgstr ""
-
-#: front-page.php:98
-msgid "What it does not do"
-msgstr ""
-
-#: front-page.php:99
-msgid "So you know exactly what to expect."
-msgstr ""
-
-#: front-page.php:104
-msgid "It does not search the internet. It answers only from your website and the files you add."
-msgstr ""
-
-#: front-page.php:105
-msgid "It does not take payments or complete orders."
-msgstr ""
-
-#: front-page.php:106
-msgid "It does not book appointments into a calendar. It collects details so you can confirm."
-msgstr ""
-
-#: front-page.php:107
-msgid "It is not a live chat. A \"Talk to a person\" button can send visitors to WhatsApp or your contact page."
-msgstr ""
-
-#: front-page.php:108
-msgid "It does not read scanned PDFs or text inside images."
-msgstr ""
-
-#: front-page.php:109
-msgid "It works on your WordPress website, not inside WhatsApp or Messenger."
-msgstr ""
-
-#: front-page.php:117
-msgid "See the full list"
-msgstr ""
-
-#: front-page.php:125
+#: front-page.php:97
 msgid "Try it now"
 msgstr ""
 
-#: front-page.php:126
-msgid "The chat has read every page of this website. Copy one of these questions, or ask your own:"
+#: front-page.php:98
+msgid "The chat has read this page. Ask one of these questions, or your own, in any language:"
 msgstr ""
 
-#: front-page.php:137
+#: front-page.php:109
 msgid "Activate the chatbot plugin to see the chat here."
 msgstr ""
 
-#: front-page.php:146
+#: front-page.php:118
+#: inc/content.php:106
 msgid "Common questions"
 msgstr ""
 
-#: front-page.php:162
-msgid "Want this chatbot on your website?"
-msgstr ""
-
-#: front-page.php:163
-msgid "Tell us about your website and we will set it up for you."
-msgstr ""
-
-#: front-page.php:168
-msgid "Contact us"
-msgstr ""
-
-#: functions.php:37
-#: header.php:30
-msgid "Main menu"
-msgstr ""
-
-#: functions.php:38
-msgid "Footer menu"
-msgstr ""
-
-#: functions.php:69
+#: functions.php:63
 msgid "Chatbot demo"
 msgstr ""
 
-#: functions.php:86
+#: functions.php:80
 msgid "Accent colour"
 msgstr ""
 
-#: functions.php:93
+#: functions.php:87
 msgid "Front page heading"
 msgstr ""
 
-#: functions.php:94
+#: functions.php:88
 msgid "Front page intro"
 msgstr ""
 
-#: functions.php:95
-msgid "Contact email"
+#: functions.php:193
+msgid "Features"
 msgstr ""
 
-#: functions.php:96
-msgid "Contact phone or WhatsApp"
+#: functions.php:194
+msgid "How it works"
+msgstr ""
+
+#: functions.php:195
+msgid "Can and cannot"
+msgstr ""
+
+#: functions.php:196
+msgid "Try it"
+msgstr ""
+
+#: functions.php:197
+msgid "FAQ"
 msgstr ""
 
 #: header.php:18
@@ -341,57 +158,313 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: inc/demo-content.php:228
-msgid "Demo menu"
+#: header.php:30
+msgid "Main menu"
 msgstr ""
 
-#: inc/demo-content.php:285
-#: inc/demo-content.php:298
-msgid "Demo content"
+#: inc/content.php:18
+msgid "An AI chatbot that knows your website"
 msgstr ""
 
-#. translators: %d: number of pages
-#: inc/demo-content.php:301
-#, php-format
-msgid "%d page created."
-msgid_plural "%d pages created."
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/demo-content.php:303
-msgid "The theme adds these pages so the chatbot has a website to learn from. Pages that already exist are left as they are."
+#: inc/content.php:19
+msgid "It reads your pages, posts, products and files, answers visitors in their own language, shows where each answer comes from, and turns interested visitors into leads. This website is a live demo: ask the chat anything about it."
 msgstr ""
 
-#: inc/demo-content.php:306
-msgid "exists"
+#: inc/content.php:21
+msgid "Learns your website in one click"
 msgstr ""
 
-#: inc/demo-content.php:306
-msgid "missing"
+#: inc/content.php:21
+msgid "It reads your published pages, posts, WooCommerce products and Elementor content, and updates itself when you edit them."
 msgstr ""
 
-#: inc/demo-content.php:311
-msgid "Create missing pages"
+#: inc/content.php:22
+msgid "Learns from files and other pages"
 msgstr ""
 
-#: inc/demo-content.php:312
-msgid "After creating pages, open the chatbot plugin and run the website scan again so it learns them."
+#: inc/content.php:22
+msgid "Add PDF and DOCX files, pages from other websites, and your own answers to questions you get often."
 msgstr ""
 
-#: inc/demo-content.php:313
-msgid "Front page texts, accent colour and contact details: Appearance, Customize, Chatbot demo."
+#: inc/content.php:23
+msgid "Speaks your visitor's language"
 msgstr ""
 
-#: inc/demo-content.php:323
+#: inc/content.php:23
+msgid "Visitors ask in English, Spanish, French, German, Portuguese, Arabic, Chinese and many other languages and get the answer in the same language."
+msgstr ""
+
+#: inc/content.php:24
+msgid "Shows its sources"
+msgstr ""
+
+#: inc/content.php:24
+msgid "Each answer can list the pages it came from, so visitors can read more and trust what they see."
+msgstr ""
+
+#: inc/content.php:25
+msgid "Understands meaning"
+msgstr ""
+
+#: inc/content.php:25
+msgid "Smart search finds the right answer even when the visitor uses different words than your website."
+msgstr ""
+
+#: inc/content.php:26
+msgid "Captures leads"
+msgstr ""
+
+#: inc/content.php:26
+msgid "When a visitor is interested, the chat asks for their name, email and phone. Leads are saved on your website and sent to your email, Slack or Telegram."
+msgstr ""
+
+#: inc/content.php:27
+msgid "Helps shops sell"
+msgstr ""
+
+#: inc/content.php:27
+msgid "In WooCommerce shops it shows product cards with an Add to cart button and lets customers check their order status."
+msgstr ""
+
+#: inc/content.php:28
+msgid "Greets visitors"
+msgstr ""
+
+#: inc/content.php:28
+msgid "A short message appears near the chat after a few seconds or when the visitor scrolls, so more people start a conversation."
+msgstr ""
+
+#: inc/content.php:29
+msgid "Knows your business hours"
+msgstr ""
+
+#: inc/content.php:29
+msgid "Outside your hours it shows an away status and collects contact details, so no visitor is lost."
+msgstr ""
+
+#: inc/content.php:30
+msgid "Shows what visitors ask"
+msgstr ""
+
+#: inc/content.php:30
+msgid "Analytics, the most asked questions and a list of questions it could not answer, so you can add the answer once."
+msgstr ""
+
+#: inc/content.php:31
+msgid "Matches your brand"
+msgstr ""
+
+#: inc/content.php:31
+msgid "Colour, position, icon, avatar, name, welcome message and suggested questions, with a live preview."
+msgstr ""
+
+#: inc/content.php:32
+msgid "Respects privacy"
+msgstr ""
+
+#: inc/content.php:32
+msgid "Conversations and leads stay in your WordPress database. Export and erase tools and automatic clean-up are built in."
+msgstr ""
+
+#: inc/content.php:35
+msgid "Install the plugin"
+msgstr ""
+
+#: inc/content.php:35
+msgid "Upload it in WordPress under Plugins, Add New, Upload Plugin, then activate it."
+msgstr ""
+
+#: inc/content.php:36
+msgid "Connect an AI service"
+msgstr ""
+
+#: inc/content.php:36
+msgid "The setup wizard guides you step by step. It works with OpenAI, Anthropic Claude, Google Gemini, Groq, Mistral, DeepSeek, OpenRouter and Cloudflare."
+msgstr ""
+
+#: inc/content.php:37
+msgid "Scan and go live"
+msgstr ""
+
+#: inc/content.php:37
+msgid "One click reads your website. Turn the chat on and it starts answering."
+msgstr ""
+
+#: inc/content.php:40
+msgid "Answer questions from your pages, products, files and custom answers."
+msgstr ""
+
+#: inc/content.php:41
+msgid "Reply in the visitor's language and show its sources."
+msgstr ""
+
+#: inc/content.php:42
+msgid "Collect leads and send them to email, Slack or Telegram."
+msgstr ""
+
+#: inc/content.php:43
+msgid "Show product cards and look up WooCommerce orders."
+msgstr ""
+
+#: inc/content.php:44
+msgid "Greet visitors and show an away status after hours."
+msgstr ""
+
+#: inc/content.php:45
+msgid "Show a \"Talk to a person\" button that opens a link you choose, such as WhatsApp."
+msgstr ""
+
+#: inc/content.php:48
+msgid "It does not search the internet. It only knows your website and the files and answers you give it."
+msgstr ""
+
+#: inc/content.php:49
+msgid "It does not read password protected, private or draft pages."
+msgstr ""
+
+#: inc/content.php:50
+msgid "It does not read scanned PDFs or text inside images and videos."
+msgstr ""
+
+#: inc/content.php:51
+msgid "It does not take payments or complete orders."
+msgstr ""
+
+#: inc/content.php:52
+msgid "It does not book appointments into a calendar. It collects details so the business can confirm."
+msgstr ""
+
+#: inc/content.php:53
+msgid "It is not a live chat. A person cannot type into the conversation."
+msgstr ""
+
+#: inc/content.php:54
+msgid "It works on your WordPress website, not inside WhatsApp, Messenger or Instagram."
+msgstr ""
+
+#: inc/content.php:57
+msgid "What can this chatbot do?"
+msgstr ""
+
+#: inc/content.php:58
+msgid "Which languages does it speak?"
+msgstr ""
+
+#: inc/content.php:59
+msgid "Can it read PDF files?"
+msgstr ""
+
+#: inc/content.php:60
+msgid "Does it work with WooCommerce?"
+msgstr ""
+
+#: inc/content.php:61
+msgid "What can it not do?"
+msgstr ""
+
+#: inc/content.php:64
+msgid "Do I need to write the answers myself?"
+msgstr ""
+
+#: inc/content.php:64
+msgid "No. The chatbot answers from the content already on your website and the files you add. You can also give it instructions, such as the tone to use or topics to avoid."
+msgstr ""
+
+#: inc/content.php:65
+msgid "What happens when it does not know the answer?"
+msgstr ""
+
+#: inc/content.php:65
+msgid "It says it does not know instead of guessing, and can offer to take the visitor's details. The question also appears in the list of unanswered questions, where you can add the answer."
+msgstr ""
+
+#: inc/content.php:66
+msgid "What does my website need?"
+msgstr ""
+
+#: inc/content.php:66
+msgid "WordPress 6.4 or newer, PHP 8.0 or newer, and permission to install plugins. It works with any theme, with the block editor, Elementor and WooCommerce."
+msgstr ""
+
+#: inc/content.php:67
+msgid "Which files can it learn from?"
+msgstr ""
+
+#: inc/content.php:67
+msgid "PDF, DOCX and TXT files with real text, and pages from other websites by their address. Scanned documents are not read."
+msgstr ""
+
+#: inc/content.php:68
+msgid "Will it slow down my website?"
+msgstr ""
+
+#: inc/content.php:68
+msgid "No noticeable effect. The chat loads after the page and only contacts the AI service when a visitor sends a message."
+msgstr ""
+
+#: inc/content.php:69
+msgid "Does it work on phones?"
+msgstr ""
+
+#: inc/content.php:69
+msgid "Yes. On phones the chat opens full screen."
+msgstr ""
+
+#: inc/content.php:70
+msgid "Where are conversations and leads stored?"
+msgstr ""
+
+#: inc/content.php:70
+msgid "In your own WordPress database. The visitor's message and the relevant text from your website are sent to the AI service you connected, so it can write the answer."
+msgstr ""
+
+#: inc/content.php:71
+msgid "Can I put the chat inside a page?"
+msgstr ""
+
+#: inc/content.php:71
+msgid "Yes. It floats in the corner by default, and can also be placed inside a page with a shortcode or a block. You can hide it on chosen pages."
+msgstr ""
+
+#: inc/content.php:100
+msgid "How to add it to a website"
+msgstr ""
+
+#: inc/content.php:104
+msgid "What it can do"
+msgstr ""
+
+#: inc/content.php:105
+msgid "What it cannot do"
+msgstr ""
+
+#: inc/content.php:124
+msgid "Home"
+msgstr ""
+
+#: inc/content.php:170
+#: inc/content.php:183
+msgid "Chatbot text"
+msgstr ""
+
+#: inc/content.php:185
+msgid "The Home page text was refreshed. Run the website scan in the chatbot plugin so it learns it."
+msgstr ""
+
+#: inc/content.php:187
+msgid "This theme is a single page. The same text is saved into the Home page, so the chatbot learns what visitors read. The theme refreshes it after each update."
+msgstr ""
+
+#: inc/content.php:191
+msgid "Refresh the Home page text"
+msgstr ""
+
+#: inc/content.php:192
+msgid "Front page heading, intro and accent colour: Appearance, Customize, Chatbot demo."
+msgstr ""
+
+#: inc/content.php:202
 msgid "You are not allowed to do this."
-msgstr ""
-
-#: inc/demo-content.php:342
-msgid "Email:"
-msgstr ""
-
-#: inc/demo-content.php:345
-msgid "Phone or WhatsApp:"
 msgstr ""
 
 #. translators: %s: search term

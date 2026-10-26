@@ -7,12 +7,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CHATBOT_DEMO_VERSION', '1.0.0' );
+define( 'CHATBOT_DEMO_VERSION', '1.1.0' );
 
-require_once get_template_directory() . '/inc/demo-content.php';
+require_once get_template_directory() . '/inc/content.php';
 
 /**
- * Theme supports and menus.
+ * Theme supports.
  *
  * @return void
  */
@@ -30,12 +30,6 @@ function chatbot_demo_setup() {
 			'width'       => 240,
 			'flex-height' => true,
 			'flex-width'  => true,
-		)
-	);
-	register_nav_menus(
-		array(
-			'primary' => __( 'Main menu', 'chatbot-demo' ),
-			'footer'  => __( 'Footer menu', 'chatbot-demo' ),
 		)
 	);
 }
@@ -57,7 +51,7 @@ function chatbot_demo_assets() {
 add_action( 'wp_enqueue_scripts', 'chatbot_demo_assets' );
 
 /**
- * Customizer: accent colour, front page texts and contact details.
+ * Customizer: accent colour and front page texts.
  *
  * @param WP_Customize_Manager $wp_customize Customizer.
  * @return void
@@ -92,15 +86,13 @@ function chatbot_demo_customize( $wp_customize ) {
 	$texts = array(
 		'chatbot_demo_hero_title' => array( __( 'Front page heading', 'chatbot-demo' ), 'text' ),
 		'chatbot_demo_hero_text'  => array( __( 'Front page intro', 'chatbot-demo' ), 'textarea' ),
-		'chatbot_demo_email'      => array( __( 'Contact email', 'chatbot-demo' ), 'email' ),
-		'chatbot_demo_phone'      => array( __( 'Contact phone or WhatsApp', 'chatbot-demo' ), 'text' ),
 	);
 	foreach ( $texts as $id => $field ) {
 		$wp_customize->add_setting(
 			$id,
 			array(
 				'default'           => '',
-				'sanitize_callback' => 'email' === $field[1] ? 'sanitize_email' : ( 'textarea' === $field[1] ? 'sanitize_textarea_field' : 'sanitize_text_field' ),
+				'sanitize_callback' => 'textarea' === $field[1] ? 'sanitize_textarea_field' : 'sanitize_text_field',
 			)
 		);
 		$wp_customize->add_control(
@@ -152,6 +144,11 @@ function chatbot_demo_icon( $name ) {
 		'shield'  => '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
 		'clock'   => '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
 		'palette' => '<path d="M12 3a9 9 0 1 0 0 18c1 0 1.5-.8 1.5-1.5 0-1.2-1-1.5-1-2.5s.8-1.5 2-1.5H17a4 4 0 0 0 4-4c0-4.7-4-8.5-9-8.5z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/>',
+		'file'    => '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
+		'search'  => '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+		'cart'    => '<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M3 4h2l2.4 11h11.2L21 8H6.2"/>',
+		'bell'    => '<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>',
+		'chart'   => '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
 		'list'    => '<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>',
 	);
 	$inner = $paths[ $name ] ?? $paths['chat'];
@@ -187,18 +184,21 @@ function chatbot_demo_svg_kses() {
 }
 
 /**
- * Menu fallback: the demo pages, so the header is never empty.
+ * Links to the sections of the one page.
  *
  * @return void
  */
-function chatbot_demo_menu_fallback() {
-	echo '<ul>';
-	wp_list_pages(
-		array(
-			'title_li' => '',
-			'depth'    => 1,
-			'number'   => 6,
-		)
+function chatbot_demo_nav() {
+	$links = array(
+		'features' => __( 'Features', 'chatbot-demo' ),
+		'how'      => __( 'How it works', 'chatbot-demo' ),
+		'limits'   => __( 'Can and cannot', 'chatbot-demo' ),
+		'try'      => __( 'Try it', 'chatbot-demo' ),
+		'faq'      => __( 'FAQ', 'chatbot-demo' ),
 	);
+	echo '<ul>';
+	foreach ( $links as $id => $label ) {
+		echo '<li><a href="' . esc_url( ( is_front_page() ? '' : home_url( '/' ) ) . '#' . $id ) . '">' . esc_html( $label ) . '</a></li>';
+	}
 	echo '</ul>';
 }

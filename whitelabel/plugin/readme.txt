@@ -3,7 +3,7 @@ Tags: chatbot, ai chatbot, live chat, lead generation, customer support
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,11 @@ AI answers are paid to the provider you choose. Groq, OpenRouter, Google Gemini 
 The next provider in the fallback order answers. If none answers, the chat replies with the most relevant parts of your pages.
 
 == Changelog ==
+
+= 1.0.1 =
+* New: All advanced features are built in and always on: more AI providers, smart search, PDF, DOCX and web page knowledge, custom answers, streaming replies, analytics, unanswered questions, WooCommerce product cards and order lookup, Slack and Telegram alerts, proactive messages, business hours, settings export and import.
+* Fixed: Text in PDF files saved from Word, Google Docs, LibreOffice and Chrome is now read. Before, these files were added with no text.
+* New: PDF files that use ASCII85 encoding are read.
 
 = 1.0.0 =
 * First release.

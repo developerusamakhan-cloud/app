@@ -28,16 +28,7 @@ defined( 'ABSPATH' ) || exit;
 		<?php endif; ?>
 		<button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false"><?php esc_html_e( 'Menu', 'chatbot-demo' ); ?></button>
 		<nav id="main-nav" class="main-nav" aria-label="<?php esc_attr_e( 'Main menu', 'chatbot-demo' ); ?>">
-			<?php
-			wp_nav_menu(
-				array(
-					'theme_location' => 'primary',
-					'container'      => false,
-					'depth'          => 1,
-					'fallback_cb'    => 'chatbot_demo_menu_fallback',
-				)
-			);
-			?>
+			<?php chatbot_demo_nav(); ?>
 		</nav>
 	</div>
 </header>

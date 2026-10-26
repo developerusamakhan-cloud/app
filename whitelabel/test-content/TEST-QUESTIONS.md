@@ -26,16 +26,16 @@ Brightway Dental Clinic is a made-up business. Use it to check that the chatbot 
 | Do you have payment plans? | Yes, 6 or 12 months with no interest, for treatments over $1,000 |
 | Is there parking? | Free parking behind the building |
 | Can I bring my 2 year old? | Yes, children from age 2, and the first visit under age 3 is free |
-| Do you speak Spanish? | Yes: English, Urdu, Spanish and Arabic |
+| Do you speak Spanish? | Yes: English, Spanish, French and Polish |
 | Does whitening hurt? | Most feel no pain; some feel mild sensitivity for a day or two |
 
 ## Test other languages
 
 Ask the same questions in another language. The answer should come back in that language.
 
-- Urdu: `Saturday ko clinic kab khulta hai?`
 - Spanish: `¿Cuánto cuesta el blanqueamiento dental?`
-- Arabic: `هل لديكم موقف سيارات؟`
+- French: `Êtes-vous ouverts le samedi ?`
+- German: `Gibt es Parkplätze?`
 
 ## Questions the chatbot should NOT know
 

@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.23.6
+Version: 2.23.7
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -1335,7 +1335,7 @@ body:not(.is-home) .site-main {
 	padding: 3px 9px;
 	border-radius: 999px;
 	background: color-mix(in srgb, var(--second) 14%, transparent);
-	color: var(--second);
+	color: color-mix(in srgb, var(--second) 60%, var(--ink));
 	font-size: 10px;
 	font-weight: 600;
 }
@@ -5509,7 +5509,7 @@ img.avatar {
 }
 
 .fm-outline {
-	color: color-mix(in srgb, var(--bg) 22%, transparent);
+	color: color-mix(in srgb, var(--bg) 50%, transparent);
 }
 
 .footer-marquee:hover .fm-text:not(.fm-outline) {
@@ -6899,6 +6899,27 @@ button[type="submit"]:not(.search-submit):hover {
 .js [data-reveal].is-visible {
 	opacity: 1;
 	transform: none;
+}
+
+/* Hero copy is on screen from the first paint (good for LCP): it only slides in. */
+.hero-rise {
+	animation: hero-rise 0.9s var(--ease) both;
+	animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+@keyframes hero-rise {
+	from {
+		transform: translateY(24px);
+	}
+	to {
+		transform: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero-rise {
+		animation: none;
+	}
 }
 
 .js .project-card[data-reveal] {

@@ -22,7 +22,7 @@ $nabia_skills      = array(
 				<figure class="intro-video">
 					<div class="intro-video-stack">
 					<div class="intro-video-frame">
-						<video src="<?php echo esc_url( $nabia_intro_video ); ?>" <?php echo $nabia_intro_thumb ? 'poster="' . esc_url( $nabia_intro_thumb ) . '"' : ''; ?> muted loop playsinline controls preload="metadata" data-intro-video></video>
+						<video src="<?php echo esc_url( $nabia_intro_video ); ?>" <?php echo $nabia_intro_thumb ? 'poster="' . esc_url( $nabia_intro_thumb ) . '"' : ''; ?> muted loop playsinline controls preload="none" data-intro-video></video>
 						<button class="video-sound intro-sound" type="button" data-intro-sound>
 							<?php nabia_icon( 'volume' ); ?><span><?php esc_html_e( 'Tap for sound', 'nabia' ); ?></span>
 						</button>

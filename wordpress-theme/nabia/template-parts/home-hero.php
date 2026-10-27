@@ -20,7 +20,7 @@ $nabia_first = trim( strtok( $nabia_name, ' ' ) );
 	<div class="container hero-inner">
 		<div class="hero-copy">
 			<?php if ( nabia_mod( 'hero_badge' ) ) : ?>
-				<p class="badge" data-reveal><span class="pulse" aria-hidden="true"></span><?php echo esc_html( nabia_mod( 'hero_badge' ) ); ?></p>
+				<p class="badge hero-rise"><span class="pulse" aria-hidden="true"></span><?php echo esc_html( nabia_mod( 'hero_badge' ) ); ?></p>
 			<?php endif; ?>
 
 			<h1 class="hero-title">
@@ -35,9 +35,9 @@ $nabia_first = trim( strtok( $nabia_name, ' ' ) );
 				<?php endif; ?>
 			</h1>
 
-			<p class="hero-text" data-reveal><?php echo nabia_link_text( nabia_mod( 'hero_text' ), 3 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+			<p class="hero-text hero-rise" style="--i:1"><?php echo nabia_link_text( nabia_mod( 'hero_text' ), 3 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 
-			<div class="hero-actions" data-reveal>
+			<div class="hero-actions hero-rise" style="--i:2">
 				<?php if ( nabia_mod( 'hero_cta_label' ) ) : ?>
 					<a class="btn btn-accent btn-lg" href="<?php echo esc_url( nabia_mod( 'hero_cta_url' ) ); ?>" data-magnetic>
 						<span><?php echo esc_html( nabia_mod( 'hero_cta_label' ) ); ?></span><?php nabia_icon( 'arrow' ); ?>

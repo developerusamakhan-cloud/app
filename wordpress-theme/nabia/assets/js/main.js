@@ -31,7 +31,7 @@
 		body.classList.add('is-loading');
 		var countEl = $('.preloader-count', preloader);
 		var start = performance.now();
-		var duration = 1400;
+		var duration = 800;
 		(function tick(now) {
 			var p = Math.min(1, (now - start) / duration);
 			var eased = 1 - Math.pow(1 - p, 3);
@@ -41,10 +41,10 @@
 			} else {
 				preloader.classList.add('is-done');
 				sessionStorageSet('nabiaSeen', '1');
-				setTimeout(ready, 350);
+				setTimeout(ready, 150);
 				setTimeout(function () {
 					preloader.remove();
-				}, 1000);
+				}, 800);
 			}
 		})(start);
 	} else {

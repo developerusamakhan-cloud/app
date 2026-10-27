@@ -27,7 +27,7 @@ $nabia_summary = $nabia_google && ! empty( $nabia_google['rating'] );
 					<div class="rating-card-score">
 						<strong><?php echo esc_html( number_format_i18n( $nabia_google['rating'], 1 ) ); ?></strong>
 						<span>
-							<span class="stars stars-lg" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: rating */ __( 'Rated %s out of 5', 'nabia' ), $nabia_google['rating'] ) ); ?>" style="--rating:<?php echo esc_attr( $nabia_google['rating'] ); ?>"></span>
+							<span class="stars stars-lg" role="img" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: rating */ __( 'Rated %s out of 5', 'nabia' ), $nabia_google['rating'] ) ); ?>" style="--rating:<?php echo esc_attr( $nabia_google['rating'] ); ?>"></span>
 							<span class="rating-card-total">
 								<?php
 								/* translators: %s: number of reviews */
@@ -81,7 +81,7 @@ $nabia_summary = $nabia_google && ! empty( $nabia_google['rating'] );
 							<?php endif; ?>
 						<?php endif; ?>
 					</figcaption>
-					<div class="stars" aria-label="<?php echo esc_attr( sprintf( /* translators: %d: rating */ __( '%d out of 5 stars', 'nabia' ), $nabia_rating ) ); ?>">
+					<div class="stars" role="img" aria-label="<?php echo esc_attr( sprintf( /* translators: %d: rating */ __( '%d out of 5 stars', 'nabia' ), $nabia_rating ) ); ?>">
 						<?php for ( $nabia_s = 0; $nabia_s < 5; $nabia_s++ ) : ?>
 							<span class="<?php echo $nabia_s < $nabia_rating ? 'is-on' : ''; ?>"><?php nabia_icon( 'star' ); ?></span>
 						<?php endfor; ?>

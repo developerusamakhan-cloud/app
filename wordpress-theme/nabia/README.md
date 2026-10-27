@@ -65,6 +65,14 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.23.7
+
+- **Faster first paint (PageSpeed).** The homepage hero text and buttons now show from the first paint and only slide in, instead of waiting for the scroll animation, which was the main cause of the slow Largest Contentful Paint on mobile.
+- The intro preloader is shorter (about 1 second instead of 1.75).
+- The intro video downloads only when someone presses play (it was loading about 11 MB on every visit).
+- The audit form and chat widget files (Nabia Website Audit, Talkwyn) no longer block the first paint: their scripts are deferred and their styles load in the background.
+- Accessibility: star ratings are labelled images, and the "New collection" tag and the outlined footer slogan have enough colour contrast.
+
 ## What's new in 2.23.6
 
 - SEO titles longer than 60 characters drop the " - Nabia Khan" ending automatically, so every article (including scheduled ones) stays within Google's title length.

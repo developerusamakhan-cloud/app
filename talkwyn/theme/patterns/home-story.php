@@ -67,11 +67,11 @@ defined( 'ABSPATH' ) || exit;
 <div data-tw-reveal class="wp-block-group tw-story__item"><!-- wp:group {"className":"tw-row tw-row--reverse","layout":{"type":"default"}} -->
 <div class="wp-block-group tw-row tw-row--reverse"><!-- wp:group {"className":"tw-row__text","layout":{"type":"default"}} -->
 <div class="wp-block-group tw-row__text"><!-- wp:paragraph {"className":"tw-eyebrow tw-eyebrow--plain"} -->
-<p class="tw-eyebrow tw-eyebrow--plain">Every language</p>
+<p class="tw-eyebrow tw-eyebrow--plain">Many languages</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading -->
-<h2 class="wp-block-heading">One chatbot. Every language your customers speak.</h2>
+<h2 class="wp-block-heading">One chatbot for the languages your customers speak.</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
@@ -128,7 +128,11 @@ defined( 'ABSPATH' ) || exit;
 <!-- /wp:list-item -->
 
 <!-- wp:list-item -->
-<li>Lead alerts on WhatsApp and Slack [tw_badge type="pro"]Pro[/tw_badge] [tw_badge]Coming soon[/tw_badge]</li>
+<li>Lead alerts on Slack and Telegram [tw_badge type="pro"]Pro[/tw_badge]</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Lead alerts on WhatsApp [tw_badge type="pro"]Pro[/tw_badge] [tw_badge]Coming soon[/tw_badge]</li>
 <!-- /wp:list-item -->
 
 <!-- wp:list-item -->

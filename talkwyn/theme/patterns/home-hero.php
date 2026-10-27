@@ -33,7 +33,7 @@ defined( 'ABSPATH' ) || exit;
 <!-- /wp:paragraph -->
 
 <!-- wp:html -->
-<ul class="tw-hero__chips" aria-label="What Talkwyn does"><li class="tw-chip">[tw_icon name="scan-search" size="18"] Answers from your content</li><li class="tw-chip">[tw_icon name="languages" size="18"] Replies in every language</li><li class="tw-chip">[tw_icon name="user-check" size="18"] Turns chats into leads</li></ul>
+<ul class="tw-hero__chips" aria-label="What Talkwyn does"><li class="tw-chip">[tw_icon name="scan-search" size="18"] Answers from your content</li><li class="tw-chip">[tw_icon name="languages" size="18"] Replies in the visitor's language</li><li class="tw-chip">[tw_icon name="user-check" size="18"] Turns chats into leads</li></ul>
 <!-- /wp:html --></div>
 <!-- /wp:group -->
 

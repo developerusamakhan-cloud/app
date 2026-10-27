@@ -406,32 +406,54 @@ add_shortcode(
 	}
 );
 
+/**
+ * Published posts that fit best with a post: shared title words count most, then a shared
+ * category. A small fixed offset per pair breaks ties, so the same few posts are not shown everywhere.
+ *
+ * @param int $id    Post ID.
+ * @param int $count How many.
+ * @return WP_Post[]
+ */
+function talkwyn_related_posts( int $id, int $count ): array {
+	$stop  = array_flip( explode( ' ', 'a an the and or for to of in on your with how what when is are you it its vs chatbot chatbots website websites ai free best guide tips by step' ) );
+	$words = static function ( WP_Post $p ) use ( $stop ): array {
+		preg_match_all( '/[a-z]{3,}/', strtolower( $p->post_title . ' ' . $p->post_excerpt ), $m );
+		return array_diff_key( array_flip( $m[0] ), $stop );
+	};
+	$me = get_post( $id );
+	if ( ! $me ) {
+		return array();
+	}
+	$mine  = $words( $me );
+	$cats  = wp_get_post_categories( $id );
+	$pool  = get_posts(
+		array(
+			'post__not_in'   => array( $id ),
+			'posts_per_page' => 100,
+			'post_status'    => 'publish',
+		)
+	);
+	$score = array();
+	foreach ( $pool as $i => $post ) {
+		$score[ $i ] = count( array_intersect_key( $mine, $words( $post ) ) ) * 3
+			+ ( array_intersect( $cats, wp_get_post_categories( $post->ID ) ) ? 2 : 0 )
+			+ ( ( $post->ID * 7 + $id ) % 10 ) / 100;
+	}
+	arsort( $score );
+	$out = array();
+	foreach ( array_slice( array_keys( $score ), 0, $count ) as $i ) {
+		$out[] = $pool[ $i ];
+	}
+	return $out;
+}
+
 add_shortcode(
 	'tw_related_posts',
 	static function () {
 		if ( ! is_singular( 'post' ) ) {
 			return '';
 		}
-		$id      = get_queried_object_id();
-		$cats    = wp_get_post_categories( $id );
-		$related = get_posts(
-			array(
-				'post__not_in'   => array( $id ),
-				'category__in'   => $cats,
-				'posts_per_page' => 3,
-			)
-		);
-		if ( count( $related ) < 3 ) {
-			$related = array_merge(
-				$related,
-				get_posts(
-					array(
-						'post__not_in'   => array_merge( array( $id ), wp_list_pluck( $related, 'ID' ) ),
-						'posts_per_page' => 3 - count( $related ),
-					)
-				)
-			);
-		}
+		$related = talkwyn_related_posts( get_queried_object_id(), 3 );
 		if ( ! $related ) {
 			return '';
 		}

@@ -1,0 +1,600 @@
+{
+ "/pricing/": {
+  "content": {
+   "in every language your visitors write in": "in the languages your visitors write in",
+   "For any site that wants honest answers and leads.": "For any site that wants accurate answers and leads.",
+   "href=\"/blog/free-ai-api-keys/": "href=\"/free-ai-api-keys/"
+  },
+  "post_type": "page"
+ },
+ "/partners/": {
+  "content": {
+   "href=\"/blog/resell-white-label-ai-chatbot/": "href=\"/resell-white-label-ai-chatbot/"
+  },
+  "seo_desc": [
+   "Join the Talkwyn chatbot affiliate program. Share your link, help sites answer visitors in every language, and earn a commission on every paid plan you refer.",
+   "Join the Talkwyn chatbot affiliate program. Share your link, help sites answer visitors in many languages, and earn a commission on every paid plan you refer."
+  ],
+  "post_type": "page"
+ },
+ "/compare/": {
+  "content": {
+   "Does it reply in every language?": "Does it reply in your visitors' languages?",
+   "see which tool gives honest answers with sources": "see which tool answers from your content, with sources,",
+   "href=\"/blog/best-chatbot-for-customer-service/": "href=\"/best-chatbot-for-customer-service/",
+   "href=\"/blog/best-wordpress-chatbot-plugins/": "href=\"/best-wordpress-chatbot-plugins/"
+  },
+  "post_type": "page"
+ },
+ "/compare/tidio-alternative/": {
+  "content": {
+   "href=\"/blog/best-wordpress-chatbot-plugins/": "href=\"/best-wordpress-chatbot-plugins/"
+  },
+  "post_type": "page"
+ },
+ "/compare/chatbase-alternative/": {
+  "content": {
+   "href=\"/blog/best-wordpress-chatbot-plugins/": "href=\"/best-wordpress-chatbot-plugins/",
+   "href=\"/blog/self-hosted-chatbot/": "href=\"/self-hosted-chatbot/"
+  },
+  "post_type": "page"
+ },
+ "/download/": {
+  "content": {
+   "href=\"/blog/best-wordpress-chatbot-plugins/": "href=\"/best-wordpress-chatbot-plugins/",
+   "href=\"/blog/add-free-chatbot-to-wordpress/": "href=\"/add-free-chatbot-to-wordpress/",
+   "href=\"/blog/free-ai-api-keys/": "href=\"/free-ai-api-keys/"
+  },
+  "seo_desc": [
+   "Download Talkwyn, the free WordPress chatbot that learns your site in one click, answers in every language, and captures leads. Live in about five minutes.",
+   "Download Talkwyn, the free WordPress chatbot that learns your site in one click, answers in your visitors' languages, and captures leads. Live in about five minutes."
+  ],
+  "post_type": "page"
+ },
+ "/about/": {
+  "content": {
+   "Every language matters": "Your visitors' languages matter"
+  },
+  "seo_desc": [
+   "About Talkwyn: why we build an AI chatbot that answers from your own content, in every language, with your data on your own site, and how we build it with you.",
+   "About Talkwyn: why we build an AI chatbot that answers from your own content, in many languages, with your data on your own site, and how we build it with you."
+  ],
+  "post_type": "page"
+ },
+ "/contact/": {
+  "content": {
+   "href=\"/blog/chatbot-vs-contact-form/": "href=\"/chatbot-vs-contact-form/"
+  },
+  "post_type": "page"
+ },
+ "/privacy/": {
+  "content": {
+   "href=\"/blog/website-chatbot-privacy-checklist/": "href=\"/website-chatbot-privacy-checklist/",
+   "href=\"/blog/self-hosted-chatbot/": "href=\"/self-hosted-chatbot/"
+  },
+  "post_type": "page"
+ },
+ "/integrations/": {
+  "content": {
+   "Here is the honest status of each one.": "Here is where each one stands."
+  },
+  "post_type": "page"
+ },
+ "/integrations/wordpress/": {
+  "content": {
+   "the honest \"I don't know\"": "the clear \"I don't know\"",
+   "Our honest roundup of the ": "Our roundup of the ",
+   "href=\"/blog/add-free-chatbot-to-wordpress/": "href=\"/add-free-chatbot-to-wordpress/",
+   "href=\"/blog/best-wordpress-chatbot-plugins/": "href=\"/best-wordpress-chatbot-plugins/"
+  },
+  "post_type": "page",
+  "excerpt": [
+   "A WordPress chatbot plugin that reads your own content, answers in every language, and saves leads in your dashboard.",
+   "A WordPress chatbot plugin that reads your own content, answers in your visitors' languages, and saves leads in your dashboard."
+  ]
+ },
+ "/integrations/woocommerce/": {
+  "content": {
+   "Multilingual answers in every language your AI model supports": "Multilingual answers in the languages your AI model supports",
+   "href=\"/blog/woocommerce-chatbot-questions/": "href=\"/woocommerce-chatbot-questions/",
+   "href=\"/blog/best-chatbot-for-ecommerce/": "href=\"/best-chatbot-for-ecommerce/",
+   "href=\"/blog/woocommerce-shipping-returns-pages/": "href=\"/woocommerce-shipping-returns-pages/"
+  },
+  "post_type": "page"
+ },
+ "/integrations/shopify/": {
+  "content": {
+   "An AI chatbot for Shopify stores, in every language": "An AI chatbot for Shopify stores, in your shoppers' languages",
+   "<h3>Every language</h3>": "<h3>Many languages</h3>"
+  },
+  "seo_desc": [
+   "We are building an AI chatbot for Shopify with product answers, order questions and lead capture in every language. Join the waitlist to hear when it launches.",
+   "We are building an AI chatbot for Shopify with product answers, order questions and lead capture in many languages. Join the waitlist to hear when it launches."
+  ],
+  "post_type": "page"
+ },
+ "/integrations/website-embed/": {
+  "content": {
+   "and say so honestly when it does not know": "and say so when it does not know",
+   "<h3>Every language</h3>": "<h3>Many languages</h3>"
+  },
+  "seo_desc": [
+   "A Talkwyn chatbot for any website, added with one line of code: answers from your pages, every language, lead capture. In development. Join the waitlist.",
+   "A Talkwyn chatbot for any website, added with one line of code: answers from your pages, many languages, lead capture. In development. Join the waitlist."
+  ],
+  "post_type": "page"
+ },
+ "/integrations/whatsapp/": {
+  "content": {
+   "<span class=\"tw-vcard__label\">Slack</span><span class=\"tw-vcard__val tw-vcard__val--soon\">Coming soon</span>": "<span class=\"tw-vcard__label\">Slack and Telegram</span><span class=\"tw-vcard__val tw-vcard__val--ok\">Live in Pro</span>"
+  },
+  "post_type": "page"
+ },
+ "/industries/ecommerce/": {
+  "content": {
+   "href=\"/blog/woocommerce-chatbot-questions/": "href=\"/woocommerce-chatbot-questions/",
+   "href=\"/blog/best-chatbot-for-ecommerce/": "href=\"/best-chatbot-for-ecommerce/"
+  },
+  "post_type": "page"
+ },
+ "/industries/real-estate/": {
+  "content": {
+   "href=\"/blog/real-estate-chatbot-examples/": "href=\"/real-estate-chatbot-examples/",
+   "href=\"/blog/real-estate-lead-follow-up/": "href=\"/real-estate-lead-follow-up/",
+   "href=\"/blog/real-estate-chatbot-template/": "href=\"/real-estate-chatbot-template/"
+  },
+  "post_type": "page"
+ },
+ "/industries/healthcare/": {
+  "content": {
+   "href=\"/blog/website-chatbot-privacy-checklist/": "href=\"/website-chatbot-privacy-checklist/",
+   "href=\"/blog/healthcare-chatbot-use-cases/": "href=\"/healthcare-chatbot-use-cases/",
+   "href=\"/blog/chatbot-for-dental-clinics/": "href=\"/chatbot-for-dental-clinics/"
+  },
+  "post_type": "page"
+ },
+ "/industries/small-business/": {
+  "content": {
+   "Honest \"I don't know\" answers": "Clear \"I don't know\" answers",
+   "<strong>Honesty.</strong> It should say": "<strong>Accuracy.</strong> It should say",
+   "href=\"/blog/chatbot-vs-contact-form/": "href=\"/chatbot-vs-contact-form/",
+   "href=\"/blog/best-chatbot-for-customer-service/": "href=\"/best-chatbot-for-customer-service/",
+   "href=\"/blog/reduce-repeat-customer-questions/": "href=\"/reduce-repeat-customer-questions/",
+   "href=\"/blog/add-free-chatbot-to-wordpress/": "href=\"/add-free-chatbot-to-wordpress/"
+  },
+  "post_type": "page"
+ },
+ "/agencies/": {
+  "content": {
+   "href=\"/blog/resell-white-label-ai-chatbot/": "href=\"/resell-white-label-ai-chatbot/"
+  },
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/": {
+  "content": {
+   "How Talkwyn handles every language": "How Talkwyn handles each language",
+   "href=\"/blog/arabic-right-to-left-chatbot/": "href=\"/arabic-right-to-left-chatbot/",
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/"
+  },
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/arabic/": {
+  "content": {
+   "href=\"/blog/real-estate-chatbot-template/": "href=\"/real-estate-chatbot-template/",
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/",
+   "href=\"/blog/arabic-right-to-left-chatbot/": "href=\"/arabic-right-to-left-chatbot/"
+  },
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/spanish/": {
+  "content": {
+   "One setup, every language": "One setup, many languages",
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/",
+   "href=\"/blog/spanish-website-chatbot-tips/": "href=\"/spanish-website-chatbot-tips/"
+  },
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/french/": {
+  "content": {
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/"
+  },
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/german/": {
+  "content": {
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/"
+  },
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/portuguese/": {
+  "content": {
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/"
+  },
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/hindi/": {
+  "content": {
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/",
+   "href=\"/blog/hindi-chatbot-for-businesses/": "href=\"/hindi-chatbot-for-businesses/"
+  },
+  "post_type": "page"
+ },
+ "/features/": {
+  "content": {
+   "href=\"/blog/website-chatbot-privacy-checklist/": "href=\"/website-chatbot-privacy-checklist/",
+   "href=\"/blog/self-hosted-chatbot/": "href=\"/self-hosted-chatbot/",
+   "href=\"/blog/chatbot-welcome-message-examples/": "href=\"/chatbot-welcome-message-examples/",
+   "<h3>Every language</h3>": "<h3>Many languages</h3>"
+  },
+  "seo_desc": [
+   "Every Talkwyn AI chatbot feature in one place: answers from your website, every language, lead capture, AI fallback, privacy controls and Pro extras.",
+   "Every Talkwyn AI chatbot feature in one place: answers from your website, many languages, lead capture, AI fallback, privacy controls and Pro extras."
+  ],
+  "post_type": "page",
+  "excerpt": [
+   "Everything Talkwyn does, from answering in every language to capturing leads, in one overview.",
+   "Everything Talkwyn does, from answering in your visitors' languages to capturing leads, in one overview."
+  ]
+ },
+ "/features/knowledge-base/": {
+  "content": {
+   "href=\"/blog/faq-page-or-chatbot/": "href=\"/faq-page-or-chatbot/"
+  },
+  "post_type": "page"
+ },
+ "/features/lead-generation/": {
+  "content": {
+   "href=\"/blog/chatbot-vs-contact-form/": "href=\"/chatbot-vs-contact-form/",
+   "href=\"/blog/real-estate-chatbot-template/": "href=\"/real-estate-chatbot-template/",
+   "href=\"/blog/after-hours-website-leads/": "href=\"/after-hours-website-leads/"
+  },
+  "post_type": "page"
+ },
+ "/features/analytics/": {
+  "content": {
+   "in every language they use": "in the languages they use",
+   "href=\"/blog/measure-website-chatbot-results/": "href=\"/measure-website-chatbot-results/"
+  },
+  "post_type": "page"
+ },
+ "/blog/free-ai-api-keys/": {
+  "content": {
+   "Every honest free tier has limits": "Every free tier has limits",
+   "and the honest answer is that": "and the short answer is that",
+   "href=\"/blog/best-wordpress-chatbot-plugins/": "href=\"/best-wordpress-chatbot-plugins/",
+   "href=\"/blog/gemini-api-key-free/": "href=\"/gemini-api-key-free/",
+   "href=\"/blog/add-free-chatbot-to-wordpress/": "href=\"/add-free-chatbot-to-wordpress/"
+  },
+  "post_type": "post"
+ },
+ "/blog/add-free-chatbot-to-wordpress/": {
+  "content": {
+   "href=\"/blog/best-wordpress-chatbot-plugins/": "href=\"/best-wordpress-chatbot-plugins/",
+   "href=\"/blog/chatbot-welcome-message-examples/": "href=\"/chatbot-welcome-message-examples/",
+   "href=\"/blog/free-ai-api-keys/": "href=\"/free-ai-api-keys/"
+  },
+  "post_type": "post"
+ },
+ "/blog/real-estate-chatbot-template/": {
+  "content": {
+   "Ready to try it on your site?": "Want to try it on your site?",
+   "href=\"/blog/real-estate-chatbot-examples/": "href=\"/real-estate-chatbot-examples/",
+   "href=\"/blog/real-estate-lead-follow-up/": "href=\"/real-estate-lead-follow-up/"
+  },
+  "post_type": "post"
+ },
+ "/blog/best-wordpress-chatbot-plugins/": {
+  "content": {
+   "href=\"/blog/add-free-chatbot-to-wordpress/": "href=\"/add-free-chatbot-to-wordpress/"
+  },
+  "post_type": "post"
+ },
+ "/docs/getting-started/": {
+  "content": {
+   "href=\"/blog/add-free-chatbot-to-wordpress/": "href=\"/add-free-chatbot-to-wordpress/",
+   "href=\"/blog/wordpress-chatbot-setup-mistakes/": "href=\"/wordpress-chatbot-setup-mistakes/"
+  },
+  "post_type": "doc"
+ },
+ "/docs/ai-providers/": {
+  "content": {
+   "href=\"/blog/gemini-api-key-free/": "href=\"/gemini-api-key-free/",
+   "href=\"/blog/free-ai-api-keys/": "href=\"/free-ai-api-keys/"
+  },
+  "post_type": "doc"
+ },
+ "/industries/": {
+  "content": {
+   "href=\"/blog/real-estate-chatbot-template/": "href=\"/real-estate-chatbot-template/"
+  },
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/italian/": {
+  "content": {
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/"
+  },
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/chinese/": {
+  "content": {
+   "One setup, every language": "One setup, many languages",
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/"
+  },
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/japanese/": {
+  "content": {
+   "One setup, every language": "One setup, many languages",
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/"
+  },
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/korean/": {
+  "content": {
+   "One setup, every language": "One setup, many languages",
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/"
+  },
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/turkish/": {
+  "content": {
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/"
+  },
+  "post_type": "page"
+ },
+ "/multilingual-chatbot/english/": {
+  "content": {
+   "Honest when it does not know": "Says when it does not know",
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/"
+  },
+  "post_type": "page"
+ },
+ "/industries/hotels/": {
+  "content": {
+   "href=\"/blog/hotel-chatbot-guest-questions/": "href=\"/hotel-chatbot-guest-questions/"
+  },
+  "post_type": "page"
+ },
+ "/industries/law-firms/": {
+  "content": {
+   "href=\"/blog/website-chatbot-privacy-checklist/": "href=\"/website-chatbot-privacy-checklist/"
+  },
+  "post_type": "page"
+ },
+ "/industries/fitness/": {
+  "content": {
+   "Honest when it does not know": "Says when it does not know"
+  },
+  "post_type": "page"
+ },
+ "/compare/freshchat-alternative/": {
+  "content": {
+   "who want honest AI answers and leads": "who want accurate AI answers and leads"
+  },
+  "post_type": "page"
+ },
+ "/blog/multilingual-website-chatbot-guide/": {
+  "content": {
+   "The same advice helps in every language.": "The same advice helps in any language.",
+   "href=\"/blog/arabic-right-to-left-chatbot/": "href=\"/arabic-right-to-left-chatbot/",
+   "href=\"/blog/hindi-chatbot-for-businesses/": "href=\"/hindi-chatbot-for-businesses/",
+   "href=\"/blog/hotel-chatbot-guest-questions/": "href=\"/hotel-chatbot-guest-questions/",
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/"
+  },
+  "post_type": "post"
+ },
+ "/blog/chatbot-vs-contact-form/": {
+  "content": {
+   "and when the honest answer is both": "and when the answer is both",
+   "href=\"/blog/reduce-repeat-customer-questions/": "href=\"/reduce-repeat-customer-questions/",
+   "href=\"/blog/lead-capture-chatbot-tips/": "href=\"/lead-capture-chatbot-tips/"
+  },
+  "post_type": "post"
+ },
+ "/blog/write-pages-your-chatbot-can-answer/": {
+  "content": {
+   "exactly as written on your site, in every language": "exactly as written on your site, in any language",
+   "That is honest, but it sends": "That is correct, but it sends",
+   "href=\"/blog/faq-page-or-chatbot/": "href=\"/faq-page-or-chatbot/",
+   "href=\"/blog/woocommerce-chatbot-questions/": "href=\"/woocommerce-chatbot-questions/",
+   "href=\"/blog/test-your-chatbot-before-launch/": "href=\"/test-your-chatbot-before-launch/"
+  },
+  "post_type": "post"
+ },
+ "/blog/woocommerce-chatbot-questions/": {
+  "content": {
+   "explain how they work in plain words": "explain clearly how they work",
+   "href=\"/blog/woocommerce-shipping-returns-pages/": "href=\"/woocommerce-shipping-returns-pages/",
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/"
+  },
+  "post_type": "post"
+ },
+ "/blog/test-your-chatbot-before-launch/": {
+  "content": {
+   "Test every language you expect": "Test each language you expect",
+   "what the chatbot can help with, in plain words": "what the chatbot can help with, in a sentence or two",
+   "href=\"/blog/spanish-website-chatbot-tips/": "href=\"/spanish-website-chatbot-tips/",
+   "href=\"/blog/wordpress-chatbot-setup-mistakes/": "href=\"/wordpress-chatbot-setup-mistakes/",
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/",
+   "href=\"/blog/arabic-right-to-left-chatbot/": "href=\"/arabic-right-to-left-chatbot/",
+   "href=\"/blog/website-chatbot-privacy-checklist/": "href=\"/website-chatbot-privacy-checklist/"
+  },
+  "post_type": "post"
+ },
+ "/blog/arabic-right-to-left-chatbot/": {
+  "content": {
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/",
+   "href=\"/blog/test-your-chatbot-before-launch/": "href=\"/test-your-chatbot-before-launch/"
+  },
+  "post_type": "post"
+ },
+ "/blog/website-chatbot-privacy-checklist/": {
+  "content": {
+   "href=\"/blog/chatbot-for-dental-clinics/": "href=\"/chatbot-for-dental-clinics/",
+   "href=\"/blog/lead-capture-chatbot-tips/": "href=\"/lead-capture-chatbot-tips/",
+   "href=\"/blog/test-your-chatbot-before-launch/": "href=\"/test-your-chatbot-before-launch/"
+  },
+  "post_type": "post"
+ },
+ "/blog/lead-capture-chatbot-tips/": {
+  "content": {
+   "Be honest when the answer is not there": "Say so when the answer is not there",
+   "An honest \"I could not find that": "A clear \"I could not find that",
+   "on your pages in plain words": "written clearly on your pages",
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/",
+   "href=\"/blog/chatbot-vs-contact-form/": "href=\"/chatbot-vs-contact-form/",
+   "href=\"/blog/after-hours-website-leads/": "href=\"/after-hours-website-leads/",
+   "href=\"/blog/measure-website-chatbot-results/": "href=\"/measure-website-chatbot-results/",
+   "href=\"/blog/website-chatbot-privacy-checklist/": "href=\"/website-chatbot-privacy-checklist/"
+  },
+  "post_type": "post"
+ },
+ "/blog/chatbot-for-dental-clinics/": {
+  "content": {
+   "href=\"/blog/healthcare-chatbot-use-cases/": "href=\"/healthcare-chatbot-use-cases/",
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/",
+   "href=\"/blog/website-chatbot-privacy-checklist/": "href=\"/website-chatbot-privacy-checklist/"
+  },
+  "post_type": "post"
+ },
+ "/blog/faq-page-or-chatbot/": {
+  "content": {
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/",
+   "href=\"/blog/reduce-repeat-customer-questions/": "href=\"/reduce-repeat-customer-questions/",
+   "href=\"/blog/test-your-chatbot-before-launch/": "href=\"/test-your-chatbot-before-launch/"
+  },
+  "post_type": "post"
+ },
+ "/blog/spanish-website-chatbot-tips/": {
+  "content": {
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/",
+   "href=\"/blog/chatbot-welcome-message-examples/": "href=\"/chatbot-welcome-message-examples/",
+   "href=\"/blog/test-your-chatbot-before-launch/": "href=\"/test-your-chatbot-before-launch/",
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/"
+  },
+  "post_type": "post"
+ },
+ "/blog/real-estate-lead-follow-up/": {
+  "content": {
+   "href=\"/blog/real-estate-chatbot-template/": "href=\"/real-estate-chatbot-template/",
+   "href=\"/blog/lead-capture-chatbot-tips/": "href=\"/lead-capture-chatbot-tips/"
+  },
+  "post_type": "post"
+ },
+ "/blog/reduce-repeat-customer-questions/": {
+  "content": {
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/",
+   "href=\"/blog/faq-page-or-chatbot/": "href=\"/faq-page-or-chatbot/",
+   "href=\"/blog/woocommerce-chatbot-questions/": "href=\"/woocommerce-chatbot-questions/"
+  },
+  "post_type": "post"
+ },
+ "/blog/chatbot-welcome-message-examples/": {
+  "content": {
+   "href=\"/blog/woocommerce-chatbot-questions/": "href=\"/woocommerce-chatbot-questions/",
+   "href=\"/blog/chatbot-for-dental-clinics/": "href=\"/chatbot-for-dental-clinics/",
+   "href=\"/blog/real-estate-lead-follow-up/": "href=\"/real-estate-lead-follow-up/",
+   "href=\"/blog/spanish-website-chatbot-tips/": "href=\"/spanish-website-chatbot-tips/",
+   "href=\"/blog/test-your-chatbot-before-launch/": "href=\"/test-your-chatbot-before-launch/"
+  },
+  "post_type": "post"
+ },
+ "/blog/hindi-chatbot-for-businesses/": {
+  "content": {
+   "a good reply says so honestly and offers": "a good reply says so and offers",
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/",
+   "href=\"/blog/test-your-chatbot-before-launch/": "href=\"/test-your-chatbot-before-launch/",
+   "href=\"/blog/lead-capture-chatbot-tips/": "href=\"/lead-capture-chatbot-tips/",
+   "href=\"/blog/free-ai-api-keys/": "href=\"/free-ai-api-keys/"
+  },
+  "post_type": "post"
+ },
+ "/blog/woocommerce-shipping-returns-pages/": {
+  "content": {
+   "href=\"/blog/woocommerce-chatbot-questions/": "href=\"/woocommerce-chatbot-questions/"
+  },
+  "post_type": "post"
+ },
+ "/blog/after-hours-website-leads/": {
+  "content": {
+   "in plain words, with real numbers": "clearly, with real numbers",
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/",
+   "href=\"/blog/lead-capture-chatbot-tips/": "href=\"/lead-capture-chatbot-tips/"
+  },
+  "post_type": "post"
+ },
+ "/blog/hotel-chatbot-guest-questions/": {
+  "content": {
+   "href=\"/blog/multilingual-website-chatbot-guide/": "href=\"/multilingual-website-chatbot-guide/"
+  },
+  "post_type": "post"
+ },
+ "/blog/wordpress-chatbot-setup-mistakes/": {
+  "content": {
+   "which is honest but not very helpful": "which is correct but not very helpful",
+   "unknown questions get an honest reply": "unknown questions get a clear reply",
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/",
+   "href=\"/blog/free-ai-api-keys/": "href=\"/free-ai-api-keys/",
+   "href=\"/blog/test-your-chatbot-before-launch/": "href=\"/test-your-chatbot-before-launch/"
+  },
+  "post_type": "post"
+ },
+ "/blog/measure-website-chatbot-results/": {
+  "content": {
+   "Honest \"I don't know\" replies.": "\"I don't know\" replies.",
+   "often the most honest one you will get": "often the most direct one you will get",
+   "Thirty minutes a month of honest review": "Thirty minutes a month of careful review",
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/",
+   "href=\"/blog/lead-capture-chatbot-tips/": "href=\"/lead-capture-chatbot-tips/",
+   "href=\"/blog/after-hours-website-leads/": "href=\"/after-hours-website-leads/",
+   "href=\"/blog/test-your-chatbot-before-launch/": "href=\"/test-your-chatbot-before-launch/"
+  },
+  "post_type": "post"
+ },
+ "/blog/best-chatbot-for-customer-service/": {
+  "content": {
+   "href=\"/blog/website-chatbot-privacy-checklist/": "href=\"/website-chatbot-privacy-checklist/",
+   "href=\"/blog/add-free-chatbot-to-wordpress/": "href=\"/add-free-chatbot-to-wordpress/"
+  },
+  "post_type": "post"
+ },
+ "/blog/gemini-api-key-free/": {
+  "content": {
+   "href=\"/blog/free-ai-api-keys/": "href=\"/free-ai-api-keys/"
+  },
+  "post_type": "post"
+ },
+ "/blog/self-hosted-chatbot/": {
+  "content": {
+   "The AI model is the part to be honest about.": "The AI model is the part that needs a closer look.",
+   "href=\"/blog/website-chatbot-privacy-checklist/": "href=\"/website-chatbot-privacy-checklist/"
+  },
+  "post_type": "post"
+ },
+ "/blog/best-chatbot-for-ecommerce/": {
+  "content": {
+   "href=\"/blog/woocommerce-shipping-returns-pages/": "href=\"/woocommerce-shipping-returns-pages/",
+   "href=\"/blog/woocommerce-chatbot-questions/": "href=\"/woocommerce-chatbot-questions/"
+  },
+  "post_type": "post"
+ },
+ "/blog/real-estate-chatbot-examples/": {
+  "content": {
+   "href=\"/blog/real-estate-chatbot-template/": "href=\"/real-estate-chatbot-template/"
+  },
+  "post_type": "post"
+ },
+ "/blog/healthcare-chatbot-use-cases/": {
+  "content": {
+   "href=\"/blog/website-chatbot-privacy-checklist/": "href=\"/website-chatbot-privacy-checklist/",
+   "href=\"/blog/chatbot-for-dental-clinics/": "href=\"/chatbot-for-dental-clinics/"
+  },
+  "post_type": "post"
+ },
+ "/blog/resell-white-label-ai-chatbot/": {
+  "content": {
+   "href=\"/blog/write-pages-your-chatbot-can-answer/": "href=\"/write-pages-your-chatbot-can-answer/"
+  },
+  "post_type": "post"
+ }
+}

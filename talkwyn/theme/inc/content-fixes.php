@@ -11,7 +11,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const TALKWYN_CONTENT_FIXES = 5;
+const TALKWYN_CONTENT_FIXES = 6;
 
 /**
  * Old text => new text. Theme 2.12.0: white label is the Agency plan's (logo and
@@ -296,6 +296,32 @@ function talkwyn_content_fixes_5(): void {
 }
 
 /**
+ * Fix set 6 (theme 2.17.6, copy review): plainer wording, no "every language" claims,
+ * direct links to blog posts instead of /blog/ addresses that redirect, and a "Keep reading"
+ * list of related guides on every post.
+ */
+function talkwyn_content_fixes_6(): void {
+	$file    = __DIR__ . '/content-fixes-6.json';
+	$skipped = array_merge( (array) get_option( 'talkwyn_content_fixes_skipped', array() ), talkwyn_content_fixes_pages( $file ) );
+	update_option( 'talkwyn_content_fixes_skipped', array_values( array_unique( array_map( 'intval', $skipped ) ) ), false );
+	$fixes = is_readable( $file ) ? json_decode( (string) file_get_contents( $file ), true ) : array(); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local theme file.
+	global $wpdb;
+	foreach ( (array) $fixes as $path => $fix ) {
+		if ( empty( $fix['excerpt'] ) ) {
+			continue;
+		}
+		$post = talkwyn_content_fixes_post( (string) $path, (string) ( $fix['post_type'] ?? 'page' ) );
+		if ( $post && $post->post_excerpt === $fix['excerpt'][0] ) {
+			$wpdb->update( $wpdb->posts, array( 'post_excerpt' => $fix['excerpt'][1] ), array( 'ID' => (int) $post->ID ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			clean_post_cache( (int) $post->ID );
+		}
+	}
+	if ( 'AI chatbot for WordPress that answers in every language' === get_option( 'blogdescription' ) ) {
+		update_option( 'blogdescription', 'AI chatbot for WordPress that answers visitors in their own language' );
+	}
+}
+
+/**
  * Descriptions for the blog categories (archive intro and meta description), only where empty.
  */
 function talkwyn_category_descriptions(): void {
@@ -323,7 +349,7 @@ function talkwyn_content_fixes_brand(): void {
 		update_option( 'blogname', 'Talkwyn' );
 	}
 	if ( '' === trim( (string) get_option( 'blogdescription' ) ) ) {
-		update_option( 'blogdescription', 'AI chatbot for WordPress that answers in every language' );
+		update_option( 'blogdescription', 'AI chatbot for WordPress that answers visitors in their own language' );
 	}
 	$rank_math = get_option( 'rank-math-options-titles' );
 	if ( is_array( $rank_math ) ) {
@@ -377,6 +403,9 @@ add_action(
 		if ( $done < 5 ) {
 			talkwyn_content_fixes_5();
 		}
+		if ( $done < 6 ) {
+			talkwyn_content_fixes_6();
+		}
 		update_option( 'talkwyn_content_fixes', TALKWYN_CONTENT_FIXES, false );
 	}
 );
@@ -405,3 +434,47 @@ add_action(
 		echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'Talkwyn theme: some pages need a manual copy check.', 'talkwyn' ) . '</strong> ' . esc_html__( 'Their text was edited after the import, so the launch copy fixes (install steps, setup order, Slack and Telegram alerts, Pro features, smart search, legal details) were not applied automatically. Compare them with setup/content/pages.json in the theme:', 'talkwyn' ) . ' ' . implode( ', ', $links ) . '. <a href="' . esc_url( wp_nonce_url( add_query_arg( 'tw_fixes_seen', 1 ), 'tw_fixes_seen' ) ) . '">' . esc_html__( 'Hide this notice', 'talkwyn' ) . '</a></p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
 	}
 );
+
+/**
+ * A link to a blog post that is not published yet (scheduled or draft) shows as plain text
+ * until the post goes live, so visitors never land on a missing page.
+ *
+ * @param string $content Post content.
+ * @return string
+ */
+function talkwyn_unlink_unpublished( $content ) {
+	static $status = array();
+	if ( false === strpos( (string) $content, 'href="/' ) ) {
+		return $content;
+	}
+	if ( ! preg_match_all( '#<a\s[^>]*href="/(?:blog/)?([a-z0-9-]+)/(?:\#[^"]*)?"[^>]*>#', (string) $content, $m ) ) {
+		return $content;
+	}
+	$need = array_diff( array_unique( $m[1] ), array_keys( $status ) );
+	if ( $need ) {
+		foreach ( $need as $slug ) {
+			$status[ $slug ] = '';
+		}
+		$posts = get_posts(
+			array(
+				'post_type'        => 'post',
+				'post_name__in'    => array_values( $need ),
+				'post_status'      => array( 'publish', 'future', 'draft', 'pending', 'private' ),
+				'numberposts'      => count( $need ),
+				'suppress_filters' => true,
+			)
+		);
+		foreach ( $posts as $post ) {
+			$status[ $post->post_name ] = $post->post_status;
+		}
+	}
+	return (string) preg_replace_callback(
+		'#<a\s[^>]*href="/(?:blog/)?([a-z0-9-]+)/(?:\#[^"]*)?"[^>]*>(.*?)</a>#s',
+		static function ( $a ) use ( $status ) {
+			$state = $status[ $a[1] ] ?? '';
+			return ( '' !== $state && 'publish' !== $state ) ? $a[2] : $a[0];
+		},
+		(string) $content
+	);
+}
+add_filter( 'the_content', 'talkwyn_unlink_unpublished', 20 );

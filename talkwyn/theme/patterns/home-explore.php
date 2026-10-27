@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"textAlign":"center"} -->
-<h2 class="wp-block-heading has-text-align-center">Every industry. Every language.</h2>
+<h2 class="wp-block-heading has-text-align-center">Find your industry or language.</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"tw-lede"} -->

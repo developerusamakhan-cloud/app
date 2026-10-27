@@ -144,7 +144,7 @@ function talkwyn_menu(): array {
 			),
 			'feature' => array(
 				'type'  => 'languages',
-				'title' => __( 'One chatbot, every language', 'talkwyn' ),
+				'title' => __( 'One chatbot, many languages', 'talkwyn' ),
 				'text'  => __( 'It replies in the language each visitor writes in.', 'talkwyn' ),
 				'url'   => '/multilingual-chatbot/',
 			),

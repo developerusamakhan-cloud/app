@@ -154,7 +154,8 @@ function nabia_preload_fonts() {
 		);
 	}
 }
-add_action( 'wp_head', 'nabia_preload_fonts', 1 );
+// After the stylesheet (wp_head priority 8), so on slow phones the CSS is downloaded first.
+add_action( 'wp_head', 'nabia_preload_fonts', 9 );
 
 /**
  * Favicon colours: follow the colour scheme and the custom accent.

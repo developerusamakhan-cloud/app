@@ -103,10 +103,6 @@ Yes. The chat fetches a fresh session token from an uncached endpoint when it op
 
 Turn on "My site is behind Cloudflare or a proxy" under Talkwyn, Privacy. Talkwyn then reads the visitor IP from the proxy headers.
 
-= I used Nabia AI Chatbot. Do I lose anything? =
-
-No. Talkwyn copies your settings, knowledge, leads and chat logs on first run and then offers to delete the old data.
-
 = Where is my data stored? =
 
 In your WordPress database. Chats, leads and knowledge stay on your site. Messages are sent to your AI provider to generate answers.
@@ -123,163 +119,51 @@ In your WordPress database. Chats, leads and knowledge stay on your site. Messag
 == Changelog ==
 
 = 2.3.14 =
-* Fixed: A visitor who filled the lead form very quickly (for example with browser autofill) saw "Lead saved" but the lead was not stored. Talkwyn now waits a shorter time and, if the form is still sent too fast, asks the visitor to press send again instead of dropping the lead.
-* New: "Write a review" button in the Talkwyn header, a "Rate Talkwyn" link on the Plugins screen and a review line in the footer of Talkwyn screens.
-* New: A review reminder on the Dashboard and Plugins screen after 7 days, once the chat has had a few conversations. "Maybe later" brings it back after 15, then 30, then 60 days, and then it stops. "I already did" stops it at once. It is never shown on white-labelled sites.
-* Changed: The Talkwyn menu icon shows in its own colours.
-* Changed: Sites that moved from Nabia AI Chatbot get the Talkwyn default texts (welcome message, suggestions, privacy note) where the old Nabia defaults were never changed. Texts you wrote yourself are kept.
+* Fixed: Leads sent very quickly (for example with browser autofill) are now saved.
+* New: "Write a review" link in the Talkwyn screens and on the Plugins screen.
+* Changed: The Talkwyn menu icon shows in colour.
 
 = 2.3.13 =
-* New: On WordPress 7.0 and later, Talkwyn answers through the WordPress AI Client by default, using the AI connection set up in Settings > Connectors. Direct keys for Groq, OpenRouter, Gemini and Cloudflare stay available as an option and as a fallback.
-* Changed: The pop-out chat window loads its styles from a stylesheet file.
-* Changed: All chat and settings screen markup is escaped on output.
+* New: On WordPress 7.0 and later, Talkwyn can answer through the AI connection set up in Settings > Connectors.
+* Improved: Security and code quality.
 
 = 2.3.12 =
-* Fixed: On block themes, a chat placed with [talkwyn_chat mode="inline"] or the block stayed empty and did not answer, because its settings were not loaded on the page. It now loads them wherever the chat is placed.
-* Fixed: An inline chat no longer stops the page from scrolling: at the end of the messages, the mouse wheel or a swipe scrolls the page on.
-
-= 2.3.11 =
-* Changed: The plugin header links to the plugin page (talkwyn.com/download/) and the author page (talkwyn.com/about/) separately, as WordPress.org asks.
+* Fixed: A chat placed inside a page on block themes did not answer.
+* Fixed: An inline chat no longer stops the page from scrolling.
 
 = 2.3.10 =
-* Fixed: With "Open full screen on phones" on, the chat on phones stayed a little narrower and shorter than the screen, so the page showed at the side and bottom. It now fills the whole screen, leaves room for the iPhone home bar, and hides the expand button there.
-
-= 2.3.9 =
-* Changed: The privacy note and the "Powered by Talkwyn" badge under the chat are smaller (11px and 10.5px), so the footer takes less space.
+* Fixed: Full screen chat on phones now fills the whole screen.
 
 = 2.3.8 =
-* Changed: The plugin is now called "Talkwyn AI Chatbot: Multilingual Answers and Lead Capture" (slug stays `talkwyn`), with a clearer description, installation steps and FAQ.
-* Fixed: The mobile layout rules of the chat window (spacing and panel size on screens up to 640px) were ignored because of a broken CSS rule.
-* Fixed: The readme now describes the weekly summary (chats, leads and top questions), the setup order (AI key before the scan) and what happens when every AI provider fails.
-* Changed: The news opt-in in the setup wizard says it also sends your site language.
-
-= 2.3.7 =
-* Changed: The Pro features list says that white label and settings export are part of the Agency plan.
+* Changed: Clearer plugin name, description and FAQ.
+* Fixed: Chat window layout on small screens.
 
 = 2.3.6 =
-* Changed: The chat uses the Inter font, bundled with the plugin, so it looks the same on every theme. Buttons and chips are lighter (medium weight) and easier to read.
-
-= 2.3.5 =
-* Changed: The plugin name is "Talkwyn" in both the plugin header and this readme, so the WordPress.org address matches the plugin's text domain.
-
-= 2.3.4 =
-* Changed: The AI provider addresses carry a code note for the WordPress Plugin Check. You pick the provider and add your own key, so nothing changes in how chats are answered.
-
-= 2.3.3 =
-* Changed: The LIKE patterns in two knowledge cleanup queries are passed as prepared values (WordPress Plugin Check).
-
-= 2.3.2 =
-* Changed: Code cleanup from the WordPress Plugin Check report: database table names go through prepared statements, error messages are escaped, and a missing translator note was added.
-* Changed: Tested up to WordPress 7.1. The plugin name in the plugin list now matches the WordPress.org listing.
+* Changed: The chat uses the bundled Inter font, so it looks the same on every theme.
 
 = 2.3.1 =
-* Changed: Sources under an answer fold behind a small "Sources (n)" button. Click it to see the links.
-* Changed: At most three sources per answer, one per page. Small talk, "I don't know" and off-topic replies show no sources.
+* Changed: Sources under an answer are folded behind a "Sources" button and limited to three.
 
 = 2.3.0 =
-* Changed: The chat keeps its own look on any theme or page builder: every widget style has ID-level weight, and the send icon, inputs, text and scrollbar are locked against theme rules (including theme-wide scrollbar colours and arrows).
-
-= 2.2.3 =
-* New: the installed Talkwyn version (and the Pro version, when Pro is installed) shows next to the title on Talkwyn screens, so you can confirm an update at a glance.
-
-= 2.2.2 =
-* Changed: Buttons use three fixed sizes everywhere: small 36px, normal 44px, large 52px. Buttons in the same row match, and the header buttons all have icons.
-
-= 2.2.1 =
-* Changed: the admin tab bar has no scrollbar. When the tabs do not fit, left and right arrow buttons appear and the open tab is kept in view. The admin area is a little wider, so all tabs fit on most desktop screens.
+* Changed: The chat keeps its own look on any theme or page builder.
 
 = 2.2.0 =
-* New: a "Pro features" tab that lists what Talkwyn Pro adds, grouped by area, plus what is on the roadmap. It is information only: nothing in the free plugin is locked. The tab hides once Pro is licensed.
-* New: Pro tips link to the full list.
+* New: Pro features overview tab.
+* Changed: Cleaner admin tabs and consistent button sizes.
 
 = 2.1.3 =
-* Fixed: the lead form in the chat showed "We could not save your details" and did not save the lead. Introduced in 2.1.0.
-
-= 2.1.2 =
-* Changed: the Save button is a tall tab on the right edge of the screen on desktop, so it no longer covers settings or the live preview. A red dot shows when there are unsaved changes.
-
-= 2.1.1 =
-* Fixed: the Appearance live preview now follows every setting as you change it: launcher icon, avatar (including your image and first letter), header buttons, chat menu, message times, copy and feedback buttons, source links, typing text, badge, colours, position and header style.
-* Fixed: no blue focus ring on Talkwyn tabs and buttons after a click. Keyboard focus shows a red outline.
+* Fixed: Leads from the chat form were not saved.
 
 = 2.1.0 =
-* New: admin screens in the Talkwyn style, with a dashboard checklist, weekly summary and live appearance preview.
-* New: chat menu with name, email transcript, language picker, sound, pop out and new chat.
-* New: show the chat by device and by logged in state; optional gradient header and launcher pulse.
-* New: "Powered by Talkwyn" badge is off by default and asked about in the wizard, with an optional referral code.
-* New: a time check on the lead and transcript forms to stop bots that submit instantly.
-* New: hooks `talkwyn_widget_menu`, `talkwyn_languages`, `talkwyn_admin_logo` and `talkwyn_hub_url`.
-* New: Start free trial links in the admin and wizard (hidden when Pro is active). Pro tabs are no longer shown in the free plugin.
-* Changed: requires PHP 8.0.
-* Changed: hooks renamed: `talkwyn_retrieve` to `talkwyn_sources`, `talkwyn_pre_reply` to `talkwyn_before_answer`, `talkwyn_after_reply` to `talkwyn_after_answer`, `talkwyn_lead_saved` to `talkwyn_lead_created`, `talkwyn_show_powered_by` to `talkwyn_show_badge`.
-* Changed: leads get a Source column (chat or transcript). The database updates on its own.
+* New: Redesigned admin with a dashboard checklist, weekly summary and live preview.
+* New: Chat menu with email transcript, language picker, sound, pop out and new chat.
+* New: Show the chat by device or for logged in visitors only.
+* Changed: Requires PHP 8.0.
 
 = 2.0.0 =
-* Renamed from Nabia AI Chatbot to Talkwyn, with a one-time migration of settings, knowledge, leads and logs.
-* New: setup wizard, Gutenberg block, `[talkwyn_chat]` shortcode.
-* New: chat endpoints moved to the REST API with a fresh token on open, so cached pages work.
-* New: conversation history stored on the server by session; the chat continues across pages. Browser-sent history is no longer trusted.
-* New: Markdown answers rendered with an allow-list sanitizer.
-* New: Smart Contrast, consent checkbox, honeypot, lead rate limit and optional Cloudflare Turnstile.
-* New: model lists loaded from each provider's API.
-* New: personal data exporter and eraser, privacy policy text, uninstall that removes data only when you opt in.
-* New: all admin text is translatable (text domain `talkwyn`).
-* Fixed: unpublished, trashed, deleted and password protected content is removed from the knowledge.
-* Fixed: retrieval ranks inside MySQL (FULLTEXT plus keyword score) before the limit, so older relevant pages are found.
-* Fixed: rate limit by session plus IP; proxy headers only when you allow them.
-* Fixed: Gemini key sent in a header instead of the URL.
-* Fixed: custom fields are opt-in with an allow list.
-* Fixed: a full scan removes knowledge of posts that no longer exist.
+* First release of Talkwyn: setup wizard, chat block and shortcode, lead capture with spam protection, multilingual answers, privacy tools and support for cached pages.
 
 == Upgrade Notice ==
 
-= 2.3.7 =
-Text update in the Pro features list.
-
-= 2.3.6 =
-Cleaner chat text and buttons with the bundled Inter font.
-
-= 2.3.5 =
-Plugin name set to Talkwyn. No behaviour change.
-
-= 2.3.4 =
-Code notes for the WordPress Plugin Check. No behaviour change.
-
-= 2.3.3 =
-One more code cleanup for the WordPress Plugin Check.
-
-= 2.3.2 =
-Code cleanup for the WordPress Plugin Check. No settings change.
-
-= 2.3.1 =
-Sources under chat answers are folded and limited to three.
-
-= 2.3.0 =
-The chat no longer picks up colours, fonts or scrollbars from your theme.
-
-= 2.2.3 =
-Shows the installed version in the Talkwyn header.
-
-= 2.2.2 =
-Consistent button sizes in the admin.
-
-= 2.2.1 =
-Cleaner admin tab bar.
-
-= 2.2.0 =
-Adds a Pro features overview tab.
-
-= 2.1.3 =
-Important: fixes leads not saving from the chat form. Update now.
-
-= 2.1.2 =
-Save button moved to the right edge so it never covers settings.
-
-= 2.1.1 =
-Live preview fixes on the Appearance tab.
-
-= 2.1.0 =
-New admin design, chat menu and visibility rules. Needs PHP 8.0. If you use Talkwyn Pro, update it to 1.2.0 too.
-
-= 2.0.0 =
-Nabia AI Chatbot is now Talkwyn. Your data is copied over automatically. Deactivate Nabia afterwards so visitors see one chat.
+= 2.3.14 =
+Fixes leads that were not saved when the form was sent very quickly.

@@ -35,7 +35,6 @@ class Talkwyn_Frontend {
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register' ) );
 		add_action( 'wp_footer', array( __CLASS__, 'render_floating' ) );
 		add_shortcode( 'talkwyn_chat', array( __CLASS__, 'shortcode' ) );
-		add_action( 'init', array( __CLASS__, 'legacy_shortcode' ), 99 );
 		add_action( 'template_redirect', array( __CLASS__, 'popout' ), 1 );
 	}
 
@@ -191,17 +190,6 @@ class Talkwyn_Frontend {
 </html>
 		<?php
 		exit;
-	}
-
-	/**
-	 * Keep [nabia_ai_chatbot] working after moving from Nabia AI Chatbot.
-	 *
-	 * @return void
-	 */
-	public static function legacy_shortcode() {
-		if ( ! shortcode_exists( 'nabia_ai_chatbot' ) ) {
-			add_shortcode( 'nabia_ai_chatbot', array( __CLASS__, 'shortcode' ) );
-		}
 	}
 
 	/**

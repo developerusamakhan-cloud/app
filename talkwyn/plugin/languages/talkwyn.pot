@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Talkwyn AI Chatbot: Multilingual Answers and Lead Capture 2.3.14\n"
+"Project-Id-Version: Talkwyn AI Chatbot: Multilingual Answers and Lead Capture 2.3.15\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/talkwyn\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-25T13:13:24+00:00\n"
+"POT-Creation-Date: 2026-10-27T11:30:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: talkwyn\n"
@@ -361,8 +361,6 @@ msgstr ""
 #: includes/admin/class-talkwyn-admin.php:1446
 #: includes/admin/class-talkwyn-onboarding.php:314
 #: includes/class-talkwyn-indexer.php:40
-#: includes/class-talkwyn-migration.php:277
-#: includes/class-talkwyn-migration.php:305
 msgid "You do not have permission to do this."
 msgstr ""
 
@@ -831,7 +829,7 @@ msgid "Choose"
 msgstr ""
 
 #: includes/admin/class-talkwyn-admin.php:959
-#: includes/class-talkwyn-frontend.php:358
+#: includes/class-talkwyn-frontend.php:346
 msgid "Chat window"
 msgstr ""
 
@@ -877,9 +875,9 @@ msgstr ""
 
 #: includes/admin/class-talkwyn-admin.php:992
 #: includes/admin/class-talkwyn-admin.php:1074
-#: includes/class-talkwyn-frontend.php:342
-#: includes/class-talkwyn-frontend.php:526
-#: includes/class-talkwyn-frontend.php:566
+#: includes/class-talkwyn-frontend.php:330
+#: includes/class-talkwyn-frontend.php:514
+#: includes/class-talkwyn-frontend.php:554
 msgid "Chat menu"
 msgstr ""
 
@@ -893,7 +891,7 @@ msgstr ""
 
 #: includes/admin/class-talkwyn-admin.php:995
 #: includes/admin/class-talkwyn-admin.php:1076
-#: includes/class-talkwyn-frontend.php:119
+#: includes/class-talkwyn-frontend.php:118
 msgid "Email transcript"
 msgstr ""
 
@@ -917,7 +915,7 @@ msgstr ""
 #: includes/admin/class-talkwyn-admin.php:1001
 #: includes/admin/class-talkwyn-admin.php:1070
 #: includes/admin/class-talkwyn-onboarding.php:235
-#: includes/class-talkwyn-frontend.php:341
+#: includes/class-talkwyn-frontend.php:329
 msgid "Powered by Talkwyn"
 msgstr ""
 
@@ -1022,7 +1020,7 @@ msgid "New chat question"
 msgstr ""
 
 #: includes/admin/class-talkwyn-admin.php:1028
-#: includes/class-talkwyn-frontend.php:125
+#: includes/class-talkwyn-frontend.php:124
 msgid "Sound"
 msgstr ""
 
@@ -1113,22 +1111,22 @@ msgid "Delivery"
 msgstr ""
 
 #: includes/admin/class-talkwyn-admin.php:1075
-#: includes/class-talkwyn-frontend.php:113
+#: includes/class-talkwyn-frontend.php:112
 msgid "Change name"
 msgstr ""
 
 #: includes/admin/class-talkwyn-admin.php:1077
-#: includes/class-talkwyn-frontend.php:131
+#: includes/class-talkwyn-frontend.php:130
 msgid "Language"
 msgstr ""
 
 #: includes/admin/class-talkwyn-admin.php:1078
-#: includes/class-talkwyn-frontend.php:136
+#: includes/class-talkwyn-frontend.php:135
 msgid "Pop out"
 msgstr ""
 
 #: includes/admin/class-talkwyn-admin.php:1079
-#: includes/class-talkwyn-frontend.php:147
+#: includes/class-talkwyn-frontend.php:146
 msgid "Add chat to your website"
 msgstr ""
 
@@ -1686,76 +1684,76 @@ msgstr ""
 msgid "this website"
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:339
-#: includes/class-talkwyn-frontend.php:572
+#: includes/class-talkwyn-frontend.php:327
+#: includes/class-talkwyn-frontend.php:560
 msgid "Send message"
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:340
-#: includes/class-talkwyn-frontend.php:570
+#: includes/class-talkwyn-frontend.php:328
+#: includes/class-talkwyn-frontend.php:558
 #: includes/class-talkwyn-privacy.php:138
 msgid "Message"
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:343
+#: includes/class-talkwyn-frontend.php:331
 msgid "Your name"
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:344
+#: includes/class-talkwyn-frontend.php:332
 msgid "Save"
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:345
+#: includes/class-talkwyn-frontend.php:333
 msgid "Cancel"
 msgstr ""
 
 #. translators: %s: visitor name
-#: includes/class-talkwyn-frontend.php:347
+#: includes/class-talkwyn-frontend.php:335
 #, php-format
 msgid "Thanks, %s. Nice to meet you."
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:348
+#: includes/class-talkwyn-frontend.php:336
 msgid "Email this chat to me"
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:349
+#: includes/class-talkwyn-frontend.php:337
 msgid "Send me this chat and let the team contact me about my questions."
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:350
+#: includes/class-talkwyn-frontend.php:338
 msgid "Send transcript"
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:351
+#: includes/class-talkwyn-frontend.php:339
 msgid "Auto (match my messages)"
 msgstr ""
 
 #. translators: %s: language name
-#: includes/class-talkwyn-frontend.php:353
+#: includes/class-talkwyn-frontend.php:341
 #, php-format
 msgid "Replies will be in %s."
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:354
+#: includes/class-talkwyn-frontend.php:342
 msgid "Sound on"
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:355
+#: includes/class-talkwyn-frontend.php:343
 msgid "Sound off"
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:356
+#: includes/class-talkwyn-frontend.php:344
 msgid "Leave this field empty"
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:357
+#: includes/class-talkwyn-frontend.php:345
 #: includes/class-talkwyn-rest.php:278
 msgid "Please complete the security check."
 msgstr ""
 
-#: includes/class-talkwyn-frontend.php:359
-#: includes/class-talkwyn-frontend.php:552
+#: includes/class-talkwyn-frontend.php:347
+#: includes/class-talkwyn-frontend.php:540
 msgid "Open chat"
 msgstr ""
 
@@ -1822,32 +1820,6 @@ msgstr ""
 
 #: includes/class-talkwyn-leads.php:169
 msgid "All leads:"
-msgstr ""
-
-#: includes/class-talkwyn-migration.php:243
-msgid "Talkwyn imported your Nabia AI Chatbot data."
-msgstr ""
-
-#. translators: 1: knowledge chunks, 2: leads, 3: chat messages
-#: includes/class-talkwyn-migration.php:246
-#, php-format
-msgid "Copied your settings plus knowledge chunks: %1$d, leads: %2$d, chat messages: %3$d."
-msgstr ""
-
-#: includes/class-talkwyn-migration.php:253
-msgid "Deactivate Nabia AI Chatbot so visitors see only one chat widget."
-msgstr ""
-
-#: includes/class-talkwyn-migration.php:255
-msgid "Delete the old Nabia tables and settings? Talkwyn keeps its own copy."
-msgstr ""
-
-#: includes/class-talkwyn-migration.php:255
-msgid "Delete old Nabia data"
-msgstr ""
-
-#: includes/class-talkwyn-migration.php:255
-msgid "Keep it for now"
 msgstr ""
 
 #: includes/class-talkwyn-privacy.php:38

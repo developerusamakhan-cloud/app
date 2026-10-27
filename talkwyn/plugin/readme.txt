@@ -4,7 +4,7 @@ Tags: chatbot, ai chatbot, live chat, multilingual, lead generation
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.3.14
+Stable tag: 2.3.15
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,6 +118,9 @@ In your WordPress database. Chats, leads and knowledge stay on your site. Messag
 
 == Changelog ==
 
+= 2.3.15 =
+* Removed: Old data import code that is no longer needed. The plugin is smaller and loads a little faster.
+
 = 2.3.14 =
 * Fixed: Leads sent very quickly (for example with browser autofill) are now saved.
 * New: "Write a review" link in the Talkwyn screens and on the Plugins screen.
@@ -165,5 +168,5 @@ In your WordPress database. Chats, leads and knowledge stay on your site. Messag
 
 == Upgrade Notice ==
 
-= 2.3.14 =
-Fixes leads that were not saved when the form was sent very quickly.
+= 2.3.15 =
+Smaller plugin with old import code removed. No settings change.

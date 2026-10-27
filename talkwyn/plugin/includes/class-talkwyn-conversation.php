@@ -2,8 +2,7 @@
 /**
  * Conversation helpers: small talk, intent, lead offers and local answers.
  *
- * Ported from Nabia AI Chatbot 1.9.0. Small talk in common languages is answered
- * locally to save provider quota.
+ * Small talk in common languages is answered locally to save provider quota.
  *
  * @package Talkwyn
  */

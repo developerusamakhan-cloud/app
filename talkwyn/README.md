@@ -22,7 +22,8 @@ cd talkwyn && cp -r theme /tmp/talkwyn && (cd /tmp && zip -r talkwyn-theme-2.17.
 
 ## Recent changes
 
-- **Plugin 2.3.14:** "Write a review" button, Rate link on the Plugins screen, a review reminder after 7 days (then 15, 30, 60 days on "Maybe later"), the menu icon in brand colours, the lead form no longer drops quick real visitors, and old Nabia default texts move to the Talkwyn defaults.
+- **Plugin 2.3.15:** old import code removed, smaller plugin.
+- **Plugin 2.3.14:** "Write a review" button, Rate link on the Plugins screen, a review reminder after 7 days (then 15, 30, 60 days on "Maybe later"), the menu icon in brand colours, and the lead form no longer drops quick real visitors.
 - **Plugin 2.3.13:** WordPress.org review fixes. Escaped output, the pop-out styles are enqueued, and the WordPress AI Client (WordPress 7.0+) is the default AI provider.
 - **Pro 1.2.8:** QA fixes for licensing (renewal, cron, freed sites, domain moves) and features (order lookup, Slack alerts, streaming, uninstall). See `QA-REPORT.md`.
 - **Hub 1.7.3:**

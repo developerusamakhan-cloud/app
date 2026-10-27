@@ -71,6 +71,7 @@ Tips:
 - The animated tab icon stays still on phones and tablets, and on computers it starts only after the page has loaded.
 - The "designer cursor" in the hero mockup now moves with a GPU-friendly transform instead of top/left, so the browser no longer recalculates the layout on every frame.
 - The pulsing ring on the video play button is now a still ring (the old animation repainted the page all the time).
+- The intro preloader is skipped on phones and tablets, so the page content shows immediately there (computers still see it once per visit).
 
 ## What's new in 2.23.7
 

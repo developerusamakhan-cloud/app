@@ -27,7 +27,9 @@
 	}
 
 	var preloader = $('.preloader');
-	if (preloader && settings.preloader && !reduceMotion && !sessionStorageGet('nabiaSeen')) {
+	// Phones skip the intro: the page should show its content as early as possible there.
+	var touchOnly = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+	if (preloader && settings.preloader && !reduceMotion && !touchOnly && !sessionStorageGet('nabiaSeen')) {
 		body.classList.add('is-loading');
 		var countEl = $('.preloader-count', preloader);
 		var start = performance.now();

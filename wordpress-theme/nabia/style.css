@@ -353,6 +353,12 @@ p {
 	transform: translateY(-100%);
 }
 
+@media (pointer: coarse) {
+	.preloader {
+		display: none;
+	}
+}
+
 .preloader-inner {
 	display: flex;
 	align-items: baseline;

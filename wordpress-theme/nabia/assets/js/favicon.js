@@ -22,7 +22,8 @@
 	var ctx = canvas.getContext( '2d' );
 	var N_PATH = new Path2D( 'M15 34V15.5a1.5 1.5 0 0 1 2.6-1l12.8 15a1.5 1.5 0 0 0 2.6-1V14' );
 	var N_LENGTH = 58;
-	var reduceMotion = window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
+	// Phones and tablets barely show the tab icon, so it stays still there (saves battery and CPU).
+	var reduceMotion = window.matchMedia && ( window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches || window.matchMedia( '(pointer: coarse)' ).matches );
 
 	canvas.width = SIZE;
 	canvas.height = SIZE;
@@ -247,9 +248,13 @@
 		} );
 	}
 
-	if ( document.readyState === 'loading' ) {
-		document.addEventListener( 'DOMContentLoaded', start );
+	// Start after the page has finished loading, so the first paint is not delayed.
+	function later() {
+		setTimeout( start, 1500 );
+	}
+	if ( document.readyState === 'complete' ) {
+		later();
 	} else {
-		start();
+		window.addEventListener( 'load', later );
 	}
 }() );

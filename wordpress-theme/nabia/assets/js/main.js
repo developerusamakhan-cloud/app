@@ -120,7 +120,8 @@
 	 * reduced-motion users and scrollable boxes marked data-lenis-prevent.
 	 * ------------------------------------------------------------------ */
 	var lenis = null;
-	if (settings.smooth && window.Lenis && !reduceMotion) {
+	var finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+	if (settings.smooth && window.Lenis && !reduceMotion && finePointer) {
 		$$('.video-list, textarea, select').forEach(function (el) {
 			el.setAttribute('data-lenis-prevent-wheel', '');
 		});

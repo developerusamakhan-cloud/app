@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.23.7
+Version: 2.23.8
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -1567,11 +1567,16 @@ body:not(.is-home) .site-main {
 }
 
 /* A collaborator-style cursor that "designs" the mockup */
+/* A full-size layer moved with translate (percent of the stage), so the browser only
+   composites it instead of laying out the page on every frame. */
 .collab-cursor {
 	position: absolute;
 	z-index: 3;
-	top: 30%;
-	left: 20%;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	translate: 20% 30%;
 	display: flex;
 	align-items: flex-start;
 	pointer-events: none;
@@ -1599,20 +1604,16 @@ body:not(.is-home) .site-main {
 @keyframes collab {
 	0%,
 	100% {
-		top: 30%;
-		left: 18%;
+		translate: 18% 30%;
 	}
 	25% {
-		top: 58%;
-		left: 62%;
+		translate: 62% 58%;
 	}
 	50% {
-		top: 70%;
-		left: 22%;
+		translate: 22% 70%;
 	}
 	75% {
-		top: 22%;
-		left: 70%;
+		translate: 70% 22%;
 	}
 }
 
@@ -5902,13 +5903,6 @@ img.avatar {
 	border-radius: 50%;
 	background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%23111'/%3E%3C/svg%3E") 56% 50% / 34px no-repeat;
 	box-shadow: 0 0 0 12px color-mix(in srgb, #fff 25%, transparent);
-	animation: ring 2s var(--ease) infinite;
-}
-
-@keyframes ring {
-	50% {
-		box-shadow: 0 0 0 22px color-mix(in srgb, #fff 0%, transparent);
-	}
 }
 
 .video-sound {

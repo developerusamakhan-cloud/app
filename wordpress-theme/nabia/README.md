@@ -65,6 +65,13 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.23.8
+
+- **Much less work for phones.** Smooth scrolling (Lenis) now runs only on devices with a mouse or trackpad; phones and tablets use their own native scrolling, so no animation loop runs in the background.
+- The animated tab icon stays still on phones and tablets, and on computers it starts only after the page has loaded.
+- The "designer cursor" in the hero mockup now moves with a GPU-friendly transform instead of top/left, so the browser no longer recalculates the layout on every frame.
+- The pulsing ring on the video play button is now a still ring (the old animation repainted the page all the time).
+
 ## What's new in 2.23.7
 
 - **Faster first paint (PageSpeed).** The homepage hero text and buttons now show from the first paint and only slide in, instead of waiting for the scroll animation, which was the main cause of the slow Largest Contentful Paint on mobile.

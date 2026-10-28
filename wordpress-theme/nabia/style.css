@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.23.8
+Version: 2.23.9
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -5648,6 +5648,109 @@ img.avatar {
 	max-width: 360px;
 	margin: 20px 0 24px;
 	color: color-mix(in srgb, var(--bg) 60%, transparent);
+}
+
+/* Ask AI about the brand */
+.ask-ai {
+	max-width: 420px;
+	margin-top: 28px;
+	padding: 18px;
+	border: 1px solid color-mix(in srgb, var(--bg) 12%, transparent);
+	border-radius: var(--radius-sm);
+	background: color-mix(in srgb, var(--bg) 4%, transparent);
+}
+
+.ask-ai-head {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 0 0 14px;
+}
+
+.footer-brand .ask-ai-head {
+	max-width: none;
+	margin: 0 0 14px;
+	color: var(--bg);
+}
+
+.ask-ai-badge {
+	display: grid;
+	flex-shrink: 0;
+	place-items: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 12px;
+	background: color-mix(in srgb, var(--accent) 22%, transparent);
+	color: var(--accent);
+}
+
+.ask-ai-badge .icon {
+	width: 20px;
+	height: 20px;
+}
+
+.ask-ai-copytext {
+	display: grid;
+	gap: 2px;
+}
+
+.ask-ai-copytext strong {
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.ask-ai-copytext span {
+	font-size: 13px;
+	color: color-mix(in srgb, var(--bg) 65%, transparent);
+}
+
+.ask-ai-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ask-ai-links a,
+.ask-ai-copy {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	min-height: 34px;
+	padding: 6px 12px;
+	border: 1px solid color-mix(in srgb, var(--bg) 16%, transparent);
+	border-radius: 999px;
+	background: transparent;
+	color: color-mix(in srgb, var(--bg) 80%, transparent);
+	font: 600 12px/1 var(--font-body);
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	text-decoration: none;
+	cursor: pointer;
+	transition: color 0.25s, border-color 0.25s, background-color 0.25s;
+}
+
+.ask-ai-links svg,
+.ask-ai-copy .icon {
+	width: 15px;
+	height: 15px;
+	flex-shrink: 0;
+}
+
+.ask-ai-links a:hover,
+.ask-ai-links a:focus-visible,
+.ask-ai-copy:hover,
+.ask-ai-copy:focus-visible {
+	border-color: var(--accent);
+	background: color-mix(in srgb, var(--accent) 14%, transparent);
+	color: var(--bg);
+}
+
+.ask-ai-copy.is-done {
+	border-color: var(--accent);
+	color: var(--accent);
 }
 
 .footer-heading {

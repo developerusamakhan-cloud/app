@@ -65,6 +65,10 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.23.9
+
+- **"Ask AI about me" in the footer.** One click opens ChatGPT, Claude, Gemini, Grok or Perplexity with the prompt "Give me a summary of (your name) from (your website)", and a Copy prompt button copies it for any other assistant. It uses your brand name and site address automatically. Turn it off in Customize → Nabia Theme → General.
+
 ## What's new in 2.23.8
 
 - **Much less work for phones.** Smooth scrolling (Lenis) now runs only on devices with a mouse or trackpad; phones and tablets use their own native scrolling, so no animation loop runs in the background.

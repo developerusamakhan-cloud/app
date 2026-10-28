@@ -110,6 +110,7 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 		'audit_text'         => 'Not sure why your website is not bringing in customers? Enter your link and get an instant score for design, SEO, content and page speed, plus a PDF report with clear, practical fixes. No cost, no obligation.',
 		'enable_popup'       => true,
 		'enable_cookies'     => true,
+		'enable_ask_ai'      => true,
 		'share_image'        => '',
 		'lock_share'         => true,
 		'cookie_title'       => 'A few cookies, if that is okay?',

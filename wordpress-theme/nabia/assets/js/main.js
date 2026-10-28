@@ -929,6 +929,28 @@
 		area.remove();
 		return Promise.resolve();
 	};
+
+	// Footer "Ask AI": copy the ready prompt for any other AI assistant.
+	$$('[data-ask-ai-copy]').forEach(function (btn) {
+		var label = btn.querySelector('span');
+		var original = label ? label.textContent : '';
+		btn.addEventListener('click', function () {
+			copyText(btn.getAttribute('data-ask-ai-copy'))
+				.then(function () {
+					btn.classList.add('is-done');
+					if (label) {
+						label.textContent = btn.getAttribute('data-done');
+					}
+					setTimeout(function () {
+						btn.classList.remove('is-done');
+						if (label) {
+							label.textContent = original;
+						}
+					}, 2500);
+				})
+				.catch(function () {});
+		});
+	});
 	if (gchat && typeof gchat.showModal === 'function') {
 		var email = ($('[data-gchat-email]', gchat) || {}).textContent || '';
 		var copyBtn = $('[data-gchat-copy]', gchat);

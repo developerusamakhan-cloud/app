@@ -70,6 +70,11 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 				<?php nabia_logo( 'logo-light' ); ?>
 				<p><?php echo esc_html( nabia_mod( 'footer_text' ) ); ?></p>
 				<?php nabia_social_links(); ?>
+				<?php
+				if ( nabia_mod( 'enable_ask_ai' ) ) {
+					get_template_part( 'template-parts/footer', 'ask-ai' );
+				}
+				?>
 			</div>
 
 			<div class="footer-col">

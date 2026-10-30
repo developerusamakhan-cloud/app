@@ -56,7 +56,7 @@ No insurer, law firm or advertiser can pay to change a formula, a result or an a
 
 [cf_faq]
 [cf_q q="Where does ClaimFairly get its information?"]From official sources such as state statutes, court decisions and insurance departments, plus established legal references like the Legal Information Institute at Cornell Law School.[/cf_q]
-[cf_q q="Do you use AI to write articles?"]Every page is written, checked and approved by a person, and we never use AI summaries as sources.[/cf_q]
+[cf_q q="Do you use AI to write articles?"]Yes, we use AI writing tools to help draft some pages. Figures, rules and formulas are checked against the sources listed on each page before it is published, and we never use AI summaries as sources.[/cf_q]
 [cf_q q="What does 'Last reviewed' mean?"]It is the date someone last checked the page against its sources. We only change it when that check actually happens.[/cf_q]
 [cf_q q="Can companies pay to be featured?"]No. No insurer, law firm or advertiser can pay to change a formula, a result or an article.[/cf_q]
 [cf_q q="How do I suggest a correction?"]Email {{email}} with the page and a source. Confirmed errors are fixed and the reviewed date is updated.[/cf_q]

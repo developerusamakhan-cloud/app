@@ -85,3 +85,89 @@ function claimfairly_publish_missed_schedule() {
 	}
 }
 add_action( 'init', 'claimfairly_publish_missed_schedule', 20 );
+
+/**
+ * Pages kept out of search results: thin archives, and pages that are still
+ * too close to a sibling page to stand on their own. They stay reachable for
+ * visitors and keep passing links ("follow").
+ *
+ * @return string[] Page slugs.
+ */
+function claimfairly_noindex_slugs() {
+	return array( 'how-allstate-handles-car-accident-claims' );
+}
+
+/**
+ * Whether the current request should carry noindex.
+ *
+ * @return bool
+ */
+function claimfairly_is_noindex_request() {
+	if ( is_category() || is_tag() || is_author() || is_date() ) {
+		return true;
+	}
+	if ( is_singular() ) {
+		$post = get_queried_object();
+		return $post instanceof WP_Post && in_array( $post->post_name, claimfairly_noindex_slugs(), true );
+	}
+	return false;
+}
+
+/**
+ * Core robots meta (used when no SEO plugin controls it).
+ *
+ * @param array $robots Robots directives.
+ * @return array
+ */
+function claimfairly_wp_robots_noindex( $robots ) {
+	if ( claimfairly_is_noindex_request() ) {
+		unset( $robots['index'] );
+		$robots['noindex'] = true;
+		$robots['follow']  = true;
+	}
+	return $robots;
+}
+add_filter( 'wp_robots', 'claimfairly_wp_robots_noindex', 20 );
+
+/**
+ * Rank Math robots meta.
+ *
+ * @param array $robots Robots directives keyed by name.
+ * @return array
+ */
+function claimfairly_rank_math_noindex( $robots ) {
+	if ( claimfairly_is_noindex_request() ) {
+		$robots['index']  = 'noindex';
+		$robots['follow'] = 'follow';
+	}
+	return $robots;
+}
+add_filter( 'rank_math/frontend/robots', 'claimfairly_rank_math_noindex', 20 );
+
+/**
+ * Keep the same pages out of the Rank Math sitemap.
+ *
+ * @param string|false $url    Sitemap entry.
+ * @param string       $type   Entry type.
+ * @param object       $object Post or term.
+ * @return string|false
+ */
+function claimfairly_rank_math_sitemap_entry( $url, $type, $object ) {
+	if ( 'post' === $type && $object instanceof WP_Post && in_array( $object->post_name, claimfairly_noindex_slugs(), true ) ) {
+		return false;
+	}
+	return $url;
+}
+add_filter( 'rank_math/sitemap/entry', 'claimfairly_rank_math_sitemap_entry', 20, 3 );
+
+/**
+ * Drop category and tag archives from the Rank Math sitemap.
+ *
+ * @param bool   $exclude Whether to exclude.
+ * @param string $type    Taxonomy name.
+ * @return bool
+ */
+function claimfairly_rank_math_exclude_taxonomy( $exclude, $type ) {
+	return in_array( $type, array( 'category', 'post_tag' ), true ) ? true : $exclude;
+}
+add_filter( 'rank_math/sitemap/exclude_taxonomy', 'claimfairly_rank_math_exclude_taxonomy', 20, 2 );

@@ -3173,21 +3173,34 @@ html[data-region="world"] .nav__list > .menu-item--tools {
 }
 
 .site-footer__bar {
-	display: flex;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
 	align-items: center;
-	justify-content: space-between;
-	gap: 14px 32px;
+	gap: 18px 32px;
 	margin-top: 20px;
 	padding-top: 20px;
 	border-top: 1px solid var(--line-dark);
 }
 
+.site-footer__links {
+	grid-column: 1 / -1;
+	padding-bottom: 18px;
+	border-bottom: 1px solid var(--line-dark);
+}
+
 .site-footer__legal {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 8px 22px;
-	margin: 0 auto 0 0 !important;
+	align-items: center;
+	gap: 10px 28px;
+	margin: 0 !important;
+	padding: 0;
+	list-style: none;
+}
+
+.site-footer__legal li {
+	margin: 0;
+	line-height: 1.4;
 }
 
 .site-footer__copy {
@@ -3966,8 +3979,12 @@ html[data-region="world"] .nav__list > .menu-item--tools {
 	}
 
 	.site-footer__bar {
-		flex-direction: column;
-		align-items: flex-start;
+		grid-template-columns: minmax(0, 1fr);
+		align-items: start;
+	}
+
+	.site-footer__legal {
+		gap: 10px 20px;
 	}
 
 	.faq__answer {

@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.12.0
+Stable tag: 1.12.1
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -285,6 +285,9 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.12.1 =
+* Footer: the separate PowerBachat column is gone. About us, How we check rates and Contact us now sit with the legal links in one row above the copyright line, which keeps the copyright on the left and the credit on the right.
 
 = 1.12.0 =
 * Visitors from outside Pakistan, India and Bangladesh get a world layout: the top bar offers free electrical calculators and links to the three countries, the menu leads with Tools and groups the bill calculators by country, the header button opens all converters, the footer shows converters and a bill calculators by country column, and the home page opens with a converters band. Tariff alerts are hidden for them.

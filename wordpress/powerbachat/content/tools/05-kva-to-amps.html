@@ -1,0 +1,60 @@
+<!-- powerbachat
+{
+"type": "page",
+"title": "kVA to Amps Calculator",
+"slug": "kva-to-amps",
+"parent": "tools",
+"template": "page-templates/tool.php",
+"order": 5,
+"excerpt": "Work out the full load current of a generator, transformer or UPS from its kVA rating, on single phase or three phase supplies.",
+"seo_title": "kVA to Amps Calculator: Single and Three Phase",
+"meta_description": "Convert kVA to amps for single and three phase supplies at 120 V to 480 V. Formula, table and worked examples for generators and transformers.",
+"focus_keyword": "kva to amps",
+"secondary_keywords": ["kva to amps calculator", "kva to amps conversion", "transformer full load current", "generator kva to amps"]
+}
+-->
+<p>To convert kVA to amps on a single phase supply, multiply the kVA by 1,000 and divide by the voltage. On a three phase supply, divide by the voltage times 1.732 instead. A 10 kVA single phase generator at 240 volts supplies about 41.7 amps, while a 100 kVA three phase transformer at 480 volts supplies about 120 amps per line.</p>
+
+<p>Use the calculator above to pick your supply and voltage, or read the table below for the most common sizes.</p>
+
+<h2>The kVA to amps formula</h2>
+
+<ul>
+<li><strong>Single phase:</strong> amps = kVA × 1,000 ÷ volts</li>
+<li><strong>Three phase:</strong> amps = kVA × 1,000 ÷ (1.732 × volts), where volts is the line to line voltage</li>
+</ul>
+
+<p>No power factor appears in these formulas, because kVA already describes apparent power: the current the equipment can carry at its rated voltage, whatever the load. That is exactly why generators, transformers and UPS units are rated in kVA.</p>
+
+<h2>kVA to amps table</h2>
+
+[powerbachat_tool_table]
+
+<h2>Worked examples</h2>
+
+<ul>
+<li><strong>5 kVA single phase inverter at 230 V:</strong> 5 × 1,000 ÷ 230 = 21.7 amps.</li>
+<li><strong>25 kVA single phase transformer at 240 V:</strong> 25,000 ÷ 240 = 104 amps.</li>
+<li><strong>75 kVA three phase transformer at 208 V:</strong> 75,000 ÷ (1.732 × 208) = 208 amps.</li>
+<li><strong>500 kVA three phase generator at 400 V:</strong> 500,000 ÷ (1.732 × 400) = 722 amps.</li>
+</ul>
+
+<h2>Using the result</h2>
+
+<p>The figure from this calculator is the full load current, the most the unit can supply continuously at its rating. Breakers, cables and switchgear are chosen from this number plus the safety margins in your local electrical code. On a generator, also check the starting current of large motors, which can briefly exceed the running load several times over.</p>
+
+<p>If you want real power instead of current, use the <a href="/tools/kva-to-kw/">kVA to kW calculator</a>. A 10 kVA generator rated at a power factor of 0.8 delivers 8 kW of real power.</p>
+
+<h2>Frequently asked questions</h2>
+
+<h3>How many amps is 1 kVA?</h3>
+<p>1 kVA is about 8.3 amps at 120 volts, 4.3 amps at 230 volts and 4.2 amps at 240 volts on a single phase supply. On a 400 volt three phase supply it is about 1.44 amps per line.</p>
+
+<h3>How many amps is a 15 kVA generator?</h3>
+<p>A single phase 15 kVA generator at 240 volts supplies 62.5 amps. A three phase 15 kVA generator at 400 volts supplies about 21.7 amps per line.</p>
+
+<h3>Why is three phase current lower?</h3>
+<p>The power is shared across three conductors, and each carries current at a voltage that is 1.732 times the phase voltage. So for the same kVA, each line carries less current than a single phase supply would.</p>
+
+<h3>Should I use 230 V or 240 V?</h3>
+<p>Use the voltage your supply or equipment is rated for. The difference between 230 and 240 volts changes the current by about 4 percent, which matters when you are close to a breaker rating.</p>

@@ -1234,6 +1234,178 @@
 	}
 
 	/* ------------------------------------------------------------------
+	 * Electrical converters (/tools/). Mirrors inc/tools.php.
+	 * ---------------------------------------------------------------- */
+
+	var HP = { mech: 745.69987, elec: 746, metric: 735.49875 };
+
+	function toolFactor(calc, p) {
+		var phase = p.phase || 'ac1';
+		var volts = parseFloat(p.volts) || 0;
+		var pf = phase === 'dc' || p.pf === undefined ? 1 : parseFloat(p.pf) || 0;
+		var root = phase === 'ac3' ? Math.sqrt(3) : 1;
+		var hours = parseFloat(p.hours) || 0;
+		switch (calc) {
+			case 'w2a':
+				return volts * pf > 0 ? 1 / (volts * pf * root) : 0;
+			case 'a2w':
+				return volts * pf * root;
+			case 'v2w':
+				return (parseFloat(p.amps) || 0) * pf;
+			case 'hp2w':
+				return HP[p.hp] || HP.mech;
+			case 'kva2a':
+				return volts > 0 ? 1000 / (volts * root) : 0;
+			case 'kva2kw':
+				return pf;
+			case 'kwh2w':
+				return hours > 0 ? 1000 / hours : 0;
+			case 'wh2mah':
+				return volts > 0 ? 1000 / volts : 0;
+			case 'ah2wh':
+				return volts;
+			case 'btu2kw':
+				return 0.00029307107;
+			case 'btu2w':
+				return 0.29307107;
+			case 'btu2ton':
+				return 1 / 12000;
+		}
+		return 0;
+	}
+
+	function toolNum(n) {
+		var abs = Math.abs(n);
+		var d = abs >= 100 ? 1 : abs >= 1 ? 2 : abs >= 0.01 ? 3 : 5;
+		var parts = n.toFixed(d).split('.');
+		parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		var out = parts.length > 1 ? (parts[0] + '.' + parts[1]).replace(/\.?0+$/, '') : parts[0];
+		return out === '-0' ? '0' : out;
+	}
+
+	// The working shown under the result, in words a non-electrician can follow.
+	function toolFormula(calc, p, from, to, cfg) {
+		var a = toolNum(from) + ' ' + cfg.from.unit;
+		var b = toolNum(to) + ' ' + cfg.to.unit;
+		var v = toolNum(parseFloat(p.volts) || 0) + ' V';
+		var pf = p.phase === 'dc' || p.pf === undefined ? '' : ' × ' + toolNum(parseFloat(p.pf) || 0) + ' PF';
+		var root = p.phase === 'ac3' ? ' × √3' : '';
+		switch (calc) {
+			case 'w2a':
+				return a + ' ÷ (' + v + pf + root + ') = ' + b;
+			case 'a2w':
+				return a + ' × ' + v + pf + root + ' = ' + b;
+			case 'v2w':
+				return a + ' × ' + toolNum(parseFloat(p.amps) || 0) + ' A' + pf + ' = ' + b;
+			case 'hp2w':
+				return a + ' × ' + toolNum(HP[p.hp] || HP.mech) + ' W = ' + b;
+			case 'kva2a':
+				return a + ' × 1,000 ÷ (' + v + root + ') = ' + b;
+			case 'kva2kw':
+				return a + pf + ' = ' + b;
+			case 'kwh2w':
+				return a + ' × 1,000 ÷ ' + toolNum(parseFloat(p.hours) || 0) + ' h = ' + b;
+			case 'wh2mah':
+				return a + ' × 1,000 ÷ ' + v + ' = ' + b;
+			case 'ah2wh':
+				return a + ' × ' + v + ' = ' + b;
+			case 'btu2kw':
+				return a + ' × 0.000293 = ' + b;
+			case 'btu2w':
+				return a + ' × 0.293 = ' + b;
+			case 'btu2ton':
+				return a + ' ÷ 12,000 = ' + b;
+		}
+		return '';
+	}
+
+	function initTool(box) {
+		var cfg;
+		try {
+			cfg = JSON.parse(box.getAttribute('data-tool'));
+		} catch (e) {
+			return;
+		}
+		var from = $('[data-tool-from]', box);
+		var to = $('[data-tool-to]', box);
+		var sum = $('[data-tool-sum]', box);
+		var result = $('[data-tool-result]', box);
+		var formula = $('[data-tool-formula]', box);
+		var inputs = $$('[data-tool-param]', box);
+
+		function params() {
+			var p = {};
+			inputs.forEach(function (el) {
+				p[el.getAttribute('data-tool-param')] = el.value;
+			});
+			return p;
+		}
+
+		function plain(n) {
+			return toolNum(n).replace(/,/g, '');
+		}
+
+		// lead: which box the visitor typed in last; the other one follows.
+		function update(lead) {
+			var p = params();
+			var k = toolFactor(cfg.calc, p);
+			var a = parseFloat(from.value);
+			var b = parseFloat(to.value);
+			if (lead === 'to') {
+				a = k > 0 && isFinite(b) ? b / k : NaN;
+				from.value = isFinite(a) ? plain(a) : '';
+			} else {
+				b = isFinite(a) ? a * k : NaN;
+				to.value = isFinite(b) ? plain(b) : '';
+			}
+			// Power factor means nothing on a DC circuit.
+			$$('[data-tool-param-wrap]', box).forEach(function (wrap) {
+				var key = wrap.getAttribute('data-tool-param-wrap');
+				var def = cfg.params[key];
+				wrap.hidden = !!(def && def.hideDc && p.phase === 'dc');
+			});
+			$$('[data-tool-preset]', box).forEach(function (btn) {
+				var key = btn.getAttribute('data-tool-preset');
+				btn.classList.toggle('is-active', parseFloat(btn.getAttribute('data-value')) === parseFloat(p[key]));
+			});
+			if (!isFinite(a) || !isFinite(b)) {
+				sum.textContent = cfg.from.unit;
+				result.textContent = '...';
+				formula.textContent = '';
+				return;
+			}
+			sum.textContent = toolNum(a) + ' ' + cfg.from.unit;
+			result.textContent = toolNum(b) + ' ' + cfg.to.unit;
+			formula.textContent = toolFormula(cfg.calc, p, a, b, cfg);
+		}
+
+		var lead = 'from';
+		from.addEventListener('input', function () {
+			lead = 'from';
+			update('from');
+		});
+		to.addEventListener('input', function () {
+			lead = 'to';
+			update('to');
+		});
+		inputs.forEach(function (el) {
+			el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', function () {
+				update(lead);
+			});
+		});
+		$$('[data-tool-preset]', box).forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				var input = $('[data-tool-param="' + btn.getAttribute('data-tool-preset') + '"]', box);
+				if (input) {
+					input.value = btn.getAttribute('data-value');
+					update(lead);
+				}
+			});
+		});
+		update('from');
+	}
+
+	/* ------------------------------------------------------------------
 	 * Boot
 	 * ---------------------------------------------------------------- */
 
@@ -1241,6 +1413,7 @@
 	$$('[data-chart]').forEach(initChart);
 	$$('[data-solar]').forEach(initSolar);
 	$$('[data-battery]').forEach(initBattery);
+	$$('[data-tool]').forEach(initTool);
 	initReveal();
 	initHeader();
 	initDemoForms();

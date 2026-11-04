@@ -66,6 +66,18 @@ if ( ! is_front_page() && apply_filters( 'powerbachat_show_alerts', true ) ) {
 					</div>
 				<?php endforeach; ?>
 
+				<?php $powerbachat_tools = powerbachat_tool_links(); ?>
+				<?php if ( $powerbachat_tools ) : ?>
+					<nav class="site-footer__col" aria-label="<?php esc_attr_e( 'Electrical converters', 'powerbachat' ); ?>">
+						<h2 class="site-footer__heading"><?php esc_html_e( 'Converters', 'powerbachat' ); ?></h2>
+						<ul>
+							<?php foreach ( $powerbachat_tools as $powerbachat_link ) : ?>
+								<li><a href="<?php echo esc_url( home_url( $powerbachat_link[1] ) ); ?>"><?php echo esc_html( $powerbachat_link[0] ); ?></a></li>
+							<?php endforeach; ?>
+						</ul>
+					</nav>
+				<?php endif; ?>
+
 				<?php if ( $powerbachat_company ) : ?>
 					<nav class="site-footer__col" aria-label="<?php esc_attr_e( 'Company', 'powerbachat' ); ?>">
 						<h2 class="site-footer__heading"><?php esc_html_e( 'PowerBachat', 'powerbachat' ); ?></h2>

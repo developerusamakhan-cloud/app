@@ -1,0 +1,59 @@
+<!-- powerbachat
+{
+"type": "page",
+"title": "Amps to Watts Calculator",
+"slug": "amps-to-watts",
+"parent": "tools",
+"template": "page-templates/tool.php",
+"order": 2,
+"excerpt": "Convert amps to watts for 12 V, 120 V, 230 V or any voltage, including single phase and three phase AC circuits.",
+"seo_title": "Amps to Watts Calculator: Formula, Table and Examples",
+"meta_description": "Convert amps to watts at any voltage. See the formula, an amps to watts table for 120 V and 230 V, and how much power a 15 or 20 amp circuit gives.",
+"focus_keyword": "amps to watts",
+"secondary_keywords": ["amps to watts conversion", "volts and amps to watts", "15 amps to watts", "20 amps to watts"]
+}
+-->
+<p>To convert amps to watts, multiply the current in amps by the voltage. A device drawing 5 amps on a 120 volt supply uses 600 watts; on a 230 volt supply the same 5 amps carries 1,150 watts. The calculator above works for any current and voltage, and for AC loads with a power factor below 1 or on three phase supplies.</p>
+
+<p>This is the calculation to use when a label, a clamp meter or a breaker gives you amps and you want to know the power, for example to estimate running costs or to check what a generator can handle.</p>
+
+<h2>The amps to watts formula</h2>
+
+<ul>
+<li><strong>DC:</strong> watts = amps × volts</li>
+<li><strong>AC single phase:</strong> watts = amps × volts × power factor</li>
+<li><strong>AC three phase:</strong> watts = √3 × amps × volts × power factor, using the line to line voltage</li>
+</ul>
+
+<p>For heaters, kettles and other purely resistive loads the power factor is 1, so watts are simply amps times volts. Motors and compressors usually sit between 0.8 and 0.95. If you leave the power factor at 1 for a motor, the answer is the apparent power in volt amperes, which is a little higher than the real power in watts.</p>
+
+<h2>Amps to watts conversion table</h2>
+
+[powerbachat_tool_table]
+
+<h2>Worked examples</h2>
+
+<ul>
+<li><strong>15 amps to watts at 120 V:</strong> 15 × 120 = 1,800 watts, the full capacity of a standard US household circuit.</li>
+<li><strong>13 amps to watts at 230 V:</strong> 13 × 230 = 2,990 watts, the most a fused UK plug should supply.</li>
+<li><strong>8 amps at 12 V DC:</strong> 8 × 12 = 96 watts, about what a car fridge or a small inverter load uses.</li>
+<li><strong>20 amps on a 208 V three phase supply, power factor 0.85:</strong> 1.732 × 20 × 208 × 0.85 = about 6,125 watts.</li>
+</ul>
+
+<h2>From amps to running cost</h2>
+
+<p>Once you have watts, the cost is easy. Multiply watts by the hours of use and divide by 1,000 to get kilowatt hours, then multiply by your price per unit. A clamp meter reading of 4 amps on a 230 volt fridge circuit means about 920 watts while the compressor runs, but because the compressor cycles on and off, the daily energy is usually far less than 920 watts times 24 hours. Our <a href="/tools/kwh-to-watts/">kWh to watts converter</a> helps you move between the two.</p>
+
+<h2>Frequently asked questions</h2>
+
+<h3>How many watts is 15 amps?</h3>
+<p>15 amps is 1,800 watts at 120 volts and 3,450 watts at 230 volts. For a load that runs for hours at a time, plan on using no more than 80 percent of that on a 15 amp breaker.</p>
+
+<h3>How many watts is 20 amps?</h3>
+<p>20 amps is 2,400 watts at 120 volts, 4,600 watts at 230 volts and 4,800 watts at 240 volts.</p>
+
+<h3>How do I convert volts and amps to watts?</h3>
+<p>Multiply them: watts = volts × amps. For AC motors also multiply by the power factor, and for three phase supplies multiply by 1.732 as well.</p>
+
+<h3>Are watts and volt amps the same?</h3>
+<p>Only when the power factor is 1. Volt amps measure apparent power, the current times the voltage. Watts measure the real power that does work. For a motor with a power factor of 0.8, 1,000 volt amps is 800 watts.</p>

@@ -296,6 +296,24 @@ function powerbachat_primary_fallback() {
 		}
 		printf( '<li class="menu-item" data-only="%s"><a href="%s">%s</a></li>', esc_attr( $code ), esc_url( powerbachat_guides_url( $code ) ), esc_html__( 'Guides', 'powerbachat' ) );
 	}
+	// Converters are the same in every country.
+	$tools = powerbachat_tool_links();
+	if ( $tools && powerbachat_page_exists( '/tools/' ) ) {
+		$hub  = home_url( '/tools/' );
+		$open = $hub === $current || in_array( $current, array_map( 'home_url', wp_list_pluck( $tools, 1 ) ), true );
+		printf( '<li class="menu-item menu-item-has-children%s"><a href="%s">%s</a><ul class="sub-menu">', $open ? ' current-menu-ancestor' : '', esc_url( $hub ), esc_html__( 'Tools', 'powerbachat' ) );
+		foreach ( $tools as $item ) {
+			$link = home_url( $item[1] );
+			printf(
+				'<li class="menu-item%s"><a href="%s"%s>%s</a></li>',
+				$link === $current ? ' current-menu-item' : '',
+				esc_url( $link ),
+				$link === $current ? ' aria-current="page"' : '',
+				esc_html( $item[0] )
+			);
+		}
+		echo '</ul></li>';
+	}
 	echo '</ul>';
 }
 

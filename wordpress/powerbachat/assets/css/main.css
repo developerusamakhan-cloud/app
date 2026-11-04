@@ -4742,3 +4742,218 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 		transform: translateY(10px) scale(0.98);
 	}
 }
+
+/* ---------- Electrical converters (/tools/) ---------- */
+
+.tool__io {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+	align-items: end;
+	gap: 12px;
+	margin: 6px 0 4px;
+}
+
+.tool__box {
+	display: block;
+	min-width: 0;
+	cursor: text;
+}
+
+.tool__label {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: #d6ddd8;
+}
+
+.tool__value,
+.tool__number {
+	display: flex;
+	align-items: baseline;
+	gap: 6px;
+	border-bottom: 1.5px solid var(--volt);
+	transition: border-color 0.2s;
+}
+
+.tool__value:focus-within,
+.tool__number:focus-within {
+	border-color: var(--volt-hi);
+}
+
+.tool__value input,
+.tool__number input {
+	flex: 1;
+	min-width: 0;
+	width: 100%;
+	padding: 2px 0;
+	border: 0;
+	background: transparent;
+	color: var(--paper);
+	font-family: var(--f-mono);
+	font-weight: 500;
+	-moz-appearance: textfield;
+	appearance: textfield;
+}
+
+.tool__value input {
+	font-size: 1.6rem;
+}
+
+.tool__number input {
+	font-size: 1.05rem;
+}
+
+.tool__value input::-webkit-outer-spin-button,
+.tool__value input::-webkit-inner-spin-button,
+.tool__number input::-webkit-outer-spin-button,
+.tool__number input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.tool__value input:focus,
+.tool__number input:focus {
+	outline: none;
+}
+
+.tool__unit {
+	flex: none;
+	font-family: var(--f-mono);
+	font-size: 0.75rem;
+	color: var(--muted-light);
+}
+
+.tool__eq {
+	padding-bottom: 8px;
+	font-family: var(--f-display);
+	font-size: 1.5rem;
+	color: var(--volt);
+}
+
+.tool__params {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 4px 18px;
+	margin-top: 16px;
+	padding-top: 14px;
+	border-top: 1px solid var(--line-dark);
+}
+
+.tool__param:only-child,
+.tool__param--select,
+.tool__param:has(.presets) {
+	grid-column: 1 / -1;
+}
+
+.tool__param .presets {
+	margin-top: 8px;
+}
+
+.tool__param[hidden] {
+	display: none;
+}
+
+.tool__slip .slip__total span {
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.tool__slip .slip__total strong {
+	overflow-wrap: anywhere;
+	text-align: right;
+}
+
+.tool__formula {
+	margin: 8px 0 0;
+	font-family: var(--f-mono);
+	font-size: 0.76rem;
+	color: var(--muted);
+	overflow-wrap: anywhere;
+}
+
+.tool__formula:empty {
+	display: none;
+}
+
+.tool__slip .slip__foot {
+	margin-top: 10px;
+}
+
+.tool-card__units {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45em;
+	margin-bottom: 14px;
+	font-family: var(--f-mono);
+	font-size: 0.78rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	color: var(--volt-deep);
+}
+
+.tool-card__units .icon {
+	width: 0.95em;
+	height: 0.95em;
+}
+
+.tool-card > a {
+	min-height: 150px;
+}
+
+.prose .tool-grid {
+	margin: 1.2em 0 2.2em;
+	padding: 0;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.prose .tool-grid li {
+	margin: 0;
+	padding: 0;
+}
+
+.prose .tool-grid li::before {
+	content: none;
+}
+
+.prose .tool-grid a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.tool-related__all {
+	margin: 22px 0 0;
+}
+
+.tool-related__all a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4em;
+	font-weight: 600;
+	color: var(--text);
+}
+
+@media (max-width: 960px) {
+	.prose .tool-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 720px) {
+	.tool__io {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 14px;
+	}
+
+	.tool__eq {
+		display: none;
+	}
+
+	.tool__params {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.prose .tool-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}

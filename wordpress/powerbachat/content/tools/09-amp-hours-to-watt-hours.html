@@ -1,0 +1,61 @@
+<!-- powerbachat
+{
+"type": "page",
+"title": "Amp Hours to Watt Hours Calculator",
+"slug": "amp-hours-to-watt-hours",
+"parent": "tools",
+"template": "page-templates/tool.php",
+"order": 9,
+"excerpt": "Convert amp hours to watt hours for 12 V, 24 V and 48 V batteries, and estimate how long a battery will run your load.",
+"seo_title": "Amp Hours to Watt Hours Calculator (Ah to Wh)",
+"meta_description": "Convert Ah to Wh: watt hours = amp hours × volts. Calculator, a table for 12 V, 24 V and 48 V batteries, and how to estimate battery runtime.",
+"focus_keyword": "amp hours to watt hours",
+"secondary_keywords": ["ah to watt hours", "wh to amp hours", "battery amp hours", "what do amp hours mean on a battery"]
+}
+-->
+<p>To convert amp hours to watt hours, multiply the amp hours by the battery voltage. A 100 Ah battery at 12 volts holds 1,200 watt hours, or 1.2 kWh, of energy. The calculator above also works backwards, from watt hours to amp hours, if you type in the right hand box.</p>
+
+<h2>What amp hours mean on a battery</h2>
+
+<p>An amp hour rating tells you how much current a battery can supply for how long. A 100 Ah battery could, in theory, supply 1 amp for 100 hours or 10 amps for 10 hours. But amp hours leave out the voltage, so they only compare batteries of the same voltage. Watt hours combine both and tell you the actual energy stored:</p>
+
+<ul>
+<li><strong>Wh = Ah × volts</strong></li>
+<li><strong>Ah = Wh ÷ volts</strong></li>
+</ul>
+
+<p>That is why a 100 Ah battery at 24 volts holds twice the energy of a 100 Ah battery at 12 volts.</p>
+
+<h2>Amp hours to watt hours table</h2>
+
+[powerbachat_tool_table]
+
+<h2>How long will a battery last?</h2>
+
+<p>Start with the watt hours, then allow for two things. First, you should not empty most batteries completely. Lead acid batteries, including tubular UPS batteries, last much longer if you use only about half their capacity. Lithium iron phosphate (LiFePO4) batteries can use around 80 to 90 percent. Second, an inverter that turns battery power into household AC loses roughly 10 percent.</p>
+
+<p class="note">Runtime in hours ≈ Wh × usable share × inverter efficiency ÷ load in watts</p>
+
+<p>For a 12 volt 100 Ah lithium battery running a 100 watt load through an inverter: 1,200 × 0.9 × 0.9 ÷ 100 = about 9.7 hours. The same size lead acid battery, used to 50 percent, gives about 1,200 × 0.5 × 0.9 ÷ 100 = 5.4 hours. For whole home backup in Pakistan, our <a href="/pk/battery-backup-calculator/">battery backup calculator</a> does this for a list of appliances.</p>
+
+<h2>Worked examples</h2>
+
+<ul>
+<li><strong>200 Ah at 12 V:</strong> 200 × 12 = 2,400 Wh.</li>
+<li><strong>100 Ah at 48 V:</strong> 100 × 48 = 4,800 Wh, a common home solar battery size.</li>
+<li><strong>5,000 Wh needed at 24 V:</strong> 5,000 ÷ 24 = about 208 Ah.</li>
+</ul>
+
+<h2>Frequently asked questions</h2>
+
+<h3>How many watt hours is a 100Ah battery?</h3>
+<p>A 100 Ah battery holds 1,200 Wh at 12 volts, 2,400 Wh at 24 volts and 4,800 Wh at 48 volts.</p>
+
+<h3>How do I convert watt hours to amp hours?</h3>
+<p>Divide the watt hours by the voltage. 1,000 Wh at 12 volts is about 83 Ah.</p>
+
+<h3>What voltage should I use for a 12 V battery?</h3>
+<p>Use the nominal voltage on the label, such as 12 volts or 12.8 volts for a LiFePO4 battery. The actual voltage changes as the battery charges and discharges, but the nominal value is what the capacity is rated at.</p>
+
+<h3>Why does my battery give fewer hours than the calculation?</h3>
+<p>Batteries deliver less capacity at high currents and in cold weather, and older batteries lose capacity over time. Inverters also draw some power even with no load. Keep a margin of 20 percent or more when planning.</p>

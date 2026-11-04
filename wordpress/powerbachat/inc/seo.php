@@ -180,7 +180,7 @@ function powerbachat_singular_schema() {
 			'headline'      => get_the_title( $post ),
 			'name'          => get_the_title( $post ),
 			'description'   => $desc,
-			'inLanguage'    => isset( $lang[ $country ] ) ? $lang[ $country ] : 'en',
+			'inLanguage'    => isset( $lang[ $country ] ) && ! powerbachat_is_tools_page( $post ) ? $lang[ $country ] : 'en',
 			'datePublished' => get_the_date( DATE_W3C, $post ),
 			'dateModified'  => get_the_modified_date( DATE_W3C, $post ),
 			'breadcrumb'    => array( '@id' => $url . '#breadcrumb' ),
@@ -222,7 +222,24 @@ function powerbachat_singular_schema() {
 	}
 
 	$template = get_page_template_slug( $post );
-	if ( 'page-templates/calculator.php' === $template || has_shortcode( $post->post_content, 'powerbachat_calculator' ) || has_shortcode( $post->post_content, 'powerbachat_solar' ) || has_shortcode( $post->post_content, 'powerbachat_battery' ) ) {
+	$tool     = 'page' === $post->post_type ? powerbachat_tool_for( $post ) : null;
+	if ( $tool ) {
+		$graph[] = array(
+			'@type'               => 'WebApplication',
+			'name'                => $tool['name'] . ' ' . __( 'Calculator', 'powerbachat' ),
+			'url'                 => $url,
+			'description'         => $desc,
+			'applicationCategory' => 'UtilitiesApplication',
+			'operatingSystem'     => 'Any',
+			'browserRequirements' => 'Requires JavaScript',
+			'isAccessibleForFree' => true,
+			'offers'              => array(
+				'@type'         => 'Offer',
+				'price'         => '0',
+				'priceCurrency' => 'USD',
+			),
+		);
+	} elseif ( 'page-templates/calculator.php' === $template || has_shortcode( $post->post_content, 'powerbachat_calculator' ) || has_shortcode( $post->post_content, 'powerbachat_solar' ) || has_shortcode( $post->post_content, 'powerbachat_battery' ) ) {
 		$graph[] = array(
 			'@type'               => 'WebApplication',
 			'name'                => get_the_title( $post ),

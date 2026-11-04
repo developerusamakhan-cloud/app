@@ -1,0 +1,60 @@
+<!-- powerbachat
+{
+"type": "page",
+"title": "kVA to kW Calculator",
+"slug": "kva-to-kw",
+"parent": "tools",
+"template": "page-templates/tool.php",
+"order": 6,
+"excerpt": "Convert kVA to kW for generators, UPS units and transformers using the power factor, with a table for the most common ratings.",
+"seo_title": "kVA to kW Calculator: Convert Using Power Factor",
+"meta_description": "Convert kVA to kW: kW = kVA × power factor. Calculator, a kVA to kW table at 0.8, 0.85, 0.9 and 1.0 and what it means for generators and UPS units.",
+"focus_keyword": "kva to kw",
+"secondary_keywords": ["kva to kw calculator", "kva to kw conversion", "generator kva to kw", "power factor"]
+}
+-->
+<p>To convert kVA to kW, multiply the kVA by the power factor. Most generators are rated at a power factor of 0.8, so a 10 kVA generator gives 8 kW and a 100 kVA generator gives 80 kW of real power. The calculator above lets you set any power factor, and the table below covers the usual values.</p>
+
+<h2>kVA, kW and power factor</h2>
+
+<p>kVA measures apparent power: volts times amps. kW measures real power: the part that actually runs motors, lights and heaters. The ratio between them is the power factor, a number between 0 and 1.</p>
+
+<ul>
+<li><strong>kW = kVA × power factor</strong></li>
+<li><strong>kVA = kW ÷ power factor</strong></li>
+</ul>
+
+<p>Heaters, kettles and incandescent lamps have a power factor of 1, so their kVA and kW are the same. Motors, compressors and older fluorescent fittings have lower power factors. Modern electronics with power factor correction usually run at 0.95 or above.</p>
+
+<h2>kVA to kW table</h2>
+
+[powerbachat_tool_table]
+
+<h2>Why generators and UPS units are rated in kVA</h2>
+
+<p>The alternator in a generator and the transformer in a UPS heat up according to the current they carry, not the real power the load uses. So manufacturers state how many kVA the unit can supply, and usually add the kW figure at a standard power factor. For diesel and petrol generators that standard is 0.8. Many modern UPS units are rated at 0.9 or 1.0, so check the datasheet.</p>
+
+<p>When you size a generator, add up the kW of everything you want to run, divide by 0.8 to get the kVA, and leave headroom for motor starting currents. To turn the rating into current for cables and breakers, use the <a href="/tools/kva-to-amps/">kVA to amps calculator</a>.</p>
+
+<h2>Worked examples</h2>
+
+<ul>
+<li><strong>5 kVA generator at 0.8:</strong> 5 × 0.8 = 4 kW.</li>
+<li><strong>62.5 kVA generator at 0.8:</strong> 62.5 × 0.8 = 50 kW, a common standby size.</li>
+<li><strong>3 kVA UPS at 0.9:</strong> 3 × 0.9 = 2.7 kW.</li>
+<li><strong>Going the other way:</strong> a 40 kW load at 0.8 needs 40 ÷ 0.8 = 50 kVA.</li>
+</ul>
+
+<h2>Frequently asked questions</h2>
+
+<h3>How many kW is 1 kVA?</h3>
+<p>1 kVA is 0.8 kW at a power factor of 0.8, 0.9 kW at 0.9 and 1 kW at a power factor of 1.</p>
+
+<h3>Is kVA the same as kW?</h3>
+<p>Only when the power factor is 1. For most real loads kVA is a little higher than kW.</p>
+
+<h3>What power factor should I use?</h3>
+<p>Use 0.8 for generators unless the datasheet says otherwise, the stated power factor for a UPS, and the nameplate value for motors. If you have nothing else, 0.8 is a safe, conservative choice.</p>
+
+<h3>How do I convert kW to kVA?</h3>
+<p>Divide by the power factor. 16 kW at 0.8 is 20 kVA. In the calculator above, type the kW in the right hand box and it works it out.</p>

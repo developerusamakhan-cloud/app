@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.10.1
+Stable tag: 1.11.0
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -285,6 +285,11 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.11.0 =
+* New Tools section at /tools/ with 12 electrical converters: watts to amps, amps to watts, volts to watts, HP to watts, kVA to amps, kVA to kW, kWh to watts, watt hours to mAh, amp hours to watt hours, BTU to kW, BTU to watts and BTU to tons. Each converter works both ways as you type, shows the formula it used and has a reference table that search engines can read.
+* Converter pages are the same for every visitor whatever their country, and cover 120 V and 230 V supplies, single phase, three phase and DC.
+* "Tools" menu with every converter, a "Converters" column in the footer, WebApplication and FAQ structured data on each converter, and a new "Converter tool" page template. Pages ship in content/tools/ and are added with Appearance, PowerBachat content.
 
 = 1.10.1 =
 * Cookie policy no longer lists the pb_lead cookie, and the privacy policy says the studio message is no longer shown. Code comments updated to match.

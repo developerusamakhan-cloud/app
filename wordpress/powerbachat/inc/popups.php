@@ -1,6 +1,6 @@
 <?php
 /**
- * Cookie consent popup and the "Need a website like this?" lead popup.
+ * Cookie consent bar, and the Leads list in the admin.
  *
  * Cookie consent
  * - Essential is always on; Analytics and Marketing are off until the visitor
@@ -8,14 +8,11 @@
  * - Google Consent Mode v2 defaults are set to "denied" before any tag loads and
  *   updated when the visitor chooses, so Google Analytics or Site Kit respect it.
  * - Other scripts can listen for the "pb:consent" event or read window.pbConsent.
- * - "Cookie settings" in the footer opens the popup again.
+ * - "Cookie settings" in the footer opens the bar again with the switches showing.
  *
- * Lead popup
- * - Shown after the visitor has spent a set time on the site (default 75 seconds,
- *   counted across pages, only while the tab is visible), at most once every 24
- *   hours, and never on top of the cookie popup.
- * - Enquiries are saved under Leads in the admin and emailed to the contact address,
- *   then the visitor is taken to the studio's website in a new tab.
+ * Leads
+ * - The "website like this" popup was removed in 1.10.0. Leads it already saved
+ *   stay under Leads in the admin until the 12 month cleanup.
  *
  * @package PowerBachat
  */

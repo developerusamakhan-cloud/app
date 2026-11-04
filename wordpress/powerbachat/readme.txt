@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.10.0
+Stable tag: 1.10.1
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -285,6 +285,9 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.10.1 =
+* Cookie policy no longer lists the pb_lead cookie, and the privacy policy says the studio message is no longer shown. Code comments updated to match.
 
 = 1.10.0 =
 * Removes the "website like this" promotion popup and its Customizer settings. Leads already saved stay under Leads in the admin.

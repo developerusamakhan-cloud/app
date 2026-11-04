@@ -2,7 +2,7 @@
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.11.0
+Stable tag: 1.11.1
 License: GPLv2 or later
 
 Theme for PowerBachat.com: electricity bill calculators, unit rates and solar prices
@@ -285,6 +285,11 @@ Fonts: Fraunces, Hanken Grotesk, JetBrains Mono, Noto Nastaliq Urdu (SIL Open Fo
 License), loaded from Google Fonts. Icons and illustrations are original inline SVG.
 
 == Changelog ==
+
+= 1.11.1 =
+* Guides show "Reviewed by the PowerBachat Editorial Team" (linked to the editorial policy) and an "Updated" date when a guide changed after it was published.
+* With Rank Math active, guide structured data credits the editorial team instead of the WordPress login, and calculator and converter pages no longer carry Article markup next to their WebApplication markup.
+* Converter pages show the month their formulas were last checked, taken from the page's real modified date.
 
 = 1.11.0 =
 * New Tools section at /tools/ with 12 electrical converters: watts to amps, amps to watts, volts to watts, HP to watts, kVA to amps, kVA to kW, kWh to watts, watt hours to mAh, amp hours to watt hours, BTU to kW, BTU to watts and BTU to tons. Each converter works both ways as you type, shows the formula it used and has a reference table that search engines can read.

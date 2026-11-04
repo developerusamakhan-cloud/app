@@ -27,7 +27,12 @@ while ( have_posts() ) :
 					<?php endif; ?>
 					<p class="hero__sig">
 						<?php echo powerbachat_icon( 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-						<span><?php esc_html_e( 'Free, instant and works for 120 V and 230 V countries', 'powerbachat' ); ?></span>
+						<span>
+							<?php
+							/* translators: %s: month and year the page was last reviewed */
+							printf( esc_html__( 'Formulas checked %s · works for 120 V and 230 V countries', 'powerbachat' ), esc_html( get_the_modified_date( 'F Y' ) ) );
+							?>
+						</span>
 					</p>
 				</div>
 				<?php

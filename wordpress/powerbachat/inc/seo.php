@@ -527,3 +527,40 @@ function powerbachat_robots_sitemap( $output, $public ) {
 	return $output;
 }
 add_filter( 'robots_txt', 'powerbachat_robots_sitemap', 99, 2 );
+
+/**
+ * Rank Math structured data: guides are credited to the editorial team instead of
+ * the WordPress login ("admin"), and calculator and converter pages are described
+ * as web applications (added by powerbachat_singular_schema()) rather than articles.
+ *
+ * @param array $data Rank Math JSON-LD entities.
+ * @return array
+ */
+function powerbachat_rank_math_schema( $data ) {
+	if ( ! is_singular() || ! is_array( $data ) ) {
+		return $data;
+	}
+	$post     = get_queried_object();
+	$is_tool  = 'page' === $post->post_type && ( powerbachat_tool_for( $post ) || 'page-templates/calculator.php' === get_page_template_slug( $post ) );
+	$articles = array( 'Article', 'BlogPosting', 'NewsArticle' );
+	$team     = array(
+		'@type' => 'Organization',
+		'name'  => __( 'PowerBachat Editorial Team', 'powerbachat' ),
+		'url'   => home_url( powerbachat_page_exists( '/editorial-policy/' ) ? '/editorial-policy/' : '/' ),
+	);
+	foreach ( $data as $key => $entity ) {
+		$types = isset( $entity['@type'] ) ? (array) $entity['@type'] : array();
+		if ( array_intersect( $types, $articles ) ) {
+			if ( $is_tool ) {
+				unset( $data[ $key ] );
+				continue;
+			}
+			$data[ $key ]['author'] = $team;
+		}
+		if ( 'post' === $post->post_type && array_intersect( $types, array( 'Person', 'ProfilePage' ) ) ) {
+			unset( $data[ $key ] );
+		}
+	}
+	return $data;
+}
+add_filter( 'rank_math/json_ld', 'powerbachat_rank_math_schema', 99 );

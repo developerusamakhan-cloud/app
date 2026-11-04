@@ -87,10 +87,23 @@ function powerbachat_reading_time( $post_id = null ) {
  * Date + reading time line.
  */
 function powerbachat_post_meta() {
+	// Show "Updated" only when the guide really changed after it was published.
+	$updated = get_the_modified_time( 'U' ) - get_the_time( 'U' ) > DAY_IN_SECONDS;
+	$team    = powerbachat_page_exists( '/editorial-policy/' )
+		? sprintf( '<a href="%s">%s</a>', esc_url( home_url( '/editorial-policy/' ) ), esc_html__( 'PowerBachat Editorial Team', 'powerbachat' ) )
+		: esc_html__( 'PowerBachat Editorial Team', 'powerbachat' );
 	printf(
-		'<p class="post-meta"><time datetime="%1$s">%2$s</time><span aria-hidden="true">·</span><span>%3$s</span></p>',
+		'<p class="post-meta"><time datetime="%1$s">%2$s</time><span aria-hidden="true">·</span>%3$s<span>%4$s</span><span aria-hidden="true">·</span><span>%5$s</span></p>',
 		esc_attr( get_the_date( DATE_W3C ) ),
 		esc_html( get_the_date() ),
+		$updated ? sprintf(
+			'<span>%1$s <time datetime="%2$s">%3$s</time></span><span aria-hidden="true">·</span>',
+			esc_html__( 'Updated', 'powerbachat' ),
+			esc_attr( get_the_modified_date( DATE_W3C ) ),
+			esc_html( get_the_modified_date() )
+		) : '',
+		/* translators: %s: team name, linked to the editorial policy */
+		sprintf( esc_html__( 'Reviewed by the %s', 'powerbachat' ), $team ), // phpcs:ignore WordPress.Security.EscapeOutput
 		/* translators: %d: minutes */
 		esc_html( sprintf( _n( '%d min read', '%d min read', powerbachat_reading_time(), 'powerbachat' ), powerbachat_reading_time() ) )
 	);

@@ -30,7 +30,8 @@ if ( ! is_front_page() && apply_filters( 'powerbachat_show_alerts', true ) ) {
 		<div class="site-footer__top">
 			<div class="site-footer__brand">
 				<?php powerbachat_logo(); ?>
-				<p><?php esc_html_e( 'Bill calculators, unit rates and solar prices for your home. Built by people who also open their bill and wince.', 'powerbachat' ); ?></p>
+				<p data-region-only="home"><?php esc_html_e( 'Bill calculators, unit rates and solar prices for your home. Built by people who also open their bill and wince.', 'powerbachat' ); ?></p>
+				<p data-region-only="world"><?php esc_html_e( 'Free electrical calculators and converters that show their working, plus electricity bill calculators for Pakistan, India and Bangladesh.', 'powerbachat' ); ?></p>
 				<p class="site-footer__checked">
 					<?php echo powerbachat_icon( 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					<?php
@@ -72,6 +73,18 @@ if ( ! is_front_page() && apply_filters( 'powerbachat_show_alerts', true ) ) {
 						<h2 class="site-footer__heading"><?php esc_html_e( 'Converters', 'powerbachat' ); ?></h2>
 						<ul>
 							<?php foreach ( $powerbachat_tools as $powerbachat_link ) : ?>
+								<li><a href="<?php echo esc_url( home_url( $powerbachat_link[1] ) ); ?>"><?php echo esc_html( $powerbachat_link[0] ); ?></a></li>
+							<?php endforeach; ?>
+						</ul>
+					</nav>
+				<?php endif; ?>
+
+				<?php $powerbachat_hubs = powerbachat_live_links( powerbachat_country_hubs() ); ?>
+				<?php if ( $powerbachat_hubs ) : ?>
+					<nav class="site-footer__col" data-region-only="world" aria-label="<?php esc_attr_e( 'Bill calculators by country', 'powerbachat' ); ?>">
+						<h2 class="site-footer__heading"><?php esc_html_e( 'Bill calculators', 'powerbachat' ); ?></h2>
+						<ul>
+							<?php foreach ( $powerbachat_hubs as $powerbachat_link ) : ?>
 								<li><a href="<?php echo esc_url( home_url( $powerbachat_link[1] ) ); ?>"><?php echo esc_html( $powerbachat_link[0] ); ?></a></li>
 							<?php endforeach; ?>
 						</ul>

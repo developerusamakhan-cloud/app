@@ -79,12 +79,14 @@ add_filter( 'wp_resource_hints', 'powerbachat_resource_hints', 10, 2 );
  * URL country (/pk/, /in/, /bd/) always wins. Otherwise ?pb_country= (testing),
  * then the pb_cc cookie, then what the server detected. With no cookie yet,
  * main.js confirms the country over REST, which keeps cached pages correct.
+ * The visitor's region (home or world, see powerbachat_visitor_region()) follows
+ * the same pattern with ?pb_region= and the pb_rg cookie.
  */
 function powerbachat_country_bootstrap() {
 	$forced  = powerbachat_forced_country();
 	$current = powerbachat_current_country();
 	?>
-	<script>(function(){var d=document.documentElement,f=<?php echo wp_json_encode( $forced ); ?>,c='',q=/[?&]pb_country=(pk|in|bd)\b/.exec(location.search),m=/(?:^|;\s*)pb_cc=(pk|in|bd)/.exec(document.cookie);d.classList.add('js');if(q){document.cookie='pb_cc='+q[1]+';path=/;max-age=2592000;SameSite=Lax';m=q;}c=f||(m&&m[1])||d.getAttribute('data-country')||<?php echo wp_json_encode( $current ); ?>;d.setAttribute('data-country',c);window.pbGeoPending=!f&&!m;})();</script>
+	<script>(function(){var d=document.documentElement,f=<?php echo wp_json_encode( $forced ); ?>,c='',q=/[?&]pb_country=(pk|in|bd)\b/.exec(location.search),m=/(?:^|;\s*)pb_cc=(pk|in|bd)/.exec(document.cookie);d.classList.add('js');if(q){document.cookie='pb_cc='+q[1]+';path=/;max-age=2592000;SameSite=Lax';m=q;}c=f||(m&&m[1])||d.getAttribute('data-country')||<?php echo wp_json_encode( $current ); ?>;d.setAttribute('data-country',c);var rq=/[?&]pb_region=(home|world)\b/.exec(location.search),rm=/(?:^|;\s*)pb_rg=(w|h)/.exec(document.cookie),r=rq?rq[1].charAt(0):(rm?rm[1]:(m?'h':''));if(rq){document.cookie='pb_rg='+r+';path=/;max-age=2592000;SameSite=Lax';}if(r){d.setAttribute('data-region',r==='w'?'world':'home');}window.pbGeoPending=!f&&!m;window.pbRegionPending=!r;})();</script>
 	<?php
 }
 add_action( 'wp_head', 'powerbachat_country_bootstrap', 1 );

@@ -127,6 +127,21 @@ function powerbachat_site_map() {
 }
 
 /**
+ * The main bill calculator page of each country, for visitors from elsewhere.
+ *
+ * @return array[] label, path.
+ */
+function powerbachat_country_hubs() {
+	$hubs = array();
+	foreach ( powerbachat_site_map() as $code => $sections ) {
+		$name   = powerbachat_data()['countries'][ $code ]['name'];
+		/* translators: %s: country name */
+		$hubs[] = array( sprintf( __( '%s bill calculator', 'powerbachat' ), $name ), $sections['bills']['url'] );
+	}
+	return $hubs;
+}
+
+/**
  * Company and legal pages, the same in every country.
  *
  * @return array[] label, path.
@@ -301,7 +316,7 @@ function powerbachat_primary_fallback() {
 	if ( $tools && powerbachat_page_exists( '/tools/' ) ) {
 		$hub  = home_url( '/tools/' );
 		$open = $hub === $current || in_array( $current, array_map( 'home_url', wp_list_pluck( $tools, 1 ) ), true );
-		printf( '<li class="menu-item menu-item-has-children%s"><a href="%s">%s</a><ul class="sub-menu">', $open ? ' current-menu-ancestor' : '', esc_url( $hub ), esc_html__( 'Tools', 'powerbachat' ) );
+		printf( '<li class="menu-item menu-item-has-children menu-item--tools%s"><a href="%s">%s</a><ul class="sub-menu sub-menu--wide">', $open ? ' current-menu-ancestor' : '', esc_url( $hub ), esc_html__( 'Tools', 'powerbachat' ) );
 		foreach ( $tools as $item ) {
 			$link = home_url( $item[1] );
 			printf(
@@ -311,6 +326,15 @@ function powerbachat_primary_fallback() {
 				$link === $current ? ' aria-current="page"' : '',
 				esc_html( $item[0] )
 			);
+		}
+		echo '</ul></li>';
+	}
+	// Visitors outside South Asia get one menu that groups the three countries.
+	$hubs = powerbachat_live_links( powerbachat_country_hubs() );
+	if ( $hubs ) {
+		printf( '<li class="menu-item menu-item-has-children" data-region-only="world"><a href="%s">%s</a><ul class="sub-menu">', esc_url( home_url( $hubs[0][1] ) ), esc_html__( 'Bill calculators', 'powerbachat' ) );
+		foreach ( $hubs as $item ) {
+			printf( '<li class="menu-item"><a href="%s">%s</a></li>', esc_url( home_url( $item[1] ) ), esc_html( $item[0] ) );
 		}
 		echo '</ul></li>';
 	}

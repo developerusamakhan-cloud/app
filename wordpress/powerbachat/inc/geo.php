@@ -228,6 +228,36 @@ function powerbachat_current_country() {
 }
 
 /**
+ * Where the visitor is browsing from: "home" for Pakistan, India and Bangladesh,
+ * "world" for everywhere else. World visitors still get a country for the bill
+ * calculators (the Customizer fallback), but the header, footer and home page lead
+ * with the converters instead of one country's bill pages.
+ *
+ * Order: ?pb_region=world|home (testing, remembered in a cookie), the pb_rg cookie,
+ * then the network lookup. Visitors who already carry a pb_cc cookie from before
+ * regions existed count as home.
+ *
+ * @return string home|world
+ */
+function powerbachat_visitor_region() {
+	static $region = null;
+	if ( null !== $region ) {
+		return $region;
+	}
+	$query = isset( $_GET['pb_region'] ) ? sanitize_key( wp_unslash( $_GET['pb_region'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( in_array( $query, array( 'home', 'world' ), true ) ) {
+		$region = $query;
+	} elseif ( ! empty( $_COOKIE['pb_rg'] ) ) {
+		$region = 'w' === $_COOKIE['pb_rg'] ? 'world' : 'home';
+	} elseif ( ! empty( $_COOKIE['pb_cc'] ) || powerbachat_query_country() ) {
+		$region = 'home';
+	} else {
+		$region = 'fallback' === powerbachat_network_country()['source'] ? 'world' : 'home';
+	}
+	return $region;
+}
+
+/**
  * <html data-country="…"> straight from the server, so it is right even without JavaScript.
  *
  * @param string $output Language attributes.
@@ -237,7 +267,7 @@ function powerbachat_html_country_attr( $output ) {
 	if ( is_admin() ) {
 		return $output;
 	}
-	return $output . ' data-country="' . esc_attr( powerbachat_current_country() ) . '"';
+	return $output . ' data-country="' . esc_attr( powerbachat_current_country() ) . '" data-region="' . esc_attr( powerbachat_visitor_region() ) . '"';
 }
 add_filter( 'language_attributes', 'powerbachat_html_country_attr' );
 
@@ -257,6 +287,7 @@ function powerbachat_register_geo_route() {
 					array(
 						'country' => $result['country'],
 						'source'  => $result['source'],
+						'region'  => 'fallback' === $result['source'] ? 'world' : 'home',
 					)
 				);
 				$res->header( 'Cache-Control', 'no-store, private' );

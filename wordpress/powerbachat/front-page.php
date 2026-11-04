@@ -11,7 +11,7 @@ get_header();
 
 $powerbachat_sections = apply_filters(
 	'powerbachat_home_sections',
-	array( 'hero', 'ticker', 'utilities', 'slabs', 'solar', 'prices', 'guides', 'trust', 'faq', 'alerts' )
+	array( 'global', 'hero', 'ticker', 'utilities', 'slabs', 'solar', 'prices', 'guides', 'trust', 'faq', 'alerts' )
 );
 
 foreach ( $powerbachat_sections as $powerbachat_section ) {

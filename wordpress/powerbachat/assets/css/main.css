@@ -182,6 +182,23 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 	display: none !important;
 }
 
+/* Region-scoped content: "home" is Pakistan, India and Bangladesh, "world" is everyone else. */
+html:not([data-region="world"]) [data-region-only="world"],
+html[data-region="world"] [data-region-only="home"] {
+	display: none !important;
+}
+
+/* World visitors: no single-country menus, footer columns or tariff alerts. */
+html[data-region="world"] .nav__list > li[data-only],
+html[data-region="world"] .site-footer__country,
+html[data-region="world"] .alerts {
+	display: none !important;
+}
+
+html[data-region="world"] .nav__list > .menu-item--tools {
+	order: -1;
+}
+
 /* ---------- Buttons, chips, kickers ---------- */
 
 .btn {
@@ -4955,5 +4972,83 @@ html[data-country="bd"] [data-only]:not([data-only~="bd"]) {
 
 	.prose .tool-grid {
 		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+/* ---------- Home page band for visitors outside South Asia ---------- */
+
+.global-band {
+	padding: clamp(40px, 6vw, 80px) 0 clamp(32px, 4vw, 56px);
+	background:
+		radial-gradient(60% 80% at 90% 0%, rgba(245, 184, 46, 0.14), transparent 60%),
+		var(--ink);
+	color: var(--paper);
+	border-bottom: 1px solid var(--line-dark);
+}
+
+.global-band__title {
+	max-width: 18ch;
+	margin: 0;
+	font-family: var(--f-display);
+	font-size: clamp(2.2rem, 5vw, 3.6rem);
+	font-weight: 500;
+	line-height: 1.02;
+	letter-spacing: -0.035em;
+}
+
+.global-band__lede {
+	max-width: 38em;
+	margin: 18px 0 30px;
+	font-size: 1.08rem;
+	line-height: 1.6;
+	color: var(--muted-light);
+}
+
+.global-band .tool-grid {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.global-band .tool-card > a {
+	color: var(--text);
+}
+
+.global-band__more {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 14px 24px;
+	margin: 28px 0 0;
+}
+
+.global-band__south {
+	font-size: 0.92rem;
+	color: var(--muted-light);
+	text-underline-offset: 3px;
+}
+
+.global-band__south:hover {
+	color: var(--paper);
+}
+
+@media (max-width: 960px) {
+	.global-band .tool-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 720px) {
+	.global-band .tool-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 10px;
+	}
+
+	.global-band .tool-card > a {
+		min-height: 0;
+		padding: 14px;
+	}
+
+	.global-band .tool-card .util-card__area,
+	.global-band .tool-card .util-card__go {
+		display: none;
 	}
 }

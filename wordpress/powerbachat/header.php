@@ -19,7 +19,31 @@
 
 <div class="topbar">
 	<div class="wrap topbar__inner">
-		<p class="topbar__note">
+		<p class="topbar__note" data-region-only="world">
+			<span class="pulse" aria-hidden="true"></span>
+			<?php
+			printf(
+				/* translators: %s: "every country" in bold */
+				esc_html__( 'Free electrical calculators for %s', 'powerbachat' ),
+				'<strong>' . esc_html__( 'every country', 'powerbachat' ) . '</strong>'
+			);
+			?>
+			<span class="topbar__sep" aria-hidden="true">/</span>
+			<span class="topbar__src"><?php esc_html_e( '120 V and 230 V supplies', 'powerbachat' ); ?></span>
+		</p>
+		<p class="topbar__where" data-region-only="world">
+			<?php esc_html_e( 'Bill calculators for', 'powerbachat' ); ?>
+			<?php
+			$powerbachat_hubs = array();
+			foreach ( powerbachat_data()['countries'] as $powerbachat_code => $powerbachat_country ) {
+				$powerbachat_hubs[] = powerbachat_page_exists( '/' . $powerbachat_code . '/' )
+					? '<a href="' . esc_url( home_url( '/' . $powerbachat_code . '/' ) ) . '">' . esc_html( $powerbachat_country['name'] ) . '</a>'
+					: esc_html( $powerbachat_country['name'] );
+			}
+			echo implode( ' · ', $powerbachat_hubs ); // phpcs:ignore WordPress.Security.EscapeOutput
+			?>
+		</p>
+		<p class="topbar__note" data-region-only="home">
 			<span class="pulse" aria-hidden="true"></span>
 			<?php
 			printf(
@@ -33,7 +57,7 @@
 			<span class="topbar__src" data-only="in">TNERC · KSERC orders</span>
 			<span class="topbar__src" data-only="bd">BERC residential tariff</span>
 		</p>
-		<p class="topbar__where">
+		<p class="topbar__where" data-region-only="home">
 			<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg>
 			<?php foreach ( powerbachat_data()['countries'] as $powerbachat_code => $powerbachat_country ) : ?>
 				<span data-only="<?php echo esc_attr( $powerbachat_code ); ?>">
@@ -65,17 +89,22 @@
 			?>
 			<form class="nav__search" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 				<label class="screen-reader-text" for="nav-search"><?php esc_html_e( 'Search', 'powerbachat' ); ?></label>
-				<input id="nav-search" type="search" name="s" placeholder="<?php esc_attr_e( 'Search “bill calculator”', 'powerbachat' ); ?>" value="<?php echo esc_attr( get_search_query() ); ?>">
+				<input id="nav-search" type="search" name="s" placeholder="<?php esc_attr_e( 'Search calculators', 'powerbachat' ); ?>" value="<?php echo esc_attr( get_search_query() ); ?>">
 				<button type="submit" aria-label="<?php esc_attr_e( 'Search', 'powerbachat' ); ?>"><?php echo powerbachat_icon( 'search' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></button>
 			</form>
 		</nav>
 
 		<div class="site-header__actions">
 			<?php foreach ( POWERBACHAT_COUNTRIES as $powerbachat_code ) : ?>
-				<a class="btn btn--volt btn--sm" data-only="<?php echo esc_attr( $powerbachat_code ); ?>" href="<?php echo esc_url( powerbachat_bill_url( $powerbachat_code ) ); ?>">
+				<a class="btn btn--volt btn--sm" data-only="<?php echo esc_attr( $powerbachat_code ); ?>" data-region-only="home" href="<?php echo esc_url( powerbachat_bill_url( $powerbachat_code ) ); ?>">
 					<?php esc_html_e( 'Check my bill', 'powerbachat' ); ?>
 				</a>
 			<?php endforeach; ?>
+			<?php if ( powerbachat_page_exists( '/tools/' ) ) : ?>
+				<a class="btn btn--volt btn--sm" data-region-only="world" href="<?php echo esc_url( home_url( '/tools/' ) ); ?>">
+					<?php esc_html_e( 'All converters', 'powerbachat' ); ?>
+				</a>
+			<?php endif; ?>
 			<button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" data-nav-toggle>
 				<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'powerbachat' ); ?></span>
 				<?php echo powerbachat_icon( 'menu' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>

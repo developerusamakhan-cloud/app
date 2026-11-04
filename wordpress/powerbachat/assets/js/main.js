@@ -251,7 +251,7 @@
 	 * fixes pages served from a full-page cache), then remember it for 30 days.
 	 */
 	function confirmCountry() {
-		if (!window.pbGeoPending || !CFG.geoUrl || !window.fetch) {
+		if ((!window.pbGeoPending && !window.pbRegionPending) || !CFG.geoUrl || !window.fetch) {
 			return;
 		}
 		fetch(CFG.geoUrl, { credentials: 'same-origin', cache: 'no-store' })
@@ -259,7 +259,14 @@
 				return r.ok ? r.json() : null;
 			})
 			.then(function (j) {
-				if (!j || !DATA.countries[j.country]) {
+				if (!j) {
+					return;
+				}
+				if (window.pbRegionPending && (j.region === 'world' || j.region === 'home')) {
+					document.cookie = 'pb_rg=' + j.region.charAt(0) + ';path=/;max-age=2592000;SameSite=Lax';
+					root.setAttribute('data-region', j.region);
+				}
+				if (!window.pbGeoPending || !DATA.countries[j.country]) {
 					return;
 				}
 				document.cookie = 'pb_cc=' + j.country + ';path=/;max-age=2592000;SameSite=Lax';

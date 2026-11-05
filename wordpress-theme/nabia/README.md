@@ -65,6 +65,10 @@ Tips:
 - **Submissions → Form settings**: who receives the emails, email subject, form title and intro, which optional fields to show, budget options, button text, thank-you message, privacy note, and an automatic reply to the sender (use `{name}` for their name).
 - Spam protection: hidden honeypot field, rejects forms sent in under 3 seconds, and max 5 messages per hour per visitor.
 
+## What's new in 2.24.1
+
+- The page cache (Vyntic Speed Optimizer) is cleared automatically once after each theme update, so visitors see changes right away.
+
 ## What's new in 2.24.0
 
 - **"Hosting I recommend" card in the footer** with your Hostinger referral link. The link is marked rel="sponsored" for Google and has a short affiliate disclosure under it. Change the name or link (or empty the name to hide the card) in Customize → Nabia Theme → General.

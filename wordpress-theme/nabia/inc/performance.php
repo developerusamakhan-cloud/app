@@ -60,3 +60,19 @@ function nabia_async_plugin_styles( $tag, $handle ) {
 	return $async . '<noscript>' . trim( $tag ) . "</noscript>\n";
 }
 add_filter( 'style_loader_tag', 'nabia_async_plugin_styles', 10, 2 );
+
+/**
+ * Clear the page cache once after each theme update, so visitors see the new version.
+ * Supports Vyntic Speed Optimizer; other cache plugins can hook into `nabia_theme_updated`.
+ */
+function nabia_purge_cache_on_update() {
+	if ( get_option( 'nabia_cache_version' ) === NABIA_VERSION ) {
+		return;
+	}
+	update_option( 'nabia_cache_version', NABIA_VERSION );
+	if ( class_exists( 'VSO_Page_Cache' ) && method_exists( 'VSO_Page_Cache', 'purge_all' ) ) {
+		VSO_Page_Cache::purge_all();
+	}
+	do_action( 'nabia_theme_updated' );
+}
+add_action( 'init', 'nabia_purge_cache_on_update', 20 );

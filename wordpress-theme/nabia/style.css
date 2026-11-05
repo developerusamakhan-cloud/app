@@ -4,7 +4,7 @@ Theme URI: https://nabiakhan.com/
 Author: Nabia Khan
 Author URI: https://nabiakhan.com/
 Description: A bold, animated portfolio theme for creative WordPress developers and designers. Big typography, an infinite skills marquee, magnetic buttons, a custom cursor, scroll reveals, animated counters, a portfolio post type, testimonials slider, FAQ and a one-page layout. Everything is editable in Appearance → Customize → Nabia Theme.
-Version: 2.23.9
+Version: 2.24.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -5648,6 +5648,70 @@ img.avatar {
 	max-width: 360px;
 	margin: 20px 0 24px;
 	color: color-mix(in srgb, var(--bg) 60%, transparent);
+}
+
+/* Recommended hosting (affiliate) */
+.host-rec {
+	max-width: 420px;
+	margin-top: 16px;
+	padding: 18px;
+	border: 1px solid color-mix(in srgb, var(--bg) 12%, transparent);
+	border-radius: var(--radius-sm);
+	background: color-mix(in srgb, var(--bg) 4%, transparent);
+}
+
+.footer-brand .host-rec-label {
+	margin: 0 0 10px;
+	color: color-mix(in srgb, var(--bg) 65%, transparent);
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.host-rec-link {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 12px 14px;
+	border-radius: 12px;
+	background: color-mix(in srgb, var(--accent) 16%, transparent);
+	color: var(--bg);
+	text-decoration: none;
+	transition: background-color 0.25s;
+}
+
+.host-rec-link:hover,
+.host-rec-link:focus-visible {
+	background: color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+.host-rec-name {
+	font-family: var(--font-display);
+	font-size: 18px;
+	font-weight: 800;
+}
+
+.host-rec-cta {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.host-rec-cta .icon {
+	width: 16px;
+	height: 16px;
+}
+
+.footer-brand .host-rec-note {
+	max-width: none;
+	margin: 10px 0 0;
+	color: color-mix(in srgb, var(--bg) 65%, transparent);
+	font-size: 12px;
+	line-height: 1.5;
 }
 
 /* Ask AI about the brand */

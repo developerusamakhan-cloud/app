@@ -74,6 +74,7 @@ $nabia_show_cta = ! is_front_page() && ! is_singular( 'project' );
 				if ( nabia_mod( 'enable_ask_ai' ) ) {
 					get_template_part( 'template-parts/footer', 'ask-ai' );
 				}
+				get_template_part( 'template-parts/footer', 'hosting' );
 				?>
 			</div>
 

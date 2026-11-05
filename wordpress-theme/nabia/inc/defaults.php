@@ -111,6 +111,8 @@ https://nabiakhan.com/wp-content/uploads/2026/09/vidssave.com-Tara-Lori-_-Happy-
 		'enable_popup'       => true,
 		'enable_cookies'     => true,
 		'enable_ask_ai'      => true,
+		'hosting_name'       => 'Hostinger',
+		'hosting_url'        => 'https://www.hostinger.com/pk?REFERRALCODE=1NABIA82',
 		'share_image'        => '',
 		'lock_share'         => true,
 		'cookie_title'       => 'A few cookies, if that is okay?',
